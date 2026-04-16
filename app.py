@@ -280,15 +280,15 @@ if uploaded_file:
                 target_col = st.session_state.meta_translate
                 translation_map = dict(zip(edited_dict['Vietnamese'], edited_dict[target_col]))
                 
-                # Prepare metadata
+                # Prepare metadata (with normalization/cleaning)
                 metadata = {
-                    "Name (not capitalized)": st.session_state.meta_name_lc,
-                    "Reporting date": st.session_state.meta_date,
+                    "Name (not capitalized)": tl.clean_text(st.session_state.meta_name_lc),
+                    "Reporting date": tl.clean_text(st.session_state.meta_date),
                     "Translate into": st.session_state.meta_translate,
-                    "Year-end date": st.session_state.meta_year_end,
-                    "Translated Name": st.session_state.meta_name_cap,
-                    "Period (out of table)": st.session_state.meta_period_full,
-                    "Period (in table)": st.session_state.meta_period_short
+                    "Year-end date": tl.clean_text(st.session_state.meta_year_end),
+                    "Translated Name": tl.clean_text(st.session_state.meta_name_cap),
+                    "Period (out of table)": tl.clean_text(st.session_state.meta_period_full),
+                    "Period (in table)": tl.clean_text(st.session_state.meta_period_short)
                 }
                 
                 # Call processing logic with the edited dictionary map

@@ -2,10 +2,24 @@ import pandas as pd
 import os
 import re
 import json
+import unicodedata
 
 # Use absolute path for Streamlit Cloud compatibility
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DICTIONARY_FILE = os.path.join(BASE_DIR, "dictionary.json")
+
+def clean_text(text):
+    """
+    Normalizes text to NFC form and strips common invisible characters/whitespace.
+    Highly recommended for Vietnamese Unicode stability.
+    """
+    if not isinstance(text, str):
+        return text
+    # Normalize to NFC (Normalization Form C)
+    text = unicodedata.normalize('NFC', text)
+    # Remove some common invisible characters like zero-width space
+    text = text.replace('\u200b', '').replace('\ufeff', '')
+    return text.strip()
 
 def load_dictionary():
     """
@@ -16,6 +30,10 @@ def load_dictionary():
             # Read JSON and return as DataFrame
             df = pd.read_json(DICTIONARY_FILE, encoding='utf-8')
             if not df.empty:
+                 # Normalize all columns that might contain Vietnamese
+                 for col in df.columns:
+                     if df[col].dtype == object:
+                         df[col] = df[col].apply(clean_text)
                  # Remove rows where Vietnamese is null
                  df = df.dropna(subset=['Vietnamese'])
             return df
@@ -63,6 +81,9 @@ def replace_text_in_paragraph(paragraph, translation_map):
     """
     inline = paragraph.runs
     full_text = "".join(run.text for run in inline)
+    
+    # Normalize document text to ensure matching with dictionary
+    full_text = clean_text(full_text)
     
     changed = False
     new_text = full_text
