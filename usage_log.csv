@@ -1,0 +1,47 @@
+Timestamp,User,Event Type,Details
+2026-04-15 22:55:45,phuonglm,Login,Successfully signed in
+2026-04-15 22:56:04,phuonglm,Comparison,"Files: fs_Kim Hoa_2025_v ph.docx, fs_Kim Hoa_2025_e ph.docx | Mode: Number | Mismatches: 0"
+2026-04-15 22:56:18,phuonglm,Login,Successfully signed in
+2026-04-15 22:58:36,phuonglm,Login,Successfully signed in
+2026-04-15 23:01:18,phuonglm,Login,Successfully signed in
+2026-04-15 23:02:37,phuonglm,User Management,Created user: VPSG (user)
+2026-04-15 23:02:48,VPSG,Login,Successfully signed in
+2026-04-15 23:04:29,phuonglm,Login,Successfully signed in
+2026-04-15 23:04:54,phuonglm,User Management,Deleted user: user1
+2026-04-15 23:09:07,phuonglm,Login,Successfully signed in
+2026-04-15 23:11:04,phuonglm,User Management,Created user: VPBD (user)
+2026-04-15 23:20:25,VPSG,Login,Successfully signed in
+2026-04-15 23:20:32,phuonglm,Login,Successfully signed in
+2026-04-15 23:21:11,phuonglm,Login,Successfully signed in
+2026-04-16 14:11:23,phuonglm,Login,Successfully signed in
+2026-04-16 14:16:40,phuonglm,Login,Successfully signed in
+2026-04-16 14:16:53,phuonglm,User Management,Updated user: VPSG
+2026-04-16 14:17:11,VPSG,Login,Successfully signed in
+2026-04-16 14:18:42,phuonglm,Login,Successfully signed in
+2026-04-16 14:19:20,phuonglm,User Management,Deleted user: VPSG
+2026-04-16 14:19:22,phuonglm,User Management,Deleted user: VPBD
+2026-04-16 14:19:24,phuonglm,User Management,Created user: user (user)
+2026-04-16 14:19:47,phuonglm,User Management,Updated user: user
+2026-04-16 14:21:55,user,Login,Successfully signed in
+2026-04-16 14:22:13,admin,Login,Successfully signed in
+2026-04-16 14:32:23,user,Login,Successfully signed in
+2026-04-16 14:32:35,admin,Login,Successfully signed in
+2026-04-16 14:33:37,user,Login,Successfully signed in
+2026-04-16 14:34:03,user,Comparison,"Files: fs_Bello_2025_v ph.docx, fs_Bello_2025_v_Hs ph.docx | Mode: Text | Mismatches: 301"
+2026-04-16 14:34:56,user,Comparison,"Files: fs_Bello_2025_v ph.docx, fs_Bello_2025_v_Hs ph.docx | Mode: Number | Mismatches: 0"
+2026-04-16 14:35:17,admin,Login,Successfully signed in
+2026-04-16 20:11:28,user,Login,Successfully signed in
+2026-04-16 20:19:48,user,Login,Successfully signed in
+2026-04-16 20:20:50,admin,Login,Successfully signed in
+2026-04-16 20:21:16,admin,User Management,Updated user: admin
+2026-04-16 20:26:28,user,Login,Successfully signed in
+2026-04-16 20:40:01,user,Login,Successfully signed in
+2026-04-16 20:45:12,user,Login,Successfully signed in
+2026-04-16 20:47:13,user,Login,Successfully signed in
+2026-04-16 20:54:17,user,Login,Successfully signed in
+2026-04-16 20:56:15,user,Login,Successfully signed in
+2026-04-16 20:58:10,user,Login,Successfully signed in
+2026-04-16 21:04:01,user,Login,Successfully signed in
+2026-04-16 21:19:01,user,Login,Successfully signed in
+2026-04-16 21:24:11,user,Login,Successfully signed in
+2026-04-16 21:24:31,user,Processing,File: fs_KeDe_2025_v1.docx (Lang: E)
