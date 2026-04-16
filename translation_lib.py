@@ -1,23 +1,42 @@
 import pandas as pd
 import os
 import re
+import json
 
-DICTIONARY_FILE = "General.xlsx"
+# Use absolute path for Streamlit Cloud compatibility
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DICTIONARY_FILE = os.path.join(BASE_DIR, "dictionary.json")
 
 def load_dictionary():
     """
-    Loads the General.xlsx file and returns it as a DataFrame.
+    Loads the dictionary.json file and returns it as a DataFrame.
     """
     if os.path.exists(DICTIONARY_FILE):
         try:
-            df = pd.read_excel(DICTIONARY_FILE)
-            # Remove rows where Vietnamese is null
-            df = df.dropna(subset=['Vietnamese'])
+            # Read JSON and return as DataFrame
+            df = pd.read_json(DICTIONARY_FILE, encoding='utf-8')
+            if not df.empty:
+                 # Remove rows where Vietnamese is null
+                 df = df.dropna(subset=['Vietnamese'])
             return df
         except Exception as e:
             print(f"Error loading dictionary: {e}")
             return None
     return None
+
+def save_dictionary(df):
+    """
+    Saves a DataFrame to dictionary.json.
+    """
+    try:
+        # Convert to records and save as JSON
+        data = df.to_dict(orient='records')
+        with open(DICTIONARY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        return True
+    except Exception as e:
+        print(f"Error saving dictionary: {e}")
+        return False
 
 def get_translation_map(df, target_lang):
     """

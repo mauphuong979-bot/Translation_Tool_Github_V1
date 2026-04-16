@@ -154,28 +154,58 @@ with st.sidebar:
     st.divider()
     st.markdown("### 📚 Dictionary Management")
     
+    DICT_PATH = tl.DICTIONARY_FILE
+    
     # Download current dictionary
-    if os.path.exists("General.xlsx"):
-        with open("General.xlsx", "rb") as f:
-            st.download_button(
-                label="📥 Download General.xlsx",
-                data=f,
-                file_name="General.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True
-            )
+    if os.path.exists(DICT_PATH):
+        # We provide it as Excel for user convenience when downloading
+        try:
+             df_current = tl.load_dictionary()
+             output_excel = io.BytesIO()
+             with pd.ExcelWriter(output_excel, engine='openpyxl') as writer:
+                 df_current.to_excel(writer, index=False)
+             excel_data = output_excel.getvalue()
+             
+             st.download_button(
+                 label="📥 Download Dictionary (Excel)",
+                 data=excel_data,
+                 file_name="General_Dictionary.xlsx",
+                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                 use_container_width=True
+             )
+             
+             # Also provide raw JSON for developers/GitHub sync
+             with open(DICT_PATH, "rb") as f:
+                 st.download_button(
+                     label="📄 Download Dictionary (JSON)",
+                     data=f,
+                     file_name="dictionary.json",
+                     mime="application/json",
+                     use_container_width=True
+                 )
+        except Exception as e:
+             st.error(f"Error preparing download: {e}")
     else:
-        st.warning("General.xlsx not found.")
+        st.warning("Dictionary file not found on server.")
         
     # Upload new dictionary
-    new_dict = st.file_uploader("Replace General.xlsx", type=["xlsx"], key="dict_upload")
+    st.markdown("#### Replace Dictionary")
+    new_dict = st.file_uploader("Upload .xlsx or .json", type=["xlsx", "json"], key="dict_upload")
     if new_dict:
         if st.button("🔄 Update Dictionary", use_container_width=True):
             try:
-                with open("General.xlsx", "wb") as f:
-                    f.write(new_dict.getbuffer())
+                if new_dict.name.endswith('.xlsx'):
+                    df_new = pd.read_excel(new_dict)
+                    tl.save_dictionary(df_new)
+                else:
+                    # Save JSON directly
+                    import json
+                    content = json.load(new_dict)
+                    with open(DICT_PATH, 'w', encoding='utf-8') as f:
+                        json.dump(content, f, ensure_ascii=False, indent=4)
+                
                 st.success("Dictionary updated successfully!")
-                log_event(st.session_state.username, "Dictionary", "Updated General.xlsx")
+                log_event(st.session_state.username, "Dictionary", f"Updated from {new_dict.name}")
                 st.rerun()
             except Exception as e:
                 st.error(f"Error updating dictionary: {e}")
@@ -231,7 +261,7 @@ if uploaded_file:
                 st.warning(f"Column '{target_col}' not found in dictionary.")
                 st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', 'Translation'])
         else:
-            st.error("Could not load Dictionary (General.xlsx).")
+            st.error("Could not load Dictionary (dictionary.json).")
             st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', 'Translation'])
 
     # Data Editor for the dictionary
