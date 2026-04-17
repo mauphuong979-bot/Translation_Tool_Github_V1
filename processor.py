@@ -3,7 +3,7 @@ from docx import Document
 import io
 import translation_lib as tl
 
-def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=100, target_col="E"):
+def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=30, target_col="E"):
     """
     Processes the financial report by applying metadata and global translations.
     """
