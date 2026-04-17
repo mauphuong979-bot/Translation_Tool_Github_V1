@@ -140,6 +140,21 @@ if not st.session_state.authenticated:
     st.stop()
 
 # App UI (Authenticated Only)
+# Load Initial Metadata from Dictionary.xlsx if not already loaded
+if 'metadata_loaded' not in st.session_state:
+    try:
+        init_metadata, init_df = tl.load_excel_dictionary()
+        if init_metadata:
+            st.session_state.meta_name_lc = init_metadata.get("name_vn", "")
+            st.session_state.meta_name_cap = init_metadata.get("name_trans", "")
+            st.session_state.meta_year_end = init_metadata.get("year_end", "")
+            st.session_state.meta_date = init_metadata.get("report_date", "")
+            st.session_state.meta_period_full = init_metadata.get("period_out", "")
+            st.session_state.meta_period_short = init_metadata.get("period_in", "")
+            st.session_state.metadata_loaded = True
+    except Exception as e:
+        st.error(f"Error loading initial metadata: {e}")
+
 st.markdown('<div class="app-logo">📄</div>', unsafe_allow_html=True)
 st.markdown('<div class="main-header">Financial Statements Processor</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">Automated analysis and formatting of Word-based financial statements</div>', unsafe_allow_html=True)
@@ -158,31 +173,18 @@ with st.sidebar:
     
     # Download current dictionary
     if os.path.exists(DICT_PATH):
-        # We provide it as Excel for user convenience when downloading
         try:
-             df_current = tl.load_dictionary()
-             output_excel = io.BytesIO()
-             with pd.ExcelWriter(output_excel, engine='openpyxl') as writer:
-                 df_current.to_excel(writer, index=False)
-             excel_data = output_excel.getvalue()
+             # Provide the ACTUAL file from DICT_PATH to preserve metadata/formulas
+             with open(DICT_PATH, "rb") as f:
+                 excel_data = f.read()
              
              st.download_button(
                  label="📥 Download Dictionary (Excel)",
                  data=excel_data,
-                 file_name="General_Dictionary.xlsx",
+                 file_name="Dictionary.xlsx",
                  mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                  use_container_width=True
              )
-             
-             # Also provide raw JSON for developers/GitHub sync
-             with open(DICT_PATH, "rb") as f:
-                 st.download_button(
-                     label="📄 Download Dictionary (JSON)",
-                     data=f,
-                     file_name="dictionary.json",
-                     mime="application/json",
-                     use_container_width=True
-                 )
         except Exception as e:
              st.error(f"Error preparing download: {e}")
     else:
@@ -190,21 +192,25 @@ with st.sidebar:
         
     # Upload new dictionary
     st.markdown("#### Replace Dictionary")
-    new_dict = st.file_uploader("Upload .xlsx or .json", type=["xlsx", "json"], key="dict_upload")
+    new_dict = st.file_uploader("Upload .xlsx", type=["xlsx"], key="dict_upload")
     if new_dict:
         if st.button("🔄 Update Dictionary", use_container_width=True):
             try:
-                if new_dict.name.endswith('.xlsx'):
-                    df_new = pd.read_excel(new_dict)
-                    tl.save_dictionary(df_new)
-                else:
-                    # Save JSON directly
-                    import json
-                    content = json.load(new_dict)
-                    with open(DICT_PATH, 'w', encoding='utf-8') as f:
-                        json.dump(content, f, ensure_ascii=False, indent=4)
+                # Save the uploaded file directly to DICT_PATH
+                with open(DICT_PATH, "wb") as f:
+                    f.write(new_dict.getbuffer())
                 
-                st.success("Dictionary updated successfully!")
+                # Reload metadata into session state after upload
+                new_meta, _ = tl.load_excel_dictionary()
+                if new_meta:
+                    st.session_state.meta_name_lc = new_meta.get("name_vn", "")
+                    st.session_state.meta_name_cap = new_meta.get("name_trans", "")
+                    st.session_state.meta_year_end = new_meta.get("year_end", "")
+                    st.session_state.meta_date = new_meta.get("report_date", "")
+                    st.session_state.meta_period_full = new_meta.get("period_out", "")
+                    st.session_state.meta_period_short = new_meta.get("period_in", "")
+                
+                st.success("Dictionary uploaded and synchronized!")
                 log_event(st.session_state.username, "Dictionary", f"Updated from {new_dict.name}")
                 st.rerun()
             except Exception as e:
@@ -244,41 +250,37 @@ st.info("📂 **Upload Financial Statements**")
 uploaded_file = st.file_uploader("Select file (.docx)", type=["docx"], key="report_file")
 
 if uploaded_file:
-    # Load and Prepare Dictionary for Review
-    st.markdown("### 🔍 Dictionary Review & Edit")
-    st.info("Review and modify the translations before applying them to the document.")
+    # 1. Action Buttons (Formerly at the bottom)
+    col_process_1, col_process_2 = st.columns([1, 2])
+    with col_process_1:
+        process_btn = st.button("🚀 Process Report", use_container_width=True, type="primary")
     
-    if 'current_dict' not in st.session_state or st.session_state.get('last_uploaded') != uploaded_file.name:
-        dict_df = tl.load_dictionary()
-        if dict_df is not None:
-            # We only show the Vietnamese and the target language column
-            target_col = st.session_state.meta_translate
-            if target_col in dict_df.columns:
-                display_df = dict_df[['Vietnamese', target_col]].dropna().copy()
-                st.session_state.current_dict = display_df
-                st.session_state.last_uploaded = uploaded_file.name
-            else:
-                st.warning(f"Column '{target_col}' not found in dictionary.")
-                st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', 'Translation'])
-        else:
-            st.error("Could not load Dictionary (dictionary.json).")
-            st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', 'Translation'])
-
-    # Data Editor for the dictionary
-    edited_dict = st.data_editor(
-        st.session_state.current_dict,
-        num_rows="dynamic",
-        use_container_width=True,
-        key="dict_editor",
-        hide_index=True
-    )
-    
-    if st.button("🚀 Process Report"):
+    if process_btn:
         with st.spinner("Processing report..."):
             try:
-                # Prepare translation map from edited dictionary
+                # Prepare selection
                 target_col = st.session_state.meta_translate
-                translation_map = dict(zip(edited_dict['Vietnamese'], edited_dict[target_col]))
+
+                # 0. Sync Metadata to Dictionary.xlsx before processing (includes formula recalculation)
+                meta_to_save = {
+                    "name_vn": st.session_state.meta_name_lc,
+                    "name_trans": st.session_state.meta_name_cap,
+                    "year_end": st.session_state.meta_year_end,
+                    "report_date": st.session_state.meta_date,
+                    "period_out": st.session_state.meta_period_full,
+                    "period_in": st.session_state.meta_period_short
+                }
+                tl.save_excel_metadata(meta_to_save)
+                
+                # Reload dictionary into session state to get recalculated formula results
+                _, refreshed_df = tl.load_excel_dictionary()
+                if refreshed_df is not None:
+                    # Sync UI view with latest calculations
+                    display_df = refreshed_df[['Vietnamese', target_col]].dropna().copy()
+                    st.session_state.current_dict = display_df
+
+                # Prepare translation map from the ENTIRE current dictionary in session state
+                translation_map = dict(zip(st.session_state.current_dict['Vietnamese'], st.session_state.current_dict[target_col]))
                 
                 # Prepare metadata (with normalization/cleaning)
                 metadata = {
@@ -291,18 +293,15 @@ if uploaded_file:
                     "Period (in table)": tl.clean_text(st.session_state.meta_period_short)
                 }
                 
-                # Call processing logic with the edited dictionary map
+                # Call processing logic
                 processed_file, msg = process_financial_report(uploaded_file, metadata=metadata, translation_map=translation_map)
                 
                 if processed_file:
                     st.success(msg)
-                    
-                    # Log event
                     log_event(st.session_state.username, "Processing", f"File: {uploaded_file.name} (Lang: {target_col})")
                     
                     st.divider()
                     st.subheader("Results")
-                    
                     st.download_button(
                         label="📥 Download Processed Report (.docx)",
                         data=processed_file,
@@ -311,9 +310,92 @@ if uploaded_file:
                     )
                 else:
                     st.error(msg)
-                
             except Exception as e:
                 st.error(f"An error occurred during processing: {str(e)}")
+
+    st.divider()
+
+    # 2. Dictionary Review & Search
+    st.markdown("### 🔍 Dictionary Review & Edit")
+    st.info("Review and modify the translations before applying them to the document.")
+    
+    # Load dictionary if needed
+    if 'current_dict' not in st.session_state or st.session_state.get('last_uploaded') != uploaded_file.name:
+        dict_df = tl.load_dictionary()
+        if dict_df is not None:
+            target_col = st.session_state.meta_translate
+            if target_col in dict_df.columns:
+                display_df = dict_df[['Vietnamese', target_col]].dropna().copy()
+                st.session_state.current_dict = display_df
+                st.session_state.last_uploaded = uploaded_file.name
+            else:
+                st.warning(f"Column '{target_col}' not found in dictionary.")
+                st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', target_col])
+        else:
+            st.error("Could not load Dictionary (Dictionary.xlsx).")
+            # Fallback column name
+            st.session_state.current_dict = pd.DataFrame(columns=['Vietnamese', st.session_state.meta_translate])
+
+    # Search Logic
+    search_query = st.text_input("🔍 Search Keyword (in Vietnamese or Translation)", placeholder="Search...", key="dict_search")
+    
+    target_col = st.session_state.meta_translate
+    
+    if search_query:
+        # Filter rows that contain the search query in either column
+        filtered_df = st.session_state.current_dict[
+            st.session_state.current_dict['Vietnamese'].str.contains(search_query, case=False, na=False) |
+            st.session_state.current_dict[target_col].str.contains(search_query, case=False, na=False)
+        ]
+    else:
+        filtered_df = st.session_state.current_dict
+
+    # Data Editor
+    edited_view = st.data_editor(
+        filtered_df,
+        num_rows="dynamic",
+        use_container_width=True,
+        key="dict_editor",
+        hide_index=False # Kept index visible to ensure consistent updates if needed
+    )
+    
+    # Update the master dictionary in session state with the edited rows
+    if search_query:
+        st.session_state.current_dict.update(edited_view)
+    else:
+        st.session_state.current_dict = edited_view
+
+    # Add Save Button for Dictionary Edits
+    if st.button("💾 Save Dictionary Changes to Excel", use_container_width=True):
+        try:
+            # Load full dictionary to merge changes
+            _, full_df = tl.load_excel_dictionary()
+            target_col = st.session_state.meta_translate
+            
+            # Merge edited view back into full_df
+            # Note: This simple merge assumes 'Vietnamese' is unique
+            for idx, row in st.session_state.current_dict.iterrows():
+                full_df.loc[full_df['Vietnamese'] == row['Vietnamese'], target_col] = row[target_col]
+            
+            # Save metadata and merged df
+            meta_to_save = {
+                "name_vn": st.session_state.meta_name_lc,
+                "name_trans": st.session_state.meta_name_cap,
+                "year_end": st.session_state.meta_year_end,
+                "report_date": st.session_state.meta_date,
+                "period_out": st.session_state.meta_period_full,
+                "period_in": st.session_state.meta_period_short
+            }
+            tl.save_excel_metadata(meta_to_save, full_df)
+            st.success("Changes saved and formulas recalculated in Dictionary.xlsx!")
+            log_event(st.session_state.username, "Dictionary", "Saved manual edits and recalculated formulas")
+            
+            # Force reload to show updated formula results
+            if 'current_dict' in st.session_state:
+                del st.session_state.current_dict
+            st.rerun()
+        except Exception as e:
+            st.error(f"Error saving changes: {e}")
 else:
     st.info("Please upload a Word document to start processing.")
 

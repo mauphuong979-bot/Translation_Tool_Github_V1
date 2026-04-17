@@ -1,0 +1,322 @@
+Inspecting Formulas in Rows 6-64:
+
+Cell A6: =UPPER($A$12)
+Cell B6: =UPPER(B12)
+Cell C6: =UPPER(C12)
+Cell D6: =UPPER(D12)
+Cell A7: ="Báo cáo tài chính cho năm tài chính kết thúc "&$A$14
+Cell B7: ="Financial statements for the year ended "&$B$13
+Cell C7: ="截至"&$C$13&"止财务年度"&"的财务报表"
+Cell D7: ="截至"&$D$13&"止財務年度之財務報表"
+Cell A8: =IF($A$16<>"","Báo cáo tài chính cho giai đoạn "&$A$16,"")
+Cell B8: ="Financial statements for the period "&$B$16
+Cell C8: =$C$16&"期间"&"的财务报表"
+Cell D8: =$D$16&"期間的財務報表"
+Cell A9: =IF($A$16<>"","Báo cáo tài chính cho giai đoạn "&$A$17,"")
+Cell B9: =B8
+Cell C9: =C8
+Cell D9: =D8
+Cell A10: =IF($A$16="","Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại "&$A$14&", cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày,"&" phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.","")
+Cell B10: ="In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at "&$B$13&", and its financial performance and its cash flows for the year then ended in accordance with Vietnamese Accounting Standards, Vietnamese"&" enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam."
+Cell C10: ="依本会计师的意见，上开财务报表在所有重大方面已真实、公允地反映公司在"&$C$13&"财务状况以及同日结束财务年度的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。"
+Cell D10: ="依本會計師之意見，上開財務報表在所有重大方面已真實、公允地反映公司於"&$D$13&"財務狀況以及同日結束財務年度之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
+Cell A11: =IF($A$16<>"","Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại "&$A$14&", cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho giai đoạn "&$A$16&","&" phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.","")
+Cell B11: ="In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at "&$B$13&", and its financial performance and its cash flows for the period "&B16&" in accordance with Vietnamese Accounting Standards, Vietnamese"&" enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam."
+Cell C11: ="依本会计师的意见，上开财务报表在所有重大方面已真实、公允地反映公司在"&$C$13&"财务状况以及"&$C$16&"期间的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。"
+Cell D11: ="依本會計師之意見，上開財務報表在所有重大方面已真實、公允地反映公司於"&$D$13&"財務狀況以及"&$C$16&"期間之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
+Cell A12: =A1
+Cell B12: =$B$1
+Cell C12: =$B$1
+Cell D12: =$B$1
+Cell A13: ="Ngày "&TEXT(DAY(C1),"00")&" tháng "&TEXT(MONTH(C1),"00")&" năm "&YEAR(C1)
+Cell B13: =TEXT(C1, "mmmm dd, yyyy")
+Cell C13: =YEAR($C$1)&"年"&TEXT(MONTH($C$1),"00")&"月"&TEXT(DAY($C$1),"00")&"日"
+Cell D13: =YEAR($C$1)&"年"&TEXT(MONTH($C$1),"00")&"月"&TEXT(DAY($C$1),"00")&"日"
+Cell A14: =LOWER(A13)
+Cell B14: =B13
+Cell C14: =$C$13
+Cell D14: =$D$13
+Cell A15: =UPPER(A13)
+Cell B15: =UPPER(B13)
+Cell C15: =$C$13
+Cell D15: =$D$13
+Cell A16: =IF(General!$A$2<>"",General!A2,"")
+Cell B16: =IF(TRIM(A16)="","","from "&
+TEXT(DATE(
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),
+             SEARCH(" năm ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" năm "),4)),
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),
+             SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" tháng "),
+             SEARCH(" năm ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))-
+             (SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" tháng ")))),
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),
+             SEARCH("ngày ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN("ngày "),
+             SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))-
+             (SEARCH("ngày ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN("ngày "))))
+),"mmmm dd, yyyy")
+& " to " &
+TEXT(DATE(
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),
+             SEARCH(" năm ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" năm "),4)),
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),
+             SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" tháng "),
+             SEARCH(" năm ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))-
+             (SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" tháng ")))),
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),
+             SEARCH("ngày ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN("ngày "),
+             SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))-
+             (SEARCH("ngày ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN("ngày "))))
+),"mmmm dd, yyyy"))
+Cell C16: =IF(TRIM(A16)="","","自"&
+TEXT(DATE(
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),SEARCH(" năm ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" năm "),4)),
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" tháng "),SEARCH(" năm ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))-(SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN(" tháng ")))),
+  VALUE(MID(TRIM(LEFT(A16,SEARCH("đến",A16)-1)),SEARCH("ngày ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN("ngày "),SEARCH(" tháng ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))-(SEARCH("ngày ",TRIM(LEFT(A16,SEARCH("đến",A16)-1)))+LEN("ngày "))))
+),"yyyy年mm月dd日")
+& "至" &
+TEXT(DATE(
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),SEARCH(" năm ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" năm "),4)),
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" tháng "),SEARCH(" năm ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))-(SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN(" tháng ")))),
+  VALUE(MID(TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))),SEARCH("ngày ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN("ngày "),SEARCH(" tháng ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))-(SEARCH("ngày ",TRIM(MID(A16,SEARCH("đến",A16)+LEN("đến"),LEN(A16))))+LEN("ngày "))))
+),"yyyy年mm月dd日"))
+Cell D16: =Table13474[[#This Row],[Hs]]
+Cell A17: =IF($A$16<>"","từ ngày "&TEXT(DATE(
+VALUE(MID($A$16,FIND("năm ",$A$16)+4,4)),
+VALUE(MID($A$16,FIND("tháng ",$A$16)+6,FIND(" năm",$A$16)-(FIND("tháng ",$A$16)+6))),
+VALUE(MID($A$16,FIND("ngày ",$A$16)+5,FIND(" tháng",$A$16)-(FIND("ngày ",$A$16)+5)))
+),"dd/mm/yyyy")
+&" đến ngày "&TEXT(DATE(
+VALUE(MID($A$16,FIND("năm ",$A$16,FIND("đến",$A$16))+4,4)),
+VALUE(MID($A$16,FIND("tháng ",$A$16,FIND("đến",$A$16))+6,FIND(" năm",$A$16,FIND("đến",$A$16))-(FIND("tháng ",$A$16,FIND("đến",$A$16))+6))),
+VALUE(MID($A$16,FIND("ngày ",$A$16,FIND("đến",$A$16))+5,FIND(" tháng",$A$16,FIND("đến",$A$16))-(FIND("ngày ",$A$16,FIND("đến",$A$16))+5)))
+),"dd/mm/yyyy"),"")
+Cell B17: =B16
+Cell C17: =C16
+Cell D17: =D16
+Cell A18: =IF(General!$A$3<>"",General!$A$3,"")
+Cell B18: =IF(Table13474[[#This Row],[Vietnamese]]<>"","From " & TEXT(
+  DATE( VALUE(RIGHT(MID($A$18,4,10),4)),
+        VALUE(MID(MID($A$18,4,10),4,2)),
+        VALUE(LEFT(MID($A$18,4,10),2)) ),
+  "[$-en-US]mmm dd, yyyy"
+)
+& " to " &
+TEXT(
+  DATE( VALUE(RIGHT(MID($A$18,19,10),4)),
+        VALUE(MID(MID($A$18,19,10),4,2)),
+        VALUE(LEFT(MID($A$18,19,10),2)) ),
+  "[$-en-US]mmm dd, yyyy"
+),"")
+Cell C18: =IF(Table13474[[#This Row],[Vietnamese]]<>"","自" & TEXT(
+  DATE( VALUE(RIGHT(MID($A$18,4,10),4)),
+        VALUE(MID(MID($A$18,4,10),4,2)),
+        VALUE(LEFT(MID($A$18,4,10),2)) ),
+  "yyyy/mm/dd"
+) & "日至" &
+TEXT(
+  DATE( VALUE(RIGHT(MID($A$18,19,10),4)),
+        VALUE(MID(MID($A$18,19,10),4,2)),
+        VALUE(LEFT(MID($A$18,19,10),2)) ),
+  "yyyy/mm/dd"
+) & "日","")
+Cell D18: =Table13474[[#This Row],[Hs]]
+Cell B19: =IF(Table13474[[#This Row],[Vietnamese]]<>"","From " & TEXT(
+  DATE( VALUE(RIGHT(MID($A$19,4,10),4)),
+        VALUE(MID(MID($A$19,4,10),4,2)),
+        VALUE(LEFT(MID($A$19,4,10),2)) ),
+  "[$-en-US]mmm dd, yyyy"
+)
+& " to " &
+TEXT(
+  DATE( VALUE(RIGHT(MID($A$19,19,10),4)),
+        VALUE(MID(MID($A$19,19,10),4,2)),
+        VALUE(LEFT(MID($A$19,19,10),2)) ),
+  "[$-en-US]mmm dd, yyyy"
+),"")
+Cell C19: =IF(Table13474[[#This Row],[Vietnamese]]<>"","自" & TEXT(
+  DATE( VALUE(RIGHT(MID($A$19,4,10),4)),
+        VALUE(MID(MID($A$19,4,10),4,2)),
+        VALUE(LEFT(MID($A$19,4,10),2)) ),
+  "yyyy/mm/dd"
+) & "日至" &
+TEXT(
+  DATE( VALUE(RIGHT(MID($A$19,19,10),4)),
+        VALUE(MID(MID($A$19,19,10),4,2)),
+        VALUE(LEFT(MID($A$19,19,10),2)) ),
+  "yyyy/mm/dd"
+) & "日","")
+Cell D19: =Table13474[[#This Row],[Hs]]
+Cell A20: ="Tại "&A14
+Cell B20: ="As at "&B13
+Cell C20: ="于"&$C$13
+Cell D20: ="於"&$D$13
+Cell A21: ="Cho năm tài chính kết thúc "&$A$14
+Cell B21: ="For the year ended "&$B$13
+Cell C21: ="截至"&$C$14&"止财务年度"
+Cell D21: ="截至"&$D$14&"止財務年度"
+Cell A22: ="cho năm tài chính kết thúc "&$A$14
+Cell B22: ="for the year ended "&$B$13
+Cell C22: =C21
+Cell D22: =D21
+Cell A23: =IF($A$16<>"","Cho giai đoạn "&$A$16,"")
+Cell B23: ="For the period "&$B$16
+Cell C23: =$C$16&"期间"
+Cell D23: =$D$16&"期間"
+Cell A24: =IF($A$16<>"","Cho giai đoạn "&$A$17,"")
+Cell B24: =B23
+Cell C24: =C23
+Cell D24: =D23
+Cell A25: =IF($A$16<>"","cho giai đoạn "&$A$16,"")
+Cell B25: ="for the period "&$B$16
+Cell C25: =C23
+Cell D25: =D23
+Cell A26: =IF($A$16<>"","cho giai đoạn "&$A$17,"")
+Cell B26: =B25
+Cell C26: =C25
+Cell D26: =D25
+Cell A27: ="Ngày "&IF(ISERROR(TEXT(DAY($D$1),"00")),LEFT($D$1,2),TEXT(DAY($D$1),"00"))&" tháng "&IF(ISERROR(TEXT(MONTH($D$1),"00")),MID($D$1,4,2),TEXT(MONTH($D$1),"00"))&" năm "&IF(ISERROR(YEAR($D$1)),RIGHT($D$1,4),YEAR($D$1))
+Cell B27: =TEXT(D1,"mmmm dd, yyyy")
+Cell C27: =IF(ISERROR(YEAR($D$1)&"年"&TEXT(MONTH($D$1),"00")&"月"&TEXT(DAY($D$1),"00")&"日"),"2025年XX月XX日",YEAR($D$1)&"年"&TEXT(MONTH($D$1),"00")&"月"&TEXT(DAY($D$1),"00")&"日")
+Cell D27: =IF(ISERROR(YEAR($D$1)&"年"&TEXT(MONTH($D$1),"00")&"月"&TEXT(DAY($D$1),"00")&"日"),"2025年XX月XX日",YEAR($D$1)&"年"&TEXT(MONTH($D$1),"00")&"月"&TEXT(DAY($D$1),"00")&"日")
+Cell A28: =LOWER(A27)
+Cell B28: =B27
+Cell C28: =C27
+Cell D28: =D27
+Cell B29: =B12
+Cell C29: =C12
+Cell D29: =D12
+Cell B30: =B13
+Cell C30: =C13
+Cell D30: =D13
+Cell B31: =YEAR($C$1)
+Cell C31: =YEAR($C$1)
+Cell D31: =YEAR($C$1)
+Cell B32: =B27
+Cell C32: =C27
+Cell D32: =D27
+Cell A33: ="CHO NĂM TÀI CHÍNH KẾT THÚC "&A15
+Cell B33: ="FOR THE YEAR ENDED "&B15
+Cell C33: ="截至"&$C$13&"止财务年度"
+Cell D33: ="截至"&$D$13&"止財務年度"
+Cell A34: =UPPER(A23)
+Cell B34: =UPPER(B23)
+Cell C34: =C23
+Cell D34: =D23
+Cell A35: =UPPER(A24)
+Cell B35: =B34
+Cell C35: =C34
+Cell D35: =D34
+Cell A36: ="Công ty TNHH Kiểm toán U&I đã kiểm toán Báo cáo tài chính "&$A$22&" và bày tỏ nguyện vọng tiếp tục được bổ nhiệm làm kiểm toán viên cho Công ty."
+Cell B36: ="The auditors, U&I Auditing Company Limited, have performed audit on the Company’s financial statements "&$B$22&" and have expressed their willingness to accept reappointment."
+Cell C36: ="U&I审计有限公司已经审计公司"&$C$22&"的财务报表，并表示期望能继续获委任为公司的会计师。"
+Cell D36: ="U&I審計有限公司業已查核公司"&$D$22&"之財務報表，並表示期望能繼續獲委任為公司會計師。"
+Cell A37: =IF($A$16<>"","Công ty TNHH Kiểm toán U&I đã kiểm toán Báo cáo tài chính "&$A$25&" và bày tỏ nguyện vọng tiếp tục được bổ nhiệm làm kiểm toán viên cho Công ty.","")
+Cell B37: ="The auditors, U&I Auditing Company Limited, have performed audit on the Company’s financial statements "&$B$25&" and have expressed their willingness to accept reappointment."
+Cell C37: ="U&I审计有限公司已经审计公司"&$C$25&"的财务报表，并表示期望能继续获委任为公司的会计师。"
+Cell D37: ="U&I審計有限公司業已查核公司"&$D$25&"之財務報表，並表示期望能繼續獲委任為公司會計師。"
+Cell A38: ="Chi phí thuế thu nhập doanh nghiệp cho năm tài chính kết thúc "&$A$14&" được tính trên thu nhập tính thuế ước tính. Chi phí thuế thu nhập doanh nghiệp này sẽ được cơ quan thuế xác định lại thông qua các cuộc kiểm tra."
+Cell B38: ="Corporate income tax expense for the year ended "&$B$13&" is calculated on the estimated assessable income. Corporate income tax expense will be determined again by the tax authority through their tax reviews. "
+Cell C38: ="截至"&$C$13&"止财务年度的企业所得税费用，在预估应纳税所得额基础上计算。企业所得税费用将由税务机关通过税务稽查重新核定。"
+Cell D38: ="截至"&$D$13&"止財務年度之企業所得稅費用，在預估應納稅所得額基礎上計算。企業所得稅費用將由稅務機關通過稅務稽查重新核定。"
+Cell A39: =IF($A$16<>"","Chi phí thuế thu nhập doanh nghiệp "&$A$25&" được tính trên thu nhập tính thuế ước tính. Chi phí thuế thu nhập doanh nghiệp này sẽ được cơ quan thuế xác định lại thông qua các cuộc kiểm tra.","")
+Cell B39: ="Corporate income tax expense  "&$B$25&" is calculated on the estimated assessable income. Corporate income tax expense will be determined again by the tax authority through their tax reviews. "
+Cell C39: =$C$25&"的企业所得税费用，在预估应纳税所得额基础上计算。企业所得税费用将由税务机关通过税务稽查重新核定。"
+Cell D39: =$D$25&"的企業所得稅費用，在預估應納稅所得額基礎上計算。企業所得稅費用將由稅務機關通過稅務稽查重新核定。"
+Cell A40: ="Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong năm "&YEAR($C$1)&"."
+Cell B40: ="Therefore, no deferred corporate income tax expense is provided in the year "&YEAR($C$1)&"."
+Cell C40: ="据此，并无递延所得税费用在"&YEAR($C$1)&"年度内得以认列。"
+Cell D40: ="據此，並無遞延所得稅費用於"&YEAR($C$1)&"年度內得以認列。"
+Cell A41: =IF($A$16<>"","Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận cho giai đoạn "&$A$16&".","")
+Cell B41: ="Therefore, no deferred corporate income tax expense is provided in the period "&$B$16&"."
+Cell C41: ="据此，并无递延所得税费用"&$C$16&"期间内得以认列。"
+Cell D41: ="據此，並無遞延所得稅費用"&$D$16&"期間內得以認列。"
+Cell A42: =IF($A$16<>"","Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong giai đoạn "&$A$16&".","")
+Cell B42: =B41
+Cell C42: =C41
+Cell D42: =D41
+Cell A43: ="Trong năm tài chính kết thúc "&$A$14&", Công ty có các nghiệp vụ kinh tế quan trọng với các bên liên quan được trình bày ở bảng sau:"
+Cell B43: ="In the year ended "&$B$13&", the Company entered into significant economic transactions with its related parties as shown in the following table:"
+Cell C43: ="在截止"&$C$13&"财务年度之内，公司与其关联方发生重大经济交易，其列示在下表："
+Cell D43: ="在截止"&$D$13&"財務年度之內，公司與其關聯方發生重大經濟交易，其列示於下表："
+Cell A44: =IF($A$16<>"","Trong giai đoạn "&$A$16&", Công ty có các nghiệp vụ kinh tế quan trọng với các bên liên quan được trình bày ở bảng sau:","")
+Cell B44: ="In the period "&B16&", the Company entered into significant economic transactions with its related parties as shown in the following table:"
+Cell C44: =$C$16&"期间，公司与其关联方发生重大经济交易，其列示在下表："
+Cell D44: =$D$16&"期間，公司與其關聯方發生重大經濟交易，其列示於下表："
+Cell A45: ="Trong năm tài chính kết thúc "&$A$14&", Công ty có các nghiệp vụ kinh tế quan trọng và các khoản phải thu, phải trả với các bên liên quan được trình bày ở bảng sau"
+Cell B45: ="In the year ended "&$B$13&", the Company entered into significant economic transactions, receivables and payables with its related parties as shown in the following table"
+Cell C45: ="在截止"&$C$13&"财务年度之内，公司与其关联方发生重大经济交易和各项应收、应付帐款，其列示在下表："
+Cell D45: ="在截止"&$D$13&"財務年度之內，公司與其關聯方發生重大經濟交易和各項應收、應付帳款，其列示於下表："
+Cell A46: =IF($A$16<>"","Trong giai đoạn "&$A$16&", Công ty có các nghiệp vụ kinh tế quan trọng và các khoản phải thu, phải trả với các bên liên quan được trình bày ở bảng sau:","")
+Cell B46: ="In the period "&$B$16&", the Company entered into significant economic transactions, receivables and payables with its related parties as shown in the following table"
+Cell C46: =$C$16&"期间，公司与其关联方发生重大经济交易和各项应收、应付帐款，其列示在下表："
+Cell D46: =$D$16&"期間，公司與其關聯方發生重大經濟交易和各項應收、應付帳款，其列示在下表："
+Cell A47: ="Trong năm tài chính kết thúc "&$A$14&", Công ty không phát sinh các nghiệp vụ kinh tế quan trọng với các bên liên quan."
+Cell B47: ="In the year ended "&$B$13&", the Company had no significant economic transactions with its related parties."
+Cell C47: ="在截止"&$C$13&"财务年度之内，公司与其关联方不发生重大经济交易。"
+Cell D47: ="在截止"&$D$13&"財務年度之內，公司與其關聯方不發生重大經濟交易。"
+Cell A48: =IF($A$16<>"","Trong giai đoạn "&$A$16&", Công ty không phát sinh các nghiệp vụ kinh tế quan trọng với các bên liên quan.","")
+Cell B48: ="In the period "&$B$16&", the Company had no significant economic transactions with its related parties."
+Cell C48: =$C$16&"期间，公司与其关联方不发生重大经济交易。"
+Cell D48: =$D$16&"期間，公司與其關聯方不發生重大經濟交易。"
+Cell A49: ="Báo cáo tài chính được phê duyệt bởi Tổng Giám đốc Công ty để phát hành vào "&$A$28&"."
+Cell B49: ="The financial statements were approved by General Director of the Company for issue on "&$B$27&"."
+Cell C49: ="本财务报表经由公司总经理批阅并在"&$C$27&"正式出具。"
+Cell D49: ="本財務報表業經公司總經理批閱並於"&$D$27&"正式出具。"
+Cell A50: ="Báo cáo tài chính được phê duyệt bởi Ban Giám đốc Công ty để phát hành vào "&$A$28&"."
+Cell B50: ="The financial statements were approved by the Board of Management of the Company for issue on "&$B$27&"."
+Cell C50: ="本财务报表经由公司管理阶层批阅并在"&$C$27&"正式出具。"
+Cell D50: ="本財務報表業經公司管理階層批閱並於"&$D$27&"正式出具。"
+Cell A51: ="Báo cáo tài chính được phê duyệt bởi Hội đồng Thành viên và Ban Giám đốc Công ty để phát hành vào "&$A$28&"."
+Cell B51: ="The financial statements were approved by the Board of Members and the Board of Management of the Company for issue on "&$B$27&"."
+Cell C51: ="本财务报表经由公司董事会及管理阶层批阅并在"&$C$27&"正式出具。"
+Cell D51: ="本財務報表業經公司董事會及管理階層批閱並於"&$D$27&"正式出具。"
+Cell A52: ="Báo cáo tài chính được phê duyệt bởi Giám đốc điều hành Công ty để phát hành vào "&$A$28&"."
+Cell B52: ="The financial statements were approved by Managing Director of the Company for issue on "&$B$27&"."
+Cell C52: ="本财务报表经由公司执行总监批阅并在"&$C$27&"正式出具。"
+Cell D52: ="本財務報表業經公司執行總監批閱並於"&$D$27&"正式出具。"
+Cell A53: ="Báo cáo tài chính được phê duyệt bởi Ban Tổng Giám đốc Công ty để phát hành vào "&$A$28&"."
+Cell B53: ="The financial statements were approved by the Board of General Directors of the Company for issue on "&$B$27&"."
+Cell C53: ="本财务报表经由公司管理阶层批阅并在"&$C$27&"正式出具。"
+Cell D53: ="本財務報表業經公司管理階層批閱並於"&$D$27&"正式出具。"
+Cell A54: ="Báo cáo tài chính được phê duyệt bởi Hội đồng Thành viên Công ty để phát hành vào "&$A$28&"."
+Cell B54: ="The financial statements were approved by the Board of Members of the Company for issue on "&$B$27&"."
+Cell C54: ="本财务报表经由公司董事会批阅并在"&$C$27&"正式出具。"
+Cell D54: ="本財務報表業經公司董事會批閱並於"&$D$27&"正式出具。"
+Cell A55: ="Báo cáo tài chính được phê duyệt bởi Giám đốc Công ty để phát hành vào "&$A$28&"."
+Cell B55: ="The financial statements were approved by Director of the Company for issue on "&$B$27&"."
+Cell C55: ="本财务报表经由公司经理批阅并在"&$C$27&"正式出具。"
+Cell D55: ="本財務報表業經公司經理批閱並於"&$D$27&"正式出具。"
+Cell A56: ="Báo cáo tài chính được phê duyệt bởi Chủ tịch Công ty để phát hành vào "&$A$28&"."
+Cell B56: ="The financial statements were approved by Chairman of the Company for issue on "&$B$27&"."
+Cell C56: ="本财务报表经由公司董事长批阅且在"&C$27&"正式出具。"
+Cell D56: ="本財務報表業經公司董事長批閱並於"&$D$27&"正式出具。"
+Cell A57: ="Báo cáo tài chính được phê duyệt bởi Hội đồng Quản trị Công ty để phát hành vào "&$A$28&"."
+Cell B57: ="The financial statements were approved by the Board of Directors of the Company for issue on "&$B$27&"."
+Cell C57: ="本财务报表经由公司董事会批阅并在"&C$27&"正式出具。"
+Cell D57: ="本財務報表業經公司董事會批閱並於"&$D$27&"正式出具。"
+Cell A58: ="Báo cáo tài chính được phê duyệt bởi Chủ sở hữu Công ty để phát hành vào "&$A$28&"."
+Cell B58: ="The financial statements were approved by Owner of the Company for issue on "&$B$27&"."
+Cell C58: ="本财务报表经由公司所有者批阅并在"&C27&"正式出具。"
+Cell D58: ="本財務報表業經公司所有者批閱並於"&D27&"正式出具。"
+Cell A59: ="Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế trong năm "&YEAR($C$1)&"."
+Cell B59: ="No provision for current corporate income tax expense has been provided as the Company has no taxable income arising in the year "&YEAR($C$1)&"."
+Cell C59: ="由于公司在"&YEAR($C$1)&"年度内无课税所得，所以公司不预提当期企业所得税费用。"
+Cell D59: ="由於公司於"&YEAR($C$1)&"年度內無課稅所得，所以公司不預提當期企業所得稅費用。"
+Cell A60: =IF($A$16<>"","Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế cho giai đoạn "&$A$16&".","")
+Cell B60: ="No provision for current corporate income tax expense has been provided as the Company has no taxable income arising in the period "&$B$16&"."
+Cell C60: ="由于公司"&$C$16&"期间无课税所得，所以公司不预提当期企业所得税费用。"
+Cell D60: ="由於公司"&$D$16&"期間無課稅所得，所以公司不預提當期企業所得稅費用。"
+Cell A61: =IF($A$16<>"","Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế trong giai đoạn "&$A$16&".","")
+Cell B61: =B60
+Cell C61: =C60
+Cell D61: =D60
+Cell A62: ="Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập tính thuế sau khi trừ chuyển lỗ trong năm "&YEAR($C$1)&"."
+Cell B62: ="No provision for current corporate income tax expense has been provided as the Company has no assessable income after deducting tax loss brought forward in the year "&YEAR($C$1)&"."
+Cell A63: =IF($A$16<>"","Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập tính thuế sau khi trừ chuyển lỗ cho giai đoạn "&$A$16&".","")
+Cell B63: ="No provision for current corporate income tax expense has been provided as the Company has no assessable income after deducting tax loss brought forward in the period "&$B$16&"."
+Cell C63: ="由于公司"&$C$16&"期间，经累计亏损抵减后无应纳税所得，所以公司不预提当期企业所得税费用。"
+Cell D63: ="由於公司"&$D$16&"期間，經累計虧損抵減後無應納稅所得，所以公司不預提當期企業所得稅費用。"
+Cell A64: ="Đến "&A14&", Công ty vẫn chưa tiến hành hoạt động sản xuất kinh doanh."
+Cell B64: ="As at "&B14&", the Company’s operation has yet to start."
+Cell C64: ="截至"&C14&"，公司尚未开始营运生产活动。"
+Cell D64: ="截至"&D14&"，公司尚未開始營運生產活動。"
