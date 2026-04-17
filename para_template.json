@@ -1,0 +1,172 @@
+{
+    "đệ trình báo cáo này cùng với": {
+        "E": "The members of the Board of Management/The members of the Board of Directors/General Director/Director/Chairman/Managing Director/chọn of [têncôngty] (“the Company”) presents-chọn-present this report and the Company’s audited financial statements for the year ended [ngàykếtthúcnăm].",
+        "Hs": "[têncôngty]（简称为“公司”）chọn-管理阶层呈上此报告及截至[ngàykếtthúcnăm]止财务年度【自年月日至年月日止阶段】的已经审计财务报表。",
+        "Ht": "[têncôngty]（簡稱為“公司”）chọn-管理階層呈上此報告及截至[ngàykếtthúcnăm]止財務年度【自年月日至年月日止階段】之業經查核之財務報表。"
+    },
+    "tuyên bố rằng": {
+        "E": "I, [tên] - General Director/Director/Chairman/Managing Director/-chọn, do hereby state that the accompanying financial statements have been properly drawn up in conformity with Vietnamese Accounting Standards and Vietnamese Enterprise Accounting System, and give a true and fair view of the financial position of the Company as at [ngàykếtthúcnăm] and of its results of operations and cash flows for the year then ended.",
+        "Hs": "本人，[tên] - 总经理【副总经理】【总经理授权人】声明，所附上财务报表得以正确地编制，符合《越南会计准则》及《越南企业会计制度》并真实、公允地反映公司在[ngàykếtthúcnăm]的财务状况和同日结束财务年度的经营成果及现金流量状况。",
+        "Ht": "本人，[tên] - 總經理【副總經理】【總經理授權人】聲明，所附上財務報表得以正確地編製，符合《越南會計準則》及《越南企業會計制度》並真實、公允地反映公司於[ngàykếtthúcnăm]之財務狀況和同日結束財務年度之經營成果及現金流量狀況。"
+    },
+    "Kính gửi:": {
+        "E": "To: The Board of Members/The Board of Directors/Owner and /General Director/Director/Chairman/Managing Director/-chọn of [têncôngty]",
+        "Hs": "[têncôngty]董事成员【管理阶层】【总经理/所有主】公鉴：",
+        "Ht": "[têncôngty]董事成員【董事會】【總經理】【所有主】公鑒："
+    },
+    "Chúng tôi đã kiểm toán Báo cáo tài chính kèm theo": {
+        "E": "We have audited the accompanying financial statements of [têncôngty] (“the Company”), approved on [ngàybáocáo], which comprise the balance sheet as at [ngàykếtthúcnăm], the related income statement, the cash flow statement for the year then ended, and the notes to the financial statements, as set out on pages [số] to [số].",
+        "Hs": "[têncôngty]（简称为“公司”）的财务报表，在[ngàybáocáo]编制，自第[số]页至第[số]页，包括[ngàykếtthúcnăm]的资产负债表，暨同日结束财务年度的利润表、现金流量表和财务报表附注，已经过本会计师查核竣事。",
+        "Ht": "[têncôngty]（簡稱為“公司”）之財務報表，於[ngàybáocáo]編製，自第[số]頁至第[số]頁，包括[ngàykếtthúcnăm]之資產負債表，暨同日結束財務年度之損益表、現金流量表及財務報表附註，業經本會計師查核竣事。"
+    },
+    "để đảm bảo cho số dư đầu năm": {
+        "E": "The opening balances (as at [số]) disclosed in the Balance sheet are based on the accounting figures as at [số] provided by the Company. We were not able to conduct necessary audit procedures to ensure such opening balances. As a result, we are not able to either evaluate the sufficiency and accuracy of the opening balances of items stated in the Balance sheet or make conclusion of potential influences to the Income statement and the Cash flow statement for the year ended [ngàykếtthúcnăm] due to potential impact on the opening balances of assets and liabilities.",
+        "Hs": "资产负债表中的年初余额（[số]余额）基于公司在[số]的会计数据。本会计师无法通过实施必要的查核程序对年初余额（金额为越南盾[số]）取得合理保证。因此，本会计师无法评估资产负债表项目的年初余额的充分性与准确性，且由于其对资产及负债项目的年初余额的隐形影响，而无法针对其对截至[ngàykếtthúcnăm]止财务年度的利润表和现金流量表的隐形影响作出结论。",
+        "Ht": "資產負債表中之年初餘額（[số]餘額）基於公司於[số]之會計數據。本會計師無法通過實施必要之查核程序對年初餘額（金額為美元/越南盾）取得合理保證。因此，本會計師無法評估資產負債表項目之年初餘額之充分性與準確性，且由於其對資產及負債項目之年初餘額之隱形影響，而無法針對其對截至[ngàykếtthúcnăm]止財務年度之損益表及現金流量表之隱形影響作出結論。"
+    },
+    "những hạn chế từ phía Công ty": {
+        "E": "We were not able to observe the count of cash fund as at [ngàykếtthúcnăm], nor as at [số] due to limitations of the Company. Even alternate audit procedures also did not provide us with sufficient appropriate audit evidences of balances of the cash fund as at the end of the current year and the prior year, of which the amounts disclosed in the Notes to the financial statements are VND [số] and VND [số] respectively. Due to influence of the aforesaid matters, we are unable to determine whether or not adjustments are required to the cash fund, the profit and the net cash flow disclosed in the Income statement. We were not able to observe the count of cash fund, inventories and fixed assets as at [ngàykếtthúcnăm] due to limitations of the Company. Owing to the nature of the Company’s records, we were unable to determine in respect of true and fair presentation the balances of cash fund, the quantities of inventories and fixed assets of which the amounts disclosed in the Balance sheet are VND [số], VND [số] and VND [số] respectively at that date by other audit procedures.",
+        "Hs": "由于查核范围受到限制，本会计师不能参加在[ngàykếtthúcnăm]及在[số]的库存现金监盘作业。本会计师亦无法通过实施其他查核程序对财务报表附注所列金额分别为越南盾[số]及越南盾[số]的库存现金本年年底余额及去年年底余额取得足够及适切的查核证据。由于上述事项的影响，本会计师无法确定应否对财务报表中的库存现金、年度净利及现金流量净额作出适当调整。由于查核范围受到限制，本会计师不能参加在[ngàykếtthúcnăm]的库存现金、存货及固定资产监盘作业。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证资产负债表所列金额分别为越南盾[số]、越南盾[số]及越南盾[số]的库存现金、存货数量、固定资产当日余额的真实、公允列报。",
+        "Ht": "由於查核範圍受到限制，本會計師不能參加於[ngàykếtthúcnăm]及於[số]之庫存現金監盤作業。本會計師亦無法通過實施其他查核程序對財務報表附註所列金額分別為{越南盾/美元}及{越南盾/美元}之庫存現金本年年底餘額及去年年底餘額取得足夠及適切之查核證據。由於上述事項之影響，本會計師無法確定應否對財務報表中之庫存現金、年度淨利及現金流量淨額作出適當調整。由於查核範圍受到限制，本會計師不能參加於[ngàykếtthúcnăm]之庫存現金、存貨及固定資產監盤作業。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證資產負債表所列金額分別為{越南盾/美元}、{越南盾/美元}及{越南盾/美元}之庫存現金、存貨數量、固定資產當日餘額之真實、公允列報。"
+    },
+    "chưa được bổ nhiệm làm kiểm toán": {
+        "E": "We were not able to observe the count of cash fund, inventories and fixed assets as at [ngàykếtthúcnăm] because we had not been assigned to be the Company’s auditor at that time. Owing to the nature of the Company’s records, we were unable to determine in respect of true and fair presentation the balances of cash fund, the quantities of inventories and fixed assets of which the amounts disclosed in the Balance sheet are VND [số] VND [số] and VND [số] respectively at that date by other audit procedures.",
+        "Hs": "由于本会计师当时未受托查核财务报表，所以我们不能参加观察在[ngàykếtthúcnăm]的库存现金、存货、固定资产盘点。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证资产负债表所列金额分别为越南盾[số]、越南盾[số]及越南盾[số]的库存现金、存货数量、固定资产当日余额的真实、公允列报。",
+        "Ht": "由於本會計師當時未受託查核財務報表，所以我們不能參加觀察於[ngàykếtthúcnăm]之庫存現金、存貨、固定資產盤點。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證資產負債表所列金額分別為{越南盾/美元}、{越南盾/美元}及{越南盾/美元}之庫存現金、存貨數量、固定資產當日餘額之真實、公允列報。"
+    },
+    "đã tham gia kiểm kê": {
+        "E": "We had already observed the count of inventories and fixed assets as at [ngàykếtthúcnăm]. However, we were unable to determine and reconcile the quantities of inventories and fixed assets by actual count with those recognized in the accounting books. Owing to the nature of the Company’s records, we were unable to determine in respect of true and fair presentation the real quantities of inventories and fixed assets of which the amounts disclosed in the Balance sheet are VND [số] and VND [số] respectively at that date by other audit procedures.",
+        "Hs": "本会计师已参加在[ngàykếtthúcnăm]的固定资产及存货监盘作业。然而，本会计师亦无法核对和确定固定资产及存货帐载数量与实盘数量间的相符性。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证资产负债表所列金额分别为越南盾[số]及越南盾[số]的存货及固定资产当日数量的真实、公允列报。",
+        "Ht": "本會計師已參加於[ngàykếtthúcnăm]之固定資產及存貨監盤作業。然而，本會計師亦無法核對和確定固定資產及存貨帳載數量與實盤數量間之相符性。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證資產負債表所列金額分別為{越南盾/美元}及{越南盾/美元}之存貨及固定資產當日數量之真實、公允列報。"
+    },
+    "chúng tôi vẫn chưa thu thập được": {
+        "E": "Up to the date of this report, we have not received reasonable evidences fully to determine in respect of true and fair presentation the balances of cash in bank, short-term trade accounts receivable, short-term advances to suppliers, short-term trade accounts payable and other short-term payables of which the amounts disclosed in the Balance sheet as at [ngàykếtthúcnăm] are [số], [số], [số], [số] and [số] respectively.",
+        "Hs": "截至查核报告日，本会计师未能获取足够及适切的查核证据以对[ngàykếtthúcnăm]资产负债表所列金额分别为越南盾[số]及越南盾[số]的应收帐款和应付帐款余额的真实、公允列报作出结论。",
+        "Ht": "截至查核報告日，本會計師未能獲取足夠及適切之查核證據以對[ngàykếtthúcnăm]資產負債表所列金額分別為{越南盾/美元}及{越南盾/美元}之應收帳款和應付帳款餘額之真實、公允列報作出結論。"
+    },
+    "ngoại trừ ảnh hưởng của": {
+        "E": "In our opinion, except for the effects of the matter-chọn-matters described in the “Basis for qualified opinion” paragraph, the financial statements present fairly, in all material respects, the financial position of the Company as at [ngàykếtthúcnăm], and its financial performance and its cash flows for the year then ended in accordance with Vietnamese accounting standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam.",
+        "Hs": "依本会计师的意见，除「保留意见的基础」段所述事项的影响以外，上开财务报表在所有重大方面已真实、公允地反映公司在[ngàykếtthúcnăm]财务状况以及同日结束财务年度的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。",
+        "Ht": "依本會計師之意見，除「保留意見之基礎」段所述事項之影響以外，上開財務報表在所有重大方面已真實、公允地反映公司於[ngàykếtthúcnăm]財務狀況以及同日結束財務年度之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
+    },
+    "Chúng tôi muốn lưu ý tại mục III.2": {
+        "E": "We would like to draw attention to note III.2 of the Notes to the financial statements, in which, as at [ngàykếtthúcnăm], the Company incurred an accumulated loss of VND [số] from its business operation and, as at that date, total current liabilities exceeded total current assets by VND [số] and total liabilities exceeded total assets by VND [số]. These factors raise doubt that the Company will be unable to continue as a going concern in the future. These financial statements are exclusive of potential adjustment which may occur when the Company is unable to continue as a going concern. Our opinion is expressed apart from this emphasis.",
+        "Hs": "本会计师建议关注本财务报表附注第III.2项的陈述内容，在[ngàykếtthúcnăm]，公司已承担一笔金额为越南盾[số]的累计营业亏损，而在同日短期负债已超过短期资产越南盾[số]，且负债总额已超过资产总额越南盾[số]。上述因素引起对于公司未来可持续经营能力的疑虑。【本财务报表不包括公司不能持续经营时发生的各项调整。】【本会计师保留意见【无法表示意见】与强调事项并无关联。】",
+        "Ht": "本會計師建議關注本財務報表附註第III.2項之陳述內容，於[ngàykếtthúcnăm]，公司業已承擔一筆金額為{越南盾/美元} [số] 之累計營業虧損，而於同日短期負債業已超過短期資產{越南盾/美元} [số]，且負債總額業已超過資產總額{越南盾/美元} [số]。上述因素引起對於公司未來可持續經營能力之疑慮。【本財務報表不包括公司不能持續經營時發生之各項調整。】【本會計師保留意見【無法表示意見】與強調事項並無關聯。】"
+    },
+    "Mặc dù không đưa ra ý kiến ngoại trừ": {
+        "E": "Without qualifying our opinion, we would like to draw attention to note III.2 of the Notes to the financial statements, in which, as at [ngàykếtthúcnăm], the Company incurred an accumulated loss of VND-chọn-USD [số] from its business operation and, as at that date, total current liabilities exceeded total current assets by VND-chọn-USD [số] and total liabilities exceeded total assets by VND-chọn-USD [số]. These factors raise doubt about the Company’s ability to continue as a going concern in the future. These financial statements are exclusive of potential adjustment which may occur when the Company is unable to continue as a going concern.",
+        "Hs": "在不影响会计师审计意见的前提下，本会计师建议关注本财务报表附注第III.2项的陈述内容，在[ngàykếtthúcnăm]，公司已承担一笔金额为[số]越南盾的累计营业亏损，而在同日短期负债已超过短期资产[số]越南盾，且负债总额已超过资产总额[số]越南盾。上述因素引起对于公司未来可持续经营能力的疑虑。本财务报表不包括公司不能持续经营时发生的各项调整。",
+        "Ht": "在不影響會計師審計意見的前提下，本會計師建議關注本財務報表附註第III.2項之陳述內容，於[ngàykếtthúcnăm]，公司業已承擔一筆金額為[số]越南盾之累計營業虧損，而於同日短期負債業已超過短期資產[số]越南盾，且負債總額業已超過資產總額[số]越南盾。上述因素引起對於公司未來可持續經營能力之疑慮。本財務報表不包括公司不能持續經營時發生之各項調整。"
+    },
+    "được kiểm toán bởi đơn vị kiểm toán khác": {
+        "E": "The financial statements for the year ended December 31, 2023 of the Company are audited by another auditor whose report was issued on ngày with ýkiến an unqualified opinion.",
+        "Hs": "公司截至2023年12月31日止财务年度的财务报表经由其他审计单位负责查核并在[số]年[số]月[số]日正式出具，会计师对该财务报表表示无保留意见ýkiến（或由于某种原因表示保留意见）。【公司截至2023年12月31日止财务年度的财务报表未经审计单位查核并得以重新呈列以作为比较之用。】",
+        "Ht": "公司截至2023年12月31日止財務年度之財務報表已由其他審計單位負責查核並於[số]年[số]月[số]日出具，會計師對該財務報表表示無保留意見ýkiến（或由於某種原因表示保留意見）。【公司截至2023年12月31日止財務年度之財務報表未經審計單位查核並得以重新呈列以作為比較之用。】"
+    },
+    "Tổng số nhân viên của": {
+        "E": "The Company’s total number of staffs at the end of the year is [số] employees (that was [số] employees at the beginning of the year).",
+        "Hs": "公司在年末日员工总人数共[số]人（在年初日共[số]人）。",
+        "Ht": "公司員工總人數於年末日為[số]人（於年初日為[số]人）。"
+    },
+    "trong quá trình xây dựng cơ bản": {
+        "E": "As at [ngàykếtthúcnăm], the Company was still in the process of construction and had not yet commenced its business operations. The Company is expected to officially commence its business operations from [số].",
+        "Hs": "截至[ngàykếtthúcnăm]，公司尚处基本建设阶段，未进入营运生产活动。公司计划在年[số]月正式开始营业、生产活动。",
+        "Ht": "截至[ngàykếtthúcnăm]，公司尚處基本建設階段，未進入營運生產活動。公司計劃於[số]年[số]月正式開始營業、生產活動。"
+    },
+    "Theo đó, Báo cáo tài chính sẽ được lập trên cơ sở giả định là doanh nghiệp đang hoạt động liên tục.": {
+        "E": "As at [ngàykếtthúcnăm], the Company incurred an accumulated loss of VND [số] arising from the business operation, and total current liabilities exceeded total current assets by VND [số] and total liabilities exceeded total assets by VND [số]. As a result, the Company’s going concern ability depends on the continuity of financial assistance from the Company’s owners, who have confirmed that they would continue assisting in finance for the Company to pay up the debts when they become due. Accordingly, the financial statements are prepared basing on the assumption that the Company is operating as a going concern.",
+        "Hs": "【在[ngàykếtthúcnăm]，公司正承受一笔【来自营业活动的】累计亏损为越南盾[số]，短期负债总额已超过短期资产总值越南盾[số]且负债总额已超过资产总值越南盾[số]。因此，公司未来持续经营能力主要依靠公司所有者（股东）资助（投资）。公司所有者确认将来继续提供财力支持以协助公司偿付到期债务。据此，本财务报表基于公司持续经营假设而编制。",
+        "Ht": "【於[ngàykếtthúcnăm]，公司正承受一筆【來自營業活動的】累計虧損為美元[số]，短期負債總額已超過短期資產總值美元[số]且負債總額已超過資產總值美元[số]。因此，公司未來持續經營能力主要依靠公司所有者（股東）資助（投資）。公司所有者確認將來繼續提供財力支持以協助公司償付到期債務。據此，本財務報表基於公司持續經營假設而編製。"
+    },
+    "45/2013/TT-BTC": {
+        "E": "Long-term prepaid expenses mainly comprise expenses of land rents, rental, insurance premiums, tools and supplies, expenses, and other expenses -chọn- whose costs do not meet the recognition criteria of fixed assets in accordance with Circular No. 45/2013/TT-BTC dated April 25, 2013 of the Ministry of Finance. Long-term prepaid expenses are allocated to the expenses in the period on a straight-line basis.",
+        "Hs": "chọn-长期预付费用主要包含不具备越南财政部在2013年04月25日颁行《第45/2013/TT-BTC号公告》中的固定资产认列条件的土地租金、工具、用具费用以及其他费用。长期预付费用应以直线法摊销并计入当期生产、营业费用。",
+        "Ht": "chọn-長期預付費用主要包含不具備越南財政部在2013年04月25日頒行《第45/2013/TT-BTC號公告》中固定資產認列條件之土地租金、工具、用具費用以及其他費用。長期預付費用應以直線法攤銷並計入當期生產、營業費用。"
+    },
+    "Tài sản cố định vô hình là quyền sử dụng đất": {
+        "E": "Intangible fixed assets comprise the land use right granted by the State with a land use charge, the legally transferred land use right to use the leased land under the leases engaged before the effective date of the Land Law 2003, of which the land rental for the entire leasing period has been paid by the Company and the certificate of land use right has been granted by the competent authority. Costs of the land use right comprise all expenses directly related to putting the land into a state of readiness for use, and are amortized on a straight-line basis over the estimated useful lives of [số] years.",
+        "Hs": "无形固定资产包含由政府出让并征收使用费的土地使用权、对2003年土地法生效日前签署土地租赁契约中的租赁土地使用权进行合法受让取得且公司已全额付清租金并已取得土地使用权证的土地使用权。土地使用权原始成本（原值）是与使土地达到可供使用状态直接相关的必要支出，且按照估计耐用年限（[số]年）采用直线法提列折旧。",
+        "Ht": "無形固定資產包含由政府出讓並徵收使用費之土地使用權、對2003年土地法生效日前簽署土地租賃契約中之租賃土地使用權進行合法受讓取得且公司已全額付清租金並已取得土地使用權證之土地使用權。土地使用權原始價值（原值）乃與使土地達到可供使用狀態直接相關之必要支出，且按照估計耐用年限（[số]年）採用直線法提列折舊。"
+    },
+    "vô hình là phần mềm": {
+        "E": "Costs of intangible assets which is the computer software comprise all expenses the Company had already paid until the software was put into use and are depreciated, on a straight-line basis, over the estimated useful lives of [số] years.",
+        "Hs": "无形资产为计算机软件，其原值乃公司购置并使其达到可供使用状态前发生的必要支出，且按照估计耐用年限（[số]年）采用直线法提列折旧。",
+        "Ht": "無形資產為電腦軟體，其原值乃公司購置並使其達到可供使用狀態前發生之必要支出，且按照估計耐用年限（[số]年）採用直線法提列折舊。"
+    },
+    "Trợ cấp thôi việc cho nhân viên được trích trước vào": {
+        "E": "Accrual for severance allowances is made at the end of each accounting period for all the employees who have worked at the Company for at least 12 months at the rate of half of the average monthly salary for each working year in accordance with the Labor Code laws and relevant guiding documents. The working time for calculation of severance allowances is determined by subtracting the time the employee has participated in unemployment insurance as prescribed by law and the working time for which the employee has been paid a severance allowance by the employer from the total actual working time provided to the employer. The average monthly salary used to calculate severance allowances will be adjusted at the end of each accounting period in accordance with the average monthly salary of the six latest months until the balance sheet date. Increase or decrease in such accrual, apart from the actual amount paid to employees, will be recorded in the income statement.",
+        "Hs": "资遣费须依《劳动法》及其相关指引公文于每一报告期末得以预提，且适用于在岗时间超过12个月者，年资每满一年应给付半个月平均工资的资遣费。计算资遣费的工作时间为员工实际工作总时间，扣除员工依法参加失业保险的时间及已由雇主支付资遣费的工作时间后确定。此平均工资应于每一报告期末按照最近六个月薪资的平均数得以计算。预提资遣费增减数，实际给付职工的金额除外，列示于利润表中。",
+        "Ht": "資遣費須依《勞動法》及其相關指引公文於每一報告期末得以預提，且適用於在崗時間超過12個月者，年資每滿一年應給付半個月平均工資之資遣費。計算資遣費的工作時間為員工實際工作總時間，扣除員工依法參加失業保險的時間及已由僱主支付資遣費的工作時間後確定。此平均工資應於每一報告期末按照最近六個月薪資之平均數得以計算。預提資遣費增減數，實際給付職工之金額除外，列示於損益表中。"
+    },
+    "Công ty đã thực hiện việc chuyển đổi": {
+        "E": "According to Article 107 of Circular No. 200/2014/TT-BTC dated December 22, 2014, [chọn] the Company’s Board of Management/the Company’s Director/the Company’s Board of General Directors/the Company’s Board of Directors/the Company’s Board or Members has converted the financial statements prepared in US Dollars (USD) into Vietnamese Dongs (VND) to publicize information and submit to State management agencies in accordance with the following principles:",
+        "Hs": "依据2014年12月22日《第200/2014/TT-BTC号公告》第107条，[chọn]公司管理阶层/公司经理/公司管理阶层/公司董事会/公司董事会已依下列原则将以美元（USD）计值的财务报表折算为越南盾（VND）后对外公布并递交给越南政府管辖机关：",
+        "Ht": "依據2014年12月22日《第200/2014/TT-BTC號公告》第107條，[chọn]公司管理階層/公司經理/公司管理階層/公司董事會/公司董事會已依下列原則將以美元（USD）計值之財務報表折算為越南盾（VND）後對外公佈並遞交給越南政府管轄機關："
+    },
+    "Tài sản và nợ phải trả được quy đổi ra VND theo": {
+        "E": "Assets and liabilities are converted into VND at the exchange rate of tênngânhàng at the fiscal year-end date (buying exchange rate: [số] VND/USD; selling exchange rate: [số] VND/USD);",
+        "Hs": "资产及债款项目按照 tênngânhàng 于会计年度结束日即[ngàykếtthúcnăm]公布的交易汇率折算为越南盾（买入汇率：[số]美元兑越南盾）；",
+        "Ht": "資產及債款項目按照 tênngânhàng 於會計年度結束日即[ngàykếtthúcnăm]公佈之交易匯率折算為越南盾（買入匯率：[số]美元兌越南盾）；"
+    },
+    "Các khoản mục thuộc Báo cáo kết quả hoạt động kinh doanh và Báo cáo lưu chuyển tiền tệ được quy đổi ra VND theo": {
+        "E": "Items in the Income Statement and the Cash Flow Statement are translated into VND using the average exchange rate for the accounting period of [số] VND/USD.",
+        "Hs": "属利润表及现金流量表中的各项目按照会计年度的平均汇率[số]越南盾/美元兑越南盾折算为越南盾。",
+        "Ht": "屬損益表及現金流量表中之各項目按照會計年度之平均匯率[số]越南盾/美元兌越南盾折算為越南盾。"
+    },
+    "Chênh lệch tỷ giá phát sinh khi chuyển đổi Báo cáo tài chính được lập bằng đồng Đô la Mỹ": {
+        "E": "Foreign exchange differences arising when converting financial statements prepared in US Dollars into Vietnamese Dongs are disclosed under the item “Foreign exchange differences” - Code 417 of section of the Owner’s equity of the Balance sheet. The converted financial statements are stated in VND under the Appendix from page [số] to [số].",
+        "Hs": "以美元计值的财务报表折算为越南盾后产生的汇兑差异得以列入资产负债表中所有者（股东）权益项下的编号417「汇兑差异」项目。折算后的财务报表以越南盾呈列并列示于附录自第[số]页至[số]页。",
+        "Ht": "以美元計值之財務報表折算為越南盾後產生之匯兌差異得以列入資產負債表中所有者（股東）權益項下之編號417「匯兌差異」項目。折算後之財務報表以越南盾呈列並列示於附錄自第[số]頁至[số]頁。"
+    },
+    "vốn đầu tư và vốn": {
+        "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] and VND [số] respectively. The paid-up capital by the Company’s owner as at [ngàykếtthúcnăm] is as follows:",
+        "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为美元[số]和美元[số]。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：【在[ngàykếtthúcnăm]，与注册资本额相比，公司溢缴资本额【欠缴资本额】为美元[số]，详细如下：】",
+        "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為美元[số]和美元[số]。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下：【於[ngàykếtthúcnăm]，與註冊資本額相比，公司溢繳資本額【欠繳資本額】為美元[số]，詳細如下：】"
+    },
+    "vốn điều lệ của Công ty là": {
+        "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] and VND [số] respectively. The paid-up capital by the Company’s owner as at [ngàykếtthúcnăm] is as follows:",
+        "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为美元[số]和美元[số]。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：【在[ngàykếtthúcnăm]，与注册资本额相比，公司溢缴资本额【欠缴资本额】为美元[số]，详细如下：】",
+        "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為美元[số]和美元[số]。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下：【於[ngàykếtthúcnăm]，與註冊資本額相比，公司溢繳資本額【欠繳資本額】為美元[số]，詳細如下：】"
+    },
+    "là do chênh lệch tỷ giá phát sinh tại thời điểm góp vốn": {
+        "E": "The Company has fully contributed its charter capital of [số] USD. The difference between the contributed capital amount in VND and the registered capital amount arises from the exchange rate differences at the time of capital contribution.",
+        "Hs": "公司已全数缴足注册资本共计[số]美元。越南盾实缴资本金额与注册资本金额间之差异，是由于出资时适用汇率不同所致。",
+        "Ht": "公司已全數繳足註冊資本共計[số]美元。越南盾實繳資本金額與註冊資本金額間之差異，係由於出資時適用匯率不同所致。"
+    },
+    "Đối với hoạt động sản xuất kinh doanh:": {
+        "E": "For business and production activities: The Company is obliged to pay the corporate income tax at the rate of [số]% on its taxable income for the first [số] years and at the rate of [số]% for the remaining years. The Company is entitled to corporate income tax holiday for [số] years from the first profit making year and a reduction of 50% for the following [số] years.",
+        "Hs": "对于生产、营业活动，公司有义务在课税基础上按照适用税率缴纳企业所得税，其适用税率在头[số]年【（自投资项目开始营运当年起算）】为[số]%且在后续年度为[số]%【普通税率（自2016年01月01日起开始调整为17%）】。公司从获利年度起开始获免[số]年企业所得税，且在后续[số]年享受税务减半（50%）。",
+        "Ht": "對於生產、營業活動，公司有義務在課稅基礎上按照適用稅率繳納企業所得稅，其適用稅率在頭[số]年【（自投資項目開始營運當年起算）】為[số]%且在後續年度為[số]%【普通稅率（自2016年01月01日起開始調整為17%）】。公司從獲利年度起開始獲免[số]年企業所得稅，且在後續[số]年享受稅務減半（50%）。"
+    },
+    "cho phần hoạt động sản xuất kinh doanh": {
+        "E": "The year [nămbáocáo] is the third/second/first/chọn year the Company continues to have taxable income and is the third/second/first/chọn year the Company is entitled to corporate income tax exemption or-reduction-chọn (the first year the Company has taxable income is [số]). Accordingly, in the year [nămbáocáo], the Company will be exempted or reduced-chọn by [số]% of the corporate income tax payable at the rate of [số]% for production and business activities.",
+        "Hs": "[nămbáocáo]年是第[số]年公司继续有课税所得，且是第[số]年公司享受企业所得税租税优惠【赋税优惠】【税收优惠】（[số]年是公司第一年有课税所得）。据此，在[nămbáocáo]年度内，公司生产、营业活动所得可以按照[số]% 税率获得税务减半（50%）。",
+        "Ht": "[nămbáocáo]年為第[số]年公司繼續有課稅所得，且為第[số]年公司享受企業所得稅租稅優惠【賦稅優惠】【稅收優惠】（[số]年為公司第一年有課稅所得）。據此，於[nămbáocáo]年度內，公司生產、營業活動所得可以按照[số]% 稅率獲得稅務減半（50%）。"
+    },
+    "đang còn được miễn thuế thu nhập doanh nghiệp": {
+        "E": "As The members of the Board of Management/The members of the Board of Directors/General Director/Director/Chairman/Managing Director/chọn believes that the Company is still exempt from corporate income tax for the next [số] years, deferred income tax assets are not required to be recognized for determining the future taxable profit. Therefore, no deferred corporate income tax expense is provided in the year [nămbáocáo].",
+        "Hs": "由于管理阶层认为公司在未来[số]年内尚可享受企业所得税免税优惠，所以递延所得税毋须认列以用于计算未来应课税所得。据此，并无递延所得税费用在[nămbáocáo]年度内得以认列。",
+        "Ht": "由於管理階層認為公司在未來[số]年內尚可享受企業所得稅免稅優惠，所以遞延所得稅毋須認列以用於計算未來應課稅所得。據此，並無遞延所得稅費用於[nămbáocáo]年度內得以認列。"
+    },
+    "Dòng tiền chi": {
+        "E": "Cash out flow on acquisition and establishment of fixed assets and cash in flow on capital contribution by the owners in the year [số] do not include the amount of [số] VND, which is additional value of fixed assets and construction in progress arising in current year, financed by the Company’s owners under the form of capital contribution.\n\nCash out flow on acquisition and establishment of fixed assets in the year [số] does not include the amount of [số] VND (which was [số] VND as of the year [số]), which is used for purchasing fixed assets and affording construction in progress in current year, but yet to be paid up.\n\nCash out flow on repayment of loan principals and cash in flow on owner’s capital contribution arising in the year [số] do not include the amount of [số], which is capital amount contributed by the Company’s owners under the form of conversion from loans.",
+        "Hs": "截至[ngàykếtthúcnăm]止财务年度的购建固定资产（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为越南盾[số]的款项，而此乃本年度所有者（股东）增加投资形成的固定资产及在建工程增添价值。\n\n截至[ngàykếtthúcnăm]止财务年度的购建固定资产的现金流出，未包含金额为越南盾[số]的款项（该款在2020年金额为越南盾[số]），而此乃本年度为取得新增固定资产及在建工程而负担的应付金额。\n\n截至[ngàykếtthúcnăm]止财务年度的支付借款本金（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为越南盾[số]的款项，而此乃公司以债务转为资本（或称所有者以债作股）的金额。",
+        "Ht": "截至[ngàykếtthúcnăm]止財務年度之購建固定資產（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為越南盾【美元】[số]之款項，而此乃本年度所有者（股東）增加投資形成之固定資產及在建工程增添價值。\n\n截至[ngàykếtthúcnăm]止財務年度之購建固定資產之現金流出，未包含金額為越南盾【美元】[số]之款項（該款於2020年金額為越南盾【美元】[số]），而此乃本年度為取得新增固定資產及在建工程而負擔之應付金額。\n\n截至[ngàykếtthúcnăm]止財務年度之支付借款本金（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為越南盾【美元】[số]之款項，而此乃公司以債務轉為資本（或稱所有者以債作股）之金額。"
+    },
+    "Dòng tiền vay": {
+        "E": "Cash in flow on short-term and long-term borrowings arising in the year [số] does not include the amount of [số] VND, which is recognized as increases in short-term and long-term loans, transferred from the trade accounts payable or other payables.",
+        "Hs": "截至[ngàykếtthúcnăm]止财务年度的收取短期或长期借款的现金流入，未包含金额为越南盾[số]的款项，而此乃由应付帐款【其他应付款】转为短期或长期借款的金额。\n",
+        "Ht": "截至[ngàykếtthúcnăm]止財務年度之收取短期或長期借款之現金流入，未包含金額為越南盾【美元】[số]之款項，而此乃由應付帳款【其他應付款】轉為短期或長期借款之金額。"
+    },
+    "Dòng tiền chi thu": {
+        "E": "Cash out flow on acquisition and establishment of fixed assets and cash in flow on capital contribution by the owners in the year [số] do not include the amount of [số] VND, which is additional value of fixed assets and construction in progress arising in current year, financed by the Company’s owners under the form of capital contribution.\n\nCash out flow on acquisition and establishment of fixed assets in the year [số] does not include the amount of [số] VND (which was [số] VND as of the year [số]), which is used for purchasing fixed assets and affording construction in progress in current year, but yet to be paid up.\n\nCash out flow on repayment of loan principals and cash in flow on owner’s capital contribution arising in the year [số] do not include the amount of [số], which is capital amount contributed by the Company’s owners under the form of conversion from loans.",
+        "Hs": "截至[ngàykếtthúcnăm]止财务年度的购建固定资产（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为越南盾[số]的款项，而此乃本年度所有者（股东）增加投资形成的固定资产及在建工程增添价值。\n\n截至[ngàykếtthúcnăm]止财务年度的购建固定资产的现金流出，未包含金额为越南盾[số]的款项（该款在2020年金额为越南盾[số]），而此乃本年度为取得新增固定资产及在建工程而负担的应付金额。\n\n截至[ngàykếtthúcnăm]止财务年度的支付借款本金（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为越南盾[số]的款项，而此乃公司以债务转为资本（或称所有者以债作股）的金额。",
+        "Ht": "截至[ngàykếtthúcnăm]止財務年度之購建固定資產（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為越南盾【美元】[số]之款項，而此乃本年度所有者（股東）增加投資形成之固定資產及在建工程增添價值。\n\n截至[ngàykếtthúcnăm]止財務年度之購建固定資產之現金流出，未包含金額為越南盾【美元】[số]之款項（該款於2020年金額為越南盾【美元】[số]），而此乃本年度為取得新增固定資產及在建工程而負擔之應付金額。\n\n截至[ngàykếtthúcnăm]止財務年度之支付借款本金（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為越南盾【美元】[số]之款項，而此乃公司以債務轉為資本（或稱所有者以債作股）之金額。"
+    },
+    "Một số số liệu của năm trước đã được": {
+        "E": "Certain reclassifications have been made to the prior year’s figures to enhance comparability with current year’s figures. Specifically, in the current year, because of the adjustments on misstatements of prior years relevant to distribute profits, the financial statements for year nămsosánh, which were released on ngàyđãpháthành, have been affected as following:",
+        "Hs": "上年度的若干信息经重新分类后与本年度的财务信息相互比较。具体而言，由于本年度内发生【以前年度的费用认列/会计科目分类在本年度内得以更正】【会计政策/会计估计/会计错误在本年度内得以变更】，导致已在ngàyđãpháthành日出具的nămsosánh年度的财务报表受此影响，详细如下：",
+        "Ht": "上年度之若干資訊經重新分類後與本年度之財務資訊相互比較。具體而言，由於本年度內發生【以前年度的費用認列/會計科目分類於本年度內得以更正】【會計政策/會計估計/會計錯誤於本年度內得以變更】 /chọn，導致已於ngàyđãpháthành日出具之nămsosánh年度之財務報表受此影響，詳細如下："
+    }
+}

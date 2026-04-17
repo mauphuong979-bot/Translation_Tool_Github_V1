@@ -139,6 +139,10 @@ if not st.session_state.authenticated:
     login_screen()
     st.stop()
 
+# Initialize Settings
+if 'case_threshold' not in st.session_state:
+    st.session_state.case_threshold = 30
+
 # App UI (Authenticated Only)
 # Load Initial Metadata from Dictionary.xlsx if not already loaded
 if 'metadata_loaded' not in st.session_state:
@@ -218,7 +222,14 @@ with st.sidebar:
 
     st.divider()
     st.markdown("### ⚙️ Settings")
-    st.info("Additional formatting settings will be added here in the future.")
+    st.number_input(
+        "Case-sensitivity threshold (length)",
+        min_value=1,
+        max_value=1000,
+        value=st.session_state.case_threshold,
+        key="case_threshold",
+        help="If the Vietnamese text length is less than this value, translation will be case-sensitive. If greater or equal, it will be case-insensitive."
+    )
 
 # Main Interface
 with st.expander("📝 **Report Metadata**", expanded=True):
@@ -293,8 +304,13 @@ if uploaded_file:
                     "Period (in table)": tl.clean_text(st.session_state.meta_period_short)
                 }
                 
-                # Call processing logic
-                processed_file, msg = process_financial_report(uploaded_file, metadata=metadata, translation_map=translation_map)
+                processed_file, msg = process_financial_report(
+                    uploaded_file, 
+                    metadata=metadata, 
+                    translation_map=translation_map,
+                    case_threshold=st.session_state.case_threshold,
+                    target_col=target_col
+                )
                 
                 if processed_file:
                     st.success(msg)
