@@ -290,10 +290,10 @@ with st.sidebar:
     st.markdown('<div class="sidebar-section">', unsafe_allow_html=True)
     st.markdown('<span class="sidebar-label">Preferences</span>', unsafe_allow_html=True)
     st.checkbox(
-        "Auto-open Word file", 
+        "Auto-open/download result", 
         value=st.session_state.get("auto_open", True), 
         key="auto_open", 
-        help="Automatically open the translated document after processing completes."
+        help="Automatically open in Word (local Windows) or trigger download (cloud/Linux) after processing completes."
     )
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -464,19 +464,24 @@ with tabs[0]:
                         
                         log_event(st.session_state.username, "Processing", f"File: {uploaded_file.name} (Lang: {target_col})")
                         
-                        # AUTO OPEN IF ENABLED
+                        # AUTO OPEN / DOWNLOAD IF ENABLED
                         if st.session_state.auto_open:
-                            temp_dir = os.path.join(BASE_DIR, "temp_output")
-                            if not os.path.exists(temp_dir):
-                                os.makedirs(temp_dir)
-                            temp_path = os.path.join(temp_dir, processed_filename)
-                            try:
-                                with open(temp_path, "wb") as f:
-                                    # Handle both BytesIO and raw bytes
-                                    f.write(processed_file.getvalue() if hasattr(processed_file, "getvalue") else processed_file)
-                                os.startfile(temp_path)
-                            except Exception as e:
-                                st.warning(f"Could not automatically open Word: {e}. You can still download it manually below.")
+                            if hasattr(os, 'startfile'):
+                                # Local Windows Usage: Open Word directly
+                                temp_dir = os.path.join(BASE_DIR, "temp_output")
+                                if not os.path.exists(temp_dir):
+                                    os.makedirs(temp_dir)
+                                temp_path = os.path.join(temp_dir, processed_filename)
+                                try:
+                                    with open(temp_path, "wb") as f:
+                                        # Handle both BytesIO and raw bytes
+                                        f.write(processed_file.getvalue() if hasattr(processed_file, "getvalue") else processed_file)
+                                    os.startfile(temp_path)
+                                except Exception as e:
+                                    st.warning(f"Could not automatically open Word: {e}. You can still download it manually below.")
+                            else:
+                                # Cloud / Linux Usage: Trigger automatic browser download
+                                st_auto_download(processed_file, processed_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                     else:
                         st.error(msg)
                 except Exception as e:
