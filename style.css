@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 /* Global Styles */
-html, body, [data-testid="stAppViewContainer"] {
+html,
+body,
+[data-testid="stAppViewContainer"] {
     font-family: 'Inter', sans-serif;
 }
 
@@ -42,11 +44,53 @@ section[data-testid="stSidebar"] {
 [data-testid="stSidebar"] .stMarkdown h3 {
     margin-top: 0;
     color: #182848;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
 }
 
-[data-testid="stSidebar"] .stCaption {
-    font-size: 0.85rem;
-    margin-bottom: 1.5rem;
+/* Sidebar Sections */
+.sidebar-section {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+}
+
+.sidebar-user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.sidebar-user-icon {
+    font-size: 1.5rem;
+}
+
+.sidebar-user-info {
+    flex-grow: 1;
+}
+
+.sidebar-user-name {
+    font-weight: 600;
+    color: #182848;
+    font-size: 0.9rem;
+}
+
+.sidebar-user-role {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.sidebar-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4b6cb7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 /* Expander Styling */
@@ -66,7 +110,7 @@ section[data-testid="stSidebar"] {
 [data-testid="stDataFrame"] {
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Metrics Styling */
@@ -88,7 +132,7 @@ section[data-testid="stSidebar"] {
 }
 
 /* Button Styling (if we target them directly) */
-div.stButton > button:first-child {
+div.stButton>button:first-child {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
@@ -99,9 +143,9 @@ div.stButton > button:first-child {
     width: 100%;
 }
 
-div.stButton > button:hover {
+div.stButton>button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     color: white;
 }
 
@@ -123,7 +167,7 @@ div.stButton > button:hover {
     font-size: 0.95rem;
     color: #1e3a8a;
     line-height: 1.6;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .word-hint b {
@@ -137,7 +181,7 @@ div.stButton > button:hover {
     padding: 2.5rem;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     border: 1px solid #e9ecef;
 }
 
@@ -159,4 +203,64 @@ div.stButton > button:hover {
     background-color: #ffffff !important;
     border-color: #4b6cb7 !important;
     box-shadow: 0 0 0 0.2rem rgba(75, 108, 183, 0.25) !important;
+}
+
+/* Success Highlight for Results */
+.success-highlight {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border-left: 5px solid #4caf50;
+    margin: 1.5rem 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+    text-align: center;
+}
+
+/* Red color for specific manual check fields (content only) */
+div[data-testid="stTextInput"] input[aria-label="Translated Name (not capitalized)"] {
+    color: #ff4b4b !important;
+    font-weight: 600 !important;
+}
+
+/* Dictionary Table Styling */
+.dict-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 1rem;
+}
+
+.dict-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.dict-table th {
+    background-color: #f8f9fa;
+    color: #182848;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 700;
+}
+
+.dict-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    line-height: 1.5;
+}
+
+.dict-table tr:hover {
+    background-color: #f1f3f9;
+}
+
+.dict-highlight {
+    color: #007bff;
 }

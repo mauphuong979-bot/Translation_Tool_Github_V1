@@ -1,0 +1,118 @@
+{
+    "Doanh thu hoạt động tài chính": [
+        {
+            "vn": "Doanh thu hoạt động tài chính",
+            "en": "Financial income"
+        }
+    ],
+    "Chi phí tài chính": [
+        {
+            "vn": "Các khoản đầu tư nắm giữ đến ngày đáo hạn được ghi nhận ban đầu theo giá gốc bao gồm giá mua và các chi phí liên quan đến giao dịch mua các khoản đầu tư. Sau khi ghi nhận ban đầu, các khoản đầu tư này được ghi nhận theo giá trị có thể thu hồi. Khi có các bằng chứng chắc chắn cho thấy một phần hoặc toàn bộ khoản đầu tư có thể không thu hồi được và số tổn thất được xác định một cách đáng tin cậy thì tổn thất được ghi nhận vào chi phí tài chính trong kỳ và giảm trừ trực tiếp giá trị đầu tư.",
+            "en": "Held-to-maturity investments are initially recognised at historical costs including buying prices plus costs related to transactions of acquisition of the investments. After initial recognition, these investments are recorded at recoverable value. If it is evident that a part or all of investment is unable to recover and it is reliable to determine the losses, then the losses are recorded into the financial expenses in the fiscal year and directly deducted against the investment value."
+        },
+        {
+            "vn": "Chi phí tài chính",
+            "en": "Financial expenses"
+        },
+        {
+            "vn": "Tài sản thuê tài chính được ghi nhận như tài sản của Công ty theo giá trị hợp lý tại thời điểm khởi đầu thuê tài sản. Nếu giá trị hợp lý của tài sản thuê cao hơn giá trị hiện tại của khoản thanh toán tiền thuê tối thiểu cho việc thuê tài sản thì ghi theo giá trị hiện tại của khoản thanh toán tiền thuê tối thiểu. Khoản nợ phải trả cho bên cho thuê tương ứng được trình bày trên Bảng cân đối kế toán như một khoản nợ phải trả về thuê tài chính. Khoản thanh toán tiền thuê được chia ra thành chi phí tài chính và phải trả nợ gốc. Chi phí thuê tài chính được ghi nhận vào Báo cáo kết quả hoạt động kinh doanh dựa trên thời hạn thuê để phản ánh tỷ lệ lãi suất định kỳ cố định trên số dư còn lại của khoản nợ phải trả về thuê tài chính cho mỗi kỳ kế toán.",
+            "en": "Assets held under finance leases are recognized as assets of the Company at their fair value at the date of acquisition. If the fair value of the assets acquired is higher than the present value of the minimum payment for the acquisition of assets, it shall be recorded at the present value of the minimum lease payment. The corresponding liability to the lesser is included in the balance sheet as a finance lease obligation. The lease payment is divided into financial costs and liabilities of principal. Finance costs are charged to the income statement over the term of the relevant lease so as to produce a constant periodic rate of charge on the remaining balance of the obligations for each accounting period."
+        },
+        {
+            "vn": "Tăng, giảm số dự phòng giảm giá chứng khoán kinh doanh tại ngày kết thúc năm tài chính được ghi nhận vào chi phí tài chính.",
+            "en": "Increase, decrease in provision for decline in value of trading securities at the end of the fiscal year is recognized into the financial expenses."
+        },
+        {
+            "vn": "Tăng, giảm số dự phòng tổn thất đầu tư vào công cụ vốn của đơn vị khác cần phải trích lập tại ngày kết thúc năm tài chính được ghi nhận vào chi phí tài chính.",
+            "en": "Increase, decrease in provision for impairment of investments in equity instruments of other units at the end of the fiscal year is recognized into the financial expenses."
+        },
+        {
+            "vn": "Tăng, giảm số dự phòng tổn thất đầu tư vào công ty con tại ngày kết thúc năm tài chính được ghi nhận vào chi phí tài chính.",
+            "en": "Increase, decrease in provision for impairment of investments in subsidiaries at the end of the fiscal year is recognized into the financial expenses."
+        },
+        {
+            "vn": "Tăng, giảm số dự phòng tổn thất đầu tư vào công ty con, công ty liên doanh, liên kết tại ngày kết thúc năm tài chính được ghi nhận vào chi phí tài chính.",
+            "en": "Increase, decrease in provision for impairment of investments in subsidiaries, joint ventures, associates at the end of the fiscal year is recognized into the financial expenses."
+        },
+        {
+            "vn": "Tăng, giảm số dự phòng tổn thất đầu tư vào công ty con, công ty liên doanh, liên kết tại ngày kết thúc năm tài chính toán được ghi nhận vào chi phí tài chính.",
+            "en": "Increase, decrease in provision for impairment of investments in subsidiaries, joint ventures, associates at the end of the fiscal year is recognized into the financial expenses."
+        },
+        {
+            "vn": "Chi phí tài chính khác",
+            "en": "Others"
+        }
+    ],
+    "Thu nhập khác": [
+        {
+            "vn": "Các khoản thu nhập khác",
+            "en": "Other income"
+        },
+        {
+            "vn": "Đối với các khoản thu nhập khác không được ưu đãi: áp dụng thuế suất phổ thông.",
+            "en": "For other income not eligible for tax incentives: The Company is obliged to pay the corporate income tax at the standard rate."
+        },
+        {
+            "vn": "Đối với các khoản thu nhập khác không được ưu đãi: áp dụng thuế suất thuế thu nhập doanh nghiệp 20%.",
+            "en": "For other income not eligible for tax incentives: The Company is obliged to pay the corporate income tax at the applicable rate of 20%."
+        },
+        {
+            "vn": "Đối với các khoản thu nhập khác không được ưu đãi: áp dụng thuế suất thuế thu nhập doanh nghiệp phổ thông.",
+            "en": "For other income not eligible for tax incentives: The Company is obliged to pay the corporate income tax at the standard rate."
+        },
+        {
+            "vn": "Đối với các khoản thu nhập khác không được ưu đãi: áp dụng thuế suất thuế thu nhập doanh nghiệp theo quy định hiện hành.",
+            "en": "For other income not eligible for tax incentives: The Company is obliged to pay the corporate income tax at the applicable rate according to the prevailing regulations."
+        },
+        {
+            "vn": "Đối với các khoản thu nhập khác: áp dụng thuế suất thuế thu nhập doanh nghiệp là 20%.",
+            "en": "For other income: The Company is obliged to pay the corporate income tax at the applicable rate of 20%."
+        },
+        {
+            "vn": "Thu nhập khác",
+            "en": "Other income"
+        },
+        {
+            "vn": "Thu nhập khác không được ưu đãi",
+            "en": "Other income not eligible for tax incentives"
+        },
+        {
+            "vn": "Thuế thu nhập doanh nghiệp phải nộp ước tính từ các khoản thu nhập khác",
+            "en": "Estimated corporate income tax payable on other income"
+        },
+        {
+            "vn": "Thuế thu nhập doanh nghiệp phải nộp ước tính từ thu nhập khác không được ưu đãi",
+            "en": "Estimated corporate income tax payable on other income not eligible for tax incentives"
+        }
+    ],
+    "Chi phí khác": [
+        {
+            "vn": "Các khoản chi phí khác",
+            "en": "Other expenses"
+        },
+        {
+            "vn": "Chi phí dịch vụ mua ngoài và chi phí khác",
+            "en": "Outsourcing expenses and other expenses"
+        },
+        {
+            "vn": "Chi phí khác",
+            "en": "Other expenses"
+        },
+        {
+            "vn": "Chi phí khác bằng tiền",
+            "en": "Other expenses in cash"
+        },
+        {
+            "vn": "Chi phí trả trước dài hạn chủ yếu bao gồm các khoản chi phí công cụ, dụng cụ và các chi phí khác.",
+            "en": "Long-term prepaid expenses mainly comprise expenses of tools and supplies and other expenses."
+        },
+        {
+            "vn": "Chi phí trả trước dài hạn chủ yếu bao gồm các khoản tiền thuê đất, chi phí công cụ, dụng cụ và các chi phí khác. ",
+            "en": "Long-term prepaid expenses mainly comprise expenses of land rents, tools and supplies, and other expenses. "
+        },
+        {
+            "vn": "Trích trước chi phí khác",
+            "en": "Accrual for other expenses"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "Vietnamese": "[V_NAME]",
+    "E": "[T_NAME]",
+    "Hs": "[T_NAME]",
+    "Ht": "[T_NAME]"
+  },
+  {
+    "Vietnamese": "Báo cáo tài chính cho năm tài chính kết thúc ngày [e_day] tháng [e_month] năm [e_year]",
+    "E": "Financial statements for the year ended [e_month] [e_day], [e_year]",
+    "Hs": "截至[e_year]年[e_month]月[e_day]日止财务年度的财务报表",
+    "Ht": "截至[e_year]年[e_month]月[e_day]日止財務年度之財務報表"
+  },
+  {
+    "Vietnamese": "Báo cáo tài chính cho giai đoạn từ ngày [p1_day] tháng [p1_month] năm [p1_year] đến ngày [p2_day] tháng [p2_month] năm [p2_year]",
+    "E": "Financial statements for the period from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year]",
+    "Hs": "自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期间的财务报表",
+    "Ht": "自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期間的財務報表"
+  },
+  {
+    "Vietnamese": "Báo cáo tài chính cho giai đoạn từ ngày [p1_day]/[p1_month]/[p1_year] đến ngày [p2_day]/[p2_month]/[p2_year]",
+    "E": "Financial statements for the period from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year]",
+    "Hs": "自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期间的财务报表",
+    "Ht": "自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期間的財務報表"
+  },
+  {
+    "Vietnamese": "Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại ngày [e_day] tháng [e_month] năm [e_year], cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày, phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.",
+    "E": "In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at [e_month] [e_day], [e_year], and its financial performance and its cash flows for the year then ended in accordance with Vietnamese Accounting Standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam.",
+    "Hs": "依本会计师的意见，上开财务报表在所有重大方面已真实、公允地反映公司在[e_year]年[e_month]月[e_day]日财务状况以及同日结束财务年度的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。",
+    "Ht": "依本會計師之意見，上開財務報表在所有重大方面已真實、公允地反映公司於[e_year]年[e_month]月[e_day]日財務狀況以及同日結束財務年度之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
+  },
+  {
+    "Vietnamese": "Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại ngày [e_day] tháng [e_month] năm [e_year], cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho giai đoạn từ ngày [p1_day] tháng [p1_month] năm [p1_year] đến ngày [p2_day] tháng [p2_month] năm [p2_year], phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.",
+    "E": "In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at [e_month] [e_day], [e_year], and its financial performance and its cash flows for the period from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year] in accordance with Vietnamese Accounting Standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam.",
+    "Hs": "依本会计师的意见，上开财务报表在所有重大方面已真实、公允地反映公司在[e_year]年[e_month]月[e_day]日财务状况以及自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期间的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。",
+    "Ht": "依本會計師之意見，上開財務報表在所有重大方面已真實、公允地反映公司於[e_year]年[e_month]月[e_day]日財務狀況以及自[p1_year]年[p1_month]月[p1_day]日至[p2_year]年[p2_month]月[p2_day]日期間之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
+  },
+  {
+    "Vietnamese": "[v_name]",
+    "E": "[t_name]",
+    "Hs": "[t_name]",
+    "Ht": "[t_name]"
+  },
+  {
+    "Vietnamese": "Ngày [e_day] tháng [e_month] năm [e_year]",
+    "E": "[e_month] [e_day], [e_year]",
+    "Hs": "[e_year]年[e_month]月[e_day]日",
+    "Ht": "[e_year]年[e_month]月[e_day]日"
+  },
+  {
+    "Vietnamese": "ngày [e_day] tháng [e_month] năm [e_year]",
+    "E": "[e_month] [e_day], [e_year]",
+    "Hs": "[e_year]年[e_month]月[e_day]日",
+    "Ht": "[e_year]年[e_month]月[e_day]日"
+  },
+  {
+    "Vietnamese": "NGÀY [e_day] THÁNG [e_month] NĂM [e_year]",
+    "E": "[E_MONTH] [e_day], [e_year]",
+    "Hs": "[e_year]年[e_month]月[e_day]日",
+    "Ht": "[e_year]年[e_month]月[e_day]日"
+  }
+]

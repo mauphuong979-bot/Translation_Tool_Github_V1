@@ -1,0 +1,11 @@
+Vietnamese,E
+"Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại ngày [e_day] tháng [e_month] năm [e_year], cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho giai đoạn từ ngày [p1_day] tháng [p1_month] năm [p1_year] đến ngày [p2_day] tháng [p2_month] năm [p2_year], phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.","In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at [e_month] [e_day], [e_year], and its financial performance and its cash flows for the period from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year] in accordance with Vietnamese Accounting Standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam."
+[v_name],[t_name]
+Ngày [e_day] tháng [e_month] năm [e_year],"[e_month] [e_day], [e_year]"
+ngày [e_day] tháng [e_month] năm [e_year],"[e_month] [e_day], [e_year]"
+NGÀY [e_day] THÁNG [e_month] NĂM [e_year],"[E_MONTH] [e_day], [e_year]"
+từ ngày [p1_day] tháng [p1_month] năm [p1_year] đến ngày [p2_day] tháng [p2_month] năm [p2_year],"from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year]"
+từ ngày [p1_day]/[p1_month]/[p1_year] đến ngày [p2_day]/[p2_month]/[p2_year],"from [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year]"
+Từ [p1_day]/[p1_month]/[p1_year] đến [p2_day]/[p2_month]/[p2_year],"From Mar [p1_day], [p1_year] to Apr [p2_day], [p2_year]"
+Từ [p3_day]/[p3_month]/[p3_year] đến [p4_day]/[p4_month]/[p4_year],"From [p3_month] [p3_day], [p3_year] to [p4_month] [p4_day], [p4_year]"
+Tại ngày [e_day] tháng [e_month] năm [e_year],"As at [e_month] [e_day], [e_year]"

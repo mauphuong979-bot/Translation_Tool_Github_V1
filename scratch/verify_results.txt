@@ -1,0 +1,4 @@
+Found 2 items still containing Vietnamese.
+
+[T1 C(1,5)] 'Từ 27/03/2024 đến 31/12/2024'
+[T2 C(1,5)] 'Tạ Thị Thảo'

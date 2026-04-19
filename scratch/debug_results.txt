@@ -1,0 +1,176 @@
+Found 29 Vietnamese segments.
+
+Context: Table 1 Cell(1, 1)
+Text: 'CHỈ TIÊU'
+Cleaned: 'CHỈ TIÊU'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'ITEMS'
+----------------------------------------
+Context: Table 1 Cell(1, 2)
+Text: 'Mã số'
+Cleaned: 'Mã số'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'Code'
+----------------------------------------
+Context: Table 1 Cell(1, 3)
+Text: 'Thuyết minh'
+Cleaned: 'Thuyết minh'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'Notes'
+----------------------------------------
+Context: Table 1 Cell(1, 4)
+Text: 'Từ 01/01/2025 đến 31/12/2025'
+Cleaned: 'Từ 01/01/2025 đến 31/12/2025'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(1, 5)
+Text: 'Từ 27/03/2024 đến 31/12/2024'
+Cleaned: 'Từ 27/03/2024 đến 31/12/2024'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(3, 1)
+Text: '1. 	Doanh thu bán hàng và cung cấp dịch vụ'
+Cleaned: '1. Doanh thu bán hàng và cung cấp dịch vụ'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(5, 1)
+Text: '2. 	Các khoản giảm trừ doanh thu'
+Cleaned: '2. Các khoản giảm trừ doanh thu'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(7, 1)
+Text: '3. 	Doanh thu thuần về bán hàng và cung cấp dịch vụ'
+Cleaned: '3. Doanh thu thuần về bán hàng và cung cấp dịch vụ'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(9, 1)
+Text: '4. 	Giá vốn hàng bán '
+Cleaned: '4. Giá vốn hàng bán'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(11, 1)
+Text: '5. 	Lợi nhuận gộp về bán hàng và cung cấp dịch vụ'
+Cleaned: '5. Lợi nhuận gộp về bán hàng và cung cấp dịch vụ'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(13, 1)
+Text: '6.	Doanh thu hoạt động tài chính'
+Cleaned: '6. Doanh thu hoạt động tài chính'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(15, 1)
+Text: '7.	Chi phí tài chính'
+Cleaned: '7. Chi phí tài chính'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(16, 1)
+Text: 'Trong đó: Chi phí lãi vay '
+Cleaned: 'Trong đó: Chi phí lãi vay'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'In which: Interest expenses'
+----------------------------------------
+Context: Table 1 Cell(18, 1)
+Text: '8. 	Chi phí bán hàng '
+Cleaned: '8. Chi phí bán hàng'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(20, 1)
+Text: '9. 	Chi phí quản lý doanh nghiệp'
+Cleaned: '9. Chi phí quản lý doanh nghiệp'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(22, 1)
+Text: '10. 	Lợi nhuận thuần từ hoạt động kinh doanh '
+Cleaned: '10. Lợi nhuận thuần từ hoạt động kinh doanh'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(24, 1)
+Text: '11.	Thu nhập khác'
+Cleaned: '11. Thu nhập khác'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(26, 1)
+Text: '12.	Chi phí khác'
+Cleaned: '12. Chi phí khác'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(28, 1)
+Text: '13. Lợi nhuận khác '
+Cleaned: '13. Lợi nhuận khác'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(30, 1)
+Text: '14. Tổng lợi nhuận kế toán trước thuế '
+Cleaned: '14. Tổng lợi nhuận kế toán trước thuế'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(32, 1)
+Text: '15. Chi phí thuế thu nhập doanh nghiệp hiện hành'
+Cleaned: '15. Chi phí thuế thu nhập doanh nghiệp hiện hành'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(34, 1)
+Text: '16. Chi phí thuế thu nhập doanh nghiệp hoãn lại'
+Cleaned: '16. Chi phí thuế thu nhập doanh nghiệp hoãn lại'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 1 Cell(36, 1)
+Text: '17. Lợi nhuận sau thuế thu nhập doanh nghiệp'
+Cleaned: '17. Lợi nhuận sau thuế thu nhập doanh nghiệp'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 2 Cell(1, 5)
+Text: 'Tạ Thị Thảo'
+Cleaned: 'Tạ Thị Thảo'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 2 Cell(2, 1)
+Text: 'Tổng Giám đốc'
+Cleaned: 'Tổng Giám đốc'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'General Director'
+----------------------------------------
+Context: Table 2 Cell(2, 5)
+Text: 'Người lập biểu kiêm kế toán trưởng'
+Cleaned: 'Người lập biểu kiêm kế toán trưởng'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'In charge of report cum Chief Accountant'
+----------------------------------------
+Context: Table 2 Cell(3, 1)
+Text: 'Ngày 20 tháng 03 năm 2026'
+Cleaned: 'Ngày 20 tháng 03 năm 2026'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 2 Cell(3, 5)
+Text: 'Số chứng chỉ hành nghề: 3913/2022/KET.1'
+Cleaned: 'Số chứng chỉ hành nghề: 3913/2022/KET.1'
+Reason: Not found in dictionary
+Dict Val: 'N/A'
+----------------------------------------
+Context: Table 2 Cell(4, 5)
+Text: 'Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam'
+Cleaned: 'Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam'
+Reason: Found in dictionary but NOT replaced
+Dict Val: 'Branch of Fair Consulting Co., Ltd. Japan in Vietnam'
+----------------------------------------

@@ -1,0 +1,19 @@
+Matches for 'Doanh thu hoạt động tài chính':
+                        Vietnamese                 E    Hs    Ht
+660  Doanh thu hoạt động tài chính  Financial income  财务收入  財務收入
+
+Checking: 'Doanh thu hoạt động tài chính'
+                        Vietnamese                 E    Hs    Ht
+660  Doanh thu hoạt động tài chính  Financial income  财务收入  財務收入
+
+Checking: 'Chi phí tài chính'
+            Vietnamese                   E    Hs    Ht
+430  Chi phí tài chính  Financial expenses  财务费用  財務費用
+
+Checking: 'Thu nhập khác'
+         Vietnamese             E     Hs     Ht
+1273  Thu nhập khác  Other income  营业外收入  營業外收入
+
+Checking: 'Chi phí khác'
+       Vietnamese               E               Hs               Ht
+395  Chi phí khác  Other expenses  营业外支出-chọn-其他费用  營業外支出-chọn-其他費用

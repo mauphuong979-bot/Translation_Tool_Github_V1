@@ -9,14 +9,26 @@ from docx.text.paragraph import Paragraph
 from docx.enum.text import WD_COLOR_INDEX
 from docx.shared import Pt, Cm
 from docx.oxml.ns import qn
+from docx.oxml import OxmlElement
 
 # Use absolute path for Streamlit Cloud compatibility
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DICTIONARY_FILE = os.path.join(BASE_DIR, "Dictionary.xlsx")
-CLEANV_FILE = os.path.join(BASE_DIR, "clean_v.json")
-PARA_TEMPLATE_FILE = os.path.join(BASE_DIR, "para_template.json")
 
-def clean_text(text):
+CLEANV_JSON = os.path.join(BASE_DIR, "clean_v.json")
+CLEANV_XLSX = os.path.join(BASE_DIR, "CleanV.xlsx")
+
+PARA_TEMPLATE_JSON = os.path.join(BASE_DIR, "para_template.json")
+PARA_TEMPLATE_XLSX = os.path.join(BASE_DIR, "ParaTemplate.xlsx")
+
+DICTIONARY_V3_XLSX = os.path.join(BASE_DIR, "Dictionary_v3.xlsx")
+DICTIONARY_V3_JSON = os.path.join(BASE_DIR, "dictionary_v3.json")
+
+# Legacy compatibility (optional, but keep if used elsewhere)
+CLEANV_FILE = CLEANV_JSON
+PARA_TEMPLATE_FILE = PARA_TEMPLATE_JSON
+DICTIONARY_V3_FILE = DICTIONARY_V3_XLSX
+
+def clean_text(text, preserve_newlines=False):
     """
     Ultra-robust text cleaning for Word documents.
     Normalizes to NFC, strips invisible controls/soft hyphens, and collapses all whitespace.
@@ -27,12 +39,21 @@ def clean_text(text):
     # Normalize to NFC (Normalization Form C) to ensure consistent Vietnamese character encoding
     text = unicodedata.normalize('NFC', str(text))
     
-    # Remove hidden control characters, soft hyphens (\u00ad), and zero-width spaces
-    # These often appear in Word headers/footers and prevent text matching.
-    text = re.sub(r'[\u200b\ufeff\u00ad\u0000-\u0008\u000e-\u001f]', '', text)
+    # Remove non-printable control characters, soft hyphens (\u00ad), and zero-width characters
+    # \u200b: zero width space, \u200c: zero width non-joiner, \u200d: zero width joiner, \u2060: word joiner, \ufeff: BOM
+    # \xb7: middle dot (·), \u2022: bullet point (•)
+    # \u202a-\u202e: BiDi markers (LRE, RLE, PDF, LRO, RLO), \u200e: LTR mark, \u200f: RTL mark
+    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\xad\u200b\u200c\u200d\u2060\ufeff\xb7\u2022\u202a-\u202e\u200e\u200f]', ' ', text)
     
-    # Replace all whitespace sequences (tabs, newlines, non-breaking spaces) with a standard space
-    text = re.sub(r'\s+', ' ', text)
+    if preserve_newlines:
+        # Replace tabs and multiple spaces with a single space, but keep newlines
+        text = re.sub(r'[ \t\r\f\v\u00a0]+', ' ', text)
+    else:
+        # Replace all whitespace sequences (tabs, newlines, non-breaking spaces) with a standard space
+        text = re.sub(r'\s+', ' ', text)
+    
+    # Robustly handle numbering by ensuring exactly one space after dots at the start of strings or after spaces
+    text = re.sub(r'(^|\s)(\d+)\.\s*', r'\1\2. ', text)
     
     return text.strip()
 
@@ -56,7 +77,12 @@ def load_para_template_map():
     if os.path.exists(PARA_TEMPLATE_FILE):
         try:
             with open(PARA_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                raw_data = json.load(f)
+                # Normalize keys for robust matching
+                normalized_map = {}
+                for vn_key, trans_data in raw_data.items():
+                    normalized_map[clean_text(vn_key)] = trans_data
+                return normalized_map
         except Exception as e:
             print(f"Error loading para_template.json: {e}")
             return {}
@@ -75,14 +101,21 @@ def _apply_para_templates_to_container(container, para_map, target_col, replaced
         
         # Sort keys by length descending
         sorted_keys = sorted(para_map.keys(), key=len, reverse=True)
+        para_text_lower = text.lower()
+        
         for vn_key in sorted_keys:
-            if vn_key in text:
+            # Case-insensitive check
+            if vn_key.lower() in para_text_lower:
                 # Found a template match
                 template_data = para_map[vn_key]
                 new_text = template_data.get(target_col, "")
                 if new_text:
-                    # Replace entire paragraph text
-                    para.text = new_text
+                    # print(f"DEBUG: Found ParaTemplate match! Key: '{vn_key[:30]}...' -> Target: '{target_col}'")
+                    # Replace entire paragraph text while preserving the best available formatting
+                    # We use the full paragraph text as the key to ensure the whole paragraph is swapped.
+                    full_original = clean_text(para.text)
+                    dummy_map = prepare_translation_list({full_original: new_text})
+                    apply_translations_to_paragraph(para, dummy_map)
                     replaced_paragraphs.add(para) # Mark as replaced
                     count += 1
                     break # Only one template per paragraph
@@ -146,6 +179,42 @@ def _apply_cleanv_to_container(container, cleanv_map):
             
     return count
 
+def apply_unicode_normalization(doc):
+    """
+    Explicitly normalizes all text in the document (Body, Header, Footer, Tables) to NFC.
+    """
+    def _norm_container(container):
+        for para in container.paragraphs:
+            for run in para.runs:
+                if run.text:
+                    run.text = unicodedata.normalize('NFC', run.text)
+
+    # 1. Body
+    _norm_container(doc)
+    
+    # 2. Tables
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                _norm_container(cell)
+                
+    # 3. Headers and Footers
+    for section in doc.sections:
+        headers = [section.header, section.footer]
+        if section.different_first_page_header_footer:
+            headers.extend([section.first_page_header, section.first_page_footer])
+        try:
+            headers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+        
+        for h in headers:
+            if h:
+                _norm_container(h)
+                for table in h.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            _norm_container(cell)
+
 def apply_cleanv_normalization(doc, cleanv_map):
     """
     Applies Vietnamese text normalization to the entire document.
@@ -185,7 +254,7 @@ def apply_special_textbox_formatting(doc, target_col):
     find_text = "BẢN DỰ THẢO"
     
     replace_data = {
-        "E": "DRAFT FOR DISCUSSION ONLY",
+        "E": "DRAFT",
         "Hs": "草 稿",
         "Ht": "草 稿"
     }
@@ -360,14 +429,26 @@ def _process_paragraph_font_dual(para, target_col):
 
     # Clear existing runs
     p_el = para._element
+    
+    LATIN_FONT = "Times New Roman"
+    CJK_FONT = "DFKai-SB"
+
+    # NEW: Protection for Link Fields (Excel links, automated data)
+    # If fields are present, we DO NOT split runs because it destroys the XML structure of the links.
+    if has_fields(para):
+        for run in para.runs:
+            if not run.text: continue
+            # Non-destructive formatting: apply font/size to existing runs
+            is_ch = contains_chinese(run.text)
+            target_size = 10 if is_ch else None # Enforce 10pt for Chinese result text
+            _set_run_fonts_refined(run, LATIN_FONT, CJK_FONT, target_size)
+        return
+
     for r in old_runs:
         p_el.remove(r._element)
         
     # Regex to split by Chinese characters while keeping them
     cjk_pattern = r'([\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]+)'
-    
-    LATIN_FONT = "Times New Roman"
-    CJK_FONT = "DFKai-SB"
     
     for old_run in old_runs:
         text = old_run.text
@@ -443,6 +524,8 @@ def format_dates_in_tables(doc, target_col="E"):
     Finds dates in DD/MM/YYYY format in table cells and reformats them.
     English (E): MMM DD, YYYY
     Chinese (Hs/Ht): YYYY/MM/DD日
+    
+    Now works at the run level to preserve Word fields (Excel links).
     """
     # Regex for DD/MM/YYYY (supports 1 or 2 digits for day/month)
     date_pattern = re.compile(r'^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/([0-9]{4})$')
@@ -451,32 +534,49 @@ def format_dates_in_tables(doc, target_col="E"):
     for table in doc.tables:
         for row in table.rows:
             for cell in row.cells:
-                # 1. Aggressive cleaning like VBA: remove control chars < 32 and trim
-                raw_text = "".join(ch for ch in cell.text if ord(ch) >= 32).strip()
-                
-                # 2. Check if text matches EXACTLY a date
-                match = date_pattern.match(raw_text)
-                if match:
-                    try:
-                        # 3. Parse date
-                        day, month, year = match.groups()
-                        dt = datetime(int(year), int(month), int(day))
-                        
-                        # 4. Reformat based on target language
-                        if target_col == "E":
-                            # VBA 'MMM dd, yyyy' -> 'Jan 01, 2023'
-                            new_text = dt.strftime("%b %d, %Y")
-                        elif target_col in ["Hs", "Ht"]:
-                            # VBA 'yyyy/mm/dd' & "日" -> '2023/12/31日'
-                            new_text = dt.strftime("%Y/%m/%d") + "日"
-                        else:
+                # Iterate through all paragraphs and runs inside the cell
+                # This allows us to find and replace dates even if they are part of a field
+                for para in cell.paragraphs:
+                    for run in para.runs:
+                        if not run.text:
                             continue
                             
-                        # 5. Overwrite cell text
-                        cell.text = new_text
-                        count += 1
-                    except:
-                        pass
+                        # Aggressive cleaning: remove control chars < 32 and trim
+                        clean_run_text = "".join(ch for ch in run.text if ord(ch) >= 32).strip()
+                        
+                        # Check if run text matches EXACTLY a date
+                        match = date_pattern.match(clean_run_text)
+                        if match:
+                            try:
+                                # Parse date
+                                day, month, year = match.groups()
+                                dt = datetime(int(year), int(month), int(day))
+                                
+                                # Reformat based on target language
+                                if target_col == "E":
+                                    # 'MMM dd, yyyy' -> 'Jan 01, 2023'
+                                    new_text = dt.strftime("%b %d, %Y")
+                                elif target_col in ["Hs", "Ht"]:
+                                    # 'yyyy/mm/dd' & "日" -> '2023/12/31日'
+                                    new_text = dt.strftime("%Y/%m/%d") + "日"
+                                else:
+                                    continue
+                                    
+                                # Preserve any extra characters that were trimmed
+                                run.text = run.text.replace(clean_run_text, new_text)
+                                count += 1
+                                
+                                # NEW: Disconnect Excel fields for this cell
+                                # This ensures the translated date is static text.
+                                unlink_fields_in_item(cell)
+                                
+                                # Since we've modified the XML structure of the cell by unlinking,
+                                # it's safer to stop iterating THIS cell and move to the next.
+                                break # break para loop
+                            except:
+                                pass
+                    else: continue
+                    break # break cell loop (para loop was broken)
     return count
 
 def contains_vietnamese(text):
@@ -505,9 +605,136 @@ def contains_chinese(text):
     """
     if not text:
         return False
-    # Regex range for common CJK characters + CJK punctuation and fullwidth symbols
     pattern = r'[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f\uff00-\uffef]'
     return bool(re.search(pattern, text))
+
+def swap_vn_to_en_number_separators(text):
+    """
+    Swaps Vietnamese number separators (. for thousands, , for decimal)
+    to International/English style (, for thousands, . for decimal).
+    
+    Target patterns:
+    - 1.234,56 -> 1,234.56
+    - 1.234 -> 1,234 (Must have exactly 3 digits after dot)
+    - 6,78 -> 6.78
+    
+    Safe from dates like 31.12.2025 because those don't have 3-digit groups.
+    """
+    if not text:
+        return text
+        
+    # Pattern explanation:
+    # (?<!\d) : No digit before
+    # (?: ... ) : Non-capturing alternatives
+    #   \d{1,3}(?:\.\d{3})+(?:,\d+)? : Numbers with thousands dots and optional decimal comma
+    #   | \d+,\d+ : Numbers with only decimal comma
+    # (?!\d) : No digit after
+    pattern = re.compile(r'(?<!\d)(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+,\d+)(?!\d)')
+    
+    def replace_func(match):
+        val = match.group(0)
+        # 3-step swap to avoid overwriting
+        return val.replace('.', 'TEMP_DOT').replace(',', '.').replace('TEMP_DOT', ',')
+        
+    return pattern.sub(replace_func, text)
+
+def apply_financial_number_formatting(doc, target_col):
+    """
+    Safe run-level scan to swap number separators.
+    Used for English and Chinese reports to match international standards.
+    Operates ONLY on run.text to preserve Link Fields (Excel links).
+    """
+    if target_col == "V":
+        return
+
+    # Process all possible containers
+    containers = [doc]
+    for section in doc.sections:
+        containers.extend([section.header, section.footer])
+        if section.different_first_page_header_footer:
+            containers.extend([section.first_page_header, section.first_page_footer])
+        try:
+            containers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+
+    for container in containers:
+        # 1. Body Paragraphs
+        for para in container.paragraphs:
+            for run in para.runs:
+                if run.text:
+                    run.text = swap_vn_to_en_number_separators(run.text)
+        
+        # 2. Table Cells
+        for table in container.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    # Deep traversal of cell contents
+                    for p_el in cell._element.xpath('.//*[local-name()="p"]'):
+                        para = Paragraph(p_el, cell)
+                        for run in para.runs:
+                            if run.text:
+                                run.text = swap_vn_to_en_number_separators(run.text)
+                    
+                    # Handle text boxes within tables too
+                    for t_el in cell._element.xpath('.//*[local-name()="textbox"]'):
+                        for p_el in t_el.xpath('.//*[local-name()="p"]'):
+                            para = Paragraph(p_el, t_el)
+                            for run in para.runs:
+                                if run.text:
+                                    run.text = swap_vn_to_en_number_separators(run.text)
+
+def has_fields(doc_item):
+    """
+    Checks if a paragraph or cell contains Word fields (links to Excel, automated data).
+    Detecting w:fldSimple, w:fldChar, or w:instrText ensures we don't destroy link structures.
+    """
+    try:
+        element = doc_item._element
+        # XPath to find common field markers
+        fields = element.xpath('.//*[local-name()="fldSimple" or local-name()="fldChar" or local-name()="instrText"]')
+        return len(fields) > 0
+    except:
+        return False
+
+def unlink_fields_in_item(item):
+    """
+    Strips Word fields (fldSimple, complex fields) to leave only plain text results (static text).
+    This "disconnects" the content from external sources like Excel.
+    """
+    try:
+        element = item._element
+        
+        # 1. Handle fldSimple: Replace the field with its children content
+        for fld in element.xpath('.//*[local-name()="fldSimple"]'):
+            parent = fld.getparent()
+            if parent is not None:
+                # Move all children (runs) out of the fldSimple element
+                for child in list(fld):
+                    fld.addprevious(child)
+                parent.remove(fld)
+                
+        # 2. Handle complex fields (begin, separate, end markers and instrText)
+        # We remove the runs that contain these markers, leaving only the "result" runs.
+        # Field markers are usually wrapped in <w:r>
+        xpath_query = './/*[local-name()="fldChar" or local-name()="instrText"]'
+        for marker in element.xpath(xpath_query):
+            # Find the parent run element <w:r>
+            run_element = marker.getparent()
+            # If marker is instrText, its parent is <w:r>. 
+            # If marker is fldChar, its parent is <w:r>.
+            # However, sometimes they might be buried deeper if there are nested elements, 
+            # but usually it's direct.
+            while run_element is not None and not run_element.tag.endswith('}r'):
+                run_element = run_element.getparent()
+                
+            if run_element is not None:
+                run_parent = run_element.getparent()
+                if run_parent is not None:
+                    run_parent.remove(run_element)
+        return True
+    except Exception as e:
+        # Silently fail if XML manipulation hits an edge case
+        return False
 
 def _copy_run_format(src_run, dest_run):
     """
@@ -539,6 +766,15 @@ def _process_item_for_word_highlight(para):
 
     # 2. Clear existing runs from paragraph element safely
     p_el = para._element
+    
+    # NEW: Protection for Link Fields in Highlight step
+    if has_fields(para):
+        # If paragraph has links, only highlight existing runs without splitting
+        for run in para.runs:
+            if contains_vietnamese(run.text):
+                run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+        return
+
     for r in old_runs:
         p_el.remove(r._element)
     
@@ -632,19 +868,6 @@ def apply_chinese_currency_cleanup(doc):
         for row in table.rows:
             for cell in row.cells:
                 _clean_container(cell)
-                
-    # 3. Headers and Footers
-    for section in doc.sections:
-        _clean_container(section.header)
-        _clean_container(section.footer)
-        if section.different_first_page_header_footer:
-            _clean_container(section.first_page_header)
-            _clean_container(section.first_page_footer)
-        try:
-            _clean_container(section.even_page_header)
-            _clean_container(section.even_page_footer)
-        except: pass
-
 def apply_normalization_to_text(text, cleanv_map):
     """
     Applies Vietnamese text normalization using the cleanv_map.
@@ -656,349 +879,295 @@ def apply_normalization_to_text(text, cleanv_map):
     new_text = text
     changed = False
     
-    # Sort keys by length descending to match longest phrases first
-    sorted_keys = sorted(cleanv_map.keys(), key=len, reverse=True)
-    
-    for key in sorted_keys:
+    # Iterate through keys in their original order (top-to-bottom in JSON)
+    for key in cleanv_map:
         if key in new_text:
             new_text = new_text.replace(key, cleanv_map[key])
             changed = True
             
     return new_text, changed
 
-# --- Excel Formula Simulation Helpers ---
+def parse_date_to_tags(date_str, prefix):
+    """
+    Extracts day, month, year from various date formats (DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY).
+    Supports 2-digit and 4-digit years.
+    Returns tags like [prefix_day], [prefix_month], [prefix_year].
+    """
+    if not date_str or not isinstance(date_str, str):
+        return {f"[{prefix}_day]": "", f"[{prefix}_month]": "", f"[{prefix}_year]": ""}
+    
+    # Clean and split by common separators
+    clean_date = date_str.strip()
+    parts = re.split(r"[/.-]", clean_date)
+    
+    if len(parts) == 3:
+        try:
+            d, m, y = parts[0].strip(), parts[1].strip(), parts[2].strip()
+            # Pad with zero if single digit
+            if d.isdigit(): d = f"{int(d):02d}"
+            if m.isdigit(): m = f"{int(m):02d}"
+            # Handle 2-digit years if necessary (simple heuristic)
+            if y.isdigit() and len(y) == 2:
+                y = "20" + y # Assume 20xx
+            
+            return {f"[{prefix}_day]": d, f"[{prefix}_month]": m, f"[{prefix}_year]": y}
+        except: pass
+    return {f"[{prefix}_day]": "", f"[{prefix}_month]": "", f"[{prefix}_year]": ""}
 
-def parse_vn_period_dates(period_str):
+def parse_period_to_tags(period_str, date1_prefix, date2_prefix):
     """
-    Parses 'từ ngày 04 tháng 11 năm 2025 đến ngày 31 tháng 12 năm 2025'
-    Returns (start_date, end_date) as datetime objects
+    Extracts two dates from a period string and maps to tags.
+    Supports /, -, . as separators and 2/4-digit years.
     """
-    if not isinstance(period_str, str) or "đến" not in period_str:
-        return None, None
+    tags = {}
+    # Initialize default empty tags
+    for p in [date1_prefix, date2_prefix]:
+        tags.update({f"[{p}_day]": "", f"[{p}_month]": "", f"[{p}_year]": ""})
+        
+    if not period_str or not isinstance(period_str, str):
+        return tags
+        
+    # Find all date patterns: \d{1,2} [separator] \d{1,2} [separator] \d{2,4}
+    # Using re.findall returns tuples of groups
+    dates = re.findall(r"(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})", period_str)
     
-    parts = period_str.split("đến")
-    dates = []
-    for part in parts:
-        # Match 'ngày X tháng Y năm Z'
-        # Group 1: day, Group 2: month, Group 3: year
-        match = re.search(r"ngày\s+(\d+)\s+tháng\s+(\d+)\s+năm\s+(\d+)", part)
-        if match:
-            day, month, year = match.groups()
-            try:
-                dates.append(datetime(int(year), int(month), int(day)))
-            except:
-                dates.append(None)
-        else:
-            dates.append(None)
-    
+    # Process First Date
+    if len(dates) >= 1:
+        d, m, y = dates[0]
+        if len(y) == 2: y = "20" + y
+        tags.update({
+            f"[{date1_prefix}_day]": f"{int(d):02d}", 
+            f"[{date1_prefix}_month]": f"{int(m):02d}", 
+            f"[{date1_prefix}_year]": y
+        })
+        
+    # Process Second Date
     if len(dates) >= 2:
-        return dates[0], dates[1]
-    return None, None
+        d, m, y = dates[1]
+        if len(y) == 2: y = "20" + y
+        tags.update({
+            f"[{date2_prefix}_day]": f"{int(d):02d}", 
+            f"[{date2_prefix}_month]": f"{int(m):02d}", 
+            f"[{date2_prefix}_year]": y
+        })
+        
+    return tags
 
-def format_excel_date_logic(dt, lang="vn"):
-    if not isinstance(dt, datetime):
-        return ""
-    if lang == "vn":
-        # 'Ngày 31 tháng 12 năm 2025'
-        return f"Ngày {dt.day:02d} tháng {dt.month:02d} năm {dt.year}"
-    elif lang == "en":
-        # 'December 31, 2025'
-        return dt.strftime("%B %d, %Y")
-    elif lang == "cn":
-        # '2025年12月31日'
-        return f"{dt.year}年{dt.month:02d}月{dt.day:02d}日"
-    elif lang == "short_vn":
-        # '31/12/2025'
-        return dt.strftime("%d/%m/%Y")
-    return ""
-
-def recalculate_dictionary_formulas(metadata):
+def get_metadata_substitution_map(metadata):
     """
-    Reproduces the logic of rows 6-64 from Dictionary.xlsx in Python.
-    Returns a list of rows, each row is [VN, E, Hs, Ht]
+    Common mapping for both template filling and legacy replacement.
+    Includes Vietnamese variants and supports v_name/V_NAME distinction.
     """
     name_vn = metadata.get("name_vn", "")
     name_trans = metadata.get("name_trans", "")
+    report_date = metadata.get("report_date", "")
     
-    # 1. Parse Dates
-    def parse_dt(d_str):
-        if not d_str: return None
-        try: return datetime.strptime(d_str, "%d/%m/%Y")
-        except: return None
-
-    y_end_dt = parse_dt(metadata.get("year_end", ""))
-    rep_date_dt = parse_dt(metadata.get("report_date", ""))
-    p_out_start, p_out_end = parse_vn_period_dates(metadata.get("period_out", ""))
+    # 1. Base Company Name Casing
+    subs = {
+        "[v_name]": name_vn,
+        "[V_NAME]": name_vn.upper(),
+        "[t_name]": name_trans,
+        "[T_NAME]": name_trans.upper(),
+        # Vietnamese Variants
+        "[têncôngty]": name_vn,
+        "[TÊN CÔNG TY]": name_vn.upper(),
+        "[tên khách hàng]": name_trans,
+        "[TÊN KHÁCH HÀNG]": name_trans.upper(),
+    }
     
-    # 2. Prepare Formatted Strings
-    date_vn = format_excel_date_logic(y_end_dt, "vn")
-    date_en = format_excel_date_logic(y_end_dt, "en")
-    date_cn = format_excel_date_logic(y_end_dt, "cn")
+    # 2. Date Tags (We add both casings because the output is numeric/consistent)
+    year_end_tags = parse_date_to_tags(metadata.get("year_end", ""), "e")
+    report_date_tags = parse_date_to_tags(report_date, "r")
+    p1_tags = parse_period_to_tags(metadata.get("period_in", ""), "p1", "p2")
+    p2_tags = parse_period_to_tags(metadata.get("period_in_2", ""), "p3", "p4")
     
-    p_out = metadata.get("period_out", "")
-    p_in = metadata.get("period_in", "")
-    p_out_en_start = format_excel_date_logic(p_out_start, "en")
-    p_out_en_end = format_excel_date_logic(p_out_end, "en")
-    p_out_cn_start = format_excel_date_logic(p_out_start, "cn")
-    p_out_cn_end = format_excel_date_logic(p_out_end, "cn")
-    
-    rep_year = str(y_end_dt.year) if y_end_dt else ""
-    rep_vn = format_excel_date_logic(rep_date_dt, "vn")
-    rep_en = format_excel_date_logic(rep_date_dt, "en")
-    rep_cn = format_excel_date_logic(rep_date_dt, "cn")
-
-    rows = []
-    
-    # 6: UPPER(A1 / Name)
-    rows.append([name_vn.upper(), name_trans.upper(), name_trans.upper(), name_trans.upper()])
-    
-    # 7: Statements for year ended ...
-    rows.append([
-        f"Báo cáo tài chính cho năm tài chính kết thúc {date_vn.lower()}",
-        f"Financial statements for the year ended {date_en}",
-        f"截至{date_cn}止财务年度的财务报表",
-        f"截至{date_cn}止財務年度之財務報表"
-    ])
-    
-    # 8-9: Periods
-    rows.append([
-        f"Báo cáo tài chính cho giai đoạn {p_out}" if p_out else "",
-        f"Financial statements for the period from {p_out_en_start} to {p_out_en_end}" if p_out_en_start else "",
-        f"{p_out_cn_start}至{p_out_cn_end}期间的财务报表" if p_out_cn_start else "",
-        f"{p_out_cn_start}至{p_out_cn_end}期間的財務報表" if p_out_cn_start else ""
-    ])
-    rows.append([
-        f"Báo cáo tài chính cho giai đoạn {p_in}" if p_in else "",
-        f"Financial statements for the period from {p_out_en_start} to {p_out_en_end}" if p_out_en_start else "",
-        f"{p_out_cn_start}至{p_out_cn_end}期间的财务报表" if p_out_cn_start else "",
-        f"{p_out_cn_start}至{p_out_cn_end}期間的財務報表" if p_out_cn_start else ""
-    ])
-    
-    # 10-11: Opinion
-    # Simplified long sentences logic based on Excel formulas
-    opinion_vn = "Theo ý kiến của chúng tôi, Báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại "
-    rows.append([
-        f"{opinion_vn}{date_vn.lower()}, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày, phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính.",
-        f"In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at {date_en}, and its financial performance and its cash flows for the year then ended in accordance with Vietnamese Accounting Standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam.",
-        f"依本会计师的意见，上开财务报表 in all material respects 已真实、公允地反映公司在{date_cn}财务状况以及同日结束财务年度的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。",
-        f"依本會計師之意見，上開財務報表 in all material respects 已真實、公允地反映公司於{date_cn}財務狀況以及同日結束財務年度之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。"
-    ])
-    rows.append([
-        f"{opinion_vn}{date_vn.lower()}, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho giai đoạn {p_out}, phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính." if p_out else "",
-        f"In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as at {date_en}, and its financial performance and its cash flows for the period from {p_out_en_start} to {p_out_en_end} in accordance with Vietnamese Accounting Standards, Vietnamese enterprise accounting system and applicable regulations relevant to the preparation and presentation of financial statements in Vietnam." if p_out_en_start else "",
-        f"依本会计师的意见，上开财务报表 in all material respects 已真实、公允地反映公司在{date_cn}财务状况以及{p_out_cn_start}至{p_out_cn_end}期间的经营成果和现金流量状况，且符合《越南会计准则》、《越南企业会计制度》以及财务报表编制和列报的相关法规。" if p_out_cn_start else "",
-        f"依本會計師之意見，上開財務報表 in all material respects 已真實、公允地反映公司於{date_cn}財務狀況以及{p_out_cn_start}至{p_out_cn_end}期間之經營成果及現金流量狀況，且符合《越南會計準則》、《越南企業會計制度》及財務報表編製及列報之相關法規。" if p_out_cn_start else ""
-    ])
-
-    # 12: Name (Standard)
-    rows.append([name_vn, name_trans, name_trans, name_trans])
-    
-    # 13, 14, 15: Dates
-    rows.append([date_vn, date_en, date_cn, date_cn])
-    rows.append([date_vn.lower(), date_en, date_cn, date_cn])
-    rows.append([date_vn.upper(), date_en.upper(), date_cn, date_cn])
-    
-    # 16, 17, 18, 19: Helpers
-    rows.append([p_out, f"from {p_out_en_start} to {p_out_en_end}" if p_out_en_start else "", f"自{p_out_cn_start}至{p_out_cn_end}" if p_out_cn_start else "", ""])
-    rows.append([f"từ ngày {format_excel_date_logic(p_out_start, 'short_vn')} đến ngày {format_excel_date_logic(p_out_end, 'short_vn')}" if p_out_start else "", "", "", ""])
-    rows.append([p_in, f"From {p_out_en_start} to {p_out_en_end}" if p_out_en_start else "", f"自{p_out_cn_start}日至{p_out_cn_end}日" if p_out_cn_start else "", ""])
-    rows.append(["", f"From {p_out_en_start} to {p_out_en_end}" if p_out_en_start else "", f"自{p_out_cn_start}日至{p_out_cn_end}日" if p_out_cn_start else "", ""])
-    
-    # 20: As at
-    rows.append([f"Tại {date_vn.lower()}", f"As at {date_en}", f"于{date_cn}", f"於{date_cn}"])
-    
-    # 21, 22: For the year ended
-    rows.append([f"Cho năm tài chính kết thúc {date_vn.lower()}", f"For the year ended {date_en}", f"截至{date_cn}止财务年度", f"截至{date_cn}止財務年度"])
-    rows.append([f"cho năm tài chính kết thúc {date_vn.lower()}", f"for the year ended {date_en}", f"截至{date_cn}止财务年度", f"截至{date_cn}止財務年度"])
-    
-    # 23-26: Period variations
-    rows.append([f"Cho giai đoạn {p_out}", f"For the period from {p_out_en_start} to {p_out_en_end}", f"{p_out_cn_start}至{p_out_cn_end}期间", ""])
-    rows.append([f"Cho giai đoạn {format_excel_date_logic(p_out_start, 'short_vn')} đến {format_excel_date_logic(p_out_end, 'short_vn')}", f"For the period from {p_out_en_start} to {p_out_en_end}", "", ""])
-    rows.append([f"cho giai đoạn {p_out}", f"for the period from {p_out_en_start} to {p_out_en_end}", "", ""])
-    rows.append([f"cho giai đoạn {format_excel_date_logic(p_out_start, 'short_vn')} đến {format_excel_date_logic(p_out_end, 'short_vn')}", f"for the period from {p_out_en_start} to {p_out_en_end}", "", ""])
-    
-    # 27, 28: Reporting Dates
-    rows.append([rep_vn, rep_en, rep_cn, rep_cn])
-    rows.append([rep_vn.lower(), rep_en, rep_cn, rep_cn])
-    
-    # 29, 30: Names/Dates again (Placeholder Keys restored)
-    rows.append(["[têncôngty]", name_trans, name_trans, name_trans])
-    rows.append(["[ngàybáocáo]", rep_en, rep_cn, rep_cn])
-    
-    # 31: Year
-    rows.append(["[nămbáocáo]", rep_year, rep_year, rep_year])
-    
-    # 32: Rep date (Placeholder Key)
-    rows.append(["[ngàykếtthúcnăm]", date_en, date_cn, date_cn])
-    
-    # 33, 34, 35: Caps
-    rows.append([f"CHO NĂM TÀI CHÍNH KẾT THÚC {date_vn.upper()}", f"FOR THE YEAR ENDED {date_en.upper()}", f"截至{date_cn}止财务年度", f"截至{date_cn}止財務年度"])
-    rows.append([f"CHO GIAI ĐOẠN {p_out.upper()}", f"FOR THE PERIOD FROM {p_out_en_start.upper()} TO {p_out_en_end.upper()}", "", ""])
-    rows.append([f"CHO GIAI ĐOẠN {p_in.upper()}", f"FOR THE PERIOD FROM {p_out_en_start.upper()} TO {p_out_en_end.upper()}", "", ""])
-    
-    # 36-64 (Auditors, Tax etc. - simplified logic based on your Excel)
-    rows.append([f"Công ty TNHH Kiểm toán U&I đã kiểm toán Báo cáo tài chính cho năm tài chính kết thúc {date_vn.lower()} và bày tỏ nguyện vọng tiếp tục được bổ nhiệm làm kiểm toán viên cho Công ty.", f"The auditors, U&I Auditing Company Limited, have performed audit on the Company’s financial statements for the year ended {date_en} and have expressed their willingness to accept reappointment.", "", ""])
-    rows.append([f"Công ty TNHH Kiểm toán U&I đã kiểm toán Báo cáo tài chính cho giai đoạn {p_out} và bày tỏ nguyện vọng tiếp tục được bổ nhiệm làm kiểm toán viên cho Công ty." if p_out else "", f"The auditors, U&I Auditing Company Limited, have performed audit on the Company’s financial statements for the period from {p_out_en_start} to {p_out_en_end} and have expressed their willingness to accept reappointment.", "", ""])
-    
-    rows.append([f"Chi phí thuế thu nhập doanh nghiệp cho năm tài chính kết thúc {date_vn.lower()} được tính trên thu nhập tính thuế ước tính. Chi phí thuế thu nhập doanh nghiệp này sẽ được cơ quan thuế xác định lại thông qua các cuộc kiểm tra.", f"Corporate income tax expense for the year ended {date_en} is calculated on the estimated assessable income. Corporate income tax expense will be determined again by the tax authority through their tax reviews. ", "", ""])
-    rows.append([f"Chi phí thuế thu nhập doanh nghiệp cho giai đoạn {p_out} được tính trên thu nhập tính thuế ước tính. Chi phí thuế thu nhập doanh nghiệp này sẽ được cơ quan thuế xác định lại thông qua các cuộc kiểm tra." if p_out else "", f"Corporate income tax expense for the period from {p_out_en_start} to {p_out_en_end} is calculated on the estimated assessable income. Corporate income tax expense will be determined again by the tax authority through their tax reviews. ", "", ""])
-    
-    rows.append([f"Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong năm {rep_year}.", f"Therefore, no deferred corporate income tax expense is provided in the year {rep_year}.", f"据此，并无递延所得税费用在{rep_year}年度内得以认列。", f"據此，並無遞延所得稅費用於{rep_year}年度內得以認列。"])
-    rows.append([f"Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận cho giai đoạn {p_out}.", f"Therefore, no deferred corporate income tax expense is provided in the period from {p_out_en_start} to {p_out_en_end}", f"据此，并无递延所得税费用{p_out_cn_start}至{p_out_cn_end}期间内得以认列。", f"據此，並無遞延所得稅費用{p_out_cn_start}至{p_out_cn_end}期間內得以認列。"])
-    rows.append([f"Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong giai đoạn {p_out}.", f"Same as above", "", ""])
-    
-    rows.append([f"Trong năm tài chính kết thúc {date_vn.lower()}, Công ty có các nghiệp vụ kinh tế quan trọng với các bên liên quan được trình bày ở bảng sau:", f"In the year ended {date_en}, the Company entered into significant economic transactions with its related parties as shown in the following table:", f"在截止{date_cn}财务年度之内，公司与其关联方发生重大经济交易，其列示在下表：", f"在截止{date_cn}財務年度之內，公司與其關聯方發生重大經濟交易，其列示於下表："])
-    rows.append([f"Trong giai đoạn {p_out}, Công ty có các nghiệp vụ kinh tế quan trọng với các bên liên quan được trình bày ở bảng sau:" if p_out else "", f"In the period from {p_out_en_start} to {p_out_en_end}, the Company entered into significant economic transactions with its related parties as shown in the following table:", "", ""])
-    rows.append([f"Trong năm tài chính kết thúc {date_vn.lower()}, Công ty có các nghiệp vụ kinh tế quan trọng và các khoản phải thu, phải trả với các bên liên quan được trình bày ở bảng sau", f"In the year ended {date_en}, the Company entered into significant economic transactions, receivables and payables with its related parties as shown in the following table", "", ""])
-    rows.append([f"Trong giai đoạn {p_out}, Công ty có các nghiệp vụ kinh tế quan trọng và các khoản phải thu, phải trả với các bên liên quan được trình bày ở bảng sau:" if p_out else "", f"In the period from {p_out_en_start} to {p_out_en_end}, the Company entered into significant economic transactions, receivables and payables with its related parties as shown in the following table", "", ""])
-    rows.append([f"Trong năm tài chính kết thúc {date_vn.lower()}, Công ty không phát sinh các nghiệp vụ kinh tế quan trọng với các bên liên quan.", f"In the year ended {date_en}, the Company had no significant economic transactions with its related parties.", "", ""])
-    rows.append([f"Trong giai đoạn {p_out}, Công ty không phát sinh các nghiệp vụ kinh tế quan trọng với các bên liên quan." if p_out else "", f"In the period from {p_out_en_start} to {p_out_en_end}, the Company had no significant economic transactions with its related parties.", "", ""])
-    
-    approvers = ["Tổng Giám đốc", "Ban Giám đốc", "Hội đồng Thành viên và Ban Giám đốc", "Giám đốc điều hành", "Ban Tổng Giám đốc", "Hội đồng Thành viên", "Giám đốc", "Chủ tịch", "Hội đồng Quản trị", "Chủ sở hữu"]
-    for app in approvers:
-        rows.append([f"Báo cáo tài chính được phê duyệt bởi {app} Công ty để phát hành vào {rep_vn.lower()}.", "", "", ""])
-        
-    rows.append([f"Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế trong năm {rep_year}.", f"No provision for current corporate income tax expense has been provided as the Company has no taxable income arising in the year {rep_year}.", "", ""])
-    rows.append([f"Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế cho giai đoạn {p_out}.", f"No provision for current corporate income tax expense has been provided as the Company has no taxable income arising in the period from {p_out_en_start} to {p_out_en_end}", "", ""])
-    rows.append([f"Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế trong giai đoạn {p_out}.", "Same as above", "", ""])
-    rows.append([f"Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập tính thuế sau khi trừ chuyển lỗ trong năm {rep_year}.", f"No provision for current corporate income tax expense has been provided as the Company has no assessable income after deducting tax loss brought forward in the year {rep_year}.", "", ""])
-    rows.append([f"Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập tính thuế sau khi trừ chuyển lỗ cho giai đoạn {p_out}.", f"No provision for current corporate income tax expense has been provided as the Company has no assessable income after deducting tax loss brought forward in the period from {p_out_en_start} to {p_out_en_end}", "", ""])
-    rows.append([f"Đến {date_vn.lower()}, Công ty vẫn chưa tiến hành hoạt động sản xuất kinh doanh.", f"As at {date_en}, the Company’s operation has yet to start.", "", ""])
-
-    return rows
-
-def load_excel_dictionary():
-    """
-    Loads metadata and dictionary from Dictionary.xlsx.
-    Metadata: A1, B1, C1, D1, A2, A3
-    Dictionary: Row 5 (headers), Row 6+ (data)
-    """
-    metadata = {}
-    df = None
-    
-    if os.path.exists(DICTIONARY_FILE):
-        try:
-            # 1. Load Metadata using openpyxl
-            wb = openpyxl.load_workbook(DICTIONARY_FILE, data_only=True)
-            ws = wb.active
+    for tag_set in [year_end_tags, report_date_tags, p1_tags, p2_tags]:
+        for k, v in tag_set.items():
+            subs[k.lower()] = v
+            subs[k.upper()] = v
             
-            metadata = {
-                "name_vn": clean_text(ws['A1'].value),
-                "name_trans": clean_text(ws['B1'].value),
-                "year_end": clean_text(ws['C1'].value),
-                "report_date": clean_text(ws['D1'].value),
-                "period_out": clean_text(ws['A2'].value),
-                "period_in": clean_text(ws['A3'].value)
-            }
-            wb.close()
-            
-            # 2. Load Dictionary Data using pandas (Start from Row 5)
-            # Row 5 is header, so header=4 (0-indexed)
-            df = pd.read_excel(DICTIONARY_FILE, header=4)
-            
-            if df is not None and not df.empty:
-                # Normalize columns
-                for col in df.columns:
-                    if df[col].dtype == object:
-                        df[col] = df[col].apply(clean_text)
-                # Ensure 'Vietnamese' column exists
-                if 'Vietnamese' in df.columns:
-                    df = df.dropna(subset=['Vietnamese'])
-            
-            return metadata, df
-        except Exception as e:
-            print(f"Error loading excel dictionary: {e}")
-            return {}, None
-    return {}, None
+    # Add other Vietnamese utility tags (both casings)
+    utility_v = {
+        "[ngàykếtthúcnăm]": metadata.get("year_end", ""),
+        "[ngàybáocáo]": report_date,
+    }
+    for k, v in utility_v.items():
+        subs[k.lower()] = v
+        subs[k.upper()] = v
 
-def save_excel_metadata(metadata, df=None):
-    """
-    Saves metadata to A1:D1, A2, A3 and optionally updates dictionary data.
-    Uses openpyxl to preserve formulas in other cells.
-    """
+    # Handle [nămbáocáo] specifically
+    year_only = ""
+    if report_date and isinstance(report_date, str):
+        parts = re.split(r"[/.-]", report_date)
+        if len(parts) == 3:
+            year_only = parts[2].strip()
+    subs["[nămbáocáo]"] = year_only
+    subs["[NĂM BÁO CÁO]"] = year_only
+    
+    # Normalize all keys to NFC
+    return {unicodedata.normalize('NFC', k): v for k, v in subs.items()}
+
+def sync_clean_v():
+    """Syncs CleanV.xlsx to clean_v.json"""
+    if not os.path.exists(CLEANV_XLSX):
+        return False, f"Missing {CLEANV_XLSX}"
     try:
-        if not os.path.exists(DICTIONARY_FILE):
-            # Create a new workbook if it doesn't exist
-            wb = openpyxl.Workbook()
-            ws = wb.active
-            ws.title = "Dictionary"
-        else:
-            wb = openpyxl.load_workbook(DICTIONARY_FILE)
-            ws = wb.active
+        df = pd.read_excel(CLEANV_XLSX).astype(str)
+        result = {}
+        for _, row in df.iterrows():
+            orig = row.get("Vietnamese")
+            if orig is None or orig == "nan":
+                orig = row.get("Original")
+            clean = row.get("Vietnamese_Cleaned")
+            if clean is None or clean == "nan":
+                clean = row.get("Cleaned")
 
-        # Write Metadata
-        ws['A1'] = metadata.get("name_vn", "")
-        ws['B1'] = metadata.get("name_trans", "")
-        ws['C1'] = metadata.get("year_end", "")
-        ws['D1'] = metadata.get("report_date", "")
-        ws['A2'] = metadata.get("period_out", "")
-        ws['A3'] = metadata.get("period_in", "")
+            orig = str(orig).strip() if orig is not None else ""
+            clean = str(clean).strip() if clean is not None else ""
+            if not orig or orig == "nan": continue
+            result[orig] = clean if clean != "nan" else ""
 
-        # Recalculate Rows 6-64 based on new metadata
-        # (Simulating Excel Formulas in Python)
-        calculated_rows = recalculate_dictionary_formulas(metadata)
-        
-        # Write calculated values starting at row 6
-        for i, row_data in enumerate(calculated_rows):
-            target_row = 6 + i
-            if target_row > 64: break
-            for j, val in enumerate(row_data):
-                if val: # Only overwrite if we have a calculated value
-                    ws.cell(row=target_row, column=j+1, value=val)
-
-        # Write Dictionary Data if provided (starting from Row 5)
-        if df is not None:
-            # Write headers at Row 5
-            headers = df.columns.tolist()
-            for col_idx, header in enumerate(headers, start=1):
-                ws.cell(row=5, column=col_idx, value=header)
-            
-            # Write data from Row 6
-            for row_idx, row in enumerate(df.values, start=6):
-                for col_idx, value in enumerate(row, start=1):
-                    # We only overwrite if value is not a formula (very basic check)
-                    ws.cell(row=row_idx, column=col_idx, value=value)
-
-        wb.save(DICTIONARY_FILE)
-        return True
+        with open(CLEANV_JSON, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=4, ensure_ascii=False)
+        return True, "Success"
     except Exception as e:
-        print(f"Error saving excel: {e}")
-        return False
+        return False, str(e)
 
-def load_dictionary():
-    """
-    Backwards compatibility wrapper for load_excel_dictionary.
-    Returns only the DataFrame.
-    """
-    _, df = load_excel_dictionary()
-    return df
+def sync_para_template():
+    """Syncs ParaTemplate.xlsx to para_template.json"""
+    if not os.path.exists(PARA_TEMPLATE_XLSX):
+        return False, f"Missing {PARA_TEMPLATE_XLSX}"
+    try:
+        df = pd.read_excel(PARA_TEMPLATE_XLSX).astype(str)
+        result = {}
+        for _, row in df.iterrows():
+            vn = row.get("Vietnamese", "").strip()
+            if not vn or vn == "nan": continue
+            result[vn] = {
+                "E": row.get("E", "").strip() if row.get("E") != "nan" else "",
+                "Hs": row.get("Hs", "").strip() if row.get("Hs") != "nan" else "",
+                "Ht": row.get("Ht", "").strip() if row.get("Ht") != "nan" else ""
+            }
+        with open(PARA_TEMPLATE_JSON, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=4, ensure_ascii=False)
+        return True, "Success"
+    except Exception as e:
+        return False, str(e)
 
-def save_dictionary(df):
-    """
-    Backwards compatibility wrapper for save_excel_metadata.
-    """
-    # Try to load existing metadata first to preserve it
-    metadata, _ = load_excel_dictionary()
-    return save_excel_metadata(metadata, df)
+def sync_dictionary_v3():
+    """Syncs Dictionary_v3.xlsx to dictionary_v3.json"""
+    if not os.path.exists(DICTIONARY_V3_XLSX):
+        return False, f"Missing {DICTIONARY_V3_XLSX}"
+    try:
+        df = pd.read_excel(DICTIONARY_V3_XLSX).astype(str)
+        result = df.to_dict(orient="records")
+        with open(DICTIONARY_V3_JSON, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=4, ensure_ascii=False)
+        return True, "Success"
+    except Exception as e:
+        return False, str(e)
 
-def get_translation_map(df, target_lang):
-    """
-    Creates a dictionary of Vietnamese -> Target Language.
-    """
-    if df is None or target_lang not in df.columns:
-        return {}
-    
-    # Create map, dropping rows with null translations in the target column
-    subset = df[['Vietnamese', target_lang]].dropna()
-    return dict(zip(subset['Vietnamese'], subset[target_lang]))
+def sync_all_templates():
+    """Syncs all three templates and returns results summary."""
+    results = {}
+    results["CleanV"] = sync_clean_v()
+    results["ParaTemplate"] = sync_para_template()
+    results["DictionaryV3"] = sync_dictionary_v3()
+    return results
 
-def find_missing_terms(text, translation_map):
-    """
-    Optional: Find terms that might be missing (not used currently based on user request).
-    """
-    pass
 
-def prepare_translation_list(translation_map, case_threshold=100):
+def load_and_fill_v3_dictionary(metadata):
+    """
+    Loads dictionary_v3.json and replaces all metadata tags.
+    If JSON is missing, syncs from XLSX first.
+    Returns a resolved DataFrame.
+    """
+    # 0. Ensure JSON exists
+    if not os.path.exists(DICTIONARY_V3_JSON):
+        if os.path.exists(DICTIONARY_V3_FILE):
+            sync_dictionary_v3()
+        else:
+            return None
+            
+    try:
+        # 1. Load from JSON
+        with open(DICTIONARY_V3_JSON, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            
+        # Convert to DataFrame (temporarily) to use the existing tag-filling logic
+        # This keeps the logic robust and minimizes changes to the core replacement loops
+        df = pd.DataFrame(data)
+        
+        # 2. Build substitution map (normalized to NFC)
+        sub_map = get_metadata_substitution_map(metadata)
+        
+        # 3. Force every column to string for total reliability
+        df = df.astype(str)
+        
+        # 4. Explicit Column-by-Column, Tag-by-Tag Replacement
+        # This approach is chosen for maximum compatibility and robustness
+        
+        # Tags that should NOT be replaced in the Vietnamese column (because they are for ParaTemplate)
+        protected_tag_names = [
+            "têncôngty", "tên công ty",
+            "ngàykếtthúcnăm", "ngày kết thúc năm",
+            "ngàybáocáo", "ngày báo cáo",
+            "nămbáocáo", "năm báo cáo"
+        ]
+        # Normalize to NFC for consistent matching check
+        protected_tag_names = [unicodedata.normalize('NFC', t.lower()) for t in protected_tag_names]
+
+        # English month names for Column E (Column B)
+        english_months = {
+            1: "January", 2: "February", 3: "March", 4: "April",
+            5: "May", 6: "June", 7: "July", 8: "August",
+            9: "September", 10: "October", 11: "November", 12: "December"
+        }
+
+        for tag_with_brackets, val in sub_map.items():
+            if not tag_with_brackets: continue
+            
+            # Extract tag name: [V_NAME] -> V_NAME
+            # We must preserve casing for the regex to match [V_NAME] specifically
+            tag_name = tag_with_brackets.replace("[", "").replace("]", "").strip()
+            tag_name_nfc = unicodedata.normalize('NFC', tag_name)
+            
+            # Check if this tag is protected in Vietnamese column (case-insensitive check)
+            is_protected = tag_name_nfc.lower() in protected_tag_names
+            
+            # Build robust regex: matches [ whitespace tag_name whitespace ]
+            # CASE-SENSITIVE matching to support v_name vs V_NAME
+            pattern = re.compile(r"\[\s*" + re.escape(tag_name_nfc) + r"\s*\]")
+            
+            for col in df.columns:
+                # Skip 'Vietnamese' column if the tag is protected for ParaTemplate
+                if is_protected and str(col).lower() == 'vietnamese':
+                    continue
+                
+                replacement_val = str(val) if val is not None else ""
+                
+                # SPECIAL: Use English month names if column is 'E' and tag is a month tag
+                if str(col).upper() == 'E' and "_month]" in tag_with_brackets.lower():
+                    try:
+                        m_num = int(replacement_val)
+                        if m_num in english_months:
+                            replacement_val = english_months[m_num]
+                    except: pass
+                    
+                # Use Series.str.replace with regex=True
+                df[col] = df[col].str.replace(pattern, replacement_val, regex=True)
+                
+        # 4. Final cleaning for every cell (collapsing whitespace, NFC normalization)
+        for col in df.columns:
+            df[col] = df[col].apply(lambda x: clean_text(x))
+            
+        return df
+    except Exception as e:
+        print(f"Error processing Dictionary_v3: {e}")
+        return None
+
+
+def prepare_translation_list(translation_map, case_threshold=25):
     """
     Pre-processes and sorts translation terms for efficiency.
     """
@@ -1039,7 +1208,22 @@ def apply_translations_to_text(text, prepared_list):
                 changed = True
     return new_text, changed
 
-def apply_translations_to_paragraph(paragraph, prepared_list):
+def is_meaningful_text(text):
+    """
+    Checks if a string contains alphanumeric characters or Vietnamese text.
+    Used to distinguish actual content runs from 'marker' runs (dots, symbols).
+    """
+    if not text:
+        return False
+    # Check if contains letters or numbers
+    if any(c.isalnum() for c in text):
+        return True
+    # Check if contains Vietnamese characters
+    if contains_vietnamese(text):
+        return True
+    return False
+
+def apply_translations_to_paragraph(paragraph, prepared_list, preserve_newlines=False):
     """
     Applies a pre-processed list of translations to a paragraph.
     Works for single-paragraph units.
@@ -1051,25 +1235,51 @@ def apply_translations_to_paragraph(paragraph, prepared_list):
     full_text = "".join(run.text for run in inline)
     
     # Normalize document text to ensure matching with dictionary
-    full_text = clean_text(full_text)
+    # Pass through the newline preservation flag
+    full_text = clean_text(full_text, preserve_newlines=preserve_newlines)
     
     new_text, changed = apply_translations_to_text(full_text, prepared_list)
     
     if changed:
         # Update runs while preserving paragraph-level formatting
-        if len(inline) > 0:
+        # We try to find the 'best' run to preserve its color/boldness/font
+        # 1st Priority: Run with meaningful text (letters/numbers)
+        # 2rd Priority: First non-empty run
+        format_source_run = None
+        
+        # Priority 1: Meaningful text
+        for run in inline:
+            if is_meaningful_text(run.text):
+                format_source_run = run
+                break
+        
+        # Priority 2: Any non-empty text
+        if not format_source_run:
+            for run in inline:
+                if run.text and run.text.strip():
+                    format_source_run = run
+                    break
+        
+        # Fallback to first run
+        if not format_source_run and len(inline) > 0:
+            format_source_run = inline[0]
+                
+        if format_source_run:
             for i, run in enumerate(inline):
-                run.text = new_text if i == 0 else ""
+                if run == format_source_run:
+                    run.text = new_text
+                else:
+                    run.text = ""
         else:
             paragraph.add_run(new_text)
     return changed
 
-def replace_text_in_paragraph(paragraph, translation_map, case_threshold=100):
+def replace_text_in_paragraph(paragraph, translation_map, case_threshold=25, preserve_newlines=False):
     """
     Backwards compatibility wrapper for apply_translations_to_paragraph.
     """
     prepared = prepare_translation_list(translation_map, case_threshold)
-    return apply_translations_to_paragraph(paragraph, prepared)
+    return apply_translations_to_paragraph(paragraph, prepared, preserve_newlines=preserve_newlines)
 
 def _process_container(container, prepared_list, replaced_paragraphs=None):
     """
@@ -1102,25 +1312,65 @@ def _process_container(container, prepared_list, replaced_paragraphs=None):
         full_text = " ".join(p_texts)
         cleaned_body_text = clean_text(full_text)
         
-        new_text, changed = apply_translations_to_text(cleaned_body_text, prepared_list)
+        # --- Signature Block Protection ---
+        # If the cell looks like a signature block, we process paragraphs individually
+        # to preserve line breaks and formatting.
+        is_signature = False
+        lower_text = cleaned_body_text.lower()
         
-        if changed:
-            # Found a match across the entire container unit (e.g. "Mã\nsố")
-            # We consolidate the translation into the first paragraph and clear others
-            first_p = Paragraph(p_elements[0], container)
-            inline = first_p.runs
-            if len(inline) > 0:
-                for i, run in enumerate(inline):
-                    run.text = new_text if i == 0 else ""
-            else:
-                first_p.add_run(new_text)
+        # Condition A: Representing + Company Name (VN / EN / CN)
+        if ("thay mặt và đại diện cho" in lower_text or "on behalf of" in lower_text or "代表" in lower_text) and \
+           ("công ty tnhh kiểm toán u&i" in lower_text or "u&i auditing" in lower_text or "u&i 审计" in lower_text):
+            is_signature = True
+        # Condition B: Auditor + License ID (VN / EN / CN)
+        elif ("kiểm toán viên" in lower_text or "auditor" in lower_text or "注册会计师" in lower_text) and \
+             ("số giấy cn đkhn kiểm toán" in lower_text or "practising certificate no" in lower_text or "证书编号" in lower_text):
+            is_signature = True
+        # Condition C: Generic Director / Manager Signature Block
+        elif "giám đốc" in lower_text or "tổng giám đốc" in lower_text or "director" in lower_text or "总经理" in lower_text:
+            if len(p_elements) <= 10: # Only if it's a reasonably small block (like a signature)
+                is_signature = True
+            
+        if is_signature:
+            # Process paragraphs individually to keep the signature layout
+            for p_el in p_elements:
+                p = Paragraph(p_el, container)
+                # ENABLE newline preservation for signature block paragraphs
+                if apply_translations_to_paragraph(p, prepared_list, preserve_newlines=True):
+                    count += 1
+        else:
+            # Standard Consolidation Logic (for Split headers like "Mã\nsố")
+            new_text, changed = apply_translations_to_text(cleaned_body_text, prepared_list)
+            
+            if changed:
+                # Found a match across the entire container unit (e.g. "Mã\nsố")
+                # We consolidate the translation into a single paragraph and clear others.
+                # To preserve formatting, we find the 'best' paragraph/run to host the result.
                 
-            # Remove all other paragraphs in this container to prevent duplicates/layout issues
-            for other_p_el in p_elements[1:]:
-                parent = other_p_el.getparent()
-                if parent is not None:
-                    parent.remove(other_p_el)
-            count += 1
+                target_para = None
+                # Priority 1: Find paragraph with meaningful text
+                for p_el in p_elements:
+                    p_obj = Paragraph(p_el, container)
+                    if is_meaningful_text(p_obj.text):
+                        target_para = p_obj
+                        break
+                
+                # Priority 2: Use first paragraph
+                if not target_para:
+                    target_para = Paragraph(p_elements[0], container)
+                
+                # Apply translation to the chosen paragraph using run-aware logic
+                # We use a case_threshold=0 to ENSURE literal match for this specific consolidation string
+                dummy_map = prepare_translation_list({cleaned_body_text: new_text}, case_threshold=9999)
+                apply_translations_to_paragraph(target_para, dummy_map)
+                    
+                # Remove all other paragraphs in this container to prevent duplicates/layout issues
+                for other_p_el in p_elements:
+                    if other_p_el != target_para._element:
+                        parent = other_p_el.getparent()
+                        if parent is not None:
+                            parent.remove(other_p_el)
+                count += 1
             
         # Mark these paragraphs as handled
         for p_el in p_elements:
@@ -1132,81 +1382,88 @@ def _process_container(container, prepared_list, replaced_paragraphs=None):
         if p_el not in processed_p_elements:
             p = Paragraph(p_el, container)
             
-            # SKIP if this paragraph was modified by ParaTemplate
-            is_replaced = False
-            if replaced_paragraphs:
-                for rp in replaced_paragraphs:
-                    if rp._element == p_el:
-                        is_replaced = True
-                        break
-            
-            if not is_replaced:
-                if apply_translations_to_paragraph(p, prepared_list):
-                    count += 1
+            # Process dictionary translation for all paragraphs
+            # (Previously we skipped replaced paragraphs, which blocked placeholders)
+            if apply_translations_to_paragraph(p, prepared_list):
+                count += 1
                 
     return count
 
-def apply_metadata_placeholders(doc, metadata, target_col):
-    """
-    Directly replaces tag-style placeholders using the provided metadata.
-    Acts as a fail-safe for tags like [têncôngty].
-    """
-    if not metadata: return 0
-    
-    # Map tag variations to metadata values
-    # Note: Values are already calculated fragment strings
-    y_end_dt = datetime.strptime(metadata.get("year_end", "31/12/2025"), "%d/%m/%Y") if metadata.get("year_end") else None
-    rep_date_dt = datetime.strptime(metadata.get("report_date", "01/01/2026"), "%d/%m/%Y") if metadata.get("report_date") else None
-    
-    date_formatted = format_excel_date_logic(y_end_dt, "en" if target_col == "E" else "cn")
-    rep_date_formatted = format_excel_date_logic(rep_date_dt, "en" if target_col == "E" else "cn")
-    rep_year = str(y_end_dt.year) if y_end_dt else ""
 
-    tag_map = {
-        "[têncôngty]": metadata.get("name_trans", ""),
-        "[tên công ty]": metadata.get("name_trans", ""),
-        "[ngàykếtthúcnăm]": date_formatted + ("日" if target_col != "E" else ""),
-        "[ngàybáocáo]": rep_date_formatted + ("日" if target_col != "E" else ""),
-        "[nămbáocáo]": rep_year,
-        "[giaiđoạn]": metadata.get("period_out", "") # Simplified, usually handled by dictionary
-    }
-    
-    count = 0
-    # Process all paragraphs, tables, etc using a simple prepared list
-    prepared = []
-    for k, v in tag_map.items():
-        if v: prepared.append((False, k, v))
 
-    count += _process_container_for_metadata(doc, prepared)
+
+
+def set_document_default_fonts(doc, target_col):
+    """
+    Sets the document-level default fonts and size (DocDefaults).
+    Equivalent to clicking 'Set As Default' in Word.
+    Specifically sets DFKai-SB for Chinese and Times New Roman for Latin.
+    """
+    if target_col not in ["Hs", "Ht"]:
+        return
+
+    # Access styles part
+    styles_element = doc.styles.element
     
-    for section in doc.sections:
-        count += _process_container_for_metadata(section.header, prepared)
-        count += _process_container_for_metadata(section.footer, prepared)
-        # Check for text boxes specifically for metadata
-        # (Already handled by _process_container_for_metadata calling deep traversal)
+    # 1. Ensure docDefaults exists
+    doc_defaults = styles_element.find(qn('w:docDefaults'))
+    if doc_defaults is None:
+        doc_defaults = OxmlElement('w:docDefaults')
+        styles_element.insert(0, doc_defaults)
         
-    return count
+    # 2. Ensure rPrDefault exists
+    r_pr_default = doc_defaults.find(qn('w:rPrDefault'))
+    if r_pr_default is None:
+        r_pr_default = OxmlElement('w:rPrDefault')
+        doc_defaults.append(r_pr_default)
+        
+    # 3. Ensure rPr exists
+    r_pr = r_pr_default.find(qn('w:rPr'))
+    if r_pr is None:
+        r_pr = OxmlElement('w:rPr')
+        r_pr_default.append(r_pr)
+        
+    # 4. Set Fonts
+    r_fonts = r_pr.find(qn('w:rFonts'))
+    if r_fonts is None:
+        r_fonts = OxmlElement('w:rFonts')
+        r_pr.append(r_fonts)
+    
+    r_fonts.set(qn('w:ascii'), "Times New Roman")
+    r_fonts.set(qn('w:hAnsi'), "Times New Roman")
+    r_fonts.set(qn('w:eastAsia'), "DFKai-SB")
+    r_fonts.set(qn('w:cs'), "Times New Roman")
+    
+    # 5. Set Size (10pt = 20 half-points)
+    sz = r_pr.find(qn('w:sz'))
+    if sz is None:
+        sz = OxmlElement('w:sz')
+        r_pr.append(sz)
+    sz.set(qn('w:val'), '20')
+    
+    sz_cs = r_pr.find(qn('w:szCs'))
+    if sz_cs is None:
+        sz_cs = OxmlElement('w:szCs')
+        r_pr.append(sz_cs)
+    sz_cs.set(qn('w:val'), '20')
+    
+    # 6. Set Language
+    lang = r_pr.find(qn('w:lang'))
+    if lang is None:
+        lang = OxmlElement('w:lang')
+        r_pr.append(lang)
+    lang_val = "zh-CN" if target_col == "Hs" else "zh-TW"
+    lang.set(qn('w:eastAsia'), lang_val)
 
-def _process_container_for_metadata(container, prepared_list):
-    """Helper to run direct replacements in a container."""
-    count = 0
-    element = container._element
-    # We target paragraphs directly for speed in metadata pass
-    for p_el in element.xpath('.//*[local-name()="p"]'):
-        p = Paragraph(p_el, container)
-        if apply_translations_to_paragraph(p, prepared_list):
-            count += 1
-    return count
-
-def replace_text_in_document(doc, translation_map, case_threshold=100, cleanv_map=None, para_map=None, target_col="E", metadata=None):
+def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None):
     """
     Performs global search and replace in paragraphs, tables, headers and footers.
-    Follows exact order: 
-    0. Metadata Placeholder Replacement (Safety Pass)
-    1. CleanV Normalization (Unicode & Corrections)
-    2. ParaTemplate Swaps (Full paragraph)
-    3. Dictionary Translation (Sub-paragraph)
+    Respects process_settings toggles.
     """
+    # Default to "All ON" if no settings provided
+    if process_settings is None:
+        process_settings = {k: True for k in ["metadata", "unicode", "clean_v", "para_template", "dictionary", "dual_font", "table_size", "date_format", "textbox", "highlight"]}
+
     # 0. Load maps if not provided but exist
     if cleanv_map is None:
         cleanv_map = load_cleanv_map()
@@ -1215,81 +1472,104 @@ def replace_text_in_document(doc, translation_map, case_threshold=100, cleanv_ma
 
     total_count = 0
 
-    # Step 0: Metadata Placeholder Replacement
-    if metadata:
-        apply_metadata_placeholders(doc, metadata, target_col)
+    # Step 1: Explicit Unicode Normalization (Always first for consistent matching)
+    if process_settings.get("unicode", True):
+        apply_unicode_normalization(doc)
 
-    # Pass 1: Global Normalization (CleanV)
-    # This standardizes Vietnamese text everywhere first.
-    if cleanv_map:
-        apply_cleanv_normalization(doc, cleanv_map)
-
-    # Pass 2: Paragraph Template Replacements (Full paragraph swaps)
-    # Replaces boilerplates with translated templates.
+    # Step 4: Paragraph Template Replacements (Full paragraph swaps)
+    # Must run BEFORE metadata and CleanV so that original phrases can match correctly.
     replaced_paras = set()
-    if para_map:
+    if process_settings.get("para_template", True) and para_map:
         _, replaced_paras = apply_paragraph_templates(doc, para_map, target_col)
 
-    # Pass 3: Dictionary-based replacements (Final translation)
-    # Skip paragraphs that were already swapped by templates.
-    prepared_list = prepare_translation_list(translation_map, case_threshold)
-    
-    # 3. Add normalization list (CleanV) to the start of prepared_list
-    if cleanv_map:
-        norm_list = []
-        for key in sorted(cleanv_map.keys(), key=len, reverse=True):
-            norm_list.append((False, key, cleanv_map[key])) # Using same format as prepared_list
-        
-        # We can prepend the normalization list to our processing, 
-        # BUT it's better to do a distinct pass or just handle it as part of the loop.
-        # Actually, adding them to the start of prepared_list is efficient IF we want to do it in one pass.
-        # HOWEVER, the user specifically mentioned "sau khi coding xong... xử lý đồng bộ unicode", 
-        # suggesting it should be a deliberate step.
-        # We'll prepend them to prepared_list so they run FIRST.
-        prepared_list = norm_list + prepared_list
+    # Step 2: Global Normalization (CleanV Typo Correction)
+    if process_settings.get("clean_v", True) and cleanv_map:
+        apply_cleanv_normalization(doc, cleanv_map)
 
-    # 3. Process the main document body
-    total_count += _process_container(doc, prepared_list, replaced_paragraphs=replaced_paras)
-    
-    # 4. Process all headers and footers in all sections
-    for section in doc.sections:
-        # Primary header and footer
-        total_count += _process_container(section.header, prepared_list, replaced_paragraphs=replaced_paras)
-        total_count += _process_container(section.footer, prepared_list, replaced_paragraphs=replaced_paras)
-        
-        # First page header and footer
-        if section.different_first_page_header_footer:
-            total_count += _process_container(section.first_page_header, prepared_list, replaced_paragraphs=replaced_paras)
-            total_count += _process_container(section.first_page_footer, prepared_list, replaced_paragraphs=replaced_paras)
-            
-        # Even page header and footer
-        # Note: python-docx handles this via odd_and_even_pages_header_footer (but we check headers directly)
-        try:
-            total_count += _process_container(section.even_page_header, prepared_list, replaced_paragraphs=replaced_paras)
-            total_count += _process_container(section.even_page_footer, prepared_list, replaced_paragraphs=replaced_paras)
-        except:
-            # Not all versions of docx or documents have these defined
-            pass
-            
-    # Step 4: Final Chinese Currency Cleanup (Hs/Ht only)
+
+
+    # Step 0.5: Set Document Defaults (Set As Default)
+    # Applied to Chinese reports to force DFKai-SB for any unstyled text.
     if target_col in ["Hs", "Ht"]:
+        set_document_default_fonts(doc, target_col)
+
+    # Pass 3: Dictionary-based replacements (Final translation)
+    if process_settings.get("dictionary", True):
+        prepared_list = prepare_translation_list(translation_map, case_threshold)
+        
+        # Add normalization list (CleanV) to the start of prepared_list ONLY if clean_v IS enabled
+        if process_settings.get("clean_v", True) and cleanv_map:
+            norm_list = []
+            for key in cleanv_map:
+                norm_list.append((False, key, cleanv_map[key]))
+            prepared_list = norm_list + prepared_list
+
+        # Process the main document body
+        total_count += _process_container(doc, prepared_list, replaced_paragraphs=replaced_paras)
+        
+        # Process all headers and footers in all sections
+        for section in doc.sections:
+            total_count += _process_container(section.header, prepared_list, replaced_paragraphs=replaced_paras)
+            total_count += _process_container(section.footer, prepared_list, replaced_paragraphs=replaced_paras)
+            if section.different_first_page_header_footer:
+                total_count += _process_container(section.first_page_header, prepared_list, replaced_paragraphs=replaced_paras)
+                total_count += _process_container(section.first_page_footer, prepared_list, replaced_paragraphs=replaced_paras)
+            try:
+                total_count += _process_container(section.even_page_header, prepared_list, replaced_paragraphs=replaced_paras)
+                total_count += _process_container(section.even_page_footer, prepared_list, replaced_paragraphs=replaced_paras)
+            except: pass
+
+    # Step 4: Final Chinese Currency Cleanup (Hs/Ht only)
+    if process_settings.get("dictionary", True) and target_col in ["Hs", "Ht"]:
         apply_chinese_currency_cleanup(doc)
         
     # Step 5: Format dates in tables
-    format_dates_in_tables(doc, target_col)
+    if process_settings.get("date_format", True):
+        format_dates_in_tables(doc, target_col)
     
     # Step 7: Dual-font formatting (Chinese only)
-    if target_col in ["Hs", "Ht"]:
+    if process_settings.get("dual_font", True) and target_col in ["Hs", "Ht"]:
         apply_chinese_font_formatting(doc, target_col)
         
+    # Step 7.5: Financial Number Separator Swap (. to , and , to .)
+    # Only for non-Vietnamese reports. Safe for Link Fields.
+    if process_settings.get("number_swap", True) and target_col != "V":
+        apply_financial_number_formatting(doc, target_col)
+
     # Step 8: Specialized Table Sizing and Layout
-    apply_sizing_and_layout(doc, target_col)
+    if process_settings.get("table_size", True):
+        apply_sizing_and_layout(doc, target_col)
     
     # Step 9: Specialized TextBox/Draft Handling
-    apply_special_textbox_formatting(doc, target_col)
+    if process_settings.get("textbox", True):
+        apply_special_textbox_formatting(doc, target_col)
     
     # Step 10: Highlight remaining Vietnamese text
-    # This must be the absolute final step to ensure all text is scanned.
-    highlight_vietnamese_text(doc)
+    if process_settings.get("highlight", True):
+        highlight_vietnamese_text(doc)
+
+
 
     return total_count
+
+    # Step 7.5: Financial Number Separator Swap (. to , and , to .)
+    # Only for non-Vietnamese reports. Safe for Link Fields.
+    if process_settings.get("number_swap", True) and target_col != "V":
+        apply_financial_number_formatting(doc, target_col)
+
+    # Step 8: Specialized Table Sizing and Layout
+    if process_settings.get("table_size", True):
+        apply_sizing_and_layout(doc, target_col)
+    
+    # Step 9: Specialized TextBox/Draft Handling
+    if process_settings.get("textbox", True):
+        apply_special_textbox_formatting(doc, target_col)
+    
+    # Step 10: Highlight remaining Vietnamese text
+    if process_settings.get("highlight", True):
+        highlight_vietnamese_text(doc)
+
+
+
+    return total_count
+

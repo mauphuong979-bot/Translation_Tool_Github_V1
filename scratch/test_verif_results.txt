@@ -1,0 +1,4 @@
+In: '7. Chi phí tài chính' -> Changed=True, Result='7. Financial expenses', Success=True
+In: '7. CHI PHÍ TÀI CHÍNH' -> Changed=True, Result='7. Financial expenses', Success=True
+In: '6. Doanh Thu Hoạt Động Tài Chính' -> Changed=True, Result='6. Financial income', Success=True
+In: '6. Doanh thu hoa­̣t d?ng t?i ch?nh' -> Changed=False, Result='6. Doanh thu hoạt d?ng t?i ch?nh', Success=False

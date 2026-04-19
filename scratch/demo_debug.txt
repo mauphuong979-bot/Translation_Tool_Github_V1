@@ -1,0 +1,6 @@
+--- Demo Debug Log ---
+Looking for: 'Doanh thu hoạt động tài chính'
+Dict Value: 'Financial income'
+
+Keys containing the term:
+  - 'Doanh thu hoạt động tài chính': 'Financial income'

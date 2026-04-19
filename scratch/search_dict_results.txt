@@ -1,0 +1,204 @@
+Searching for: 'Doanh thu bán hàng và cung cấp dịch vụ' (Cleaned: 'Doanh thu bán hàng và cung cấp dịch vụ')
+  Found 1 matches:
+    - Dict: 'Doanh thu bán hàng và cung cấp dịch vụ' -> 'Gross sales '
+      (Cleaned Dict: 'Doanh thu bán hàng và cung cấp dịch vụ')
+--------------------
+Searching for: 'CHỈ TIÊU' (Cleaned: 'CHỈ TIÊU')
+  Found 2 matches:
+    - Dict: 'CHỈ TIÊU' -> 'ITEMS'
+      (Cleaned Dict: 'CHỈ TIÊU')
+    - Dict: 'Khoản phải thu về cho vay phản ánh các khoản cho vay (không bao gồm các nội dung được phản ánh ở chỉ tiêu “Đầu tư nắm giữ đến ngày đáo hạn”) có kỳ hạn như các khoản cho vay bằng khế ước, hợp đồng vay giữa hai bên.' -> 'Loans receivable reflect term loans (not including the contents reflected in the item “Held-to-maturity investments”) such as loans by agreements, contracts between two parties.'
+      (Cleaned Dict: 'Khoản phải thu về cho vay phản ánh các khoản cho vay (không bao gồm các nội dung được phản ánh ở chỉ tiêu “Đầu tư nắm giữ đến ngày đáo hạn”) có kỳ hạn như các khoản cho vay bằng khế ước, hợp đồng vay giữa hai bên.')
+--------------------
+Searching for: 'Mã số' (Cleaned: 'Mã số')
+  Found 2 matches:
+    - Dict: 'Mã số' -> 'Code'
+      (Cleaned Dict: 'Mã số')
+    - Dict: 'Mã số thuế:' -> 'Tax code:'
+      (Cleaned Dict: 'Mã số thuế:')
+--------------------
+Searching for: 'Thuyết minh' (Cleaned: 'Thuyết minh')
+  Found 7 matches:
+    - Dict: 'BẢN THUYẾT MINH BÁO CÁO TÀI CHÍNH' -> 'NOTES TO THE FINANCIAL STATEMENTS'
+      (Cleaned Dict: 'BẢN THUYẾT MINH BÁO CÁO TÀI CHÍNH')
+    - Dict: 'Bản thuyết minh kèm theo là một bộ phận hợp thành của Báo cáo tài chính này' -> 'The accompanying notes are an integral part of these financial statements.'
+      (Cleaned Dict: 'Bản thuyết minh kèm theo là một bộ phận hợp thành của Báo cáo tài chính này')
+    - Dict: 'Bản thuyết minh này là một bộ phận hợp thành và cần được đọc đồng thời với Báo cáo tài chính' -> 'These notes are an integral part of and should be read in conjunction with the accompanying financial statements'
+      (Cleaned Dict: 'Bản thuyết minh này là một bộ phận hợp thành và cần được đọc đồng thời với Báo cáo tài chính')
+    - Dict: 'Công việc kiểm toán bao gồm thực hiện các thủ tục nhằm thu thập các bằng chứng kiểm toán về các số liệu và thuyết minh trên Báo cáo tài chính. Các thủ tục kiểm toán được lựa chọn dựa trên xét đoán của kiểm toán viên, bao gồm đánh giá rủi ro có sai sót trọng yếu trong Báo cáo tài chính do gian lận hoặc nhầm lẫn. Khi thực hiện đánh giá các rủi ro này, kiểm toán viên đã xem xét kiểm soát nội bộ của Công ty liên quan đến việc lập và trình bày Báo cáo tài chính trung thực, hợp lý nhằm thiết kế các thủ tục kiểm toán phù hợp với tình hình thực tế, tuy nhiên không nhằm mục đích đưa ra ý kiến về hiệu quả của kiểm soát nội bộ của Công ty. ' -> 'An audit involves performing procedures to obtain audit evidence about the amounts and disclosures in the financial statements. The procedures selected depend on the auditor’s judgment, including the assessment of the risks of material misstatement of the financial statements, whether due to fraud or error. In making those risk assessments, the auditor considers internal control relevant to the Company’s preparation and fair presentation of the financial statements in order to design audit procedures that are appropriate in the circumstances, but not for the purpose of expressing an opinion on the effectiveness of the Company’s internal control. '
+      (Cleaned Dict: 'Công việc kiểm toán bao gồm thực hiện các thủ tục nhằm thu thập các bằng chứng kiểm toán về các số liệu và thuyết minh trên Báo cáo tài chính. Các thủ tục kiểm toán được lựa chọn dựa trên xét đoán của kiểm toán viên, bao gồm đánh giá rủi ro có sai sót trọng yếu trong Báo cáo tài chính do gian lận hoặc nhầm lẫn. Khi thực hiện đánh giá các rủi ro này, kiểm toán viên đã xem xét kiểm soát nội bộ của Công ty liên quan đến việc lập và trình bày Báo cáo tài chính trung thực, hợp lý nhằm thiết kế các thủ tục kiểm toán phù hợp với tình hình thực tế, tuy nhiên không nhằm mục đích đưa ra ý kiến về hiệu quả của kiểm soát nội bộ của Công ty.')
+    - Dict: 'Thuyết minh' -> 'Notes'
+      (Cleaned Dict: 'Thuyết minh')
+    - Dict: 'Xem chi tiết ở thuyết minh mục' -> 'Details are at Note'
+      (Cleaned Dict: 'Xem chi tiết ở thuyết minh mục')
+    - Dict: 'Xem chi tiết tại thuyết minh' -> 'Details are at Note'
+      (Cleaned Dict: 'Xem chi tiết tại thuyết minh')
+--------------------
+Searching for: 'Tổng Giám đốc' (Cleaned: 'Tổng Giám đốc')
+  Found 81 matches:
+    - Dict: 'Báo cáo tài chính được phê duyệt bởi Tổng Giám đốc Công ty để phát hành vào ngày [r_day] tháng [r_month] năm [r_year].' -> 'The financial statements were approved by General Director of the Company for issue on [r_month] [r_day], [r_year].'
+      (Cleaned Dict: 'Báo cáo tài chính được phê duyệt bởi Tổng Giám đốc Công ty để phát hành vào ngày [r_day] tháng [r_month] năm [r_year].')
+    - Dict: 'Báo cáo tài chính được phê duyệt bởi Ban Tổng Giám đốc Công ty để phát hành vào ngày [r_day] tháng [r_month] năm [r_year].' -> 'The financial statements were approved by the Board of General Directors of the Company for issue on [r_month] [r_day], [r_year].'
+      (Cleaned Dict: 'Báo cáo tài chính được phê duyệt bởi Ban Tổng Giám đốc Công ty để phát hành vào ngày [r_day] tháng [r_month] năm [r_year].')
+    - Dict: 'BÁO CÁO CỦA BAN TỔNG GIÁM ĐỐC' -> 'REPORT OF THE BOARD OF GENERAL DIRECTORS'
+      (Cleaned Dict: 'BÁO CÁO CỦA BAN TỔNG GIÁM ĐỐC')
+    - Dict: 'BÁO CÁO CỦA TỔNG GIÁM ĐỐC' -> 'REPORT OF GENERAL DIRECTOR'
+      (Cleaned Dict: 'BÁO CÁO CỦA TỔNG GIÁM ĐỐC')
+    - Dict: 'CHỦ TỊCH CÔNG TY VÀ TỔNG GIÁM ĐỐC' -> 'CHAIRMAN AND GENERAL DIRECTOR'
+      (Cleaned Dict: 'CHỦ TỊCH CÔNG TY VÀ TỔNG GIÁM ĐỐC')
+    - Dict: 'CHỦ TỊCH KIÊM TỔNG GIÁM ĐỐC' -> 'CHAIRMAN CUM GENERAL DIRECTOR'
+      (Cleaned Dict: 'CHỦ TỊCH KIÊM TỔNG GIÁM ĐỐC')
+    - Dict: 'CHỦ TỊCH VÀ TỔNG GIÁM ĐỐC' -> 'CHAIRMAN AND GENERAL DIRECTOR'
+      (Cleaned Dict: 'CHỦ TỊCH VÀ TỔNG GIÁM ĐỐC')
+    - Dict: 'HỘI ĐỒNG QUẢN TRỊ VÀ BAN TỔNG GIÁM ĐỐC' -> 'THE BOARD OF DIRECTORS AND THE BOARD OF GENERAL DIRECTORS'
+      (Cleaned Dict: 'HỘI ĐỒNG QUẢN TRỊ VÀ BAN TỔNG GIÁM ĐỐC')
+    - Dict: 'HỘI ĐỒNG QUẢN TRỊ VÀ TỔNG GIÁM ĐỐC' -> 'THE BOARD OF DIRECTORS AND GENERAL DIRECTOR'
+      (Cleaned Dict: 'HỘI ĐỒNG QUẢN TRỊ VÀ TỔNG GIÁM ĐỐC')
+    - Dict: 'HỘI ĐỒNG THÀNH VIÊN VÀ BAN TỔNG GIÁM ĐỐC' -> 'THE BOARD OF MEMBERS AND THE BOARD OF GENERAL DIRECTORS'
+      (Cleaned Dict: 'HỘI ĐỒNG THÀNH VIÊN VÀ BAN TỔNG GIÁM ĐỐC')
+    - Dict: 'HỘI ĐỒNG THÀNH VIÊN VÀ TỔNG GIÁM ĐỐC' -> 'THE BOARD OF MEMBERS AND GENERAL DIRECTOR'
+      (Cleaned Dict: 'HỘI ĐỒNG THÀNH VIÊN VÀ TỔNG GIÁM ĐỐC')
+    - Dict: 'TỔNG GIÁM ĐỐC' -> 'GENERAL DIRECTOR'
+      (Cleaned Dict: 'TỔNG GIÁM ĐỐC')
+    - Dict: 'TRÁCH NHIỆM CỦA BAN TỔNG GIÁM ĐỐC' -> 'STATEMENT OF RESPONSIBILITY OF THE BOARD OF GENERAL DIRECTORS'
+      (Cleaned Dict: 'TRÁCH NHIỆM CỦA BAN TỔNG GIÁM ĐỐC')
+    - Dict: 'TRÁCH NHIỆM CỦA TỔNG GIÁM ĐỐC' -> 'GENERAL DIRECTOR’S STATEMENT OF RESPONSIBILITY'
+      (Cleaned Dict: 'TRÁCH NHIỆM CỦA TỔNG GIÁM ĐỐC')
+    - Dict: 'TUYÊN BỐ CỦA BAN TỔNG GIÁM ĐỐC' -> 'STATEMENT BY THE BOARD OF GENERAL DIRECTORS'
+      (Cleaned Dict: 'TUYÊN BỐ CỦA BAN TỔNG GIÁM ĐỐC')
+    - Dict: 'TUYÊN BỐ CỦA TỔNG GIÁM ĐỐC' -> 'STATEMENT BY GENERAL DIRECTOR'
+      (Cleaned Dict: 'TUYÊN BỐ CỦA TỔNG GIÁM ĐỐC')
+    - Dict: 'Ban Tổng Giám đốc' -> 'The Board of General Directors'
+      (Cleaned Dict: 'Ban Tổng Giám đốc')
+    - Dict: 'Ban Tổng Giám đốc chịu trách nhiệm đảm bảo rằng sổ sách kế toán được ghi chép một cách phù hợp để phản ánh một cách hợp lý tình hình tài chính của Công ty ở bất kỳ thời điểm nào. ' -> 'The Board of General Directors is responsible for ensuring that proper accounting records are kept, which disclose, with reasonable accuracy at any time, the financial position of the Company. '
+      (Cleaned Dict: 'Ban Tổng Giám đốc chịu trách nhiệm đảm bảo rằng sổ sách kế toán được ghi chép một cách phù hợp để phản ánh một cách hợp lý tình hình tài chính của Công ty ở bất kỳ thời điểm nào.')
+    - Dict: 'Ban Tổng Giám đốc Công ty chịu trách nhiệm về việc lập và trình bày trung thực và hợp lý Báo cáo tài chính của Công ty theo chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính và chịu trách nhiệm về kiểm soát nội bộ mà Ban Tổng Giám đốc xác định là cần thiết để đảm bảo cho việc lập và trình bày Báo cáo tài chính không có sai sót trọng yếu do gian lận hoặc nhầm lẫn.' -> 'The Board of General Directors is responsible for the preparation and fair presentation of these financial statements in accordance with Vietnamese Accounting Standards, the Vietnamese Enterprise Accounting System and applicable regulations relevant to the preparation and presentation of financial statements and for such internal control as the Board of General Directors determines is necessary to enable the preparation of financial statements that are free from material misstatement, whether due to fraud or error.'
+      (Cleaned Dict: 'Ban Tổng Giám đốc Công ty chịu trách nhiệm về việc lập và trình bày trung thực và hợp lý Báo cáo tài chính của Công ty theo chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính và chịu trách nhiệm về kiểm soát nội bộ mà Ban Tổng Giám đốc xác định là cần thiết để đảm bảo cho việc lập và trình bày Báo cáo tài chính không có sai sót trọng yếu do gian lận hoặc nhầm lẫn.')
+    - Dict: 'Ban Tổng Giám đốc Công ty có trách nhiệm lập Báo cáo tài chính từng năm, phản ánh một cách trung thực và hợp lý tình hình tài chính của Công ty, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ trong năm. Trong việc lập Báo cáo tài chính này, Ban Tổng Giám đốc được yêu cầu phải:' -> 'The Board of General Directors is responsible for preparing the financial statements of each fiscal year, which give a true and fair view of the state of affairs of the Company and of its operations and cash flows for the year. In preparing those financial statements, the Board of General Directors is required to:'
+      (Cleaned Dict: 'Ban Tổng Giám đốc Công ty có trách nhiệm lập Báo cáo tài chính từng năm, phản ánh một cách trung thực và hợp lý tình hình tài chính của Công ty, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ trong năm. Trong việc lập Báo cáo tài chính này, Ban Tổng Giám đốc được yêu cầu phải:')
+    - Dict: 'Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'The Board of General Directors of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Ban Tổng Giám đốc cũng chịu trách nhiệm đảm bảo an toàn cho tài sản của Công ty và vì vậy thực hiện các biện pháp thích hợp để ngăn chặn và phát hiện các hành vi gian lận và sai phạm khác.' -> 'The Board of General Directors is also responsible for safeguarding the assets of the Company and hence for taking reasonable steps for the prevention and detection of fraud and other irregularities.'
+      (Cleaned Dict: 'Ban Tổng Giám đốc cũng chịu trách nhiệm đảm bảo an toàn cho tài sản của Công ty và vì vậy thực hiện các biện pháp thích hợp để ngăn chặn và phát hiện các hành vi gian lận và sai phạm khác.')
+    - Dict: 'Ban Tổng Giám đốc xác nhận rằng Công ty đã tuân thủ các yêu cầu nêu trên trong việc lập Báo cáo tài chính.' -> 'The Board of General Directors confirms that the Company has complied with the above requirements in preparing the financial statements.'
+      (Cleaned Dict: 'Ban Tổng Giám đốc xác nhận rằng Công ty đã tuân thủ các yêu cầu nêu trên trong việc lập Báo cáo tài chính.')
+    - Dict: 'Các thành viên Hội đồng Quản trị và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Directors and the Board of General Directors of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Quản trị và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Quản trị và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Directors and General Director of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Quản trị và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Thành viên và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Members and the Board of General Directors of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Thành viên và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Thành viên và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Members and General Director of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Thành viên và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Chủ tịch Công ty và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'Chairman and General Director of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Chủ tịch Công ty và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Chủ tịch Hội đồng Quản trị kiêm Tổng Giám đốc' -> 'Chairman of the Board of Directors cum General Director'
+      (Cleaned Dict: 'Chủ tịch Hội đồng Quản trị kiêm Tổng Giám đốc')
+    - Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc' -> 'Chairman of the Board of Members cum General Director'
+      (Cleaned Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc')
+    - Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty' -> 'Chairman of the Board of Members cum General Director of the Company'
+      (Cleaned Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty')
+    - Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.' -> 'Chairman of the Board of Members cum General Director of the Company, who has held business during the year and at the date of this report.'
+      (Cleaned Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.')
+    - Dict: 'Chủ tịch kiêm Tổng Giám đốc' -> 'Chairman cum General Director'
+      (Cleaned Dict: 'Chủ tịch kiêm Tổng Giám đốc')
+    - Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty' -> 'Chairman cum General Director'
+      (Cleaned Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty')
+    - Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.' -> 'Chairman cum General Director of the Company, who has held business during the year and at the date of this report.'
+      (Cleaned Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.')
+    - Dict: 'Chủ tịch và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'Chairman and General Director of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Chủ tịch và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Chủ tịch và Tổng Giám đốc đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:' -> 'Chairman and General Director of the Company who have held business during the year and at the date of this report are as follows:'
+      (Cleaned Dict: 'Chủ tịch và Tổng Giám đốc đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo gồm:')
+    - Dict: 'Công việc kiểm toán cũng bao gồm đánh giá tính thích hợp của các chính sách kế toán được áp dụng và tính hợp lý của các ước tính kế toán của Ban Tổng Giám đốc cũng như đánh giá việc trình bày tổng thể Báo cáo tài chính.' -> 'An audit also includes evaluating the appropriateness of accounting policies used and the reasonableness of accounting estimates made by the Board of General Directors, as well as evaluating the overall presentation of the financial statements.'
+      (Cleaned Dict: 'Công việc kiểm toán cũng bao gồm đánh giá tính thích hợp của các chính sách kế toán được áp dụng và tính hợp lý của các ước tính kế toán của Ban Tổng Giám đốc cũng như đánh giá việc trình bày tổng thể Báo cáo tài chính.')
+    - Dict: 'Công việc kiểm toán cũng bao gồm đánh giá tính thích hợp của các chính sách kế toán được áp dụng và tính hợp lý của các ước tính kế toán của Tổng Giám đốc cũng như đánh giá việc trình bày tổng thể Báo cáo tài chính.' -> 'An audit also includes evaluating the appropriateness of accounting policies used and the reasonableness of accounting estimates made by General Director, as well as evaluating the overall presentation of the financial statements.'
+      (Cleaned Dict: 'Công việc kiểm toán cũng bao gồm đánh giá tính thích hợp của các chính sách kế toán được áp dụng và tính hợp lý của các ước tính kế toán của Tổng Giám đốc cũng như đánh giá việc trình bày tổng thể Báo cáo tài chính.')
+    - Dict: 'Lương và thu nhập của Ban Tổng Giám đốc' -> 'Salaries and remuneration of the Board of General Directors'
+      (Cleaned Dict: 'Lương và thu nhập của Ban Tổng Giám đốc')
+    - Dict: 'Lương và thu nhập của Hội đồng Quản trị và Ban Tổng Giám đốc' -> 'Salaries and remuneration of the Board of Directors and the Board of General Directors'
+      (Cleaned Dict: 'Lương và thu nhập của Hội đồng Quản trị và Ban Tổng Giám đốc')
+    - Dict: 'Lương và thu nhập của Hội đồng Quản trị và Tổng Giám đốc' -> 'Salaries and remuneration of the Board of Directors and General Director'
+      (Cleaned Dict: 'Lương và thu nhập của Hội đồng Quản trị và Tổng Giám đốc')
+    - Dict: 'Lương và thu nhập của Hội đồng Thành viên và Ban Tổng Giám đốc' -> 'Salaries and remuneration of the Board of Members and the Board of General Directors'
+      (Cleaned Dict: 'Lương và thu nhập của Hội đồng Thành viên và Ban Tổng Giám đốc')
+    - Dict: 'Lương và thu nhập của Tổng Giám đốc' -> 'Salaries and remuneration of General Director'
+      (Cleaned Dict: 'Lương và thu nhập của Tổng Giám đốc')
+    - Dict: 'Phó Tổng Giám đốc' -> 'Deputy General Director'
+      (Cleaned Dict: 'Phó Tổng Giám đốc')
+    - Dict: 'Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Ban Tổng Giám đốc Công ty cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai. ' -> 'No deferred income tax assets are recognized to the extent as the Board of General Directors of the Company believes that it is uncertain that future taxable profit will be available against which a deferred tax asset could be utilized. '
+      (Cleaned Dict: 'Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Ban Tổng Giám đốc Công ty cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai.')
+    - Dict: 'Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Tổng Giám đốc Công ty cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai. ' -> 'No deferred income tax assets are recognized to the extent as the Company’s General Director believes that it is uncertain that future taxable profit will be available against which a deferred tax asset could be utilized. '
+      (Cleaned Dict: 'Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Tổng Giám đốc Công ty cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai.')
+    - Dict: 'Thay mặt và đại diện cho Ban Tổng Giám đốc,' -> 'For and on behalf of the Board of General Directors,'
+      (Cleaned Dict: 'Thay mặt và đại diện cho Ban Tổng Giám đốc,')
+    - Dict: 'Tổng Giám đốc' -> 'General Director'
+      (Cleaned Dict: 'Tổng Giám đốc')
+    - Dict: 'Tổng Giám đốc chịu trách nhiệm đảm bảo rằng sổ sách kế toán được ghi chép một cách phù hợp để phản ánh một cách hợp lý tình hình tài chính của Công ty ở bất kỳ thời điểm nào. ' -> 'General Director is responsible for ensuring that proper accounting records are kept, which disclose, with reasonable accuracy at any time, the financial position of the Company. '
+      (Cleaned Dict: 'Tổng Giám đốc chịu trách nhiệm đảm bảo rằng sổ sách kế toán được ghi chép một cách phù hợp để phản ánh một cách hợp lý tình hình tài chính của Công ty ở bất kỳ thời điểm nào.')
+    - Dict: 'Tổng Giám đốc Công ty chịu trách nhiệm về việc lập và trình bày trung thực và hợp lý Báo cáo tài chính của Công ty theo chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính và chịu trách nhiệm về kiểm soát nội bộ mà Tổng Giám đốc xác định là cần thiết để đảm bảo cho việc lập và trình bày Báo cáo tài chính không có sai sót trọng yếu do gian lận hoặc nhầm lẫn.' -> 'General Director is responsible for the preparation and fair presentation of these financial statements in accordance with Vietnamese Accounting Standards, the Vietnamese Enterprise Accounting System and applicable regulations relevant to the preparation and presentation of financial statements and for such internal control as General Director determines is necessary to enable the preparation of financial statements that are free from material misstatement, whether due to fraud or error.'
+      (Cleaned Dict: 'Tổng Giám đốc Công ty chịu trách nhiệm về việc lập và trình bày trung thực và hợp lý Báo cáo tài chính của Công ty theo chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày Báo cáo tài chính và chịu trách nhiệm về kiểm soát nội bộ mà Tổng Giám đốc xác định là cần thiết để đảm bảo cho việc lập và trình bày Báo cáo tài chính không có sai sót trọng yếu do gian lận hoặc nhầm lẫn.')
+    - Dict: 'Tổng Giám đốc Công ty có trách nhiệm lập Báo cáo tài chính từng năm, phản ánh một cách trung thực và hợp lý tình hình tài chính của Công ty, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ trong năm. Trong việc lập Báo cáo tài chính này, Tổng Giám đốc được yêu cầu phải:' -> 'General Director is responsible for preparing the financial statements of each fiscal year, which give a true and fair view of the state of affairs of the Company and of its operations and cash flows for the year. In preparing those financial statements, General Director is required to:'
+      (Cleaned Dict: 'Tổng Giám đốc Công ty có trách nhiệm lập Báo cáo tài chính từng năm, phản ánh một cách trung thực và hợp lý tình hình tài chính của Công ty, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ trong năm. Trong việc lập Báo cáo tài chính này, Tổng Giám đốc được yêu cầu phải:')
+    - Dict: 'Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.' -> 'General Director of the Company, has held business during the year and at the date of this report.'
+      (Cleaned Dict: 'Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.')
+    - Dict: 'Tổng Giám đốc cũng chịu trách nhiệm đảm bảo an toàn cho tài sản của Công ty và vì vậy thực hiện các biện pháp thích hợp để ngăn chặn và phát hiện các hành vi gian lận và sai phạm khác.' -> 'General Director is also responsible for safeguarding the assets of the Company and hence for taking reasonable steps for the prevention and detection of fraud and other irregularities.'
+      (Cleaned Dict: 'Tổng Giám đốc cũng chịu trách nhiệm đảm bảo an toàn cho tài sản của Công ty và vì vậy thực hiện các biện pháp thích hợp để ngăn chặn và phát hiện các hành vi gian lận và sai phạm khác.')
+    - Dict: 'Tổng Giám đốc điều hành' -> 'Chief Executive Officer (CEO)'
+      (Cleaned Dict: 'Tổng Giám đốc điều hành')
+    - Dict: 'Tổng Giám đốc xác nhận rằng Công ty đã tuân thủ các yêu cầu nêu trên trong việc lập Báo cáo tài chính.' -> 'General Director confirms that the Company has complied with the above requirements in preparing the financial statements.'
+      (Cleaned Dict: 'Tổng Giám đốc xác nhận rằng Công ty đã tuân thủ các yêu cầu nêu trên trong việc lập Báo cáo tài chính.')
+    - Dict: 'Trách nhiệm của Ban Tổng Giám đốc' -> 'Responsibility for the financial statements of the Board of General Directors'
+      (Cleaned Dict: 'Trách nhiệm của Ban Tổng Giám đốc')
+    - Dict: 'Trách nhiệm của Tổng Giám đốc' -> 'General Director’s responsibility for the financial statements'
+      (Cleaned Dict: 'Trách nhiệm của Tổng Giám đốc')
+    - Dict: 'TUQ. Tổng Giám đốc' -> 'For and on behalf of General Director'
+      (Cleaned Dict: 'TUQ. Tổng Giám đốc')
+    - Dict: 'Tiền mượn của Tổng Giám đốc' -> 'Borrowings from General Director'
+      (Cleaned Dict: 'Tiền mượn của Tổng Giám đốc')
+    - Dict: 'Chủ đầu tư - Tổng Giám đốc' -> 'Investor - General Director'
+      (Cleaned Dict: 'Chủ đầu tư - Tổng Giám đốc')
+    - Dict: 'Chủ sở hữu, Tổng Giám đốc' -> 'Owner,  General Director'
+      (Cleaned Dict: 'Chủ sở hữu, Tổng Giám đốc')
+    - Dict: 'Chủ sở hữu - Tổng Giám đốc' -> 'Owner - General Director'
+      (Cleaned Dict: 'Chủ sở hữu - Tổng Giám đốc')
+    - Dict: 'Chủ sở hữu kiêm Tổng Giám đốc' -> 'Owner cum General Director'
+      (Cleaned Dict: 'Chủ sở hữu kiêm Tổng Giám đốc')
+    - Dict: 'Chủ đầu tư kiêm Tổng Giám đốc' -> 'Investor cum General Director'
+      (Cleaned Dict: 'Chủ đầu tư kiêm Tổng Giám đốc')
+    - Dict: 'Lương của Tổng Giám đốc' -> 'Salaries and remuneration of General Director'
+      (Cleaned Dict: 'Lương của Tổng Giám đốc')
+    - Dict: 'BÁO CÁO CỦA CHỦ TỊCH KIÊM TỔNG GIÁM ĐỐC' -> 'REPORT OF CHAIRMAN CUM GENERAL DIRECTOR'
+      (Cleaned Dict: 'BÁO CÁO CỦA CHỦ TỊCH KIÊM TỔNG GIÁM ĐỐC')
+    - Dict: 'Chủ đầu tư - Phó Tổng Giám đốc' -> 'Investor - Deputy General Director'
+      (Cleaned Dict: 'Chủ đầu tư - Phó Tổng Giám đốc')
+    - Dict: 'Thành viên kiêm Tổng Giám đốc' -> 'Member cum General Director'
+      (Cleaned Dict: 'Thành viên kiêm Tổng Giám đốc')
+    - Dict: 'Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'The Board of General Directors of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Quản trị và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Directors and the Board of General Directors of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Quản trị và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Quản trị và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Directors and General Director of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Quản trị và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Thành viên và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Members and the Board of General Directors of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Thành viên và Ban Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Các thành viên Hội đồng Thành viên và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'The members of the Board of Members and General Director of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Các thành viên Hội đồng Thành viên và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Chủ tịch Công ty và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'Chairman and General Director of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Chủ tịch Công ty và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.' -> 'Chairman of the Board of Members cum General Director of the Company, who has held business during the period and at the date of this report.'
+      (Cleaned Dict: 'Chủ tịch Hội đồng Thành viên kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.')
+    - Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.' -> 'Chairman cum General Director of the Company, who has held business during the period and at the date of this report.'
+      (Cleaned Dict: 'Chủ tịch kiêm Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.')
+    - Dict: 'Chủ tịch và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:' -> 'Chairman and General Director of the Company who have held business during the period and at the date of this report are as follows:'
+      (Cleaned Dict: 'Chủ tịch và Tổng Giám đốc Công ty đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo gồm:')
+    - Dict: 'Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.' -> 'General Director of the Company, has held business during the period and at the date of this report.'
+      (Cleaned Dict: 'Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt giai đoạn và đến ngày lập báo cáo.')
+    - Dict: 'Cổ đông - Tổng Giám đốc' -> 'Shareholder - General Director'
+      (Cleaned Dict: 'Cổ đông - Tổng Giám đốc')
+    - Dict: 'Phó Tổng Giám đốc kiểm toán' -> 'Deputy General Director - Audit'
+      (Cleaned Dict: 'Phó Tổng Giám đốc kiểm toán')
+--------------------
+Searching for: 'Chi nhánh Fair Consulting Co., Ltd. Nhật Bản tại Việt Nam' (Cleaned: 'Chi nhánh Fair Consulting Co., Ltd. Nhật Bản tại Việt Nam')
+  No match found.
+--------------------

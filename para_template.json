@@ -156,7 +156,7 @@
     },
     "Dòng tiền vay": {
         "E": "Cash in flow on short-term and long-term borrowings arising in the year [số] does not include the amount of [số] VND, which is recognized as increases in short-term and long-term loans, transferred from the trade accounts payable or other payables.",
-        "Hs": "截至[ngàykếtthúcnăm]止财务年度的收取短期或长期借款的现金流入，未包含金额为越南盾[số]的款项，而此乃由应付帐款【其他应付款】转为短期或长期借款的金额。\n",
+        "Hs": "截至[ngàykếtthúcnăm]止财务年度的收取短期或长期借款的现金流入，未包含金额为越南盾[số]的款项，而此乃由应付帐款【其他应付款】转为短期或长期借款的金额。",
         "Ht": "截至[ngàykếtthúcnăm]止財務年度之收取短期或長期借款之現金流入，未包含金額為越南盾【美元】[số]之款項，而此乃由應付帳款【其他應付款】轉為短期或長期借款之金額。"
     },
     "Dòng tiền chi thu": {

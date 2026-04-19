@@ -1,0 +1,4 @@
+Found target in cell. full_text repr: '6.Doanh thu hoạt động tài chính'
+cleaned_body_text repr: '6.Doanh thu hoạt động tài chính'
+apply_translations_to_text changed=True
+new_text repr: '6.Financial income'

@@ -1,0 +1,1112 @@
+--- MAIN BODY ---
+P28: MỤC LỤC
+P32: BÁO CÁO CỦA TỔNG GIÁM ĐỐC
+P35: Tổng Giám đốc Công ty TNHH Ito En Việt Nam (gọi tắt là “Công ty”) đệ trình báo cáo này cùng với báo cáo tài chính đã được kiểm toán cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025.
+P37: TỔNG GIÁM ĐỐC 
+P39: Ông Murakami Hiroaki – Tổng Giám đốc Công ty, đã điều hành Công ty trong suốt năm và đến ngày lập báo cáo.
+P41: KIỂM TOÁN VIÊN
+P43: Công ty TNHH Kiểm toán U&I đã kiểm toán báo cáo tài chính cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025 và bày tỏ nguyện vọng tiếp tục được bổ nhiệm làm kiểm toán viên cho Công ty.
+P45: TRÁCH NHIỆM CỦA TỔNG GIÁM ĐỐC
+P47: Tổng Giám đốc Công ty có trách nhiệm lập báo cáo tài chính từng năm, phản ánh một cách trung thực và hợp lý tình hình tài chính của Công ty, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ trong năm. Trong việc lập báo cáo tài chính này, Tổng Giám đốc được yêu cầu phải:
+P49: Lựa chọn các chính sách kế toán thích hợp và áp dụng các chính sách đó một cách nhất quán;
+P50: Đưa ra các phán đoán và ước tính một cách hợp lý và thận trọng;
+P51: Nêu rõ các Chuẩn mực kế toán thích hợp có được tuân thủ hay không, có những áp dụng sai lệch trọng yếu cần được công bố và giải thích trong các báo cáo tài chính hay không; và
+P52: Lập các báo cáo tài chính trên cơ sở hoạt động liên tục trừ trường hợp không thể cho rằng Công ty sẽ tiếp tục hoạt động kinh doanh.
+P54: Tổng Giám đốc xác nhận rằng Công ty đã tuân thủ các yêu cầu nêu trên trong việc lập báo cáo tài chính.
+P56: Tổng Giám đốc chịu trách nhiệm đảm bảo rằng sổ sách kế toán được ghi chép một cách phù hợp để phản ánh một cách hợp lý tình hình tài chính của Công ty ở bất kỳ thời điểm nào. Tổng Giám đốc cũng chịu trách nhiệm đảm bảo an toàn cho tài sản của Công ty và vì vậy thực hiện các biện pháp thích hợp để ngăn chặn và phát hiện các hành vi gian lận và sai phạm khác.
+P58: TUYÊN BỐ CỦA TỔNG GIÁM ĐỐC
+P60: Tôi, Murakami Hiroaki - Tổng Giám đốc, tuyên bố rằng báo cáo tài chính kèm theo đã được soạn lập đúng đắn, phù hợp với các Chuẩn mực kế toán Việt Nam và Chế độ kế toán doanh nghiệp Việt Nam và phản ánh trung thực và hợp lý tình hình tài chính của Công ty tại thời điểm ngày 31 tháng 12 năm 2025 và kết quả hoạt động kinh doanh và lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày.
+P73: Số: 42.11-200326/UI.SG
+P75: BÁO CÁO KIỂM TOÁN ĐỘC LẬP
+P78: Kính gửi: Tổng Giám đốc Công ty TNHH Ito En Việt Nam
+P80: Chúng tôi đã kiểm toán báo cáo tài chính kèm theo của Công ty TNHH Ito En Việt Nam (gọi tắt là “Công ty”), được lập ngày 20 tháng 03 năm 2026, từ trang 3 đến trang 18, bao gồm Bảng cân đối kế toán tại ngày 31 tháng 12 năm 2025, Báo cáo kết quả hoạt động kinh doanh, Báo cáo lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày và Bản thuyết minh báo cáo tài chính.
+P82: Trách nhiệm của Tổng Giám đốc
+P84: Tổng Giám đốc Công ty chịu trách nhiệm về việc lập và trình bày trung thực và hợp lý báo cáo tài chính của Công ty theo chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày báo cáo tài chính và chịu trách nhiệm về kiểm soát nội bộ mà Tổng Giám đốc xác định là cần thiết để đảm bảo cho việc lập và trình bày báo cáo tài chính không có sai sót trọng yếu do gian lận hoặc nhầm lẫn.
+P86: Trách nhiệm của Kiểm toán viên
+P87: Trách nhiệm của chúng tôi là đưa ra ý kiến về báo cáo tài chính dựa trên kết quả của cuộc kiểm toán. Chúng tôi đã tiến hành kiểm toán theo các chuẩn mực kiểm toán Việt Nam. Các chuẩn mực này yêu cầu chúng tôi tuân thủ chuẩn mực và các quy định về đạo đức nghề nghiệp, lập kế hoạch và thực hiện cuộc kiểm toán để đạt được sự đảm bảo hợp lý về việc liệu báo cáo tài chính của Công ty có còn sai sót trọng yếu hay không.
+P89: Công việc kiểm toán bao gồm thực hiện các thủ tục nhằm thu thập các bằng chứng kiểm toán về các số liệu và thuyết minh trên báo cáo tài chính. Các thủ tục kiểm toán được lựa chọn dựa trên xét đoán của kiểm toán viên, bao gồm đánh giá rủi ro có sai sót trọng yếu trong báo cáo tài chính do gian lận hoặc nhầm lẫn. Khi thực hiện đánh giá các rủi ro này, kiểm toán viên đã xem xét kiểm soát nội bộ của Công ty liên quan đến việc lập và trình bày báo cáo tài chính trung thực, hợp lý nhằm thiết kế các thủ tục kiểm toán phù hợp với tình hình thực tế, tuy nhiên không nhằm mục đích đưa ra ý kiến về hiệu quả của kiểm soát nội bộ của Công ty. Công việc kiểm toán cũng bao gồm đánh giá tính thích hợp của các chính sách kế toán được áp dụng và tính hợp lý của các ước tính kế toán của Tổng Giám đốc cũng như đánh giá việc trình bày tổng thể báo cáo tài chính.
+P91: Ý kiến của Kiểm toán viên
+P93: Theo ý kiến của chúng tôi, báo cáo tài chính đã phản ánh trung thực và hợp lý, trên các khía cạnh trọng yếu tình hình tài chính của Công ty tại ngày 31 tháng 12 năm 2025, cũng như kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày, phù hợp với chuẩn mực kế toán, chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày báo cáo tài chính.
+P103: BẢNG CÂN ĐỐI KẾ TOÁN	MẪU SỐ B 01 - DN
+P104: Tại ngày 31 tháng 12 năm 2025
+P106: Đơn vị tính: VND
+P108: BẢNG CÂN ĐỐI KẾ TOÁN	MẪU SỐ B 01 - DN
+P109: Tại ngày 31 tháng 12 năm 2025
+P111: Đơn vị tính: VND
+P120: BÁO CÁO KẾT QUẢ HOẠT ĐỘNG KINH DOANH	MẪU SỐ B 02 - DN
+P121: Cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025
+P123: Đơn vị tính: VND
+P131: BÁO CÁO LƯU CHUYỂN TIỀN TỆ	MẪU SỐ B 03 - DN
+P132: Cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025
+P133: (Theo phương pháp gián tiếp)
+P134: Đơn vị tính: VND
+P143: ĐẶC ĐIỂM HOẠT ĐỘNG CỦA DOANH NGHIỆP
+P145: Hình thức sở hữu vốn
+P147: Công ty TNHH Ito En Việt Nam (gọi tắt là “Công ty”) là một công ty trách nhiệm hữu hạn 100% vốn nước ngoài được thành lập tại Việt Nam theo giấy chứng nhận đăng ký doanh nghiệp số 0318373412 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh nay là Sở Tài chính Thành phố Hồ Chí Minh cấp ngày 27 tháng 03 năm 2024 và giấy chứng nhận đăng ký đầu tư với mã số 5485366072 do Ủy ban nhân dân Thành phố Hồ Chí Minh cấp ngày 18 tháng 03 năm 2024, cùng với các loại giấy chứng nhận thay đổi.
+P149: Thời gian hoạt động của dự án đầu tư của Công ty là 50 năm, kể từ ngày 18 tháng 03 năm 2024. 
+P151: Văn phòng và nhà xưởng của Công ty tọa lạc tại tòa nhà Zen Plaza, số 54-56, đường Nguyễn Trãi, phường Bến Thành, quận 1, thành phố Hồ Chí Minh, Việt Nam.
+P153: Chủ sở hữu của Công ty là Ito En Asia Pacific Holdings Pte. Ltd., được thành lập tại Singapore.
+P155: Tổng số nhân viên của Công ty tại ngày cuối năm là 8 người (tại ngày đầu năm là 4 người).
+P157: Ngành nghề kinh doanh
+P159: Ngành nghề kinh doanh của Công ty là:
+P161: Bán buôn tổng hợp và bán lẻ các sản phẩm liên quan đến trà xanh, thực hiện quyền xuất khẩu, quyền nhập khẩu, quyền phân phối bán buôn và bán lẻ các hàng hóa theo quy định của pháp luật Việt Nam và các điều ước quốc tế mà Việt Nam là thành viên.
+P163: Dịch vụ tư vấn quản lý.
+P165: Chu kỳ sản xuất, kinh doanh thông thường	
+P167: Chu kỳ sản xuất kinh doanh thông thường của Công ty không quá 12 tháng. 
+P169: Khả năng so sánh thông tin trên báo cáo tài chính
+P171: Niên độ từ ngày 27 tháng 03 năm 2024 đến ngày 31 tháng 12 năm 2024, Công ty mới hoạt động năm đầu tiên nên kỳ kế toán năm chuyển đổi chỉ là 10 tháng, các thông tin trên báo cáo tài chính cho năm 2024 không so sánh được với thông tin trên báo cáo tài chính năm tài chính chuyển đổi này.
+P174: KỲ KẾ TOÁN, ĐƠN VỊ TIỀN TỆ SỬ DỤNG TRONG KẾ TOÁN
+P176: Kỳ kế toán năm
+P178: Kỳ kế toán năm của Công ty bắt đầu từ ngày 01 tháng 01 và kết thúc vào ngày 31 tháng 12.
+P180: Đơn vị tiền tệ sử dụng trong kế toán
+P182: Đơn vị tiền tệ được sử dụng chính thức trong kế toán là Đồng Việt Nam (VND).
+P188: CHUẨN MỰC VÀ CHẾ ĐỘ KẾ TOÁN ÁP DỤNG
+P190: Chế độ kế toán áp dụng
+P192: Công ty áp dụng Chế độ kế toán doanh nghiệp ban hành theo Thông tư số 200/2014/TT-BTC ngày 22 tháng 12 năm 2014, Thông tư số 75/2015/TT-BTC ngày 18 tháng 05 năm 2015 và Thông tư số 53/2016/TT-BTC ngày 21 tháng 03 năm 2016 của Bộ Tài chính.
+P194: Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ kế toán
+P196: Báo cáo tài chính được lập và trình bày theo quy ước giá gốc, phù hợp với Chuẩn mực kế toán Việt Nam và Chế độ kế toán doanh nghiệp Việt Nam.
+P198: Báo cáo tài chính kèm theo không nhằm phản ánh tình hình tài chính, kết quả hoạt động kinh doanh và tình hình lưu chuyển tiền tệ phù hợp với các nguyên tắc và thông lệ kế toán được chấp nhận chung tại các nước khác ngoài Việt Nam. Báo cáo tài chính được dịch sang tiếng Anh từ báo cáo tiếng Việt phát hành tại Việt Nam.
+P201: CÁC CHÍNH SÁCH KẾ TOÁN ÁP DỤNG CHỦ YẾU
+P203: Các chính sách kế toán chủ yếu được Công ty áp dụng trong việc lập báo cáo tài chính như sau:
+P205: Các giao dịch bằng ngoại tệ
+P207: Các nghiệp vụ phát sinh trong kỳ không phải là VND được quy đổi sang VND theo tỷ giá giao dịch thực tế tại ngày phát sinh nghiệp vụ. Tỷ giá giao dịch thực tế được xác định như sau:
+P209: Tỷ giá giao dịch thực tế khi mua bán ngoại tệ là tỷ giá ký kết trong hợp đồng mua, bán ngoại tệ giữa Công ty và ngân hàng thương mại;
+P210: Tỷ giá giao dịch thực tế khi góp vốn hoặc nhận vốn góp là tỷ giá mua ngoại tệ của ngân hàng thương mại nơi Công ty mở tài khoản để nhận vốn của nhà đầu tư tại ngày góp vốn;
+P211: Tỷ giá giao dịch thực tế khi ghi nhận nợ phải thu là tỷ giá mua của ngân hàng thương mại nơi Công ty chỉ định khách hàng thanh toán;
+P212: Tỷ giá giao dịch thực tế khi ghi nhận nợ phải trả là tỷ giá bán của ngân hàng thương mại nơi Công ty dự kiến giao dịch;
+P213: Tỷ giá giao dịch thực tế khi giao dịch mua sắm tài sản hoặc các khoản chi phí được thanh toán ngay bằng ngoại tệ (không qua các tài khoản phải trả): tỷ giá mua của ngân hàng thương mại nơi Công ty thực hiện thanh toán.
+P215: Tài sản và công nợ có gốc ngoại tệ tại ngày lập Bảng cân đối kế toán được đánh giá lại theo tỷ giá giao dịch thực tế tại ngày lập Bảng cân đối kế toán. Tỷ giá giao dịch thực tế được xác định như sau:
+P217: Đối với các khoản ngoại tệ gửi ngân hàng: tỷ giá mua ngoại tệ của ngân hàng thương mại nơi Công ty mở tài khoản ngoại tệ;
+P218: Đối với các khoản mục tiền tệ có gốc ngoại tệ được phân loại là tài sản khác: tỷ giá mua ngoại tệ của ngân hàng thương mại nơi Công ty thường xuyên có giao dịch;
+P219: Đối với các khoản mục tiền tệ có gốc ngoại tệ được phân loại là nợ phải trả: tỷ giá bán ngoại tệ của ngân hàng thương mại nơi Công ty thường xuyên có giao dịch.
+P221: Tất cả các khoản chênh lệch tỷ giá hối đoái phát sinh từ các nghiệp vụ trên được phản ánh trên Báo cáo kết quả hoạt động kinh doanh.
+P226: Tiền và các khoản tương đương tiền
+P228: Tiền và các khoản tương đương tiền bao gồm tiền mặt tại quỹ, tiền gửi ngân hàng, tiền đang chuyển, tiền gửi không kỳ hạn và các khoản đầu tư ngắn hạn khác có thời hạn không quá ba tháng mà có thể dễ dàng chuyển thành tiền và có rủi ro không đáng kể về việc thay đổi giá trị. 
+P230: Các khoản đầu tư tài chính
+P232: Đầu tư nắm giữ đến ngày đáo hạn
+P234: Đầu tư nắm giữ đến ngày đáo hạn là khoản đầu tư mà Công ty có ý định và khả năng giữ đến ngày đáo hạn. Các khoản đầu tư nắm giữ đến ngày đáo hạn là tiền gửi ngân hàng có kỳ hạn. 
+P236: Các khoản phải thu 
+P238: Các khoản phải thu phản ánh số tiền còn phải thu từ khách hàng và phải thu khác, được trình bày theo giá trị ghi sổ sau khi đã ghi giảm do các khoản dự phòng phải thu khó đòi. 
+P240: Hàng tồn kho
+P242: Hàng tồn kho được tính theo giá gốc. Trường hợp giá trị thuần có thể thực hiện được thấp hơn giá gốc thì tính theo giá trị thuần có thể thực hiện được. Giá gốc hàng tồn kho bao gồm: Chi phí mua, chi phí chế biến và các chi phí liên quan trực tiếp khác phát sinh để có được hàng tồn kho ở địa điểm và trạng thái hiện tại. Giá trị thuần có thể thực hiện được là giá bán ước tính của hàng tồn kho trong kỳ sản xuất kinh doanh bình thường trừ chi phí ước tính để hoàn thành sản phẩm và chi phí ước tính cần thiết cho việc tiêu thụ chúng.
+P244: Giá trị hàng tồn kho được tính theo phương pháp bình quân gia quyền.  
+P246: Hàng tồn kho được hạch toán theo phương pháp kê khai thường xuyên.
+P248: Chi phí trả trước 
+P250: Chi phí trả trước bao gồm chi phí trả trước ngắn hạn và chi phí trả trước dài hạn, thể hiện các khoản chi phí thực tế đã phát sinh nhưng chưa tính hết vào chi phí trong kỳ phát sinh do các chi phí này liên quan đến nhiều kỳ hạch toán và được phân bổ vào chi phí theo thời gian mà lợi ích kinh tế do các khoản chi phí này mang lại.
+P252: Tài sản cố định hữu hình
+P254: Tài sản cố định hữu hình được trình bày theo nguyên giá trừ đi khấu hao lũy kế. 
+P256: Nguyên giá bao gồm toàn bộ các chi phí mà doanh nghiệp phải bỏ ra để có được tài sản cố định tính đến thời điểm đưa tài sản đó vào trạng thái sẵn sàng sử dụng. Các chi phí phát sinh sau ghi nhận ban đầu chỉ được ghi tăng nguyên giá tài sản cố định nếu các chi phí này chắc chắn làm tăng lợi ích kinh tế trong tương lai do sử dụng tài sản đó. Các chi phí phát sinh không thỏa mãn điều kiện trên được ghi nhận là chi phí sản xuất, kinh doanh trong kỳ. 
+P258: Khi tài sản cố định hữu hình được nhượng bán hay thanh lý, nguyên giá và giá trị hao mòn lũy kế được xóa sổ và lãi, lỗ phát sinh do nhượng bán hay thanh lý được ghi nhận vào thu nhập hay chi phí trong kỳ.
+P260: Khấu hao được tính theo phương pháp đường thẳng dựa trên thời gian hữu dụng ước tính. Thời gian hữu dụng ước tính của các loại tài sản cụ thể như sau:
+P264: Các khoản phải trả và chi phí phải trả
+P266: Các khoản phải trả và chi phí phải trả được ghi nhận cho số tiền phải trả trong tương lai liên quan đến hàng hóa đã được mua và dịch vụ đã được sử dụng mà không phụ thuộc vào việc Công ty đã nhận được hóa đơn của nhà cung cấp hay chưa. 
+P268: Doanh thu và thu nhập
+P270: Doanh thu bán hàng
+P272: Doanh thu bán hàng được ghi nhận khi được xác định tương đối chắc chắn và thỏa mãn đồng thời các điều kiện sau: 
+P274: Công ty đã chuyển giao phần lớn rủi ro và lợi ích gắn liền với quyền sở hữu sản phẩm cho người mua;
+P275: Công ty không còn nắm giữ quyền quản lý hàng hóa như người sở hữu hàng hóa hoặc quyền kiểm soát hàng hóa; 
+P276: Doanh thu được xác định tương đối chắc chắn. Khi hợp đồng quy định người mua được quyền trả lại sản phẩm, hàng hoá đã mua theo những điều kiện cụ thể, Công ty chỉ được ghi nhận doanh thu khi những điều kiện cụ thể đó không còn tồn tại và người mua không được quyền trả lại sản phẩm, hàng hoá (trừ trường hợp khách hàng có quyền trả lại hàng hóa dưới hình thức đổi lại để lấy hàng hóa, dịch vụ khác); và
+P277: Công ty đã thu được hoặc sẽ thu được lợi ích và xác định được chi phí liên quan đến giao dịch bán hàng.
+P279: Tiền lãi
+P281: Tiền lãi được ghi nhận trên cơ sở dồn tích, được xác định trên số dư gốc và lãi suất thực tế từng kỳ.
+P283: Thuê hoạt động
+P285: Các hình thức thuê mà không phải là thuê tài chính được phân loại là thuê hoạt động. Các chi phí thuê dưới hình thức thuê hoạt động được ghi nhận vào Báo cáo kết quả hoạt động kinh doanh theo phương pháp đường thẳng dựa trên thời hạn thuê.
+P287: Thuế 
+P289: Thuế thu nhập doanh nghiệp được ghi nhận trong Báo cáo kết quả hoạt động kinh doanh bao gồm thuế thu nhập hiện hành và thuế thu nhập hoãn lại.
+P291: Thuế thu nhập hiện hành được tính căn cứ vào thuế suất áp dụng trong năm và kết quả kinh doanh trong năm đã được điều chỉnh cho vài khoản mục, mà cho rằng không được đánh giá hay được phép khi xác định thu nhập chịu thuế bao gồm cả khoản lỗ mang sang, nếu có. 
+P293: Thuế thu nhập hoãn lại được ghi nhận theo phương pháp bảng cân đối kế toán, trên cơ sở các chênh lệch tạm thời phát sinh giữa cơ sở tính thuế đối với tài sản hoặc công nợ và giá trị ghi sổ của chúng trên Bảng cân đối kế toán. Thuế thu nhập hoãn lại được xác định theo thuế suất dự tính sẽ áp dụng cho niên độ mà tài sản được thu hồi hay nợ phải trả được thanh toán. Tài sản thuế thu nhập hoãn lại được ghi nhận tới chừng mực mà trong tương lai có thể phát sinh thu nhập chịu thuế để số chênh lệch tạm thời có thể được sử dụng đến.
+P295: Các loại thuế khác được áp dụng theo các luật thuế hiện hành tại Việt Nam.
+P296: Các bên liên quan
+P298: Các bên được coi là có liên quan nếu một bên có khả năng kiểm soát hoặc có ảnh hưởng đáng kể đối với bên kia trong việc ra quyết định các chính sách tài chính và hoạt động. Các bên cũng được xem là bên liên quan nếu cùng chịu sự kiểm soát chung hay chịu ảnh hưởng đáng kể chung.
+P300: Trong việc xem xét mối quan hệ của các bên liên quan, bản chất của mối quan hệ được chú trọng nhiều hơn hình thức pháp lý.
+P303: THÔNG TIN BỔ SUNG CÁC KHOẢN MỤC TRÌNH BÀY TRONG BẢNG CÂN ĐỐI KẾ TOÁN 
+P305: Tiền và các khoản tương đương tiền
+P308: (*): Đây là khoản tiền gửi ngân hàng có kỳ hạn 3 tháng, chi tiết như sau:
+P310: Ngân hàng Thương mại cổ phần Việt Nam Thịnh Vượng - Chi nhánh Đồng Nai:
+P314: Phải thu ngắn hạn của khách hàng
+P318: Hàng tồn kho
+P321: Phải thu khác
+P326: Chi phí trả trước ngắn hạn
+P330: Tài sản cố định hữu hình	
+P334: Thuế giá trị gia tăng được khấu trừ
+P346: Chi phí trả trước dài hạn
+P350: Phải trả người bán ngắn hạn
+P354: Thuế và các khoản phải nộp Nhà nước
+P358: Chi phí phải trả ngắn hạn
+P363: Phải trả ngắn hạn khác
+P367: Vốn góp của chủ sở hữu
+P369: Theo giấy chứng nhận đăng ký đầu tư và giấy chứng nhận đăng ký doanh nghiệp của Công ty, vốn đầu tư và vốn điều lệ của Công ty lần lượt là 67.000.000.000 VND (tương đương 2.749.281,91 USD) và 24.000.000.000 VND (tương đương 984.817,40 USD). Tình hình góp vốn điều lệ của Công ty tại ngày 31 tháng 12 năm 2025 cụ thể như sau:
+P374: Các khoản mục ngoài Bảng cân đối kế toán
+P387: THÔNG TIN BỔ SUNG CHO CÁC KHOẢN MỤC TRÌNH BÀY TRONG BÁO CÁO KẾT QUẢ HOẠT ĐỘNG KINH DOANH 
+P389: Doanh thu thuần về bán hàng và cung cấp dịch vụ
+P393: Giá vốn hàng bán
+P397: Doanh thu hoạt động tài chính
+P401: Chi phí tài chính
+P407: Chi phí bán hàng
+P411: Chi phí quản lý doanh nghiệp
+P415: Chi phí thuế thu nhập doanh nghiệp hiện hành
+P417: Công ty có nghĩa vụ nộp thuế thu nhập doanh nghiệp theo quy định hiện hành.
+P420: Công ty không lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành vì Công ty không có thu nhập chịu thuế trong năm 2025.
+P422: Chi phí thuế thu nhập doanh nghiệp cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025 được tính trên thu nhập tính thuế ước tính. Chi phí thuế thu nhập doanh nghiệp này sẽ được cơ quan thuế xác định lại thông qua các cuộc kiểm tra. 
+P424: Do việc áp dụng luật thuế và các qui định về thuế đối với các loại nghiệp vụ khác nhau, bao gồm việc xác định giá trị thị trường trong giao dịch kinh doanh giữa các bên có quan hệ liên kết, có thể được giải thích theo nhiều cách khác nhau, nên số liệu về chi phí thuế thu nhập doanh nghiệp đã được ghi nhận ở trên có thể thay đổi tùy theo quyết định cuối cùng của cơ quan thuế. 
+P426: Chi phí thuế thu nhập doanh nghiệp hoãn lại
+P428: Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Tổng Giám đốc Công ty cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai. Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong năm 2025.
+P431: Chi phí sản xuất, kinh doanh theo yếu tố
+P435: NHỮNG THÔNG TIN KHÁC
+P438: Giao dịch với các bên liên quan
+P441: Trong năm tài chính kết thúc ngày 31 tháng 12 năm 2025, Công ty có các nghiệp vụ kinh tế quan trọng với các bên liên quan được trình bày ở bảng sau:
+P447: Những sự kiện phát sinh sau ngày kết thúc kỳ kế toán năm
+P449: Không có sự kiện quan trọng nào xảy ra sau ngày khóa sổ kế toán lập báo cáo tài chính yêu cầu phải điều chỉnh hoặc công bố trong báo cáo tài chính.
+P452: PHÊ DUYỆT BÁO CÁO TÀI CHÍNH
+P454: Báo cáo tài chính được phê duyệt bởi Tổng Giám đốc Công ty để phát hành vào ngày 20 tháng 03 năm 2026.
+P459: xyâ
+
+--- TABLES ---
+Table 0:
+  T0R0C0: CÔNG TY TNHH ITO EN VIỆT NAM
+  T0R1C0: (Thành lập tại Việt Nam)
+  T0R2C0: Mã số thuế: 0318373412
+  T0R5C0: BÁO CÁO TÀI CHÍNH ĐÃ ĐƯỢC KIỂM TOÁN
+  T0R6C0: CHO NĂM TÀI CHÍNH KẾT THÚC NGÀY 31 THÁNG 12 NĂM 2025
+Table 1:
+  T1R0C0: NỘI DUNG
+  T1R0C1: TRANG
+  T1R3C0: BÁO CÁO CỦA TỔNG GIÁM ĐỐC
+  T1R3C1: 1
+  T1R5C0: BÁO CÁO KIỂM TOÁN ĐỘC LẬP
+  T1R5C1: 2
+  T1R7C0: BẢNG CÂN ĐỐI KẾ TOÁN
+  T1R7C1: 3 - 4
+  T1R9C0: BÁO CÁO KẾT QUẢ HOẠT ĐỘNG KINH DOANH
+  T1R9C1: 5
+  T1R11C0: BÁO CÁO LƯU CHUYỂN TIỀN TỆ
+  T1R11C1: 6
+  T1R13C0: BẢN THUYẾT MINH BÁO CÁO TÀI CHÍNH
+  T1R13C1: 7 - 18
+Table 2:
+  T2R0C0: Murakami Hiroaki
+  T2R1C0: Tổng Giám đốc
+  T2R2C0: Ngày 20 tháng 03 năm 2026
+Table 3:
+  T3R0C0: Phạm Nguyễn Trường Sơn Tổng Giám đốc Số giấy CN ĐKHN kiểm toán: 0853-2023-051-1 Thay mặt và đại diện cho CÔNG TY TNHH KIỂM TOÁN U&I Ngày 20 tháng 03 năm 2026
+  T3R0C2: Nguyễn Thị Thùy Uyễn  Kiểm toán viên Số giấy CN ĐKHN kiểm toán: 3885-2022-051-1 
+Table 4:
+  T4R0C0: TÀI SẢN
+  T4R0C1: Mã số
+  T4R0C2: Thuyết minh
+  T4R0C3: Số cuối năm
+  T4R0C4: Số đầu năm
+  T4R2C0: TÀI SẢN NGẮN HẠN
+  T4R2C1: 100
+  T4R2C3:  20.522.929.956 
+  T4R2C4:  22.057.558.601 
+  T4R4C0: Tiền và các khoản tương đương tiền
+  T4R4C1: 110
+  T4R4C2: V.1
+  T4R4C3:  13.018.047.709 
+  T4R4C4:  19.074.134.705 
+  T4R5C0: Tiền 
+  T4R5C1: 111
+  T4R5C3:  8.018.047.709 
+  T4R5C4:  19.074.134.705 
+  T4R6C0: Các khoản tương đương tiền
+  T4R6C1: 112
+  T4R6C3:  5.000.000.000 
+  T4R6C4:  -   
+  T4R8C0: Các khoản phải thu ngắn hạn
+  T4R8C1: 130
+  T4R8C3:  3.941.769.844 
+  T4R8C4:  1.288.961.215 
+  T4R9C0: Phải thu ngắn hạn của khách hàng 
+  T4R9C1: 131
+  T4R9C2: V.2
+  T4R9C3:  3.708.436.266 
+  T4R9C4:  1.165.066.059 
+  T4R10C0: Trả trước cho người bán ngắn hạn
+  T4R10C1: 132
+  T4R10C3:  89.988.000 
+  T4R10C4:  6.441.400 
+  T4R11C0: Phải thu về cho vay ngắn hạn
+  T4R11C1: 135
+  T4R11C3:  -   
+  T4R11C4:  -      
+  T4R12C0: Phải thu ngắn hạn khác
+  T4R12C1: 136
+  T4R12C2: V.4
+  T4R12C3:  143.345.578 
+  T4R12C4:  117.453.756 
+  T4R14C0: Hàng tồn kho
+  T4R14C1: 140
+  T4R14C3:  2.222.814.609 
+  T4R14C4:  1.114.628.859 
+  T4R15C0: Hàng tồn kho
+  T4R15C1: 141
+  T4R15C2: V.3
+  T4R15C3:  2.222.814.609 
+  T4R15C4:  1.114.628.859 
+  T4R17C0: Tài sản ngắn hạn khác
+  T4R17C1: 150
+  T4R17C3:  1.340.297.794 
+  T4R17C4:  579.833.822 
+  T4R18C0: Chi phí trả trước ngắn hạn 
+  T4R18C1: 151
+  T4R18C2: V.5
+  T4R18C3:  395.601.009 
+  T4R18C4:  319.339.284 
+  T4R19C0: Thuế giá trị gia tăng được khấu trừ
+  T4R19C1: 152
+  T4R19C2: V.7
+  T4R19C3:  944.696.785 
+  T4R19C4:  260.494.538 
+  T4R21C0: TÀI SẢN DÀI HẠN
+  T4R21C1: 200
+  T4R21C3:  363.306.844 
+  T4R21C4:  555.062.538 
+  T4R23C0: Các khoản phải thu dài hạn 
+  T4R23C1: 210
+  T4R23C3:  155.000.000 
+  T4R23C4:  155.000.000 
+  T4R24C0: Phải thu dài hạn khác
+  T4R24C1: 216
+  T4R24C2: V.4
+  T4R24C3:  155.000.000 
+  T4R24C4:  155.000.000 
+  T4R26C0: Tài sản cố định
+  T4R26C1: 220
+  T4R26C3:  33.820.242 
+  T4R26C4:  -   
+  T4R27C0: Tài sản cố định hữu hình
+  T4R27C1: 221
+  T4R27C2: V.6
+  T4R27C3:  33.820.242 
+  T4R27C4:  -   
+  T4R28C0: - Nguyên giá
+  T4R28C1: 222
+  T4R28C3:  37.416.000 
+  T4R28C4:  -   
+  T4R29C0: - Giá trị hao mòn luỹ kế 
+  T4R29C1: 223
+  T4R29C3:  (3.595.758)
+  T4R29C4:  -   
+  T4R31C0: Tài sản dài hạn khác
+  T4R31C1: 260
+  T4R31C3:  174.486.602 
+  T4R31C4:  400.062.538 
+  T4R32C0: Chi phí trả trước dài hạn
+  T4R32C1: 261
+  T4R32C2: V.8
+  T4R32C3:  174.486.602 
+  T4R32C4:  400.062.538 
+  T4R34C0: TỔNG CỘNG TÀI SẢN
+  T4R34C1: 270
+  T4R34C3:  20.886.236.800 
+  T4R34C4:  22.612.621.139 
+Table 5:
+  T5R0C0: NGUỒN VỐN
+  T5R0C1: Mã số
+  T5R0C2: Thuyết minh
+  T5R0C3: Số cuối năm
+  T5R0C4: Số đầu năm
+  T5R2C0: NỢ PHẢI TRẢ
+  T5R2C1: 300
+  T5R2C3:  7.328.563.928 
+  T5R2C4:  3.079.629.960 
+  T5R4C0: Nợ ngắn hạn
+  T5R4C1: 310
+  T5R4C3:  7.328.563.928 
+  T5R4C4:  3.079.629.960 
+  T5R5C0: Phải trả người bán ngắn hạn
+  T5R5C1: 311
+  T5R5C2: V.9
+  T5R5C3:  4.277.037.674 
+  T5R5C4:  1.860.295.506 
+  T5R6C0: Người mua trả tiền trước ngắn hạn
+  T5R6C1: 312
+  T5R6C3:  156.103 
+  T5R6C4:  -   
+  T5R7C0: Thuế và các khoản phải nộp Nhà nước
+  T5R7C1: 313
+  T5R7C2: V.10
+  T5R7C3:  331.601.111 
+  T5R7C4:  183.764.312 
+  T5R8C0: Phải trả người lao động
+  T5R8C1: 314
+  T5R8C3:  24.035.000 
+  T5R8C4:  128.934.234 
+  T5R9C0: Chi phí phải trả ngắn hạn
+  T5R9C1: 315
+  T5R9C2: V.11
+  T5R9C3:  1.136.378.194 
+  T5R9C4:  370.344.341 
+  T5R10C0: Phải trả ngắn hạn khác
+  T5R10C1: 319
+  T5R10C2: V.12
+  T5R10C3:  1.559.355.846 
+  T5R10C4:  536.291.567 
+  T5R12C0: VỐN CHỦ SỞ HỮU
+  T5R12C1: 400
+  T5R12C3:  13.557.672.872 
+  T5R12C4:  19.532.991.179 
+  T5R14C0: Vốn chủ sở hữu
+  T5R14C1: 410
+  T5R14C3:  13.557.672.872 
+  T5R14C4:  19.532.991.179 
+  T5R15C0: Vốn góp của chủ sở hữu
+  T5R15C1: 411
+  T5R15C2: V.13
+  T5R15C3:  24.000.000.000 
+  T5R15C4:  24.000.000.000 
+  T5R16C0: Lợi nhuận sau thuế chưa phân phối
+  T5R16C1: 421
+  T5R16C3:  (10.442.327.128)
+  T5R16C4:  (4.467.008.821)
+  T5R17C0: -Lợi nhuận sau thuế chưa phân phối lũy kế đến cuối kỳ trước
+  T5R17C1: 421a
+  T5R17C3:  (4.467.008.821)
+  T5R17C4:  -   
+  T5R18C0: -Lợi nhuận sau thuế chưa phân phối kỳ này
+  T5R18C1: 421b
+  T5R18C3:  (5.975.318.307)
+  T5R18C4:  (4.467.008.821)
+  T5R20C0: TỔNG CỘNG NGUỒN VỐN
+  T5R20C1: 440
+  T5R20C3:  20.886.236.800 
+  T5R20C4:  22.612.621.139 
+Table 6:
+  T6R0C0: Murakami Hiroaki
+  T6R0C4: Tạ Thị Thảo
+  T6R1C0: Tổng Giám đốc
+  T6R1C4: Người lập biểu kiêm kế toán trưởng
+  T6R2C0: Ngày 20 tháng 03 năm 2026
+  T6R2C4: Số chứng chỉ hành nghề: 3913/2022/KET.1
+  T6R3C4: Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam
+Table 7:
+  T7R0C0: CHỈ TIÊU
+  T7R0C1: Mã số
+  T7R0C2: Thuyết minh
+  T7R0C3: Từ 01/01/2025 đến 31/12/2025
+  T7R0C4: Từ 27/03/2024 đến 31/12/2024
+  T7R2C0: 1. 	Doanh thu bán hàng và cung cấp dịch vụ
+  T7R2C1: 01
+  T7R2C2: VI.1
+  T7R2C3:  24.003.870.743 
+  T7R2C4:  4.509.440.670 
+  T7R4C0: 2. 	Các khoản giảm trừ doanh thu
+  T7R4C1: 02
+  T7R4C3:  62.333.642 
+  T7R4C4:  -   
+  T7R6C0: 3. 	Doanh thu thuần về bán hàng và cung cấp dịch vụ
+  T7R6C1: 10
+  T7R6C3:  23.941.537.101 
+  T7R6C4:  4.509.440.670 
+  T7R8C0: 4. 	Giá vốn hàng bán 
+  T7R8C1: 11
+  T7R8C2: VI.2
+  T7R8C3:  14.709.421.077 
+  T7R8C4:  2.775.398.309 
+  T7R10C0: 5. 	Lợi nhuận gộp về bán hàng và cung cấp dịch vụ
+  T7R10C1: 20
+  T7R10C3:  9.232.116.024 
+  T7R10C4:  1.734.042.361 
+  T7R12C0: 6.	Doanh thu hoạt động tài chính
+  T7R12C1: 21
+  T7R12C2: VI.3
+  T7R12C3:  482.232.917 
+  T7R12C4:  20.156.218 
+  T7R14C0: 7.	Chi phí tài chính
+  T7R14C1: 22
+  T7R14C2: VI.4
+  T7R14C3:  459.315.262 
+  T7R14C4:  89.365.628 
+  T7R15C0: Trong đó: Chi phí lãi vay 
+  T7R15C1: 23
+  T7R15C3:  -   
+  T7R15C4:  -   
+  T7R17C0: 8. 	Chi phí bán hàng 
+  T7R17C1: 25
+  T7R17C2: VI.5
+  T7R17C3:  9.015.674.311 
+  T7R17C4:  2.467.630.409 
+  T7R19C0: 9. 	Chi phí quản lý doanh nghiệp
+  T7R19C1: 26
+  T7R19C2: VI.6
+  T7R19C3:  6.204.121.018 
+  T7R19C4:  3.758.160.222 
+  T7R21C0: 10. 	Lợi nhuận thuần từ hoạt động kinh doanh 
+  T7R21C1: 30
+  T7R21C3:  (5.964.761.650)
+  T7R21C4:  (4.560.957.680)
+  T7R23C0: 11.	Thu nhập khác
+  T7R23C1: 31
+  T7R23C3:  2.326.610 
+  T7R23C4:  94.045.639 
+  T7R25C0: 12.	Chi phí khác
+  T7R25C1: 32
+  T7R25C3:  12.883.267 
+  T7R25C4:  96.780 
+  T7R27C0: 13. Lợi nhuận khác 
+  T7R27C1: 40
+  T7R27C3:  (10.556.657)
+  T7R27C4:  93.948.859 
+  T7R29C0: 14. Tổng lợi nhuận kế toán trước thuế 
+  T7R29C1: 50
+  T7R29C3:  (5.975.318.307)
+  T7R29C4:  (4.467.008.821)
+  T7R31C0: 15. Chi phí thuế thu nhập doanh nghiệp hiện hành
+  T7R31C1: 51
+  T7R31C2: VI.7
+  T7R31C3:  -   
+  T7R31C4:  -   
+  T7R33C0: 16. Chi phí thuế thu nhập doanh nghiệp hoãn lại
+  T7R33C1: 52
+  T7R33C2: VI.8
+  T7R33C3:  -   
+  T7R33C4:  -   
+  T7R35C0: 17. Lợi nhuận sau thuế thu nhập doanh nghiệp
+  T7R35C1: 60
+  T7R35C3:  (5.975.318.307)
+  T7R35C4:  (4.467.008.821)
+Table 8:
+  T8R0C0: Murakami Hiroaki
+  T8R0C4: Tạ Thị Thảo
+  T8R1C0: Tổng Giám đốc
+  T8R1C4: Người lập biểu kiêm kế toán trưởng
+  T8R2C0: Ngày 20 tháng 03 năm 2026
+  T8R2C4: Số chứng chỉ hành nghề: 3913/2022/KET.1
+  T8R3C4: Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam
+Table 9:
+  T9R0C0: CHỈ TIÊU
+  T9R0C1: Mã số
+  T9R0C2: Thuyết minh
+  T9R0C3: Từ 01/01/2025 đến 31/12/2025
+  T9R0C4: Từ 27/03/2024 đến 31/12/2024
+  T9R2C0: I. Lưu chuyển tiền từ hoạt động kinh doanh
+  T9R3C0: Lợi nhuận trước thuế
+  T9R3C1: 01
+  T9R3C3:  (5.975.318.307)
+  T9R3C4:  (4.467.008.821)
+  T9R4C0: Điều chỉnh cho các khoản:
+  T9R5C0: Khấu hao tài sản cố định 
+  T9R5C1: 02
+  T9R5C3:  3.595.758 
+  T9R5C4:  -   
+  T9R6C0: Lãi, lỗ chênh lệch tỷ giá hối đoái do đánh giá lại các khoản mục tiền tệ có gốc ngoại tệ
+  T9R6C1: 04
+  T9R6C3:  26.406.334 
+  T9R6C4:  (1.114.678)
+  T9R7C0: Lãi, lỗ từ hoạt động đầu tư
+  T9R7C1: 05
+  T9R7C3:  (302.493.151)
+  T9R7C4:  -   
+  T9R8C0: Lợi nhuận từ hoạt động kinh doanh trước những thay đổi vốn lưu động
+  T9R8C1: 08
+  T9R8C3:  (6.247.809.366)
+  T9R8C4:  (4.468.123.499)
+  T9R10C0: Tăng, giảm các khoản phải thu 
+  T9R10C1: 09
+  T9R10C3:  (3.337.010.876)
+  T9R10C4:  (1.704.455.753)
+  T9R11C0: Tăng, giảm hàng tồn kho
+  T9R11C1: 10
+  T9R11C3:  (1.108.185.750)
+  T9R11C4:  (1.114.628.859)
+  T9R12C0: Tăng, giảm các khoản phải trả
+  T9R12C1: 11
+  T9R12C3:  4.222.527.634 
+  T9R12C4:  3.318.110.293 
+  T9R13C0: Tăng, giảm chi phí trả trước
+  T9R13C1: 12
+  T9R13C3:  149.314.211 
+  T9R13C4:  (719.401.822)
+  T9R14C0: Lưu chuyển tiền thuần từ hoạt động kinh doanh
+  T9R14C1: 20
+  T9R14C3:  (6.321.164.147)
+  T9R14C4:  (4.688.499.640)
+  T9R16C0: II. Lưu chuyển tiền từ hoạt động đầu tư
+  T9R18C0: Tiền chi để mua sắm, xây dựng tài sản cố định và các tài sản dài hạn khác 
+  T9R18C1: 21
+  T9R18C3:  (37.416.000)
+  T9R18C4:  -   
+  T9R19C0: Tiền chi cho vay, mua các công cụ nợ của đơn vị khác
+  T9R19C1: 23
+  T9R19C3:  (10.000.000.000)
+  T9R19C4:  -   
+  T9R20C0: Tiền thu hồi cho vay, bán lại các công cụ nợ của đơn vị khác
+  T9R20C1: 24
+  T9R20C3:  10.000.000.000 
+  T9R20C4:  -   
+  T9R21C0: Tiền thu lãi cho vay, cổ tức và lợi nhuận được chia 
+  T9R21C1: 27
+  T9R21C3:  302.493.151 
+  T9R21C4:  -   
+  T9R22C0: Lưu chuyển tiền thuần từ hoạt động đầu tư
+  T9R22C1: 30
+  T9R22C3:  265.077.151 
+  T9R22C4:  -   
+  T9R24C0: III. Lưu chuyển tiền từ hoạt động tài chính
+  T9R26C0: Tiền thu từ phát hành cổ phiếu, nhận vốn góp của chủ sở hữu
+  T9R26C1: 31
+  T9R26C3:  -   
+  T9R26C4:  24.000.000.000 
+  T9R27C0: Tiền chi trả nợ gốc vay
+  T9R27C1: 34
+  T9R27C3:  -   
+  T9R27C4:  (237.365.655)
+  T9R28C0: Lưu chuyển tiền thuần từ hoạt động tài chính
+  T9R28C1: 40
+  T9R28C3:  -   
+  T9R28C4:  23.762.634.345 
+  T9R30C0: Lưu chuyển tiền thuần trong kỳ
+  T9R30C1: 50
+  T9R30C3:  (6.056.086.996)
+  T9R30C4:  19.074.134.705 
+  T9R31C0: Tiền và tương đương tiền đầu kỳ
+  T9R31C1: 60
+  T9R31C3:  19.074.134.705 
+  T9R31C4:  -   
+  T9R32C0: Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ
+  T9R32C1: 61
+  T9R32C3:  -   
+  T9R32C4:  -   
+  T9R33C0: Tiền và tương đương tiền cuối kỳ
+  T9R33C1: 70
+  T9R33C3:  13.018.047.709 
+  T9R33C4:  19.074.134.705 
+Table 10:
+  T10R0C0: Murakami Hiroaki
+  T10R0C4: Tạ Thị Thảo
+  T10R1C0: Tổng Giám đốc
+  T10R1C4: Người lập biểu kiêm kế toán trưởng
+  T10R2C0: Ngày 20 tháng 03 năm 2026
+  T10R2C4: Số chứng chỉ hành nghề: 3913/2022/KET.1
+  T10R3C4: Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam
+Table 11:
+  T11R0C2: Số năm khấu hao
+  T11R2C0: Tài sản cố định hữu hình khác
+  T11R2C2: 4
+Table 12:
+  T12R0C1: Số cuối năm
+  T12R0C3: Số đầu năm
+  T12R1C1: VND
+  T12R1C3: VND
+  T12R3C0: Tiền gửi ngân hàng
+  T12R3C1:  8.018.047.709 
+  T12R3C3:  19.074.134.705 
+  T12R4C0: Các khoản tương đương tiền (*)
+  T12R4C1:  5.000.000.000 
+  T12R4C3:  -   
+  T12R5C0: Tổng cộng
+  T12R5C1:  13.018.047.709 
+  T12R5C3:  19.074.134.705 
+Table 13:
+  T13R0C0: Số hợp đồng
+  T13R0C1: Ngày hợp đồng
+  T13R0C2: Ngày đáo hạn
+  T13R0C3: Lãi suất
+  T13R0C4: Số tiền
+  T13R1C3: (%/năm)
+  T13R1C4: VND
+  T13R2C0: 494096908
+  T13R2C1: 04/12/2025
+  T13R2C2: 04/03/2026
+  T13R2C3: 4,75
+  T13R2C4: 5.000.000.000
+  T13R3C0: Tổng cộng
+  T13R3C4: 5.000.000.000
+Table 14:
+  T14R0C1: Số cuối năm
+  T14R0C3: Số đầu năm
+  T14R1C1: VND
+  T14R1C3: VND
+  T14R3C0: Bên thứ ba
+  T14R4C0: Công ty cổ phần Thương mại Sim Ba
+  T14R4C1: 722.906.640
+  T14R4C3: 448.902.000
+  T14R5C0: Công ty TNHH Aeon Việt Nam
+  T14R5C1: 633.034.838
+  T14R5C3: -
+  T14R6C0: Công ty TNHH Vòng Tròn Đỏ
+  T14R6C1: 583.149.680
+  T14R6C3: -
+  T14R7C0: Công ty TNHH Cửa Hàng Tiện Lợi Gia Đình Việt Nam
+  T14R7C1: 417.770.826
+  T14R7C3: 280.806.299
+  T14R8C0: Công ty cổ phần Seven System Việt Nam
+  T14R8C1: 336.353.472
+  T14R8C3: 262.944.616
+  T14R9C0: Khác
+  T14R9C1: 1.015.220.810
+  T14R9C3: 172.413.144
+  T14R10C0: Tổng cộng
+  T14R10C1:  3.708.436.266 
+  T14R10C3:  1.165.066.059 
+Table 15:
+  T15R0C1: Số cuối năm
+  T15R0C3: Số đầu năm
+  T15R1C1: VND
+  T15R1C3: VND
+  T15R3C0: Hàng mua đang đi đường
+  T15R3C1:  -   
+  T15R3C3:  72.067.968 
+  T15R4C0: Hàng hóa
+  T15R4C1:  2.222.814.609 
+  T15R4C3:  1.042.560.891 
+  T15R5C0: Tổng cộng
+  T15R5C1:  2.222.814.609 
+  T15R5C3:  1.114.628.859 
+Table 16:
+  T16R0C1: Số cuối năm
+  T16R0C3: Số đầu năm
+  T16R1C1: VND
+  T16R1C3: VND
+  T16R3C0: Các khoản ký quỹ, ký cược ngắn hạn
+  T16R3C1: 122.300.000
+  T16R3C3: 117.300.000
+  T16R4C0: Đặt cọc thuê văn phòng
+  T16R4C1: 155.000.000
+  T16R4C3: 155.000.000
+  T16R5C0: Khác
+  T16R5C1: 21.045.578
+  T16R5C3: 153.756
+  T16R6C0: Tổng cộng
+  T16R6C1:  298.345.578 
+  T16R6C3:  272.453.756 
+Table 17:
+  T17R0C0: Ngắn hạn
+  T17R0C1:  143.345.578 
+  T17R0C3:  117.453.756 
+  T17R1C0: Dài hạn
+  T17R1C1:  155.000.000 
+  T17R1C3:  155.000.000 
+  T17R2C0: Tổng cộng
+  T17R2C1:  298.345.578 
+  T17R2C3:  272.453.756 
+Table 18:
+  T18R0C1: Từ 01/01/2025 đến 31/12/2025
+  T18R0C3: Từ 27/03/2024 đến 31/12/2024
+  T18R1C1: VND
+  T18R1C3: VND
+  T18R3C0: Số đầu năm
+  T18R3C1:  319.339.284 
+  T18R3C3: -
+  T18R4C0: Phát sinh tăng
+  T18R4C1: 1.632.653.567
+  T18R4C3: 1.063.874.919
+  T18R5C0: Đã phân bổ
+  T18R5C1: (1.556.391.842)
+  T18R5C3: (744.535.635)
+  T18R6C0: Số cuối năm
+  T18R6C1:  395.601.009 
+  T18R6C3:  319.339.284 
+Table 19:
+  T19R0C0: Tài sản cố định hữu hình khác
+  T19R0C1: Số cuối năm
+  T19R0C3: Số đầu năm
+  T19R1C1: VND
+  T19R1C3: VND
+  T19R3C0: Nguyên giá
+  T19R3C1:  37.416.000 
+  T19R3C3:  -   
+  T19R4C0: Khấu hao lũy kế
+  T19R4C1:  (3.595.758)
+  T19R4C3:  -   
+  T19R5C0: Giá trị còn lại
+  T19R5C1:  33.820.242 
+  T19R5C3:  -   
+  T19R7C0: Khấu hao trong năm
+  T19R7C1: (3.595.758)
+  T19R7C3: -
+Table 20:
+  T20R0C1: Số cuối năm
+  T20R0C3: Số đầu năm
+  T20R1C1: VND
+  T20R1C3: VND
+  T20R3C0: Thuế giá trị gia tăng được khấu trừ
+  T20R3C1: 944.696.785
+  T20R3C3: 260.494.538
+  T20R4C0: Tổng cộng
+  T20R4C1:  944.696.785    
+  T20R4C3:  260.494.538 
+Table 21:
+  T21R0C1: Từ 01/01/2025 đến 31/12/2025
+  T21R0C3: Từ 27/03/2024 đến 31/12/2024
+  T21R1C1: VND
+  T21R1C3: VND
+  T21R3C0: Số đầu năm
+  T21R3C1:  400.062.538    
+  T21R3C3: -
+  T21R4C0: Phát sinh tăng
+  T21R4C1: 50.369.000
+  T21R4C3: 557.439.699
+  T21R5C0: Đã phân bổ
+  T21R5C1: (275.944.936)
+  T21R5C3: (157.377.161)
+  T21R6C0: Số cuối năm
+  T21R6C1:  174.486.602 
+  T21R6C3:  400.062.538 
+Table 22:
+  T22R0C1: Số cuối năm
+  T22R0C3: Số đầu năm
+  T22R1C1: VND
+  T22R1C3: VND
+  T22R3C0: Bên liên quan
+  T22R4C0: Ito En, Ltd.
+  T22R4C1: 1.532.907.558
+  T22R4C3:  389.309.758
+  T22R5C0: Bên thứ ba
+  T22R6C0: Toyo Seikan (Thailand) Co., Ltd
+  T22R6C1: 2.128.864.304
+  T22R6C3: 735.601.342
+  T22R7C0: Công ty TNHH Omori Kaisoten Việt Nam
+  T22R7C1: 311.575.488
+  T22R7C3: 247.444.053
+  T22R8C0: Công ty cổ phần Liên Kết Con Người
+  T22R8C1: 82.612.116
+  T22R8C3: 241.467.298
+  T22R9C0: Khác
+  T22R9C1: 221.078.208
+  T22R9C3: 246.473.055
+  T22R10C0: Tổng cộng
+  T22R10C1:  4.277.037.674 
+  T22R10C3:  1.860.295.506 
+Table 23:
+  T23R0C1: Số đầu năm
+  T23R0C3: Số phải nộp 
+  T23R0C5: Số đã nộp, khấu trừ 
+  T23R0C7: Số cuối năm
+  T23R1C1: VND
+  T23R1C3: VND
+  T23R1C5: VND
+  T23R1C7: VND
+  T23R3C0: Thuế giá trị gia tăng
+  T23R3C1: -
+  T23R3C3: 3.784.083.939
+  T23R3C5: (3.784.083.939)
+  T23R3C7: -
+  T23R4C0: Thuế giá trị gia tăng hàng nhập khẩu
+  T23R4C1: -
+  T23R4C3: 1.861.353.983
+  T23R4C5: (1.861.353.983)
+  T23R4C7: -
+  T23R5C0: Thuế nhập khẩu
+  T23R5C1: -
+  T23R5C3: 101.696.014
+  T23R5C5: (101.696.014)
+  T23R5C7: -
+  T23R6C0: Thuế thu nhập cá nhân
+  T23R6C1: 183.764.312
+  T23R6C3: 1.008.160.088
+  T23R6C5: (860.323.289)
+  T23R6C7: 331.601.111
+  T23R7C0: Thuế nhà thầu
+  T23R7C3: 30.727.915
+  T23R7C5: (30.727.915)
+  T23R8C0: Lệ phí môn bài
+  T23R8C1: -
+  T23R8C3: 3.000.000
+  T23R8C5: (3.000.000)
+  T23R8C7: -
+  T23R9C0: Tổng cộng
+  T23R9C1: 183.764.312
+  T23R9C3: 6.789.021.939
+  T23R9C5: (6.641.185.140)
+  T23R9C7: 331.601.111
+Table 24:
+  T24R0C1: Số cuối năm
+  T24R0C3: Số đầu năm
+  T24R1C1: VND
+  T24R1C3: VND
+  T24R3C0: Trích trước phí khuyến mãi
+  T24R3C1: 137.846.547
+  T24R3C3: 60.193.985
+  T24R4C0: Trích trước phí bản quyền sản phẩm
+  T24R4C1: 443.201.428
+  T24R4C3: 88.702.289
+  T24R5C0: Trích trước phí quảng cáo
+  T24R5C1: 218.785.033
+  T24R5C3: 140.356.400
+  T24R6C0: Khác
+  T24R6C1: 336.545.186
+  T24R6C3: 81.091.667
+  T24R7C0: Tổng cộng
+  T24R7C1:  1.136.378.194 
+  T24R7C3:  370.344.341 
+Table 25:
+  T25R0C1: Số cuối năm
+  T25R0C3: Số đầu năm
+  T25R1C1: VND
+  T25R1C3: VND
+  T25R3C0: Bên liên quan 
+  T25R4C0: Ito En, Ltd
+  T25R4C1: 1.492.616.316
+  T25R4C3: 472.516.152
+  T25R5C0: Khác
+  T25R5C1: 66.739.530
+  T25R5C3: 63.775.415
+  T25R6C0: Tổng cộng
+  T25R6C1:  1.559.355.846 
+  T25R6C3:  536.291.567 
+Table 26:
+  T26R0C0: Theo giấy chứng nhận đăng ký đầu tư và giấy chứng nhận đăng ký doanh nghiệp
+  T26R0C1: Theo giấy chứng nhận đăng ký đầu tư và giấy chứng nhận đăng ký doanh nghiệp
+  T26R0C3: Vốn đã góp
+  T26R0C4: Vốn đã góp
+  T26R0C5: Vốn đã góp
+  T26R0C6: Vốn đã góp
+  T26R0C7: Vốn đã góp
+  T26R1C0: Theo giấy chứng nhận đăng ký đầu tư và giấy chứng nhận đăng ký doanh nghiệp
+  T26R1C1: Theo giấy chứng nhận đăng ký đầu tư và giấy chứng nhận đăng ký doanh nghiệp
+  T26R1C3: Số cuối năm
+  T26R1C4: Số cuối năm
+  T26R1C5: Số cuối năm
+  T26R1C7: Số đầu năm
+  T26R2C1: USD
+  T26R2C3: USD
+  T26R2C5: VND
+  T26R2C7: VND
+  T26R4C0: Ito En Asia Pacific Holdings Pte. Ltd.
+  T26R4C1: 984.817,40
+  T26R4C3: 984.817,40
+  T26R4C5: 24.000.000.000
+  T26R4C7: 24.000.000.000
+  T26R5C0: Tổng cộng
+  T26R5C1: 984.817,40
+  T26R5C3: 984.817,40
+  T26R5C5:  24.000.000.000 
+  T26R5C7:  24.000.000.000 
+Table 27:
+  T27R0C0: Tình hình tăng giảm vốn chủ sở hữu
+  T27R0C1: Vốn góp của chủ sở hữu
+  T27R0C3: Lợi nhuận sau thuế chưa phân phối 
+  T27R0C5: Tổng cộng
+  T27R1C1: VND
+  T27R1C3: VND
+  T27R1C5: VND
+  T27R3C0: 27/03/2024
+  T27R3C1: - 
+  T27R3C3:  -   
+  T27R3C5: -
+  T27R4C0: Tăng vốn bằng tiền
+  T27R4C1: 24.000.000.000
+  T27R4C3: -
+  T27R4C5: 24.000.000.000
+  T27R5C0: Lợi nhuận thuần trong năm trước
+  T27R5C1: -
+  T27R5C3:  (4.467.008.821)
+  T27R5C5:  (4.467.008.821) 
+  T27R6C0: 31/12/2024, 01/01/2025
+  T27R6C1:  24.000.000.000  
+  T27R6C3:  (4.467.008.821) 
+  T27R6C5:  19.532.991.179  
+  T27R7C0: Lợi nhuận thuần trong năm
+  T27R7C1: -
+  T27R7C3:  (5.975.318.307)
+  T27R7C5:  (5.975.318.307)
+  T27R8C0: 31/12/2025
+  T27R8C1:  24.000.000.000  
+  T27R8C3:  (10.442.327.128) 
+  T27R8C5:  13.557.672.872 
+Table 28:
+  T28R0C1: Số cuối năm
+  T28R0C3: Số đầu năm
+  T28R2C0: Ngoại tệ các loại (USD)
+  T28R2C1: -
+  T28R2C3: -
+Table 29:
+  T29R0C1: Từ 01/01/2025 đến 31/12/2025
+  T29R0C3: Từ 27/03/2024 đến 31/12/2024
+  T29R1C1: VND
+  T29R1C3: VND
+  T29R3C0: Doanh thu bán hàng hóa
+  T29R3C1: 24.003.870.743
+  T29R3C3: 4.509.440.670
+  T29R4C1:  24.003.870.743 
+  T29R4C3:  4.509.440.670 
+  T29R5C0: Trừ:
+  T29R6C0: Chiết khấu thương mại
+  T29R6C1: 9.238.992
+  T29R6C3: -
+  T29R7C0: Hàng bán bị trả lại
+  T29R7C1: 53.094.650
+  T29R7C3: -
+  T29R8C1:  62.333.642 
+  T29R8C3:  -   
+  T29R10C0: Doanh thu thuần
+  T29R10C1:  23.941.537.101 
+  T29R10C3:  4.509.440.670 
+Table 30:
+  T30R0C1: Từ 01/01/2025 đến 31/12/2025
+  T30R0C3: Từ 27/03/2024 đến 31/12/2024
+  T30R1C1: VND
+  T30R1C3: VND
+  T30R3C0: Giá vốn của hàng hóa đã bán
+  T30R3C1: 14.709.421.077
+  T30R3C3: 2.775.398.309
+  T30R4C0: Tổng cộng
+  T30R4C1:  14.709.421.077 
+  T30R4C3:  2.775.398.309 
+Table 31:
+  T31R0C1: Từ 01/01/2025 đến 31/12/2025
+  T31R0C3: Từ 27/03/2024 đến 31/12/2024
+  T31R1C1: VND
+  T31R1C3: VND
+  T31R3C0: Lãi tiền gửi
+  T31R3C1: 428.902.154
+  T31R3C3: 5.689.271
+  T31R4C0: Lãi chênh lệch tỷ giá phát sinh trong năm
+  T31R4C1: 53.330.763
+  T31R4C3: 13.352.269
+  T31R5C0: Lãi chênh lệch tỷ giá do đánh giá lại cuối năm
+  T31R5C1: -
+  T31R5C3: 1.114.678
+  T31R6C0: Tổng cộng
+  T31R6C1:  482.232.917  
+  T31R6C3:  20.156.218 
+Table 32:
+  T32R0C1: Từ 01/01/2025 đến 31/12/2025
+  T32R0C3: Từ 27/03/2024 đến 31/12/2024
+  T32R1C1: VND
+  T32R1C3: VND
+  T32R3C0: Chiết khấu thanh toán
+  T32R3C1: 75.154.007
+  T32R3C3: -
+  T32R4C0: Lỗ chênh lệch tỷ giá phát sinh trong năm
+  T32R4C1: 357.754.921
+  T32R4C3: 89.365.628
+  T32R5C0: Lỗ chênh lệch tỷ giá do đánh giá lại cuối năm
+  T32R5C1: 26.406.334
+  T32R5C3: -
+  T32R6C0: Tổng cộng
+  T32R6C1:  459.315.262  
+  T32R6C3:  89.365.628 
+Table 33:
+  T33R0C1: Từ 01/01/2025 đến 31/12/2025
+  T33R0C3: Từ 27/03/2024 đến 31/12/2024
+  T33R1C1: VND
+  T33R1C3: VND
+  T33R3C0: Chi phí nhân viên
+  T33R3C1: 1.349.876.116
+  T33R3C3: 180.867.213
+  T33R4C0: Chi phí dịch vụ mua ngoài
+  T33R4C1: 4.704.628.435
+  T33R4C3: 435.172.482
+  T33R5C0: Chi phí khuyến mại
+  T33R5C1: 468.884.957
+  T33R5C3: 318.523.812
+  T33R6C0: Chi phí quảng cáo
+  T33R6C1: 1.955.443.398
+  T33R6C3: 1.190.598.898
+  T33R7C0: Các khoản chi phí khác
+  T33R7C1: 536.841.405
+  T33R7C3: 342.468.004
+  T33R8C0: Tổng cộng
+  T33R8C1:  9.015.674.311 
+  T33R8C3:  2.467.630.409 
+Table 34:
+  T34R0C1: Từ 01/01/2025 đến 31/12/2025
+  T34R0C3: Từ 27/03/2024 đến 31/12/2024
+  T34R1C1: VND
+  T34R1C3: VND
+  T34R3C0: Chi phí nhân viên quản lý
+  T34R3C1: 3.649.771.017
+  T34R3C3: 2.133.977.739
+  T34R4C0: Chi phí vật liệu quản lý
+  T34R4C1: -
+  T34R4C3: 66.339.278
+  T34R5C0: Chi phí đồ dùng văn phòng
+  T34R5C1: 45.850.450
+  T34R5C3: 53.200.408
+  T34R6C0: Chi phí dịch vụ mua ngoài
+  T34R6C1: 2.201.770.796
+  T34R6C3: 1.326.046.986
+  T34R7C0: Chi phí bằng tiền khác
+  T34R7C1: 306.728.755
+  T34R7C3: 178.595.811
+  T34R8C0: Tổng cộng
+  T34R8C1:  6.204.121.018 
+  T34R8C3:  3.758.160.222 
+Table 35:
+  T35R0C1: Từ 01/01/2025 đến 31/12/2025
+  T35R0C3: Từ 27/03/2024 đến 31/12/2024
+  T35R1C1: VND
+  T35R1C3: VND
+  T35R3C0: Lợi nhuận trước thuế
+  T35R3C1:  (5.975.318.307)
+  T35R3C3:  (4.467.008.821)
+  T35R4C0: Ảnh hưởng do:
+  T35R5C0: Điều chỉnh tăng lợi nhuận trước thuế
+  T35R5C1: 614.640.965
+  T35R5C3: 424.572.755
+  T35R6C0: Điều chỉnh giảm lợi nhuận trước thuế
+  T35R6C1: (88.702.289)
+  T35R6C3: -
+  T35R7C0: Thu nhập chịu thuế
+  T35R7C1: (5.449.379.631)
+  T35R7C3: (4.042.436.066)
+  T35R9C0: Chi phí thuế thu nhập doanh nghiệp hiện hành
+  T35R9C1:  -   
+  T35R9C3:  -   
+Table 36:
+  T36R0C1: Từ 01/01/2025 đến 31/12/2025
+  T36R0C3: Từ 27/03/2024 đến 31/12/2024
+  T36R1C1: VND
+  T36R1C3: VND
+  T36R3C0: Chi phí nhân công
+  T36R3C1:  4.999.647.133 
+  T36R3C3:  2.314.844.952 
+  T36R4C0: Chi phí khấu hao tài sản
+  T36R4C1:  3.595.758 
+  T36R4C3:  -   
+  T36R5C0: Chi phí dịch vụ mua ngoài
+  T36R5C1:  7.692.037.281 
+  T36R5C3:  4.120.336.834 
+  T36R6C0: Chi phí phân bổ
+  T36R6C1:  1.818.260.394 
+  T36R6C3:  571.296.531 
+  T36R7C0: Chi phí khác
+  T36R7C1:  706.254.763 
+  T36R7C3:  1.994.710.623 
+  T36R8C0: Tổng cộng 
+  T36R8C1:  15.219.795.329 
+  T36R8C3:  9.001.188.940 
+Table 37:
+  T37R0C0: Bên liên quan
+  T37R0C1: Mối quan hệ
+  T37R2C0: Ito En Asia Pacific Holdings Pte. Ltd.
+  T37R2C1: Chủ sở hữu
+  T37R3C0: Ito En, Ltd.
+  T37R3C1: Công ty chung tập đoàn
+  T37R4C0: Ông Murakami Hiroaki
+  T37R4C1: Tổng Giám đốc
+Table 38:
+  T38R0C1: Từ 01/01/2025 đến 31/12/2025
+  T38R0C3: Từ 27/03/2024 đến 31/12/2024
+  T38R1C1: VND
+  T38R1C3: VND
+  T38R3C0: Nhận góp vốn
+  T38R4C0: Ito En Asia Pacific Holdings Pte. Ltd.
+  T38R4C1: -
+  T38R4C3: 24.000.000.000
+  T38R6C0: Vay
+  T38R7C0: Ito En Asia Pacific Holdings Pte. Ltd.
+  T38R7C1: -
+  T38R7C3: 237.365.655
+  T38R9C0: Trả nợ vay
+  T38R10C0: Ito En Asia Pacific Holdings Pte. Ltd.
+  T38R10C1: -
+  T38R10C3: 237.365.655
+  T38R12C0: Mua hàng hóa và dịch vụ
+  T38R13C0: Ito En, Ltd.
+  T38R13C1: 3.250.957.632 
+  T38R13C3: 572.821.750
+  T38R15C0: Lương và thu nhập của Tổng Giám đốc
+  T38R15C1: 1.900.615.606
+  T38R15C3: 545.145.748
+Table 39:
+  T39R0C0: Murakami Hiroaki
+  T39R0C4: Tạ Thị Thảo
+  T39R1C0: Tổng Giám đốc
+  T39R1C4: Người lập biểu kiêm kế toán trưởng
+  T39R2C0: Ngày 20 tháng 03 năm 2026
+  T39R2C4: Số chứng chỉ hành nghề: 3913/2022/KET.1
+  T39R3C4: Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam

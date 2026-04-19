@@ -1,0 +1,42 @@
+Dict Row 660: 'Doanh thu hoạt động tài chính'
+  Char: 'D' | Code: 68
+  Char: 'o' | Code: 111
+  Char: 'a' | Code: 97
+  Char: 'n' | Code: 110
+  Char: 'h' | Code: 104
+  Char: ' ' | Code: 32
+  Char: 't' | Code: 116
+  Char: 'h' | Code: 104
+  Char: 'u' | Code: 117
+  Char: ' ' | Code: 32
+  Char: 'h' | Code: 104
+  Char: 'o' | Code: 111
+  Char: 'ạ' | Code: 7841
+  Char: 't' | Code: 116
+  Char: ' ' | Code: 32
+  Char: 'đ' | Code: 273
+  Char: 'ộ' | Code: 7897
+  Char: 'n' | Code: 110
+  Char: 'g' | Code: 103
+  Char: ' ' | Code: 32
+  Char: 't' | Code: 116
+  Char: 'à' | Code: 224
+  Char: 'i' | Code: 105
+  Char: ' ' | Code: 32
+  Char: 'c' | Code: 99
+  Char: 'h' | Code: 104
+  Char: 'í' | Code: 237
+  Char: 'n' | Code: 110
+  Char: 'h' | Code: 104
+--------------------
+Dict Row 1653: 'Doanh thu'
+  Char: 'D' | Code: 68
+  Char: 'o' | Code: 111
+  Char: 'a' | Code: 97
+  Char: 'n' | Code: 110
+  Char: 'h' | Code: 104
+  Char: ' ' | Code: 32
+  Char: 't' | Code: 116
+  Char: 'h' | Code: 104
+  Char: 'u' | Code: 117
+--------------------

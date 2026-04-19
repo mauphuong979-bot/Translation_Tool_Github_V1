@@ -1,0 +1,31 @@
+--- T1 C1,1 ---
+Original: 'CHỈ TIÊU'
+  Char: '̉' | Code: 777 | Name: COMBINING HOOK ABOVE
+  Char: 'Ê' | Code: 202 | Name: LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+
+--- T1 C13,1 ---
+Original: '6.\tDoanh thu hoạt động tài chính'
+  Char: '\t' | Code: 9 | Name: UNKNOWN
+  Char: '̣' | Code: 803 | Name: COMBINING DOT BELOW
+  Char: 'đ' | Code: 273 | Name: LATIN SMALL LETTER D WITH STROKE
+  Char: 'ô' | Code: 244 | Name: LATIN SMALL LETTER O WITH CIRCUMFLEX
+  Char: '̣' | Code: 803 | Name: COMBINING DOT BELOW
+  Char: '̀' | Code: 768 | Name: COMBINING GRAVE ACCENT
+  Char: '́' | Code: 769 | Name: COMBINING ACUTE ACCENT
+
+--- T2 C2,1 ---
+Original: 'Tổng Giám đốc'
+  Char: 'ổ' | Code: 7893 | Name: LATIN SMALL LETTER O WITH CIRCUMFLEX AND HOOK ABOVE
+  Char: '́' | Code: 769 | Name: COMBINING ACUTE ACCENT
+  Char: 'đ' | Code: 273 | Name: LATIN SMALL LETTER D WITH STROKE
+  Char: 'ô' | Code: 244 | Name: LATIN SMALL LETTER O WITH CIRCUMFLEX
+  Char: '́' | Code: 769 | Name: COMBINING ACUTE ACCENT
+
+--- T2 C4,5 ---
+Original: 'Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam'
+  Char: 'á' | Code: 225 | Name: LATIN SMALL LETTER A WITH ACUTE
+  Char: 'ậ' | Code: 7853 | Name: LATIN SMALL LETTER A WITH CIRCUMFLEX AND DOT BELOW
+  Char: 'ả' | Code: 7843 | Name: LATIN SMALL LETTER A WITH HOOK ABOVE
+  Char: 'ạ' | Code: 7841 | Name: LATIN SMALL LETTER A WITH DOT BELOW
+  Char: 'ệ' | Code: 7879 | Name: LATIN SMALL LETTER E WITH CIRCUMFLEX AND DOT BELOW
+

@@ -29,7 +29,7 @@
     "về kiểm soát nội bộ mà Chủ tịch Công ty xác định là": "về kiểm soát nội bộ mà Chủ tịch xác định là",
     "các ước tính kế toán của Chủ tịch Công ty cũng như đánh giá": "các ước tính kế toán của Chủ tịch cũng như đánh giá",
     "Ngân Hàng": "Ngân hàng",
-    "Tiền thu từ phát hành cổ phiếu, nhận góp vốn của chủ sở hữu": "Tiền thu từ nhận góp vốn của chủ sở hữu",
+    "Tiền thu từ phát hành cổ phiếu, nhận góp vốn \ncủa chủ sở hữu": "Tiền thu từ nhận góp vốn của chủ sở hữu",
     "Công ty không ghi nhận tài sản thuế thu nhập hoãn lại và thuế thu nhập hoãn lại phải trả": "Công ty không ghi nhận tài sản thuế thu nhập hoãn lại hoặc thuế thu nhập hoãn lại phải trả",
     "Các khoản mục ngoài Bảng cân đối kế toán": "Các khoản mục ngoài Bảng Cân đối kế toán",
     "CỔ PHIẾU": "CỔ PHẦN",
@@ -68,5 +68,6 @@
     "Giá vốn hàng hóa đã bán": "Giá vốn của hàng hóa đã bán",
     "Chủ sở hữu Công ty là": "Chủ sở hữu của Công ty là",
     "suốt giai đoạn tài chính": "suốt giai đoạn",
-    "chi nhánh": "Chi nhánh"
+    "chi nhánh": "Chi nhánh",
+    "cho giai đoạn tài chính từ ngày": "cho giai đoạn từ ngày"
 }

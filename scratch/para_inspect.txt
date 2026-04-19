@@ -1,0 +1,32 @@
+{
+  "Chúng tôi đã kiểm toán Báo cáo tài chính kèm theo": {
+    "E": "We have audited the accompanying financial statements of [têncôngty] (“the Company”), approved on [ngàybáocáo], which comprise the balance sheet as at [ngàykếtthúcnăm], the related income statement, the cash flow statement for the year then ended, and the notes to the financial statements, as set out on pages [số] to [số].",
+    "Hs": "[têncôngty]（简称为“公司”）的财务报表，在[ngàybáocáo]编制，自第[số]页至第[số]页，包括[ngàykếtthúcnăm]的资产负债表，暨同日结束财务年度的利润表、现金流量表和财务报表附注，已经过本会计师查核竣事。",
+    "Ht": "[têncôngty]（簡稱為“公司”）之財務報表，於[ngàybáocáo]編製，自第[số]頁至第[số]頁，包括[ngàykếtthúcnăm]之資產負債表，暨同日結束財務年度之損益表、現金流量表及財務報表附註，業經本會計師查核竣事。"
+  },
+  "những hạn chế từ phía Công ty": {
+    "E": "We were not able to observe the count of cash fund as at [ngàykếtthúcnăm], nor as at [số] due to limitations of the Company. Even alternate audit procedures also did not provide us with sufficient appropriate audit evidences of balances of the cash fund as at the end of the current year and the prior year, of which the amounts disclosed in the Notes to the financial statements are VND [số] and VND [số] respectively. Due to influence of the aforesaid matters, we are unable to determine whether or not adjustments are required to the cash fund, the profit and the net cash flow disclosed in the Income statement. We were not able to observe the count of cash fund, inventories and fixed assets as at [ngàykếtthúcnăm] due to limitations of the Company. Owing to the nature of the Company’s records, we were unable to determine in respect of true and fair presentation the balances of cash fund, the quantities of inventories and fixed assets of which the amounts disclosed in the Balance sheet are VND [số], VND [số] and VND [số] respectively at that date by other audit procedures.",
+    "Hs": "由于查核范围受到限制，本会计师不能参加在[ngàykếtthúcnăm]及在[số]的库存现金监盘作业。本会计师亦无法通过实施其他查核程序对财务报表附注所列金额分别为越南盾[số]及越南盾[số]的库存现金本年年底余额及去年年底余额取得足够及适切的查核证据。由于上述事项的影响，本会计师无法确定应否对财务报表中的库存现金、年度净利及现金流量净额作出适当调整。由于查核范围受到限制，本会计师不能参加在[ngàykếtthúcnăm]的库存现金、存货及固定资产监盘作业。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证资产负债表所列金额分别为越南盾[số]、越南盾[số]及越南盾[số]的库存现金、存货数量、固定资产当日余额的真实、公允列报。",
+    "Ht": "由於查核範圍受到限制，本會計師不能參加於[ngàykếtthúcnăm]及於[số]之庫存現金監盤作業。本會計師亦無法通過實施其他查核程序對財務報表附註所列金額分別為{越南盾/美元}及{越南盾/美元}之庫存現金本年年底餘額及去年年底餘額取得足夠及適切之查核證據。由於上述事項之影響，本會計師無法確定應否對財務報表中之庫存現金、年度淨利及現金流量淨額作出適當調整。由於查核範圍受到限制，本會計師不能參加於[ngàykếtthúcnăm]之庫存現金、存貨及固定資產監盤作業。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證資產負債表所列金額分別為{越南盾/美元}、{越南盾/美元}及{越南盾/美元}之庫存現金、存貨數量、固定資產當日餘額之真實、公允列報。"
+  },
+  "Theo đó, Báo cáo tài chính sẽ được lập trên cơ sở giả định là doanh nghiệp đang hoạt động liên tục.": {
+    "E": "As at [ngàykếtthúcnăm], the Company incurred an accumulated loss of VND [số] arising from the business operation, and total current liabilities exceeded total current assets by VND [số] and total liabilities exceeded total assets by VND [số]. As a result, the Company’s going concern ability depends on the continuity of financial assistance from the Company’s owners, who have confirmed that they would continue assisting in finance for the Company to pay up the debts when they become due. Accordingly, the financial statements are prepared basing on the assumption that the Company is operating as a going concern.",
+    "Hs": "【在[ngàykếtthúcnăm]，公司正承受一笔【来自营业活动的】累计亏损为越南盾[số]，短期负债总额已超过短期资产总值越南盾[số]且负债总额已超过资产总值越南盾[số]。因此，公司未来持续经营能力主要依靠公司所有者（股东）资助（投资）。公司所有者确认将来继续提供财力支持以协助公司偿付到期债务。据此，本财务报表基于公司持续经营假设而编制。",
+    "Ht": "【於[ngàykếtthúcnăm]，公司正承受一筆【來自營業活動的】累計虧損為美元[số]，短期負債總額已超過短期資產總值美元[số]且負債總額已超過資產總值美元[số]。因此，公司未來持續經營能力主要依靠公司所有者（股東）資助（投資）。公司所有者確認將來繼續提供財力支持以協助公司償付到期債務。據此，本財務報表基於公司持續經營假設而編製。"
+  },
+  "Công ty đã thực hiện việc chuyển đổi": {
+    "E": "According to Article 107 of Circular No. 200/2014/TT-BTC dated December 22, 2014, [chọn] the Company’s Board of Management/the Company’s Director/the Company’s Board of General Directors/the Company’s Board of Directors/the Company’s Board or Members has converted the financial statements prepared in US Dollars (USD) into Vietnamese Dongs (VND) to publicize information and submit to State management agencies in accordance with the following principles:",
+    "Hs": "依据2014年12月22日《第200/2014/TT-BTC号公告》第107条，[chọn]公司管理阶层/公司经理/公司管理阶层/公司董事会/公司董事会已依下列原则将以美元（USD）计值的财务报表折算为越南盾（VND）后对外公布并递交给越南政府管辖机关：",
+    "Ht": "依據2014年12月22日《第200/2014/TT-BTC號公告》第107條，[chọn]公司管理階層/公司經理/公司管理階層/公司董事會/公司董事會已依下列原則將以美元（USD）計值之財務報表折算為越南盾（VND）後對外公佈並遞交給越南政府管轄機關："
+  },
+  "Chênh lệch tỷ giá phát sinh khi chuyển đổi Báo cáo tài chính được lập bằng đồng Đô la Mỹ": {
+    "E": "Foreign exchange differences arising when converting financial statements prepared in US Dollars into Vietnamese Dongs are disclosed under the item “Foreign exchange differences” - Code 417 of section of the Owner’s equity of the Balance sheet. The converted financial statements are stated in VND under the Appendix from page [số] to [số].",
+    "Hs": "以美元计值的财务报表折算为越南盾后产生的汇兑差异得以列入资产负债表中所有者（股东）权益项下的编号417「汇兑差异」项目。折算后的财务报表以越南盾呈列并列示于附录自第[số]页至[số]页。",
+    "Ht": "以美元計值之財務報表折算為越南盾後產生之匯兌差異得以列入資產負債表中所有者（股東）權益項下之編號417「匯兌差異」項目。折算後之財務報表以越南盾呈列並列示於附錄自第[số]頁至[số]頁。"
+  },
+  "vốn điều lệ của Công ty là": {
+    "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] and VND [số] respectively. The paid-up capital by the Company’s owner as at [ngàykếtthúcnăm] is as follows:",
+    "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为美元[số]和美元[số]。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：【在[ngàykếtthúcnăm]，与注册资本额相比，公司溢缴资本额【欠缴资本额】为美元[số]，详细如下：】",
+    "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為美元[số]和美元[số]。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下：【於[ngàykếtthúcnăm]，與註冊資本額相比，公司溢繳資本額【欠繳資本額】為美元[số]，詳細如下：】"
+  }
+}

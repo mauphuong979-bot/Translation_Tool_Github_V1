@@ -3,7 +3,7 @@ from docx import Document
 import io
 import translation_lib as tl
 
-def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=30, target_col="E"):
+def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=30, target_col="E", process_settings=None):
     """
     Processes the financial report by applying metadata and global translations.
     """
@@ -23,13 +23,20 @@ def process_financial_report(file_stream, metadata=None, translation_map=None, c
 
         # 2. Apply Global Translations from the (potentially edited) dictionary
         if translation_map:
-            tl.replace_text_in_document(doc, translation_map, case_threshold, target_col=target_col, metadata=metadata)
+            tl.replace_text_in_document(
+                doc, 
+                translation_map, 
+                case_threshold, 
+                target_col=target_col, 
+                metadata=metadata,
+                process_settings=process_settings
+            )
         
         # Save to a BytesIO object
         output = io.BytesIO()
         doc.save(output)
         output.seek(0)
         
-        return output, "✅ Report processed with global translations."
+        return output, "Report processed."
     except Exception as e:
         return None, f"❌ Error during processing: {str(e)}"

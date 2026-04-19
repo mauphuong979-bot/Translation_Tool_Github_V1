@@ -1,0 +1,9 @@
+Decomposed: 'ạ'
+Precomposed: 'ạ'
+Normalized: 'ạ'
+Equal? True
+Doc text: 'Tổng Giám đốc'
+Norm doc: 'Tổng Giám đốc'
+Norm dict: 'Tổng Giám đốc'
+Match? True
+Exact Match? True

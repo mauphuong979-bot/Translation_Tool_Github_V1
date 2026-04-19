@@ -1,0 +1,2 @@
+Test A ('7. Chi phí tài chính'): Changed=True, Result='7. Financial expenses'
+Test B ('7. CHI PHÍ TÀI CHÍNH'): Changed=False, Result='7. CHI PHÍ TÀI CHÍNH'

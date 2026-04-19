@@ -1,0 +1,7 @@
+Original Text: '6.\tDoanh thu hoạt động tài chính'
+Cleaned Text: '6. Doanh thu hoạt động tài chính'
+Prepared List: [(True, re.compile('Doanh\\ thu\\ hoạt\\ động\\ tài\\ chính', re.IGNORECASE), 'Financial income')]
+New Text: '6. Financial income'
+Changed? True
+Is 'Doanh thu hoạt động tài chính' in Cleaned Text? True
+Regex Match? True
