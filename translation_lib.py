@@ -4,10 +4,11 @@ import re
 import json
 import unicodedata
 import openpyxl
+import difflib
 from datetime import datetime
 from docx.text.paragraph import Paragraph
 from docx.enum.text import WD_COLOR_INDEX
-from docx.shared import Pt, Cm
+from docx.shared import Pt, Cm, RGBColor
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
@@ -752,17 +753,40 @@ def _copy_run_format(src_run, dest_run):
             dest_run.font.color.rgb = src_run.font.color.rgb
     except: pass
 
+def find_fuzzy_translation(text, translation_map, threshold=0.6):
+    """
+    Finds the most similar Vietnamese term in the dictionary and returns its translation.
+    Uses difflib.get_close_matches for robust fuzzy matching.
+    """
+    if not text or not translation_map:
+        return None
+        
+    # Standardize input for better matching
+    clean_input = clean_text(text)
+    if len(clean_input) < 2: return None
+    
+    keys = list(translation_map.keys())
+    matches = difflib.get_close_matches(clean_input, keys, n=1, cutoff=threshold)
+    
+    if matches:
+        return translation_map[matches[0]]
+    return None
+
 def _process_item_for_word_highlight(para):
     """
     Splits runs in a paragraph to highlight only the specific words containing Vietnamese.
+    Returns (vn_total_length, vn_segments_list) for suggestion logic.
     """
+    vn_total_len = 0
+    vn_segments = set()
+    
     old_runs = list(para.runs)
     if not old_runs:
-        return
+        return 0, []
 
     # 1. Check if the paragraph has ANY Vietnamese first to avoid unnecessary splitting
     if not contains_vietnamese(para.text):
-        return
+        return 0, []
 
     # 2. Clear existing runs from paragraph element safely
     p_el = para._element
@@ -773,7 +797,9 @@ def _process_item_for_word_highlight(para):
         for run in para.runs:
             if contains_vietnamese(run.text):
                 run.font.highlight_color = WD_COLOR_INDEX.YELLOW
-        return
+                vn_total_len += len(run.text)
+                vn_segments.add(run.text.strip())
+        return vn_total_len, list(vn_segments)
 
     for r in old_runs:
         p_el.remove(r._element)
@@ -803,22 +829,65 @@ def _process_item_for_word_highlight(para):
                 _copy_run_format(old_run, new_run)
                 if contains_vietnamese(part):
                     new_run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+                    vn_total_len += len(part)
+                    vn_segments.add(part.strip())
+    
+    return vn_total_len, list(vn_segments)
 
-def highlight_vietnamese_text(doc):
+def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, show_suggestions=True):
     """
     Scans the entire document and highlights only the specific WORDS 
     containing Vietnamese text in yellow.
+    If show_suggestions is True and a paragraph has > 30 Vietnamese characters, 
+    adds fuzzy suggestions based on the similarity of the ORIGINAL paragraph text.
     """
+    
+    def handle_suggestions(para, vn_count):
+        # Only process if toggled ON, highlighted VN characters > 30 and dictionary is available
+        if show_suggestions and vn_count > 30 and translation_map:
+            # Use original text if provided, otherwise fallback to current text
+            # Use _element as key because id(para) is not stable across wrapper recreations
+            raw_orig_text = original_texts.get(para._element, para.text) if original_texts else para.text
+            
+            # Clean and normalize for matching
+            match_text = clean_text(raw_orig_text)
+            if not match_text: return
+            
+            # Find the single best fuzzy match for the ORIGINAL text
+            keys = list(translation_map.keys())
+            matches = difflib.get_close_matches(match_text, keys, n=1, cutoff=0.6)
+            
+            if matches:
+                best_match_key = matches[0]
+                suggestion = translation_map[best_match_key]
+                
+                # Create suggestion text
+                sug_line = f"[Suggest: {suggestion}]"
+                
+                # Insert new paragraph IMMEDIATELY after the current one
+                new_p_el = OxmlElement('w:p')
+                para._element.addnext(new_p_el)
+                new_p = Paragraph(new_p_el, para._parent)
+                
+                # Add text and format (Blue, Regular)
+                run = new_p.add_run(sug_line)
+                run.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+                return True
+        return False
+
     # 1. Main body paragraphs
-    for para in doc.paragraphs:
-        _process_item_for_word_highlight(para)
+    # Iterating over list(doc.paragraphs) to allow modification (adding new paragraphs)
+    for para in list(doc.paragraphs):
+        count, _ = _process_item_for_word_highlight(para)
+        handle_suggestions(para, count)
         
     # 2. Table cells
     for table in doc.tables:
         for row in table.rows:
             for cell in row.cells:
-                for para in cell.paragraphs:
-                    _process_item_for_word_highlight(para)
+                for para in list(cell.paragraphs):
+                    count, _ = _process_item_for_word_highlight(para)
+                    handle_suggestions(para, count)
                     
     # 3. Headers and Footers
     for section in doc.sections:
@@ -832,14 +901,16 @@ def highlight_vietnamese_text(doc):
         
         for container in containers:
             if container:
-                for para in container.paragraphs:
-                    _process_item_for_word_highlight(para)
+                for para in list(container.paragraphs):
+                    count, _ = _process_item_for_word_highlight(para)
+                    handle_suggestions(para, count)
                 # Tables in headers/footers
                 for table in container.tables:
                     for row in table.rows:
                         for cell in row.cells:
-                            for para in cell.paragraphs:
-                                _process_item_for_word_highlight(para)
+                            for para in list(cell.paragraphs):
+                                count, _ = _process_item_for_word_highlight(para)
+                                handle_suggestions(para, count)
 
 def apply_chinese_currency_cleanup(doc):
     """
@@ -1360,9 +1431,16 @@ def _process_container(container, prepared_list, replaced_paragraphs=None):
                     target_para = Paragraph(p_elements[0], container)
                 
                 # Apply translation to the chosen paragraph using run-aware logic
-                # We use a case_threshold=0 to ENSURE literal match for this specific consolidation string
-                dummy_map = prepare_translation_list({cleaned_body_text: new_text}, case_threshold=9999)
-                apply_translations_to_paragraph(target_para, dummy_map)
+                # We use a case_threshold=9999 (ignore delta) to ENSURE literal match.
+                # FIX: We must match AGAINST the target_para's own text, not the combined text,
+                # to ensure apply_translations_to_paragraph actually finds something to replace.
+                current_p_text = clean_text(target_para.text)
+                if current_p_text:
+                    dummy_map = prepare_translation_list({current_p_text: new_text}, case_threshold=9999)
+                    apply_translations_to_paragraph(target_para, dummy_map)
+                else:
+                    # Fallback for empty paragraphs: just add a run
+                    target_para.add_run(new_text)
                     
                 # Remove all other paragraphs in this container to prevent duplicates/layout issues
                 for other_p_el in p_elements:
@@ -1455,6 +1533,41 @@ def set_document_default_fonts(doc, target_col):
     lang_val = "zh-CN" if target_col == "Hs" else "zh-TW"
     lang.set(qn('w:eastAsia'), lang_val)
 
+def _get_all_paragraphs(doc):
+    """
+    Helper to yield all paragraphs in the document (body, tables, headers, footers).
+    """
+    # 1. Main body paragraphs
+    for para in doc.paragraphs:
+        yield para
+        
+    # 2. Table cells
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for para in cell.paragraphs:
+                    yield para
+                    
+    # 3. Headers and Footers
+    for section in doc.sections:
+        containers = [
+            section.header, section.footer,
+            section.first_page_header, section.first_page_footer
+        ]
+        try:
+            containers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+        
+        for container in containers:
+            if container:
+                for para in container.paragraphs:
+                    yield para
+                for table in container.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            for para in cell.paragraphs:
+                                yield para
+
 def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None):
     """
     Performs global search and replace in paragraphs, tables, headers and footers.
@@ -1462,13 +1575,16 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     """
     # Default to "All ON" if no settings provided
     if process_settings is None:
-        process_settings = {k: True for k in ["metadata", "unicode", "clean_v", "para_template", "dictionary", "dual_font", "table_size", "date_format", "textbox", "highlight"]}
+        process_settings = {k: True for k in ["metadata", "unicode", "clean_v", "para_template", "dictionary", "dual_font", "table_size", "date_format", "textbox", "highlight", "suggestion"]}
 
     # 0. Load maps if not provided but exist
     if cleanv_map is None:
         cleanv_map = load_cleanv_map()
     if para_map is None:
         para_map = load_para_template_map()
+        
+    # NEW: Capture Snapshot of Original Paragraph Texts for downstream fuzzy suggestions
+    original_texts = {p._element: p.text for p in _get_all_paragraphs(doc)}
 
     total_count = 0
 
@@ -1544,32 +1660,13 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     if process_settings.get("textbox", True):
         apply_special_textbox_formatting(doc, target_col)
     
-    # Step 10: Highlight remaining Vietnamese text
-    if process_settings.get("highlight", True):
-        highlight_vietnamese_text(doc)
-
-
-
-    return total_count
-
-    # Step 7.5: Financial Number Separator Swap (. to , and , to .)
-    # Only for non-Vietnamese reports. Safe for Link Fields.
-    if process_settings.get("number_swap", True) and target_col != "V":
-        apply_financial_number_formatting(doc, target_col)
-
-    # Step 8: Specialized Table Sizing and Layout
-    if process_settings.get("table_size", True):
-        apply_sizing_and_layout(doc, target_col)
-    
-    # Step 9: Specialized TextBox/Draft Handling
-    if process_settings.get("textbox", True):
-        apply_special_textbox_formatting(doc, target_col)
-    
-    # Step 10: Highlight remaining Vietnamese text
-    if process_settings.get("highlight", True):
-        highlight_vietnamese_text(doc)
-
-
+    # Step 10 & 11: Highlight and Suggest
+    if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
+        highlight_vietnamese_text(
+            doc, 
+            translation_map, 
+            original_texts=original_texts,
+            show_suggestions=process_settings.get("suggestion", True)
+        )
 
     return total_count
-

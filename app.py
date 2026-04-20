@@ -263,7 +263,8 @@ with st.sidebar:
                 "table_size": True,
                 "date_format": True,
                 "textbox": True,
-                "highlight": True
+                "highlight": True,
+                "suggestion": True
             }
 
         steps = [
@@ -276,7 +277,8 @@ with st.sidebar:
             ("table_size", "7. Table & Layout"),
             ("date_format", "8. Date Formatting"),
             ("textbox", "9. Textbox & Draft"),
-            ("highlight", "10. Highlight VN")
+            ("highlight", "10. Highlight VN"),
+            ("suggestion", "11. Dictionary Suggestion")
         ]
         
         process_settings = {}
