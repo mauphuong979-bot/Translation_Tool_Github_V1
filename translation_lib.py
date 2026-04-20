@@ -29,6 +29,9 @@ CLEANV_FILE = CLEANV_JSON
 PARA_TEMPLATE_FILE = PARA_TEMPLATE_JSON
 DICTIONARY_V3_FILE = DICTIONARY_V3_XLSX
 
+# Environment-independent month names for English
+MONTH_ABBR_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
 def clean_text(text, preserve_newlines=False):
     """
     Ultra-robust text cleaning for Word documents.
@@ -568,8 +571,9 @@ def format_dates_in_tables(doc, target_col="E"):
                                 
                                 # Reformat based on target language
                                 if target_col == "E":
-                                    # 'MMM dd, yyyy' -> 'Jan 01, 2023'
-                                    new_text = dt.strftime("%b %d, %Y")
+                                    # Use hardcoded abbreviations to avoid locale issues on Streamlit Cloud
+                                    short_month = MONTH_ABBR_EN[dt.month - 1]
+                                    new_text = f"{short_month} {dt.day:02d}, {dt.year}"
                                 elif target_col in ["Hs", "Ht"]:
                                     # 'yyyy/mm/dd' & "日" -> '2023/12/31日'
                                     new_text = dt.strftime("%Y/%m/%d") + "日"
@@ -598,6 +602,7 @@ def abbreviate_english_months_in_tables(doc):
     Scans all tables and abbreviates English month names (January -> Jan) 
     unless they are all uppercase (JANUARY remains JANUARY).
     Preserves casing (Title Case, lower case).
+    Now robust against run fragmentation by processing paragraph-level text.
     """
     month_map = {
         "January": "Jan", "February": "Feb", "March": "Mar", "April": "Apr",
@@ -606,7 +611,6 @@ def abbreviate_english_months_in_tables(doc):
     }
     
     # Combined regex for all months
-    # \b matches word boundaries
     month_pattern = re.compile(r'\b(' + '|'.join(month_map.keys()) + r')\b', re.IGNORECASE)
     
     def replacer(match):
@@ -615,9 +619,7 @@ def abbreviate_english_months_in_tables(doc):
         if word.isupper():
             return word
         
-        # Determine replacement abbreviation
         lower_word = word.lower()
-        # Find which month it corresponds to
         for full, short in month_map.items():
             if full.lower() == lower_word:
                 if word.istitle(): return short
@@ -629,16 +631,42 @@ def abbreviate_english_months_in_tables(doc):
     for table in doc.tables:
         for row in table.rows:
             for cell in row.cells:
-                changed_cell = False
                 for para in cell.paragraphs:
-                    for run in para.runs:
-                        if run.text and month_pattern.search(run.text):
-                            new_text = month_pattern.sub(replacer, run.text)
-                            if new_text != run.text:
-                                run.text = new_text
-                                changed_cell = True
-                if changed_cell:
-                    count += 1
+                    # 1. Join all run texts to handle fragmentation and clean invisible markers
+                    full_text = "".join(r.text for r in para.runs)
+                    if not full_text: continue
+                    
+                    # Also use clean_text to handle zero-width spaces/soft hyphens that might break regex
+                    cleaned_full = clean_text(full_text)
+                    
+                    if month_pattern.search(cleaned_full):
+                        # 2. Apply abbreviation logic
+                        new_text = month_pattern.sub(replacer, cleaned_full)
+                        
+                        if new_text != cleaned_full:
+                            # 3. Restore to runs while preserving some formatting
+                            runs = list(para.runs)
+                            format_source_run = None
+                            for run in runs:
+                                if run.text and run.text.strip():
+                                    format_source_run = run
+                                    break
+                            
+                            if not format_source_run and len(runs) > 0:
+                                format_source_run = runs[0]
+                                
+                            if format_source_run:
+                                for run in runs:
+                                    if run == format_source_run:
+                                        run.text = new_text
+                                    else:
+                                        run.text = ""
+                                count += 1
+    
+    # Output to Streamlit logs for debugging (only if replacements were made)
+    if count > 0:
+        print(f"DEBUG (abbreviate_months): Replaced {count} instances in tables.")
+        
     return count
 
 def contains_vietnamese(text):

@@ -23,7 +23,8 @@ def test_abbreviation():
     
     print("--- Before Processing ---")
     for i, row in enumerate(table.rows):
-        print(f"Cell {i}: {row.cells[0].text}")
+        p = row.cells[0].paragraphs[0]
+        print(f"Cell {i}: '{p.text}' (Runs: {len(p.runs)})")
     print(f"Para: {doc.paragraphs[0].text}")
     
     # 3. Process
