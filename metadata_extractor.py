@@ -28,7 +28,10 @@ def extract_metadata(file_stream):
         "year_end": None,
         "report_date": None,
         "period_in": None,
-        "period_in_2": None
+        "period_in_2": None,
+        "signer_1": None,
+        "signer_2": None,
+        "signer_3": None
     }
     
     try:
@@ -122,6 +125,35 @@ def extract_metadata(file_stream):
                 if len(s_dates) >= 2:
                     d, m, y = s_dates[-1] # Take the last one (end date)
                     metadata["year_end"] = f"{int(d):02d}/{int(m):02d}/{y}"
+
+        # 6. Signer Name
+        # Logic: First row of the last table, appearing >= 4 times in report
+        # We extract one distinct signer per cell.
+        if doc.tables:
+            last_table = doc.tables[-1]
+            if last_table.rows:
+                first_row = last_table.rows[0]
+                signer_candidates = []
+                for cell in first_row.cells:
+                    raw_cell_text = cell.text
+                    lines = [line.strip() for line in raw_cell_text.split('\n') if line.strip()]
+                    
+                    found_in_cell = None
+                    # Iterate backwards to find the name (usually at the bottom of the cell)
+                    for line in reversed(lines):
+                        clean_line = tl.clean_text(line)
+                        if len(clean_line) > 5:
+                            count = len(re.findall(re.escape(clean_line), full_content, re.IGNORECASE))
+                            if count >= 4:
+                                found_in_cell = clean_line
+                                break 
+                    
+                    if found_in_cell and found_in_cell not in signer_candidates:
+                        signer_candidates.append(found_in_cell)
+                
+                # Assign to individual metadata fields
+                for i in range(min(len(signer_candidates), 3)):
+                    metadata[f"signer_{i+1}"] = signer_candidates[i]
 
     except Exception as e:
         print(f"Error extracting metadata: {e}")

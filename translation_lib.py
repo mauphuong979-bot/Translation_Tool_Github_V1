@@ -58,6 +58,19 @@ def clean_text(text, preserve_newlines=False):
     
     return text.strip()
 
+def ensure_proper_case(text):
+    """
+    If the text is all uppercase (including Vietnamese characters), 
+    converts it to Title Case (Proper Case).
+    """
+    if not isinstance(text, str) or not text:
+        return text
+    
+    # isupper() is True if all cased characters in S are uppercase
+    if text.isupper():
+        return text.title()
+    return text
+
 def load_cleanv_map():
     """
     Loads Vietnamese text normalization map from clean_v.json.
@@ -599,6 +612,102 @@ def contains_vietnamese(text):
             return True
     return False
 
+def remove_accents(text):
+    """
+    Removes Vietnamese diacritics from text.
+    'Nguyễn Văn A' -> 'Nguyen Van A'
+    """
+    if not isinstance(text, str) or not text:
+        return text
+    
+    # Handle đ/Đ manually as they are not base characters in NFC/NFD
+    text = text.replace('đ', 'd').replace('Đ', 'D')
+    
+    # Normalize with NFD (Normalization Form Decomposition) to separate base chars from marks
+    nfd_text = unicodedata.normalize('NFD', text)
+    # Filter out characters that are in the 'Mn' (Mark, Nonspacing) category
+    result = "".join(c for c in nfd_text if unicodedata.category(c) != 'Mn')
+    
+    return unicodedata.normalize('NFC', result)
+
+def apply_signer_accent_removal(doc, metadata):
+    """
+    Replaces accented signer names with unaccented versions throughout the document.
+    Handles field links by unlinking then replacing.
+    """
+    if not metadata:
+        return 0
+        
+    signer_keys = ["signer_1", "signer_2", "signer_3"]
+    replacements = {}
+    
+    for key in signer_keys:
+        val = metadata.get(key)
+        if val and contains_vietnamese(val):
+            unaccented = remove_accents(val)
+            if unaccented != val:
+                replacements[val] = unaccented
+                
+    if not replacements:
+        return 0
+        
+    count = 0
+    # Process all containers including headers/footers
+    from docx.text.paragraph import Paragraph
+    
+    # Use a helper to get all items (paragraphs and table cells)
+    def _get_items():
+        # Body
+        for para in doc.paragraphs: yield para
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    for para in cell.paragraphs: yield para
+        # Headers/Footers
+        for section in doc.sections:
+            headers = [section.header, section.footer]
+            if section.different_first_page_header_footer:
+                headers.extend([section.first_page_header, section.first_page_footer])
+            try: headers.extend([section.even_page_header, section.even_page_footer])
+            except: pass
+            for h in headers:
+                if not h: continue
+                for para in h.paragraphs: yield para
+                for table in h.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            for para in cell.paragraphs: yield para
+
+    for para in _get_items():
+        para_text = para.text
+        found_signer = False
+        for accented in replacements:
+            if accented in para_text:
+                found_signer = True
+                break
+        
+        if found_signer:
+            # Unlink fields if any to handle Excel links
+            if has_fields(para):
+                unlink_fields_in_item(para)
+            
+            # Perform replacement in runs
+            for accented, unaccented in replacements.items():
+                # We do a case-insensitive check but preserve case if possible?
+                # The user said "nếu là tiếng Việt có dấu, thì thực hiện thay thế bằng tiếng Việt không dấu"
+                # We'll use case-insensitive regex for finding but careful replacement
+                pattern = re.compile(re.escape(accented), re.IGNORECASE)
+                
+                # Scan runs
+                for run in para.runs:
+                    if not run.text: continue
+                    new_text = pattern.sub(unaccented, run.text)
+                    if new_text != run.text:
+                        run.text = new_text
+                        count += 1
+                        
+    return count
+
 def contains_chinese(text):
     """
     Checks if a string contains CJK characters (Chinese characters) 
@@ -861,8 +970,9 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
                 best_match_key = matches[0]
                 suggestion = translation_map[best_match_key]
                 
-                # Create suggestion text
-                sug_line = f"[Suggest: {suggestion}]"
+                # Create combined text: Original VN + Suggested Translation
+                # Using \n for newline within the same professional blue block
+                combined_text = f"[Original: {raw_orig_text}]\n[Suggest: {suggestion}]"
                 
                 # Insert new paragraph IMMEDIATELY after the current one
                 new_p_el = OxmlElement('w:p')
@@ -870,7 +980,7 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
                 new_p = Paragraph(new_p_el, para._parent)
                 
                 # Add text and format (Blue, Regular)
-                run = new_p.add_run(sug_line)
+                run = new_p.add_run(combined_text)
                 run.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
                 return True
         return False
@@ -1044,7 +1154,24 @@ def get_metadata_substitution_map(metadata):
         "[TÊN CÔNG TY]": name_vn.upper(),
         "[tên khách hàng]": name_trans,
         "[TÊN KHÁCH HÀNG]": name_trans.upper(),
+        "[v_signer_1]": metadata.get("signer_1", ""),
+        "[v_signer_2]": metadata.get("signer_2", ""),
+        "[v_signer_3]": metadata.get("signer_3", ""),
+        "[signer1]": metadata.get("signer_1", ""),
+        "[signer2]": metadata.get("signer_2", ""),
+        "[signer3]": metadata.get("signer_3", ""),
+        "[ngườiký1]": metadata.get("signer_1", ""),
+        "[ngườiký2]": metadata.get("signer_2", ""),
+        "[ngườiký3]": metadata.get("signer_3", ""),
     }
+    
+    # Fallback/Legacy [v_signer]
+    all_signers = []
+    for i in range(1, 4):
+        s = metadata.get(f"signer_{i}")
+        if s: all_signers.append(s)
+    subs["[v_signer]"] = ", ".join(all_signers)
+    subs["[ngườiký]"] = ", ".join(all_signers)
     
     # 2. Date Tags (We add both casings because the output is numeric/consistent)
     year_end_tags = parse_date_to_tags(metadata.get("year_end", ""), "e")
@@ -1660,6 +1787,11 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     if process_settings.get("textbox", True):
         apply_special_textbox_formatting(doc, target_col)
     
+    # Step 12: Signer Accent Removal
+    # New logic: If signer name has accents, replace with unaccented in whole doc.
+    if process_settings.get("signer_accents", True) and metadata:
+        apply_signer_accent_removal(doc, metadata)
+
     # Step 10 & 11: Highlight and Suggest
     if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
         highlight_vietnamese_text(

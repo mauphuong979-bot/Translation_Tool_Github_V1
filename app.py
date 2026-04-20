@@ -150,6 +150,11 @@ def handle_autofill():
     else:
         st.session_state.login_password = ""
 
+def handle_name_cap_change():
+    """Callback to automatically convert Translated Name to Proper Case if all caps."""
+    if 'meta_name_cap' in st.session_state:
+        st.session_state.meta_name_cap = tl.ensure_proper_case(st.session_state.meta_name_cap)
+
 def login_screen():
     st.markdown('<div class="login-container">', unsafe_allow_html=True)
     st.markdown('<div class="login-header">🔐 User Login</div>', unsafe_allow_html=True)
@@ -210,6 +215,9 @@ metadata_defaults = {
     "meta_date": "",
     "meta_period_short": "",
     "meta_period_short_2": "",
+    "meta_signer_1": "",
+    "meta_signer_2": "",
+    "meta_signer_3": "",
     "meta_translate": "E"
 }
 
@@ -263,6 +271,7 @@ with st.sidebar:
                 "table_size": True,
                 "date_format": True,
                 "textbox": True,
+                "signer_accents": True,
                 "highlight": True,
                 "suggestion": True
             }
@@ -277,8 +286,9 @@ with st.sidebar:
             ("table_size", "7. Table & Layout"),
             ("date_format", "8. Date Formatting"),
             ("textbox", "9. Textbox & Draft"),
-            ("highlight", "10. Highlight VN"),
-            ("suggestion", "11. Dictionary Suggestion")
+            ("signer_accents", "10. Signer Accents"),
+            ("highlight", "11. Highlight VN"),
+            ("suggestion", "12. Dictionary Suggestion")
         ]
         
         process_settings = {}
@@ -338,6 +348,12 @@ with tabs[0]:
                     st.session_state.meta_period_short = ext_meta["period_in"]
                 if ext_meta.get("period_in_2"):
                     st.session_state.meta_period_short_2 = ext_meta["period_in_2"]
+                if ext_meta.get("signer_1"):
+                    st.session_state.meta_signer_1 = ext_meta["signer_1"]
+                if ext_meta.get("signer_2"):
+                    st.session_state.meta_signer_2 = ext_meta["signer_2"]
+                if ext_meta.get("signer_3"):
+                    st.session_state.meta_signer_3 = ext_meta["signer_3"]
                     
                 st.session_state.last_extracted_id = uploaded_file.name
                 st.rerun() # Refresh to show extracted values in inputs
@@ -362,7 +378,7 @@ with tabs[0]:
             )
 
             # 2. Translated Name (not capitalized)
-            st.text_input("Translated Name (not capitalized)", placeholder="CustomerName", key="meta_name_cap")
+            st.text_input("Translated Name (not capitalized)", placeholder="CustomerName", key="meta_name_cap", on_change=handle_name_cap_change)
 
             # 3. Name in Vietnamese (not capitalized)
             st.text_input("Name in Vietnamese (not capitalized)", placeholder="ABC Company Co., Ltd...", key="meta_name_lc")
@@ -379,6 +395,15 @@ with tabs[0]:
             
             # 7. Period 2 (in table)
             st.text_input("Period 2 (in table)", placeholder="From xx/xx/20xx to xx/xx/20xx", key="meta_period_short_2")
+
+            # 8. Signer Names (extracted from last table)
+            c_s1, c_s2, c_s3 = st.columns(3)
+            with c_s1:
+                st.text_input("Signer 1", key="meta_signer_1")
+            with c_s2:
+                st.text_input("Signer 2", key="meta_signer_2")
+            with c_s3:
+                st.text_input("Signer 3", key="meta_signer_3")
 
     st.divider()
 
@@ -406,7 +431,10 @@ with tabs[0]:
                         "year_end": st.session_state.meta_year_end,
                         "report_date": st.session_state.meta_date,
                         "period_in": st.session_state.meta_period_short,
-                        "period_in_2": st.session_state.meta_period_short_2
+                        "period_in_2": st.session_state.meta_period_short_2,
+                        "signer_1": st.session_state.meta_signer_1,
+                        "signer_2": st.session_state.meta_signer_2,
+                        "signer_3": st.session_state.meta_signer_3
                     }
                     
                     v3_df = tl.load_and_fill_v3_dictionary(metadata_for_tags)
@@ -432,7 +460,10 @@ with tabs[0]:
                         "Translate into": st.session_state.meta_translate,
                         "Year-end date": tl.clean_text(st.session_state.meta_year_end),
                         "Translated Name": tl.clean_text(st.session_state.meta_name_cap),
-                        "Period (in table)": tl.clean_text(st.session_state.meta_period_short)
+                        "Period (in table)": tl.clean_text(st.session_state.meta_period_short),
+                        "signer_1": tl.clean_text(st.session_state.meta_signer_1),
+                        "signer_2": tl.clean_text(st.session_state.meta_signer_2),
+                        "signer_3": tl.clean_text(st.session_state.meta_signer_3)
                     }
                     
                     processed_file, msg = process_financial_report(
@@ -516,7 +547,10 @@ with tabs[1]:
         "year_end": st.session_state.meta_year_end,
         "report_date": st.session_state.meta_date,
         "period_in": st.session_state.meta_period_short,
-        "period_in_2": st.session_state.meta_period_short_2
+        "period_in_2": st.session_state.meta_period_short_2,
+        "signer_1": st.session_state.meta_signer_1,
+        "signer_2": st.session_state.meta_signer_2,
+        "signer_3": st.session_state.meta_signer_3
     }
 
     # 2. Language Selection UI
