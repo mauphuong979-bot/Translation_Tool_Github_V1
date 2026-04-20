@@ -1802,3 +1802,23 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
         )
 
     return total_count
+    
+    # Step 9: Specialized TextBox/Draft Handling
+    if process_settings.get("textbox", True):
+        apply_special_textbox_formatting(doc, target_col)
+    
+    # Step 12: Signer Accent Removal
+    # New logic: If signer name has accents, replace with unaccented in whole doc.
+    if process_settings.get("signer_accents", True) and metadata:
+        apply_signer_accent_removal(doc, metadata)
+
+    # Step 10 & 11: Highlight and Suggest
+    if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
+        highlight_vietnamese_text(
+            doc, 
+            translation_map, 
+            original_texts=original_texts,
+            show_suggestions=process_settings.get("suggestion", True)
+        )
+
+    return total_count
