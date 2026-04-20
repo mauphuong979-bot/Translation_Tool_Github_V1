@@ -73,7 +73,7 @@
     },
     {
         "Vietnamese": "Từ [p1_day]/[p1_month]/[p1_year] đến [p2_day]/[p2_month]/[p2_year]",
-        "E": "From Mar [p1_day], [p1_year] to Apr [p2_day], [p2_year]",
+        "E": "From [p1_month] [p1_day], [p1_year] to [p2_month] [p2_day], [p2_year]",
         "Hs": "自[p1_year]/[p1_month]/[p1_day]日至[p2_year]/[p2_month]/[p2_day]日",
         "Ht": "自[p1_year]/[p1_month]/[p1_day]日至[p2_year]/[p2_month]/[p2_day]日"
     },

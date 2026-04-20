@@ -1,42 +1,47 @@
 
-from docx import Document
+import sys
 import os
+import io
+from docx import Document
 
-doc_path = r'd:\AI\Python\11_Project\Translation_Tool\Translation_Tool_Antigravity_V2\test.docx'
-doc = Document(doc_path)
+# Set terminal output to UTF-8
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
-print("--- Run Inspection of Table 1 Cell(1, 1) ---")
-# Table 1 Cell(1, 1) was 'CHỈ TIÊU'
-cell = doc.tables[0].cell(0, 0)
-print(f"Cell text: '{cell.text}'")
-for i, para in enumerate(cell.paragraphs):
-    print(f"  Para {i}:")
-    for j, run in enumerate(para.runs):
-        print(f"    Run {j}: '{run.text}'")
+# Add the project directory to sys.path
+BASE_DIR = r"d:\AI\Python\11_Project\Translation_Tool\Translation_Tool_Antigravity_V3"
+sys.path.append(BASE_DIR)
 
-print("\n--- Run Inspection of Table 1 Cell(1, 2) ---")
-# Table 1 Cell(1, 2) was 'Mã số'
-cell = doc.tables[0].cell(0, 1)
-print(f"Cell text: '{cell.text}'")
-for i, para in enumerate(cell.paragraphs):
-    print(f"  Para {i}:")
-    for j, run in enumerate(para.runs):
-        print(f"    Run {j}: '{run.text}'")
+import metadata_extractor as mex
+import translation_lib as tl
 
-print("\n--- Run Inspection of Table 1 Cell(13, 1) ---")
-# '6.	Doanh thu hoạt động tài chính'
-cell = doc.tables[0].cell(12, 0)
-print(f"Cell text: '{cell.text}'")
-for i, para in enumerate(cell.paragraphs):
-    print(f"  Para {i}:")
-    for j, run in enumerate(para.runs):
-        print(f"    Run {j}: '{run.text}' (repr: {repr(run.text)})")
+def inspect_runs():
+    doc_path = os.path.join(BASE_DIR, "fs_Usha_2025_v1.docx")
+    doc = Document(doc_path)
+    
+    signer1 = "Phạm Phú Quí"
+    signer2 = "Đỗ Thị Ngân Trâm"
+    
+    print(f"Inspecting runs for '{signer1}' and '{signer2}'...")
+    
+    def check_container(container, name):
+        for para in container.paragraphs:
+            if name in para.text:
+                print(f"\nFound '{name}' in paragraph: '{para.text}'")
+                print("Runs:")
+                for i, run in enumerate(para.runs):
+                    print(f"  Run {i}: '{run.text}'")
+                    
+    # Check body
+    check_container(doc, signer1)
+    check_container(doc, signer2)
+    
+    # Check tables
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                check_container(cell, signer1)
+                check_container(cell, signer2)
 
-print("\n--- Run Inspection of Table 2 Cell(2, 5) ---")
-# 'Người lập biểu kiêm kế toán trưởng'
-cell = doc.tables[1].cell(1, 4) # 1-indexed (2, 5) -> (1, 4)
-print(f"Cell text: '{cell.text}'")
-for i, para in enumerate(cell.paragraphs):
-    print(f"  Para {i}:")
-    for j, run in enumerate(para.runs):
-        print(f"    Run {j}: '{run.text}'")
+if __name__ == "__main__":
+    inspect_runs()

@@ -593,6 +593,54 @@ def format_dates_in_tables(doc, target_col="E"):
                     break # break cell loop (para loop was broken)
     return count
 
+def abbreviate_english_months_in_tables(doc):
+    """
+    Scans all tables and abbreviates English month names (January -> Jan) 
+    unless they are all uppercase (JANUARY remains JANUARY).
+    Preserves casing (Title Case, lower case).
+    """
+    month_map = {
+        "January": "Jan", "February": "Feb", "March": "Mar", "April": "Apr",
+        "May": "May", "June": "Jun", "July": "Jul", "August": "Aug",
+        "September": "Sep", "October": "Oct", "November": "Nov", "December": "Dec"
+    }
+    
+    # Combined regex for all months
+    # \b matches word boundaries
+    month_pattern = re.compile(r'\b(' + '|'.join(month_map.keys()) + r')\b', re.IGNORECASE)
+    
+    def replacer(match):
+        word = match.group(0)
+        # Rule: Keep all-caps months as is
+        if word.isupper():
+            return word
+        
+        # Determine replacement abbreviation
+        lower_word = word.lower()
+        # Find which month it corresponds to
+        for full, short in month_map.items():
+            if full.lower() == lower_word:
+                if word.istitle(): return short
+                if word.islower(): return short.lower()
+                return short
+        return word
+
+    count = 0
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                changed_cell = False
+                for para in cell.paragraphs:
+                    for run in para.runs:
+                        if run.text and month_pattern.search(run.text):
+                            new_text = month_pattern.sub(replacer, run.text)
+                            if new_text != run.text:
+                                run.text = new_text
+                                changed_cell = True
+                if changed_cell:
+                    count += 1
+    return count
+
 def contains_vietnamese(text):
     """
     Checks if a string contains characters unique to the Vietnamese language.
@@ -678,33 +726,20 @@ def apply_signer_accent_removal(doc, metadata):
                         for cell in row.cells:
                             for para in cell.paragraphs: yield para
 
+    # Pre-prepare replacements for apply_translations_to_paragraph
+    # case_threshold=9999 ensures we always use literal matching or case-insensitive regex for the full name
+    signer_prepared = prepare_translation_list(replacements, case_threshold=9999)
+
     for para in _get_items():
-        para_text = para.text
-        found_signer = False
-        for accented in replacements:
-            if accented in para_text:
-                found_signer = True
-                break
-        
-        if found_signer:
+        # Check if any accented signer is in paragraph text
+        if any(acc in para.text for acc in replacements):
             # Unlink fields if any to handle Excel links
             if has_fields(para):
                 unlink_fields_in_item(para)
             
-            # Perform replacement in runs
-            for accented, unaccented in replacements.items():
-                # We do a case-insensitive check but preserve case if possible?
-                # The user said "nếu là tiếng Việt có dấu, thì thực hiện thay thế bằng tiếng Việt không dấu"
-                # We'll use case-insensitive regex for finding but careful replacement
-                pattern = re.compile(re.escape(accented), re.IGNORECASE)
-                
-                # Scan runs
-                for run in para.runs:
-                    if not run.text: continue
-                    new_text = pattern.sub(unaccented, run.text)
-                    if new_text != run.text:
-                        run.text = new_text
-                        count += 1
+            # Use paragraph-level replacement which handles run splitting
+            if apply_translations_to_paragraph(para, signer_prepared):
+                count += 1
                         
     return count
 
@@ -1769,6 +1804,10 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     # Step 5: Format dates in tables
     if process_settings.get("date_format", True):
         format_dates_in_tables(doc, target_col)
+        
+    # Step 5.5: Abbreviate already-English months in tables (if Target = E)
+    if process_settings.get("date_format", True) and target_col == "E":
+        abbreviate_english_months_in_tables(doc)
     
     # Step 7: Dual-font formatting (Chinese only)
     if process_settings.get("dual_font", True) and target_col in ["Hs", "Ht"]:
@@ -1802,23 +1841,4 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
         )
 
     return total_count
-    
-    # Step 9: Specialized TextBox/Draft Handling
-    if process_settings.get("textbox", True):
-        apply_special_textbox_formatting(doc, target_col)
-    
-    # Step 12: Signer Accent Removal
-    # New logic: If signer name has accents, replace with unaccented in whole doc.
-    if process_settings.get("signer_accents", True) and metadata:
-        apply_signer_accent_removal(doc, metadata)
-
-    # Step 10 & 11: Highlight and Suggest
-    if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
-        highlight_vietnamese_text(
-            doc, 
-            translation_map, 
-            original_texts=original_texts,
-            show_suggestions=process_settings.get("suggestion", True)
-        )
-
     return total_count
