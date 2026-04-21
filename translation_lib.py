@@ -599,12 +599,13 @@ def format_dates_in_tables(doc, target_col="E"):
 
 def apply_form_indicator_tabbing(doc):
     """
-    Scans document for "MẪU SỐ ... DN", "FORM ... DN", or "表格 ... DN" 
+    Scans document for "MẪU SỐ ... DN", "MÃ SỐ ... DN", "FORM ... DN", or "表格 ... DN" 
     and adds a tab before it. This helps with document alignment.
     NEW: Ensures [Report Title] remains Bold (if it was) but [Form ID] is Normal.
     Runs AFTER dictionary replacement to ensure nothing overwrites the formatting.
     """
-    pattern = re.compile(r"\s*(MẪU\s+SỐ|FORM|表\s*格).*?DN", re.IGNORECASE)
+    # Regex updated to include MÃ SỐ (with diacritics variants)
+    pattern = re.compile(r"\s*(MẪU\s+SỐ|MÃ\s+SỐ|FORM|表\s*格).*?DN", re.IGNORECASE)
     count = 0
     
     # We use _get_all_paragraphs to cover body, tables, headers, and footers
@@ -613,7 +614,10 @@ def apply_form_indicator_tabbing(doc):
         if not para.runs:
             continue
             
-        full_text = "".join(r.text for r in para.runs)
+        # Robustness: Normalize to NFC before matching
+        full_text_raw = "".join(r.text for r in para.runs)
+        full_text = unicodedata.normalize('NFC', full_text_raw)
+        
         if not full_text:
             continue
             
@@ -641,6 +645,9 @@ def apply_form_indicator_tabbing(doc):
             
             for run in orig_runs:
                 run_text = run.text
+                if run_text is None: run_text = ""
+                # Normalize run text to ensure index consistency with full_text
+                run_text = unicodedata.normalize('NFC', run_text)
                 run_len = len(run_text)
                 
                 # Case A: Run is entirely BEFORE the match
@@ -648,11 +655,12 @@ def apply_form_indicator_tabbing(doc):
                     new_r = para.add_run(run_text)
                     _copy_run_format(run, new_r)
                     
-                # Case B: Run is entirely AFTER (or starts at) the match start
+                # Case B: Run starts AFTER (or at) the match start
                 elif current_pos >= start_idx:
                     # Clean up text if it's the start of the match
                     text_to_add = run_text
                     if not found_split:
+                        # Add tab and remove leading whitespace from THIS run
                         text_to_add = "\t" + run_text.lstrip()
                         found_split = True
                     
@@ -899,73 +907,96 @@ def swap_vn_to_en_number_separators(text):
 
 def apply_financial_number_formatting(doc, target_col):
     """
-    Safe run-level scan to swap number separators.
-    Used for English and Chinese reports to match international standards.
-    Operates ONLY on run.text to preserve Link Fields (Excel links).
+    Robust scan to swap number separators (. to , and , to .).
+    Works at the paragraph level to handle numbers fragmented across multiple runs.
+    Uses table._cells to correctly handle merged cells exactly once.
+    Operates ONLY on visible text to preserve Link Fields (Excel links).
     """
     if target_col == "V":
         return
 
-    # Process all possible containers
-    containers = [doc]
+    processed_p_els = set()
+    
+    def _process_para(para):
+        if not para.runs or para._element in processed_p_els:
+            return
+            
+        # Robust Number Swap Logic
+        full_text = "".join(r.text for r in para.runs)
+        if not full_text: 
+            return
+            
+        new_text = swap_vn_to_en_number_separators(full_text)
+        if new_text != full_text:
+            # Check if paragraph contains Fields (Excel links)
+            is_field_item = has_fields(para)
+            
+            if is_field_item:
+                # [FIELD-AWARE SURGICAL SWAP]
+                # We iterate runs and only swap text in runs that DO NOT have field markers.
+                # This protects the Linking structure while swapping separators in the visible result.
+                for run in para.runs:
+                    if run.text and any(c.isdigit() for c in run.text) and not run_has_fields(run):
+                        # Use a simpler but safe swap logic for individual runs within a field
+                        # to avoid cross-run fragmentation issues destroying markers.
+                        run_new_text = swap_vn_to_en_number_separators(run.text)
+                        if run_new_text != run.text:
+                            run.text = run_new_text
+            else:
+                # [ROBUST CONSOLIDATION]
+                # No fields detected. We can safely consolidate to handle fragmented numbers.
+                if len(para.runs) == 1:
+                    para.runs[0].text = new_text
+                else:
+                    runs = list(para.runs)
+                    format_run = None
+                    for r in runs:
+                        if r.text and any(c.isdigit() for c in r.text):
+                            format_run = r
+                            break
+                    if not format_run: format_run = runs[0]
+                    
+                    for r in runs:
+                        if r == format_run:
+                            r.text = new_text
+                        else:
+                            r.text = ""
+            processed_p_els.add(para._element)
+
+    # 1. Body Paragraphs
+    for para in doc.paragraphs:
+        _process_para(para)
+        
+    # 2. Main Tables
+    for table in doc.tables:
+        # Use table._cells to get unique cells in merged table structures
+        seen_tcs = set()
+        for cell in table._cells:
+            if cell._tc in seen_tcs: continue
+            seen_tcs.add(cell._tc)
+            for para in cell.paragraphs:
+                _process_para(para)
+                
+    # 3. Headers and Footers
     for section in doc.sections:
-        containers.extend([section.header, section.footer])
+        containers = [section.header, section.footer]
         if section.different_first_page_header_footer:
             containers.extend([section.first_page_header, section.first_page_footer])
         try:
             containers.extend([section.even_page_header, section.even_page_footer])
         except: pass
-
-    processed_p_els = set()
-    
-    for container in containers:
-        # 1. Body Paragraphs (direct descendants mainly)
-        for para in container.paragraphs:
-            if para._element in processed_p_els:
-                continue
-            for run in para.runs:
-                if run.text:
-                    new_text = swap_vn_to_en_number_separators(run.text)
-                    if new_text != run.text:
-                        run.text = new_text
-            processed_p_els.add(para._element)
         
-        # 2. Tables (including nested tables if we use xpath)
-        for table in container.tables:
-            for row in table.rows:
-                for cell in row.cells:
-                    # Deep traversal of cell contents for paragraphs
-                    # This covers paragraphs in the cell and in any nested tables
-                    for p_el in cell._element.xpath('.//*[local-name()="p"]'):
-                        if p_el in processed_p_els:
-                            continue
-                            
-                        para = Paragraph(p_el, cell)
-                        changed = False
-                        for run in para.runs:
-                            if run.text:
-                                new_text = swap_vn_to_en_number_separators(run.text)
-                                if new_text != run.text:
-                                    run.text = new_text
-                                    changed = True
-                        if changed:
-                            processed_p_els.add(p_el)
-                    
-                    # Handle text boxes within tables too
-                    for t_el in cell._element.xpath('.//*[local-name()="textbox"]'):
-                        for p_el in t_el.xpath('.//*[local-name()="p"]'):
-                            if p_el in processed_p_els:
-                                continue
-                            para = Paragraph(p_el, t_el)
-                            changed = False
-                            for run in para.runs:
-                                if run.text:
-                                    new_text = swap_vn_to_en_number_separators(run.text)
-                                    if new_text != run.text:
-                                        run.text = new_text
-                                        changed = True
-                            if changed:
-                                processed_p_els.add(p_el)
+        for container in containers:
+            if not container: continue
+            for para in container.paragraphs:
+                _process_para(para)
+            for table in container.tables:
+                seen_tcs = set()
+                for cell in table._cells:
+                    if cell._tc in seen_tcs: continue
+                    seen_tcs.add(cell._tc)
+                    for para in cell.paragraphs:
+                        _process_para(para)
 
 def has_fields(doc_item):
     """
@@ -973,9 +1004,25 @@ def has_fields(doc_item):
     Detecting w:fldSimple, w:fldChar, or w:instrText ensures we don't destroy link structures.
     """
     try:
-        element = doc_item._element
+        if hasattr(doc_item, '_element'):
+            element = doc_item._element
+        else:
+            element = doc_item
         # XPath to find common field markers
         fields = element.xpath('.//*[local-name()="fldSimple" or local-name()="fldChar" or local-name()="instrText"]')
+        return len(fields) > 0
+    except:
+        return False
+
+def run_has_fields(run):
+    """
+    Checks if a specific run contains field markers (begin, separate, end) or instruction text.
+    Modifying the .text of such runs directly can destroy the field link.
+    """
+    try:
+        element = run._element
+        # Direct check for fldChar or instrText inside the run element
+        fields = element.xpath('.//*[local-name()="fldChar" or local-name()="instrText"]')
         return len(fields) > 0
     except:
         return False
