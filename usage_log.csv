@@ -626,3 +626,13 @@ Timestamp,User,Event Type,Details
 2026-04-21 13:38:19,user,Login,Successfully signed in
 2026-04-21 13:39:00,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
 2026-04-21 13:42:11,user,Processing,File: fs_Usha_2025_v1.docx (Lang: E)
+2026-04-21 13:54:04,user,Login,Successfully signed in
+2026-04-21 13:54:37,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
+2026-04-21 14:03:21,user,Login,Successfully signed in
+2026-04-21 14:03:53,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
+2026-04-21 14:33:52,user,Login,Successfully signed in
+2026-04-21 14:34:26,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
+2026-04-21 14:35:42,admin,Login,Successfully signed in
+2026-04-21 14:36:18,admin,Template Mgmt,Uploaded and synced Dictionary_v3.xlsx
+2026-04-21 14:36:42,admin,Processing,File: fs_C&C_2025_V.docx (Lang: E)
+2026-04-21 14:36:44,admin,Template Mgmt,Uploaded and synced Dictionary_v3.xlsx
