@@ -597,6 +597,92 @@ def format_dates_in_tables(doc, target_col="E"):
                     break # break cell loop (para loop was broken)
     return count
 
+def apply_form_indicator_tabbing(doc):
+    """
+    Scans document for "MẪU SỐ ... DN", "FORM ... DN", or "表格 ... DN" 
+    and adds a tab before it. This helps with document alignment.
+    NEW: Ensures [Report Title] remains Bold (if it was) but [Form ID] is Normal.
+    Runs AFTER dictionary replacement to ensure nothing overwrites the formatting.
+    """
+    pattern = re.compile(r"\s*(MẪU\s+SỐ|FORM|表\s*格).*?DN", re.IGNORECASE)
+    count = 0
+    
+    # We use _get_all_paragraphs to cover body, tables, headers, and footers
+    for para in _get_all_paragraphs(doc):
+        # We need runs to perform surgical formatting
+        if not para.runs:
+            continue
+            
+        full_text = "".join(r.text for r in para.runs)
+        if not full_text:
+            continue
+            
+        # Find the match
+        match = pattern.search(full_text)
+        if match:
+            start_idx = match.start()
+            matched_text = match.group(0)
+            
+            # Check if there is already a tab immediately before the match
+            if (start_idx > 0 and full_text[start_idx-1] == '\t') or matched_text.startswith('\t'):
+                # We still might need to fix the bolding even if tab is present
+                pass 
+            
+            # Surgical Run Manipulation
+            orig_runs = list(para.runs)
+            
+            # 1. Clear existing runs from XML to rebuild
+            for r in orig_runs:
+                para._element.remove(r._element)
+                
+            # 2. Rebuild with split logic
+            current_pos = 0
+            found_split = False
+            
+            for run in orig_runs:
+                run_text = run.text
+                run_len = len(run_text)
+                
+                # Case A: Run is entirely BEFORE the match
+                if current_pos + run_len <= start_idx:
+                    new_r = para.add_run(run_text)
+                    _copy_run_format(run, new_r)
+                    
+                # Case B: Run is entirely AFTER (or starts at) the match start
+                elif current_pos >= start_idx:
+                    # Clean up text if it's the start of the match
+                    text_to_add = run_text
+                    if not found_split:
+                        text_to_add = "\t" + run_text.lstrip()
+                        found_split = True
+                    
+                    new_r = para.add_run(text_to_add)
+                    _copy_run_format(run, new_r)
+                    new_r.bold = False # FORCE NORMAL for Form ID
+                    
+                # Case C: Split required (Match starts inside this run)
+                else:
+                    split_point = start_idx - current_pos
+                    before_text = run_text[:split_point]
+                    after_text = run_text[split_point:]
+                    
+                    # Part 1: Before the match (keeps original bolding)
+                    if before_text:
+                        r_before = para.add_run(before_text)
+                        _copy_run_format(run, r_before)
+                    
+                    # Part 2: From the match onwards (Normal bolding)
+                    r_after = para.add_run("\t" + after_text.lstrip())
+                    _copy_run_format(run, r_after)
+                    r_after.bold = False # FORCE NORMAL
+                    found_split = True
+                
+                current_pos += run_len
+            
+            count += 1
+            
+    return count
+
 def abbreviate_english_months_in_tables(doc):
     """
     Scans all tables and abbreviates English month names (January -> Jan) 
@@ -830,31 +916,56 @@ def apply_financial_number_formatting(doc, target_col):
             containers.extend([section.even_page_header, section.even_page_footer])
         except: pass
 
+    processed_p_els = set()
+    
     for container in containers:
-        # 1. Body Paragraphs
+        # 1. Body Paragraphs (direct descendants mainly)
         for para in container.paragraphs:
+            if para._element in processed_p_els:
+                continue
             for run in para.runs:
                 if run.text:
-                    run.text = swap_vn_to_en_number_separators(run.text)
+                    new_text = swap_vn_to_en_number_separators(run.text)
+                    if new_text != run.text:
+                        run.text = new_text
+            processed_p_els.add(para._element)
         
-        # 2. Table Cells
+        # 2. Tables (including nested tables if we use xpath)
         for table in container.tables:
             for row in table.rows:
                 for cell in row.cells:
-                    # Deep traversal of cell contents
+                    # Deep traversal of cell contents for paragraphs
+                    # This covers paragraphs in the cell and in any nested tables
                     for p_el in cell._element.xpath('.//*[local-name()="p"]'):
+                        if p_el in processed_p_els:
+                            continue
+                            
                         para = Paragraph(p_el, cell)
+                        changed = False
                         for run in para.runs:
                             if run.text:
-                                run.text = swap_vn_to_en_number_separators(run.text)
+                                new_text = swap_vn_to_en_number_separators(run.text)
+                                if new_text != run.text:
+                                    run.text = new_text
+                                    changed = True
+                        if changed:
+                            processed_p_els.add(p_el)
                     
                     # Handle text boxes within tables too
                     for t_el in cell._element.xpath('.//*[local-name()="textbox"]'):
                         for p_el in t_el.xpath('.//*[local-name()="p"]'):
+                            if p_el in processed_p_els:
+                                continue
                             para = Paragraph(p_el, t_el)
+                            changed = False
                             for run in para.runs:
                                 if run.text:
-                                    run.text = swap_vn_to_en_number_separators(run.text)
+                                    new_text = swap_vn_to_en_number_separators(run.text)
+                                    if new_text != run.text:
+                                        run.text = new_text
+                                        changed = True
+                            if changed:
+                                processed_p_els.add(p_el)
 
 def has_fields(doc_item):
     """
@@ -1825,6 +1936,10 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
                 total_count += _process_container(section.even_page_footer, prepared_list, replaced_paragraphs=replaced_paras)
             except: pass
 
+    # Step 3.5: Fix Form Indicator Tabbing (Apply tab even after translation)
+    # This runs AFTER dictionary replacement to catch FORM, 表格, or MẪU SỐ.
+    apply_form_indicator_tabbing(doc)
+
     # Step 4: Final Chinese Currency Cleanup (Hs/Ht only)
     if process_settings.get("dictionary", True) and target_col in ["Hs", "Ht"]:
         apply_chinese_currency_cleanup(doc)
@@ -1868,5 +1983,4 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
             show_suggestions=process_settings.get("suggestion", True)
         )
 
-    return total_count
     return total_count

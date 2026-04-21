@@ -1,20 +1,27 @@
-import pandas as pd
+
 import re
 
-def test_regex():
-    s = pd.Series(["[v_name]", "[ V_NAME ]", "Before [p1_day] After"])
-    tag_name = "v_name"
-    pattern = re.compile(r"\[\s*" + re.escape(tag_name) + r"\s*\]", re.IGNORECASE)
-    print(f"Regex: {pattern.pattern}")
+def swap_vn_to_en_number_separators(text):
+    if not text:
+        return text
+    pattern = re.compile(r'(?<!\d)(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+,\d+)(?!\d)')
     
-    # Test str.replace
-    res = s.str.replace(pattern, "REPLACED", regex=True)
-    print("Results:")
-    print(res)
-    
-    assert res[0] == "REPLACED"
-    assert res[1] == "REPLACED"
-    print("Regex works on Series!")
+    def replace_func(match):
+        val = match.group(0)
+        return val.replace('.', 'TEMP_DOT').replace(',', '.').replace('TEMP_DOT', ',')
+        
+    return pattern.sub(replace_func, text)
 
-if __name__ == "__main__":
-    test_regex()
+# Test cases
+test_cases = [
+    "91.504.195",
+    "50.000.000",
+    "1.021.000.000",
+    "3.588.883.200",
+    " 4.882.149.339 ",
+    "1.234,56",
+    "6,78"
+]
+
+for tc in test_cases:
+    print(f"'{tc}' -> '{swap_vn_to_en_number_separators(tc)}'")
