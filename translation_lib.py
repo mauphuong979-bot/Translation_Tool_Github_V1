@@ -1478,7 +1478,10 @@ def sync_dictionary_v3():
     if not os.path.exists(DICTIONARY_V3_XLSX):
         return False, f"Missing {DICTIONARY_V3_XLSX}"
     try:
-        df = pd.read_excel(DICTIONARY_V3_XLSX).astype(str)
+        df = pd.read_excel(DICTIONARY_V3_XLSX)
+        # Convert NaN to empty string instead of literal "nan"
+        df = df.fillna("")
+        df = df.astype(str)
         result = df.to_dict(orient="records")
         with open(DICTIONARY_V3_JSON, "w", encoding="utf-8") as f:
             json.dump(result, f, indent=4, ensure_ascii=False)
@@ -1514,14 +1517,17 @@ def load_and_fill_v3_dictionary(metadata):
             data = json.load(f)
             
         # Convert to DataFrame (temporarily) to use the existing tag-filling logic
-        # This keeps the logic robust and minimizes changes to the core replacement loops
         df = pd.DataFrame(data)
         
         # 2. Build substitution map (normalized to NFC)
         sub_map = get_metadata_substitution_map(metadata)
         
-        # 3. Force every column to string for total reliability
+        # 3. Clean and normalize data (treat "nan" strings as empty)
+        df = df.fillna("")
         df = df.astype(str)
+        for col in df.columns:
+            df[col] = df[col].apply(lambda x: "" if x.lower() == "nan" else x)
+            df[col] = df[col].apply(lambda x: clean_text(x))
         
         # 4. Explicit Column-by-Column, Tag-by-Tag Replacement
         # This approach is chosen for maximum compatibility and robustness
@@ -1589,12 +1595,23 @@ def load_and_fill_v3_dictionary(metadata):
 def prepare_translation_list(translation_map, case_threshold=25):
     """
     Pre-processes and sorts translation terms for efficiency.
+    SKIPS entries where the translation (value) is empty or strictly invalid.
     """
+    prepared = []
+    if not translation_map:
+        return prepared
+
     # Sort keys by length descending to match longest phrases first
     sorted_keys = sorted(translation_map.keys(), key=len, reverse=True)
-    prepared = []
+    
     for key in sorted_keys:
         val = translation_map[key]
+        
+        # SKIP: If translation is empty or literal "nan", do not replace.
+        # This preserves the original Vietnamese text.
+        if not val or str(val).lower().strip() == "nan" or not str(val).strip():
+            continue
+            
         if len(key) >= case_threshold:
             # Pre-compile regex for long phrases
             pattern = re.compile(re.escape(key), re.IGNORECASE)
