@@ -2,15 +2,15 @@
     "users": [
         {
             "username": "admin",
-            "password": "123456",
+            "password": "9",
             "role": "admin",
-            "auto_fill": true
+            "auto_fill": false
         },
         {
             "username": "user",
-            "password": "user",
+            "password": "ui123",
             "role": "user",
-            "auto_fill": true
+            "auto_fill": false
         }
     ]
 }

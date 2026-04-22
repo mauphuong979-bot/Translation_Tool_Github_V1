@@ -644,3 +644,8 @@ Timestamp,User,Event Type,Details
 2026-04-21 14:57:02,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
 2026-04-21 15:25:46,user,Login,Successfully signed in
 2026-04-21 15:26:05,user,Processing,File: fs_C&C_2025_V.docx (Lang: E)
+2026-04-22 12:02:47,admin,Login,Successfully signed in
+2026-04-22 12:03:31,admin,User Management,Updated user: admin
+2026-04-22 12:03:48,admin,User Management,Updated user: user
+2026-04-22 12:04:09,admin,Login,Successfully signed in
+2026-04-22 12:04:37,admin,Processing,File: fs_forte_2024_v.docx (Lang: E)
