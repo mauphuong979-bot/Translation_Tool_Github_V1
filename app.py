@@ -679,25 +679,92 @@ if st.session_state.authenticated and st.session_state.username == "admin":
             logs = get_logs()
             if logs:
                 log_df = pd.DataFrame(logs)
-                st.dataframe(log_df, use_container_width=True)
+                # Convert Timestamp to datetime for filtering
+                log_df['Timestamp'] = pd.to_datetime(log_df['Timestamp'])
                 
-                # Export Logs to Excel
-                output_log = io.BytesIO()
-                with pd.ExcelWriter(output_log, engine='openpyxl') as writer:
-                    log_df.to_excel(writer, index=False, sheet_name='UsageLogs')
-                log_excel_data = output_log.getvalue()
+                # Filter Section UI
+                st.markdown("#### 🔍 Filters")
+                c1, c2, c3, c4 = st.columns([1.5, 1, 1, 1.5])
                 
-                st.download_button(
-                    label="📥 Download Usage Logs (Excel)",
-                    data=log_excel_data,
-                    file_name=f"Usage_Log_Export_{datetime.now().strftime('%Y%m%d')}.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    key="dl_usage_logs"
-                )
+                with c1:
+                    # Date filter
+                    min_date = log_df['Timestamp'].min().date()
+                    max_date = log_df['Timestamp'].max().date()
+                    # Default to show all
+                    date_range = st.date_input(
+                        "Date Range",
+                        value=(min_date, max_date),
+                        min_value=min_date,
+                        max_value=max_date,
+                        key="log_filter_date"
+                    )
                 
-                st.info(f"Total actions recorded: {len(logs)}")
+                with c2:
+                    # User filter
+                    all_users = sorted(log_df['User'].unique().tolist())
+                    selected_users = st.multiselect("Users", options=all_users, key="log_filter_user")
+                
+                with c3:
+                    # Event Type filter
+                    all_events = sorted(log_df['Event Type'].unique().tolist())
+                    selected_events = st.multiselect("Event Types", options=all_events, key="log_filter_event")
+                
+                with c4:
+                    # Keyword search
+                    search_query = st.text_input("Search Details", placeholder="Search text...", key="log_filter_search")
+
+                # Apply Filters to the DataFrame
+                filtered_df = log_df.copy()
+                
+                # 1. Filter by Date Range
+                if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
+                    start_date, end_date = date_range
+                    filtered_df = filtered_df[
+                        (filtered_df['Timestamp'].dt.date >= start_date) & 
+                        (filtered_df['Timestamp'].dt.date <= end_date)
+                    ]
+                
+                # 2. Filter by Users
+                if selected_users:
+                    filtered_df = filtered_df[filtered_df['User'].isin(selected_users)]
+                
+                # 3. Filter by Event Types
+                if selected_events:
+                    filtered_df = filtered_df[filtered_df['Event Type'].isin(selected_events)]
+                
+                # 4. Filter by Search Keyword
+                if search_query:
+                    filtered_df = filtered_df[filtered_df['Details'].str.contains(search_query, case=False, na=False)]
+
+                # Display Results
+                st.dataframe(filtered_df, use_container_width=True)
+                
+                # Metrics Row
+                col_m1, col_m2 = st.columns(2)
+                with col_m1:
+                    st.info(f"📊 Displaying **{len(filtered_df)}** of **{len(log_df)}** total records.")
+                
+                with col_m2:
+                    # Export Filtered Logs to Excel
+                    output_log = io.BytesIO()
+                    with pd.ExcelWriter(output_log, engine='openpyxl') as writer:
+                        # Format timestamp back to string for Excel readability if needed
+                        export_df = filtered_df.copy()
+                        export_df['Timestamp'] = export_df['Timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
+                        export_df.to_excel(writer, index=False, sheet_name='UsageLogs')
+                    log_excel_data = output_log.getvalue()
+                    
+                    st.download_button(
+                        label="📥 Download Filtered Logs (Excel)",
+                        data=log_excel_data,
+                        file_name=f"Usage_Log_Export_{datetime.now().strftime('%Y%m%d')}.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        key="dl_usage_logs",
+                        use_container_width=True
+                    )
             else:
                 st.write("No logs found yet.")
+
 
         with st.expander("👤 User Management", expanded=False):
             st.markdown("### Add New User")
