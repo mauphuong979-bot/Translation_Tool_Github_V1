@@ -11,8 +11,6 @@ from processor import process_financial_report
 from usage_logger import log_event, get_logs
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
-import plotly.express as px
-
 
 # Page Configuration
 st.set_page_config(
@@ -67,135 +65,6 @@ def highlight_match(text, keyword):
         return text
     pattern = re.compile(re.escape(keyword), re.IGNORECASE)
     return pattern.sub(lambda m: f'<span class="dict-highlight">{m.group(0)}</span>', text)
-
-def render_analytics_dashboard(df):
-    """Renders a comprehensive analytics dashboard from log data."""
-    if df.empty:
-        st.info("No data available for analytics.")
-        return
-
-    # Data Preprocessing
-    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
-    df['Date'] = df['Timestamp'].dt.date
-    df['Hour'] = df['Timestamp'].dt.hour
-    
-    # --- 1. Filters ---
-    st.markdown("#### 🔍 Filters")
-    col_f1, col_f2 = st.columns(2)
-    with col_f1:
-        date_range = st.date_input(
-            "Date Range",
-            value=(df['Date'].min(), df['Date'].max()),
-            min_value=df['Date'].min(),
-            max_value=df['Date'].max()
-        )
-    with col_f2:
-        users_list = ["All"] + sorted(df['User'].unique().tolist())
-        selected_user = st.selectbox("Filter by User", users_list)
-    
-    # Apply Filters
-    filtered_df = df.copy()
-    if len(date_range) == 2:
-        filtered_df = filtered_df[(filtered_df['Date'] >= date_range[0]) & (filtered_df['Date'] <= date_range[1])]
-    if selected_user != "All":
-        filtered_df = filtered_df[filtered_df['User'] == selected_user]
-        
-    if filtered_df.empty:
-        st.warning("No data matches the selected filters.")
-        return
-
-    # --- 2. Key Metrics ---
-    total_actions = len(filtered_df)
-    unique_users = filtered_df['User'].nunique()
-    processing_events = len(filtered_df[filtered_df['Event Type'] == 'Processing'])
-    
-    # Calculate trend (comparing to previous period of same length)
-    # For simplicity, we'll just show the current metrics in cards
-    st.markdown(f"""
-    <div class="dashboard-container">
-        <div class="metric-card">
-            <div class="metric-label">Total Actions</div>
-            <div class="metric-value">{total_actions}</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-label">Active Users</div>
-            <div class="metric-value">{unique_users}</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-label">Files Processed</div>
-            <div class="metric-value">{processing_events}</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # --- 3. Charts ---
-    col_c1, col_c2 = st.columns(2)
-    
-    with col_c1:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-        st.markdown("##### 📈 Usage Trend")
-        daily_counts = filtered_df.groupby('Date').size().reset_index(name='Actions')
-        fig_trend = px.line(daily_counts, x='Date', y='Actions', 
-                            template='plotly_white',
-                            color_discrete_sequence=['#4b6cb7'])
-        fig_trend.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=300)
-        st.plotly_chart(fig_trend, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-    with col_c2:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-        st.markdown("##### 👤 Top Users")
-        user_counts = filtered_df.groupby('User').size().reset_index(name='Actions').sort_values('Actions', ascending=False).head(5)
-        fig_users = px.bar(user_counts, x='User', y='Actions', 
-                           template='plotly_white',
-                           color_discrete_sequence=['#764ba2'])
-        fig_users.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=300)
-        st.plotly_chart(fig_users, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-    # Event Distribution
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-    st.markdown("##### 🏷️ Event Distribution")
-    event_counts = filtered_df.groupby('Event Type').size().reset_index(name='Count')
-    fig_events = px.pie(event_counts, values='Count', names='Event Type', 
-                        hole=0.4, template='plotly_white',
-                        color_discrete_sequence=px.colors.qualitative.Pastel)
-    fig_events.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=350)
-    st.plotly_chart(fig_events, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # --- 4. Recent Activity Feed ---
-    st.markdown("#### 🕒 Recent Activity")
-    activity_html = '<div class="activity-feed">'
-    
-    # Icon mapping for event types
-    icons = {
-        "Login": "🔑",
-        "Processing": "⚙️",
-        "User Management": "👤",
-        "Dictionary": "📖",
-        "Comparison": "⚖️",
-        "Template Mgmt": "📁"
-    }
-    
-    recent_logs = filtered_df.sort_values('Timestamp', ascending=False).head(20)
-    for _, row in recent_logs.iterrows():
-        icon = icons.get(row['Event Type'], "📝")
-        time_str = row['Timestamp'].strftime("%Y-%m-%d %H:%M:%S")
-        activity_html += f"""
-        <div class="activity-item">
-            <div class="activity-icon">{icon}</div>
-            <div class="activity-content">
-                <div class="activity-title">{row['User']} - {row['Event Type']}</div>
-                <div class="activity-details">{row['Details']}</div>
-                <div class="activity-time">{time_str}</div>
-            </div>
-        </div>
-        """
-    activity_html += '</div>'
-    st.markdown(activity_html, unsafe_allow_html=True)
-
-
 
 # Authentication Logic
 # Load Users with absolute path
@@ -806,39 +675,29 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         st.divider()
 
         with st.expander("📈 Usage Logs", expanded=True):
+            st.markdown("### Recent Tool Activity")
             logs = get_logs()
             if logs:
                 log_df = pd.DataFrame(logs)
+                st.dataframe(log_df, use_container_width=True)
                 
-                # Create sub-tabs for Dashboard and Raw Data
-                admin_log_tabs = st.tabs(["📊 Dashboard", "📋 Raw Data"])
+                # Export Logs to Excel
+                output_log = io.BytesIO()
+                with pd.ExcelWriter(output_log, engine='openpyxl') as writer:
+                    log_df.to_excel(writer, index=False, sheet_name='UsageLogs')
+                log_excel_data = output_log.getvalue()
                 
-                with admin_log_tabs[0]:
-                    render_analytics_dashboard(log_df)
+                st.download_button(
+                    label="📥 Download Usage Logs (Excel)",
+                    data=log_excel_data,
+                    file_name=f"Usage_Log_Export_{datetime.now().strftime('%Y%m%d')}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="dl_usage_logs"
+                )
                 
-                with admin_log_tabs[1]:
-                    st.markdown("### Recent Tool Activity (Raw)")
-                    st.dataframe(log_df, use_container_width=True)
-                    
-                    # Export Logs to Excel
-                    output_log = io.BytesIO()
-                    with pd.ExcelWriter(output_log, engine='openpyxl') as writer:
-                        log_df.to_excel(writer, index=False, sheet_name='UsageLogs')
-                    log_excel_data = output_log.getvalue()
-                    
-                    st.download_button(
-                        label="📥 Download Usage Logs (Excel)",
-                        data=log_excel_data,
-                        file_name=f"Usage_Log_Export_{datetime.now().strftime('%Y%m%d')}.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        key="dl_usage_logs",
-                        use_container_width=True
-                    )
-                    
-                    st.info(f"Total actions recorded: {len(logs)}")
+                st.info(f"Total actions recorded: {len(logs)}")
             else:
-                st.info("No logs found yet.")
-
+                st.write("No logs found yet.")
 
         with st.expander("👤 User Management", expanded=False):
             st.markdown("### Add New User")
