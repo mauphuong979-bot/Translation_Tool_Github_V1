@@ -66,7 +66,7 @@ def highlight_match(text, keyword):
     if not keyword or not isinstance(text, str):
         return text
     pattern = re.compile(re.escape(keyword), re.IGNORECASE)
-    return pattern.sub(lambda m: f\'<span class="dict-highlight">{m.group(0)}</span>\', text)
+    return pattern.sub(lambda m: f'<span class="dict-highlight">{m.group(0)}</span>', text)
 
 def render_analytics_dashboard(df):
     """Renders a comprehensive analytics dashboard from log data."""
@@ -75,9 +75,9 @@ def render_analytics_dashboard(df):
         return
 
     # Data Preprocessing
-    df[\'Timestamp\'] = pd.to_datetime(df[\'Timestamp\'])
-    df[\'Date\'] = df[\'Timestamp\'].dt.date
-    df[\'Hour\'] = df[\'Timestamp\'].dt.hour
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    df['Date'] = df['Timestamp'].dt.date
+    df['Hour'] = df['Timestamp'].dt.hour
     
     # --- 1. Filters ---
     st.markdown("#### 🔍 Filters")
@@ -85,20 +85,20 @@ def render_analytics_dashboard(df):
     with col_f1:
         date_range = st.date_input(
             "Date Range",
-            value=(df[\'Date\'].min(), df[\'Date\'].max()),
-            min_value=df[\'Date\'].min(),
-            max_value=df[\'Date\'].max()
+            value=(df['Date'].min(), df['Date'].max()),
+            min_value=df['Date'].min(),
+            max_value=df['Date'].max()
         )
     with col_f2:
-        users_list = ["All"] + sorted(df[\'User\'].unique().tolist())
+        users_list = ["All"] + sorted(df['User'].unique().tolist())
         selected_user = st.selectbox("Filter by User", users_list)
     
     # Apply Filters
     filtered_df = df.copy()
     if len(date_range) == 2:
-        filtered_df = filtered_df[(filtered_df[\'Date\'] >= date_range[0]) & (filtered_df[\'Date\'] <= date_range[1])]
+        filtered_df = filtered_df[(filtered_df['Date'] >= date_range[0]) & (filtered_df['Date'] <= date_range[1])]
     if selected_user != "All":
-        filtered_df = filtered_df[filtered_df[\'User\'] == selected_user]
+        filtered_df = filtered_df[filtered_df['User'] == selected_user]
         
     if filtered_df.empty:
         st.warning("No data matches the selected filters.")
@@ -106,8 +106,8 @@ def render_analytics_dashboard(df):
 
     # --- 2. Key Metrics ---
     total_actions = len(filtered_df)
-    unique_users = filtered_df[\'User\'].nunique()
-    processing_events = len(filtered_df[filtered_df[\'Event Type\'] == \'Processing\'])
+    unique_users = filtered_df['User'].nunique()
+    processing_events = len(filtered_df[filtered_df['Event Type'] == 'Processing'])
     
     # Calculate trend (comparing to previous period of same length)
     # For simplicity, we'll just show the current metrics in cards
@@ -132,41 +132,41 @@ def render_analytics_dashboard(df):
     col_c1, col_c2 = st.columns(2)
     
     with col_c1:
-        st.markdown(\'<div class="chart-card">\', unsafe_allow_html=True)
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
         st.markdown("##### 📈 Usage Trend")
-        daily_counts = filtered_df.groupby(\'Date\').size().reset_index(name=\'Actions\')
-        fig_trend = px.line(daily_counts, x=\'Date\', y=\'Actions\', 
-                            template=\'plotly_white\',
-                            color_discrete_sequence=[\'#4b6cb7\'])
+        daily_counts = filtered_df.groupby('Date').size().reset_index(name='Actions')
+        fig_trend = px.line(daily_counts, x='Date', y='Actions', 
+                            template='plotly_white',
+                            color_discrete_sequence=['#4b6cb7'])
         fig_trend.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=300)
         st.plotly_chart(fig_trend, use_container_width=True)
-        st.markdown(\'</div>\', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
     with col_c2:
-        st.markdown(\'<div class="chart-card">\', unsafe_allow_html=True)
+        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
         st.markdown("##### 👤 Top Users")
-        user_counts = filtered_df.groupby(\'User\').size().reset_index(name=\'Actions\').sort_values(\'Actions\', ascending=False).head(5)
-        fig_users = px.bar(user_counts, x=\'User\', y=\'Actions\', 
-                           template=\'plotly_white\',
-                           color_discrete_sequence=[\'#764ba2\'])
+        user_counts = filtered_df.groupby('User').size().reset_index(name='Actions').sort_values('Actions', ascending=False).head(5)
+        fig_users = px.bar(user_counts, x='User', y='Actions', 
+                           template='plotly_white',
+                           color_discrete_sequence=['#764ba2'])
         fig_users.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=300)
         st.plotly_chart(fig_users, use_container_width=True)
-        st.markdown(\'</div>\', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
     # Event Distribution
-    st.markdown(\'<div class="chart-card">\', unsafe_allow_html=True)
+    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
     st.markdown("##### 🏷️ Event Distribution")
-    event_counts = filtered_df.groupby(\'Event Type\').size().reset_index(name=\'Count\')
-    fig_events = px.pie(event_counts, values=\'Count\', names=\'Event Type\', 
-                        hole=0.4, template=\'plotly_white\',
+    event_counts = filtered_df.groupby('Event Type').size().reset_index(name='Count')
+    fig_events = px.pie(event_counts, values='Count', names='Event Type', 
+                        hole=0.4, template='plotly_white',
                         color_discrete_sequence=px.colors.qualitative.Pastel)
     fig_events.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=350)
     st.plotly_chart(fig_events, use_container_width=True)
-    st.markdown(\'</div>\', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # --- 4. Recent Activity Feed ---
     st.markdown("#### 🕒 Recent Activity")
-    activity_html = \'<div class="activity-feed">\'
+    activity_html = '<div class="activity-feed">'
     
     # Icon mapping for event types
     icons = {
@@ -178,22 +178,23 @@ def render_analytics_dashboard(df):
         "Template Mgmt": "📁"
     }
     
-    recent_logs = filtered_df.sort_values(\'Timestamp\', ascending=False).head(20)
+    recent_logs = filtered_df.sort_values('Timestamp', ascending=False).head(20)
     for _, row in recent_logs.iterrows():
-        icon = icons.get(row[\'Event Type\'], "📝")
-        time_str = row[\'Timestamp\'].strftime("%Y-%m-%d %H:%M:%S")
+        icon = icons.get(row['Event Type'], "📝")
+        time_str = row['Timestamp'].strftime("%Y-%m-%d %H:%M:%S")
         activity_html += f"""
         <div class="activity-item">
             <div class="activity-icon">{icon}</div>
             <div class="activity-content">
-                <div class="activity-title">{row[\'User\']} - {row[\'Event Type\']}</div>
-                <div class="activity-details">{row[\'Details\']}</div>
+                <div class="activity-title">{row['User']} - {row['Event Type']}</div>
+                <div class="activity-details">{row['Details']}</div>
                 <div class="activity-time">{time_str}</div>
             </div>
         </div>
         """
-    activity_html += \'</div>\'
+    activity_html += '</div>'
     st.markdown(activity_html, unsafe_allow_html=True)
+
 
 
 # Authentication Logic
