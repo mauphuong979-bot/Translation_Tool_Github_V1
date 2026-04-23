@@ -9,7 +9,7 @@ import streamlit.components.v1 as components
 import translation_lib as tl
 from processor import process_financial_report
 from usage_logger import log_event, get_logs
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
 
 # Page Configuration
@@ -485,7 +485,9 @@ with tabs[0]:
                         # Generate Dynamic Filename
                         original_name = uploaded_file.name.rsplit('.', 1)[0]
                         target_lang = st.session_state.meta_translate
-                        timestamp = datetime.now().strftime("%d%m%y %H%M")
+                        # Vietnam Time (GMT+7)
+                        vn_tz = timezone(timedelta(hours=7))
+                        timestamp = datetime.now(vn_tz).strftime("%d%m%y %H%M")
                         processed_filename = f"{original_name}_{target_lang}_tool_{timestamp}.docx"
                         
                         # Save to session state for persistent display

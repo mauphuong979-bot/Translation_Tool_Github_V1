@@ -264,3 +264,10 @@ div[data-testid="stTextInput"] input[aria-label="Translated Name (not capitalize
 .dict-highlight {
     color: #007bff;
 }
+
+/* Hide Streamlit Menu and Footer (Source code protection) */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+.stAppDeployButton {display: none;}
+header {visibility: hidden;}
+[data-testid="stHeader"] {display: none;}
