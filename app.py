@@ -681,6 +681,12 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         
         if not is_local and not gs_configured:
             st.error("⚠️ **Google Sheets Configuration Missing!** Please set up your secrets in the Streamlit Cloud dashboard.")
+            # ... setup guide code ...
+        elif not is_local and st.session_state.get("gsheet_error"):
+            st.error(f"❌ **Google Sheets Logging Error:** {st.session_state.gsheet_error}")
+            if st.button("Clear Error"):
+                del st.session_state["gsheet_error"]
+                st.rerun()
             with st.expander("ℹ️ How to set up Google Sheets Logging"):
                 st.markdown("""
                 1. Create a Google Service Account and get the JSON key.

@@ -31,36 +31,47 @@ def get_gsheet_client():
         elif "gsheets" in st.secrets:
             creds_dict = dict(st.secrets["gsheets"])
         else:
-            return None, "Google Sheets secrets not found"
+            return None, "Secrets not found in st.secrets"
         
         # Support both 'spreadsheet' (standard) and 'spreadsheet_url' (custom)
         spreadsheet_url = creds_dict.pop("spreadsheet", None) or creds_dict.pop("spreadsheet_url", None)
         
         if not spreadsheet_url:
-            return None, "Spreadsheet URL not found in secrets"
+            return None, "Spreadsheet URL (spreadsheet) not found in secrets"
             
+        # Fix private key formatting (replace literal \n with actual newlines if necessary)
+        if "private_key" in creds_dict and isinstance(creds_dict["private_key"], str):
+            creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
         client = gspread.authorize(creds)
         return client, spreadsheet_url
     except Exception as e:
-        return None, str(e)
+        return None, f"Client init error: {str(e)}"
 
 def log_to_gsheet(user, event_type, details):
     """Appends a log entry to Google Sheets."""
-    client, sheet_url = get_gsheet_client()
-    if not client or not sheet_url:
+    client, sheet_url_or_err = get_gsheet_client()
+    if not client:
+        print(f"GSheet client failed: {sheet_url_or_err}")
         return
     
     try:
-        spreadsheet = client.open_by_url(sheet_url)
+        spreadsheet = client.open_by_url(sheet_url_or_err)
         worksheet = spreadsheet.get_worksheet(0)
         
+        # Check if sheet is empty and add headers
+        if not worksheet.get_all_values():
+            worksheet.append_row(["Timestamp", "User", "Event Type", "Details"])
+
         vn_tz = timezone(timedelta(hours=7))
         timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")
         
         worksheet.append_row([timestamp, user, event_type, details])
     except Exception as e:
+        # Store error in session state for UI display if possible
+        st.session_state["gsheet_error"] = str(e)
         print(f"GSheet logging failed: {e}")
 
 def get_gsheet_logs():
