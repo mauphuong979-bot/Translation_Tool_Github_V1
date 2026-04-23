@@ -657,18 +657,41 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         
         # 0. Logging Status
         is_local = is_local_env()
-        status_color = "#2ecc71" if is_local else "#e67e22"
-        status_label = "Local Logging (CSV)" if is_local else "Cloud Logging (Upcoming - Google Sheets)"
+        status_color = "#2ecc71" if is_local else "#3498db"
+        status_label = "Local Logging (CSV)" if is_local else "Cloud Logging (Google Sheets)"
         status_icon = "💻" if is_local else "☁️"
         
         st.markdown(f"""
         <div style="padding: 15px; border-radius: 10px; border-left: 5px solid {status_color}; background-color: rgba(0,0,0,0.05); margin-bottom: 20px;">
             <div style="font-weight: bold; font-size: 1.1em;">{status_icon} Logging System: <span style="color: {status_color};">{status_label}</span></div>
             <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                { "Logs are being recorded to <code>usage_log.csv</code> on your local machine." if is_local else "CSV logging is disabled on Streamlit Cloud. Google Sheets integration is pending." }
+                { "Logs are being recorded to <code>usage_log.csv</code> on your local machine." if is_local else "Logs are being recorded to your Google Sheet. Ensure secrets are configured on Streamlit Cloud." }
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        if not is_local and "gsheets" not in st.secrets:
+            st.error("⚠️ **Google Sheets Configuration Missing!** Please set up your secrets in the Streamlit Cloud dashboard.")
+            with st.expander("ℹ️ How to set up Google Sheets Logging"):
+                st.markdown("""
+                1. Create a Google Service Account and get the JSON key.
+                2. Share your Google Sheet with the service account email.
+                3. Add the following to your Streamlit Cloud **Secrets**:
+                ```toml
+                [gsheets]
+                type = "service_account"
+                project_id = "..."
+                private_key_id = "..."
+                private_key = "..."
+                client_email = "..."
+                client_id = "..."
+                auth_uri = "https://accounts.google.com/o/oauth2/auth"
+                token_uri = "https://oauth2.googleapis.com/token"
+                auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+                client_x509_cert_url = "..."
+                spreadsheet_url = "https://docs.google.com/spreadsheets/d/..."
+                ```
+                """)
 
         # 1. Translation Tools (including Resolved Dictionary)
         st.markdown("#### 🛠️ Translation Tools")
@@ -692,7 +715,9 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         with st.expander("📈 Usage Logs", expanded=True):
             st.markdown("### Recent Tool Activity")
             if not is_local_env():
-                st.caption("⚠️ Note: This list contains historical logs from local operations. Cloud activities are not recorded here.")
+                st.info("🌐 Viewing logs from **Google Sheets**.")
+                if "gsheets" not in st.secrets:
+                    st.warning("Logs cannot be displayed because Google Sheets is not configured.")
             logs = get_logs()
             if logs:
                 log_df = pd.DataFrame(logs)
