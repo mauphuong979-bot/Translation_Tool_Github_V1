@@ -6,8 +6,17 @@ from datetime import datetime, timedelta, timezone
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BASE_DIR, "usage_log.csv")
 
+def is_local_env():
+    """Detects if the app is running locally (Windows) or on Streamlit Cloud (Linux)."""
+    # Local host (Windows) has os.startfile, Streamlit Cloud (Linux) does not.
+    return hasattr(os, 'startfile')
+
 def log_event(user, event_type, details):
-    """Logs an event to the usage_log.csv file."""
+    """Logs an event to the usage_log.csv file ONLY IF running locally."""
+    if not is_local_env():
+        # Future: Call log_event_cloud(user, event_type, details) here
+        return
+
     # Vietnam Time (GMT+7)
     vn_tz = timezone(timedelta(hours=7))
     timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")

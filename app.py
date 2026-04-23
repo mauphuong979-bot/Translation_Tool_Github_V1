@@ -8,7 +8,7 @@ import re
 import streamlit.components.v1 as components
 import translation_lib as tl
 from processor import process_financial_report
-from usage_logger import log_event, get_logs
+from usage_logger import log_event, get_logs, is_local_env
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
 
@@ -655,6 +655,21 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         # --- Tab 3: Admin (Admin Only) ---
         st.markdown("### 📈 Admin Section")
         
+        # 0. Logging Status
+        is_local = is_local_env()
+        status_color = "#2ecc71" if is_local else "#e67e22"
+        status_label = "Local Logging (CSV)" if is_local else "Cloud Logging (Upcoming - Google Sheets)"
+        status_icon = "💻" if is_local else "☁️"
+        
+        st.markdown(f"""
+        <div style="padding: 15px; border-radius: 10px; border-left: 5px solid {status_color}; background-color: rgba(0,0,0,0.05); margin-bottom: 20px;">
+            <div style="font-weight: bold; font-size: 1.1em;">{status_icon} Logging System: <span style="color: {status_color};">{status_label}</span></div>
+            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                { "Logs are being recorded to <code>usage_log.csv</code> on your local machine." if is_local else "CSV logging is disabled on Streamlit Cloud. Google Sheets integration is pending." }
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
         # 1. Translation Tools (including Resolved Dictionary)
         st.markdown("#### 🛠️ Translation Tools")
         if st.session_state.get('processed_output_excel') is not None:
@@ -676,6 +691,8 @@ if st.session_state.authenticated and st.session_state.username == "admin":
 
         with st.expander("📈 Usage Logs", expanded=True):
             st.markdown("### Recent Tool Activity")
+            if not is_local_env():
+                st.caption("⚠️ Note: This list contains historical logs from local operations. Cloud activities are not recorded here.")
             logs = get_logs()
             if logs:
                 log_df = pd.DataFrame(logs)
