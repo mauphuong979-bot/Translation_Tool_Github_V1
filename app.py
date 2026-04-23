@@ -670,7 +670,14 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         </div>
         """, unsafe_allow_html=True)
 
-        gs_configured = ("gsheets" in st.secrets) or ("connections" in st.secrets and "gsheets" in st.secrets["connections"])
+        gs_configured = False
+        try:
+            if "gsheets" in st.secrets:
+                gs_configured = True
+            elif "connections" in st.secrets and "gsheets" in st.secrets["connections"]:
+                gs_configured = True
+        except Exception:
+            pass
         
         if not is_local and not gs_configured:
             st.error("⚠️ **Google Sheets Configuration Missing!** Please set up your secrets in the Streamlit Cloud dashboard.")

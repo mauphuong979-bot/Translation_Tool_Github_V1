@@ -9,7 +9,13 @@ LOG_FILE = os.path.join(BASE_DIR, "usage_log.csv")
 
 def is_local_env():
     """Detects if the app is running locally (Windows) or on Streamlit Cloud (Linux)."""
-    # Local host (Windows) has os.startfile, Streamlit Cloud (Linux) does not.
+    # Windows is always local host for this user.
+    if os.name == 'nt':
+        return True
+    # Streamlit Cloud runs on Linux and sets specific env vars.
+    if os.environ.get("STREAMLIT_SHARING_MODE") is not None:
+        return False
+    # Fallback to the original method
     return hasattr(os, 'startfile')
 
 # --- Google Sheets Logic (Cloud) ---
