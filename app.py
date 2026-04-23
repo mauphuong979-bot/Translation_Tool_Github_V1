@@ -670,7 +670,9 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         </div>
         """, unsafe_allow_html=True)
 
-        if not is_local and "gsheets" not in st.secrets:
+        gs_configured = ("gsheets" in st.secrets) or ("connections" in st.secrets and "gsheets" in st.secrets["connections"])
+        
+        if not is_local and not gs_configured:
             st.error("⚠️ **Google Sheets Configuration Missing!** Please set up your secrets in the Streamlit Cloud dashboard.")
             with st.expander("ℹ️ How to set up Google Sheets Logging"):
                 st.markdown("""
@@ -678,7 +680,8 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 2. Share your Google Sheet with the service account email.
                 3. Add the following to your Streamlit Cloud **Secrets**:
                 ```toml
-                [gsheets]
+                [connections.gsheets]
+                spreadsheet = "https://docs.google.com/spreadsheets/d/..."
                 type = "service_account"
                 project_id = "..."
                 private_key_id = "..."
@@ -689,7 +692,6 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 token_uri = "https://oauth2.googleapis.com/token"
                 auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
                 client_x509_cert_url = "..."
-                spreadsheet_url = "https://docs.google.com/spreadsheets/d/..."
                 ```
                 """)
 
@@ -716,7 +718,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
             st.markdown("### Recent Tool Activity")
             if not is_local_env():
                 st.info("🌐 Viewing logs from **Google Sheets**.")
-                if "gsheets" not in st.secrets:
+                if not gs_configured:
                     st.warning("Logs cannot be displayed because Google Sheets is not configured.")
             logs = get_logs()
             if logs:

@@ -19,14 +19,20 @@ def get_gsheet_client():
         import gspread
         from google.oauth2.service_account import Credentials
         
-        if "gsheets" not in st.secrets:
-            return None, "Secrets 'gsheets' not found"
+        # Support both [gsheets] and [connections.gsheets] structures
+        if "connections" in st.secrets and "gsheets" in st.secrets["connections"]:
+            creds_dict = dict(st.secrets["connections"]["gsheets"])
+        elif "gsheets" in st.secrets:
+            creds_dict = dict(st.secrets["gsheets"])
+        else:
+            return None, "Google Sheets secrets not found"
         
-        # Streamlit secrets can be accessed as a dict
-        creds_dict = dict(st.secrets["gsheets"])
-        # Remove spreadsheet_url from credentials dict before passing to Credentials
-        spreadsheet_url = creds_dict.pop("spreadsheet_url", None)
+        # Support both 'spreadsheet' (standard) and 'spreadsheet_url' (custom)
+        spreadsheet_url = creds_dict.pop("spreadsheet", None) or creds_dict.pop("spreadsheet_url", None)
         
+        if not spreadsheet_url:
+            return None, "Spreadsheet URL not found in secrets"
+            
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
         client = gspread.authorize(creds)
