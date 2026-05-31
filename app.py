@@ -11,6 +11,8 @@ from processor import process_financial_report
 from usage_logger import log_event, get_logs, is_local_env
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
+from user_guide import render_user_guide_sidebar
+
 
 # Page Configuration
 st.set_page_config(
@@ -251,6 +253,11 @@ with st.sidebar:
         st.session_state.authenticated = False
         st.rerun()
         
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # User Guide Section
+    render_user_guide_sidebar()
+    
     st.markdown("<br>", unsafe_allow_html=True)
     
     # 2. Processing Steps Section
