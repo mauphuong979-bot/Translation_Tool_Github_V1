@@ -1,5 +1,7 @@
 import csv
 import os
+import time
+import random
 from datetime import datetime, timedelta, timezone
 import streamlit as st
 
@@ -51,28 +53,31 @@ def get_gsheet_client():
         return None, f"Client init error: {str(e)}"
 
 def log_to_gsheet(user, event_type, details):
-    """Appends a log entry to Google Sheets."""
+    """Appends a log entry to Google Sheets with retry logic to handle rate limits and concurrency."""
     client, sheet_url_or_err = get_gsheet_client()
     if not client:
         print(f"GSheet client failed: {sheet_url_or_err}")
         return
     
-    try:
-        spreadsheet = client.open_by_url(sheet_url_or_err)
-        worksheet = spreadsheet.get_worksheet(0)
-        
-        # Check if sheet is empty and add headers
-        if not worksheet.get_all_values():
-            worksheet.append_row(["Timestamp", "User", "Event Type", "Details"])
-
-        vn_tz = timezone(timedelta(hours=7))
-        timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")
-        
-        worksheet.append_row([timestamp, user, event_type, details])
-    except Exception as e:
-        # Store error in session state for UI display if possible
-        st.session_state["gsheet_error"] = str(e)
-        print(f"GSheet logging failed: {e}")
+    for attempt in range(3):
+        try:
+            spreadsheet = client.open_by_url(sheet_url_or_err)
+            worksheet = spreadsheet.get_worksheet(0)
+            
+            vn_tz = timezone(timedelta(hours=7))
+            timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")
+            
+            worksheet.append_row([timestamp, user, event_type, details])
+            break  # Success, exit the retry loop
+        except Exception as e:
+            if attempt == 2:
+                # Store error in session state for UI display if all retries fail
+                st.session_state["gsheet_error"] = str(e)
+                print(f"GSheet logging failed after 3 attempts: {e}")
+            else:
+                # Exponential backoff with jitter to reduce congestion
+                sleep_time = 1 + attempt + random.random()
+                time.sleep(sleep_time)
 
 def get_gsheet_logs():
     """Fetches all logs from Google Sheets."""
