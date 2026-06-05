@@ -905,6 +905,20 @@ def swap_vn_to_en_number_separators(text):
         
     return pattern.sub(replace_func, text)
 
+def _get_table_cells_safely(table):
+    """
+    Returns the cells of a table.
+    Falls back to row-by-row iteration if table._cells raises an IndexError.
+    """
+    try:
+        return table._cells
+    except IndexError:
+        cells = []
+        for row in table.rows:
+            for cell in row.cells:
+                cells.append(cell)
+        return cells
+
 def apply_financial_number_formatting(doc, target_col):
     """
     Robust scan to swap number separators (. to , and , to .).
@@ -971,7 +985,7 @@ def apply_financial_number_formatting(doc, target_col):
     for table in doc.tables:
         # Use table._cells to get unique cells in merged table structures
         seen_tcs = set()
-        for cell in table._cells:
+        for cell in _get_table_cells_safely(table):
             if cell._tc in seen_tcs: continue
             seen_tcs.add(cell._tc)
             for para in cell.paragraphs:
@@ -992,7 +1006,7 @@ def apply_financial_number_formatting(doc, target_col):
                 _process_para(para)
             for table in container.tables:
                 seen_tcs = set()
-                for cell in table._cells:
+                for cell in _get_table_cells_safely(table):
                     if cell._tc in seen_tcs: continue
                     seen_tcs.add(cell._tc)
                     for para in cell.paragraphs:
