@@ -349,7 +349,7 @@ def apply_special_textbox_formatting(doc, target_col):
                 count += 1
     return count
 
-def apply_sizing_and_layout(doc, target_col="E"):
+def apply_sizing_and_layout(doc, target_col="E", process_settings=None):
     """
     Applies specialized table sizing and layout formatting.
     """
@@ -389,12 +389,31 @@ def apply_sizing_and_layout(doc, target_col="E"):
                 tbl.rows[0].height = Cm(1.01)
                 
             # Cols > 10 -> Font size = 7pt for all cells
-            if col_count > 10:
+            if col_count > 10 and (process_settings is None or process_settings.get("table_7pt", True)):
+                resized_any = False
                 for row in tbl.rows:
                     for cell in row.cells:
                         for para in cell.paragraphs:
                             for run in para.runs:
                                 run.font.size = Pt(7)
+                                resized_any = True
+                
+                # Leave a warning note before the table if size was modified
+                if resized_any:
+                    try:
+                        new_p_el = OxmlElement('w:p')
+                        tbl._element.addprevious(new_p_el)
+                        new_p = Paragraph(new_p_el, tbl._parent)
+                        run = new_p.add_run(
+                            "⚠️ [Ghi chú từ Tool: Bảng có >10 cột, tự động giảm cỡ chữ xuống 7pt để phù hợp bố cục / "
+                            "Table has >10 columns, font size auto-set to 7pt]"
+                        )
+                        run.font.color.rgb = RGBColor(220, 53, 69) # Red warning color
+                        run.font.italic = True
+                        run.font.bold = True
+                        run.font.size = Pt(8.5)
+                    except Exception as e:
+                        pass
                                 
             # 3-column table with specific text in Cell(0, 2)
             if col_count == 3:
@@ -455,10 +474,8 @@ def _process_paragraph_font_dual(para, target_col):
     if has_fields(para):
         for run in para.runs:
             if not run.text: continue
-            # Non-destructive formatting: apply font/size to existing runs
-            is_ch = contains_chinese(run.text)
-            target_size = 10 if is_ch else None # Enforce 10pt for Chinese result text
-            _set_run_fonts_refined(run, LATIN_FONT, CJK_FONT, target_size)
+            # Non-destructive formatting: apply font/size (enforce 10pt) to existing runs
+            _set_run_fonts_refined(run, LATIN_FONT, CJK_FONT, 10)
         return
 
     for r in old_runs:
@@ -471,18 +488,11 @@ def _process_paragraph_font_dual(para, target_col):
         text = old_run.text
         if not text: continue
         
-        # Get original size to preserve for Latin text
-        orig_size_pt = None
-        try:
-            if old_run.font and old_run.font.size:
-                orig_size_pt = old_run.font.size.pt
-        except: pass
-        
         if not contains_chinese(text):
-            # Pure Latin/Numbers -> Keep original size
+            # Pure Latin/Numbers -> Enforce 10pt
             new_run = para.add_run(text)
             _copy_run_format(old_run, new_run)
-            _set_run_fonts_refined(new_run, LATIN_FONT, CJK_FONT, orig_size_pt)
+            _set_run_fonts_refined(new_run, LATIN_FONT, CJK_FONT, 10)
         else:
             # Mixed content -> Split into small chunks
             parts = re.split(cjk_pattern, text)
@@ -491,12 +501,8 @@ def _process_paragraph_font_dual(para, target_col):
                 new_run = para.add_run(part)
                 _copy_run_format(old_run, new_run)
                 
-                if contains_chinese(part):
-                    # Chinese segment -> Enforce 10pt and CJK font
-                    _set_run_fonts_refined(new_run, LATIN_FONT, CJK_FONT, 10)
-                else:
-                    # Latin/Number segment -> Keep original size and TNR font
-                    _set_run_fonts_refined(new_run, LATIN_FONT, CJK_FONT, orig_size_pt)
+                # Enforce 10pt for both Chinese and Latin/Number segments
+                _set_run_fonts_refined(new_run, LATIN_FONT, CJK_FONT, 10)
 
 def apply_chinese_font_formatting(doc, target_col):
     """
@@ -1954,7 +1960,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     """
     # Default to "All ON" if no settings provided
     if process_settings is None:
-        process_settings = {k: True for k in ["metadata", "unicode", "clean_v", "para_template", "dictionary", "dual_font", "table_size", "date_format", "textbox", "highlight", "suggestion"]}
+        process_settings = {k: True for k in ["metadata", "unicode", "clean_v", "para_template", "dictionary", "dual_font", "table_size", "table_7pt", "date_format", "textbox", "highlight", "suggestion"]}
 
     # 0. Load maps if not provided but exist
     if cleanv_map is None:
@@ -2041,7 +2047,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     # Step 8: Specialized Table Sizing and Layout
     if process_settings.get("table_size", True):
-        apply_sizing_and_layout(doc, target_col)
+        apply_sizing_and_layout(doc, target_col, process_settings=process_settings)
     
     # Step 9: Specialized TextBox/Draft Handling
     if process_settings.get("textbox", True):
