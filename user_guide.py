@@ -78,7 +78,7 @@ def render_user_guide_sidebar():
             1. Tích chọn **Suggest based on prior year report** (mặc định có chọn). Khi bỏ chọn, các giao diện liên quan sẽ tự động ẩn đi.
             2. **Tải tệp đối chiếu song song:**
                * **Bên trái (Vietnamese):** Tải báo cáo tiếng Việt năm trước (ví dụ: `V 2025.docx`).
-               * **Bên phải (English):** Tải báo cáo tiếng Anh dịch tương ứng năm trước (ví dụ: `Dich 2025.docx`).
+               * **Bên phải (Translated):** Tải báo cáo dịch tương ứng của năm trước (Tiếng Anh hoặc Tiếng Hoa, ví dụ: `Dich 2025.docx`).
             3. **Trích xuất Metadata:** Hệ thống sẽ tự động trích xuất bảng đầu tiên của 2 báo cáo năm trước (Tên doanh nghiệp, mã số thuế, niên độ...) và hiển thị trong mục thông tin để bạn dễ đối chiếu.
             """)
 

@@ -1127,6 +1127,11 @@ def _process_item_for_word_highlight(para):
     Splits runs in a paragraph to highlight only the specific words containing Vietnamese.
     Returns (vn_total_length, vn_segments_list) for suggestion logic.
     """
+    curr_text = para.text.strip()
+    # Ignore suggestion paragraphs
+    if any(curr_text.startswith(prefix) for prefix in ["[Original]", "[Original:", "[Prior VN:", "[Prior VN]", "[Dict VN]", "[Dict VN:", "[Suggest:", "[Suggest]", "[PY Suggestion -"]):
+        return 0, []
+
     vn_total_len = 0
     vn_segments = set()
     
