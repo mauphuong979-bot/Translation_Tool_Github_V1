@@ -25,7 +25,7 @@ def render_user_guide_sidebar():
             </style>
         """, unsafe_allow_html=True)
 
-        total_steps = 8
+        total_steps = 9
         step = st.session_state.user_guide_step
 
         # Render navigation buttons at the TOP of the expander
@@ -52,7 +52,7 @@ def render_user_guide_sidebar():
 
         # Define headers and content for each step
         if step == 1:
-            st.markdown("### **Step 1/8: Overview & Supported Formats**")
+            st.markdown("### **Step 1/9: Overview & Supported Formats**")
             st.markdown("""
             **Tổng quan:**
             Công cụ chuyên dùng để tự động hóa quá trình phân tích, căn chỉnh định dạng bảng biểu và dịch thuật báo cáo tài chính chuyên nghiệp từ Tiếng Việt sang các ngôn ngữ khác (Tiếng Anh, Tiếng Trung Giản thể, Tiếng Trung Phồn thể).
@@ -63,16 +63,27 @@ def render_user_guide_sidebar():
             """)
 
         elif step == 2:
-            st.markdown("### **Step 2/8: Upload Document**")
+            st.markdown("### **Step 2/9: Upload Document**")
             st.markdown("""
             **Tải tệp tin đầu vào:**
             1. Tại giao diện chính, di chuyển tới tab **🚀 Process**.
-            2. Nhấp vào vùng kéo thả hoặc bấm nút duyệt tại mục **Upload Financial Statements** để chọn tệp báo cáo tài chính `.docx` cần xử lý từ máy tính.
+            2. Nhấp vào vùng kéo thả hoặc bấm nút duyệt tại mục **Upload Financial Statements** để chọn tệp báo cáo tài chính `.docx` cần xử lý từ máy tính (ví dụ: báo cáo của năm nay).
             3. Hệ thống sẽ tự động quét tệp tin ngay khi tải lên để trích xuất các thông tin siêu dữ liệu cần thiết.
             """)
 
         elif step == 3:
-            st.markdown("### **Step 3/8: Metadata Selection**")
+            st.markdown("### **Step 3/9: Prior Year Suggestion**")
+            st.markdown("""
+            **Sử dụng báo cáo năm trước để gợi ý dịch:**
+            1. Tích chọn **Suggest based on prior year report** (mặc định có chọn). Khi bỏ chọn, các giao diện liên quan sẽ tự động ẩn đi.
+            2. **Tải tệp đối chiếu song song:**
+               * **Bên trái (Vietnamese):** Tải báo cáo tiếng Việt năm trước (ví dụ: `V 2025.docx`).
+               * **Bên phải (English):** Tải báo cáo tiếng Anh dịch tương ứng năm trước (ví dụ: `Dich 2025.docx`).
+            3. **Trích xuất Metadata:** Hệ thống sẽ tự động trích xuất bảng đầu tiên của 2 báo cáo năm trước (Tên doanh nghiệp, mã số thuế, niên độ...) và hiển thị trong mục thông tin để bạn dễ đối chiếu.
+            """)
+
+        elif step == 4:
+            st.markdown("### **Step 4/9: Metadata Selection**")
             st.markdown("""
             **Tùy chọn dịch & Chỉnh sửa:**
             1. Rà soát thông tin được trích xuất tự động tại phần **Report Metadata** (Tên doanh nghiệp, ngày lập báo cáo, niên độ, danh sách người ký).
@@ -80,17 +91,19 @@ def render_user_guide_sidebar():
             3. **Translated Name:** Nhập tên dịch của công ty. Trường này sẽ tự động viết hoa chữ cái đầu (Proper Case) và được in đỏ nổi bật trên giao diện để nhắc nhở kiểm tra kỹ.
             """)
 
-        elif step == 4:
-            st.markdown("### **Step 4/8: Pipeline Configuration**")
+        elif step == 5:
+            st.markdown("### **Step 5/9: Pipeline Configuration**")
             st.markdown("""
             **Cấu hình quy trình xử lý:**
-            * Ngay phía dưới phần hướng dẫn này trên thanh Sidebar là mục **PROCESSING PIPELINE**.
-            * Đây là tập hợp 12 bước tiền xử lý, căn chỉnh và hậu xử lý tài liệu (đồng bộ Unicode, chuẩn hóa dấu số tài chính, chỉnh phông chữ kép CJK, định dạng ngày tháng...).
-            * Khuyến nghị: Giữ tích chọn **toàn bộ 12 bước** để bản dịch đầu ra hoàn thiện nhất. Bạn có thể bỏ tích các bước nếu muốn can thiệp thủ công.
+            * Phía dưới phần hướng dẫn này trên thanh Sidebar là mục **PROCESSING PIPELINE**.
+            * Tập hợp các bước xử lý tự động (chuẩn hóa Unicode, căn chỉnh bảng, phông chữ kép CJK...).
+            * **Lưu ý các tính năng thông minh mới:**
+              * **11. Highlight VN:** Tự động **xóa toàn bộ highlight cũ** trước khi đánh dấu chữ tiếng Việt mới để tránh nhầm lẫn.
+              * **13. Always Show [Original]:** Luôn hiển thị khối gốc tiếng Việt cho các câu chưa được dịch để dễ so sánh (mặc định được bật).
             """)
 
-        elif step == 5:
-            st.markdown("### **Step 5/8: Execute Process**")
+        elif step == 6:
+            st.markdown("### **Step 6/9: Execute Process**")
             st.markdown("""
             **Kích hoạt xử lý báo cáo:**
             1. Sau khi hoàn thành rà soát các trường thông tin, bấm nút **`🚀 Process Report`** màu tím/xanh nổi bật dưới phần Metadata ở giao diện chính để thực thi.
@@ -98,8 +111,8 @@ def render_user_guide_sidebar():
             3. Thời gian xử lý dao động từ vài giây tới một phút tùy thuộc vào độ lớn của tài liệu.
             """)
 
-        elif step == 6:
-            st.markdown("### **Step 6/8: Download Output Files**")
+        elif step == 7:
+            st.markdown("### **Step 7/9: Download Output Files**")
             st.markdown("""
             **Nhận tệp tin kết quả:**
             * **Môi trường cục bộ (Windows):** Tệp Word kết quả đã xử lý sẽ tự động được mở trực tiếp bằng ứng dụng Microsoft Word của bạn (nếu chọn *Auto-open/download result*).
@@ -107,22 +120,23 @@ def render_user_guide_sidebar():
             * **Quyền Admin:** Bạn có thể tải bản từ điển đối chiếu đã giải mã thẻ động qua nút **`Download Resolved Dictionary (.xlsx)`** ở tab **Admin**.
             """)
 
-        elif step == 7:
-            st.markdown("### **Step 7/8: Output Verification**")
+        elif step == 8:
+            st.markdown("### **Step 8/9: Smart Output Verification**")
             st.markdown("""
-            **Lưu ý quan trọng khi kiểm tra kết quả:**
-            Bản dịch tự động luôn cần được kiểm duyệt trước khi phát hành chính thức:
-            * **Vùng bôi màu vàng (Yellow Highlights):** Đây là các cụm từ Tiếng Việt còn sót lại chưa được định nghĩa trong từ điển. Bạn bắt buộc phải rà soát và hoàn thiện dịch thuật thủ công tại đây.
-            * **Gợi ý màu xanh dương (Blue Suggestions):** Đọc kỹ phần gợi ý đối chiếu từ điển hiển thị ngay dưới các đoạn văn còn chữ Tiếng Việt để hỗ trợ dịch nhanh hơn.
-            * **Các phần quan trọng cần kiểm tra kỹ:**
-              * Trang *Ý kiến kiểm toán (Auditor's Opinion)*.
-              * *Thông tin công ty (Company Information)*.
-              * Các thuyết minh về *Khoản vay (Borrowings/Loans)*.
-              * Thuyết minh *Giao dịch bên liên quan (Related Party Transactions)*.
+            **Cách đọc và rà soát kết quả dịch thông minh:**
+            * **Vùng bôi màu vàng (Yellow Highlights):** Đây là các cụm từ Tiếng Việt chưa được dịch.
+            * **Định dạng gợi ý trực quan (Bold & Color):** Các nhãn được tách dòng riêng và in đậm để phân biệt với nội dung.
+            * **Gợi ý Báo cáo năm trước (Màu Đỏ - Có độ ưu tiên cao hơn):**
+              * Hiển thị dạng: `[Original]`, `[Prior VN]`, `[Suggest]`.
+              * **Tự động đối chiếu:** Hệ thống sẽ tự động so sánh và **tô highlight xanh lá sáng (bright green)** cho những từ/cụm từ khác biệt ở phần nội dung **`[Original]`** so với **`[Prior VN]`** để bạn chú ý và hiệu chỉnh chính xác.
+            * **Gợi ý Từ điển (Màu Xanh Dương):**
+              * Hiển thị dạng: `[Original]`, `[Dict VN]`, `[Suggest]`. Không tô highlight xanh lá.
+            * **Standalone `[Original]` (Màu Xanh Dương):**
+              * Hiển thị cho các câu tô vàng còn lại không có so khớp (khi bật bước 13).
             """)
 
-        elif step == 8:
-            st.markdown("### **Step 8/8: Common Issues & Fixes**")
+        elif step == 9:
+            st.markdown("### **Step 9/9: Common Issues & Fixes**")
             st.markdown("""
             **Common Issues & Fixes (Sự cố thường gặp):**
             * **Không tải được tệp/Lỗi định dạng:** Đảm bảo tệp tin đúng định dạng `.docx`, không bị lỗi mã hóa XML và không ở trạng thái khóa bảo vệ (Protected/Read-only).
