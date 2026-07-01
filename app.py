@@ -327,6 +327,88 @@ tabs = st.tabs(tab_titles)
 
 with tabs[0]:
     # --- Tab 1: Process ---
+    # Prior Year Suggestions Configuration
+    st.markdown("### 📅 Prior Year Report Settings")
+    suggest_py = st.checkbox(
+        "Suggest based on prior year report", 
+        value=st.session_state.get("suggest_py", True), 
+        key="suggest_py"
+    )
+    
+    py_dict = None
+    if suggest_py:
+        col_py_1, col_py_2 = st.columns(2)
+        with col_py_1:
+            py_vn_file = st.file_uploader("Select prior year Vietnamese report (.docx)", type=["docx"], key="py_vn_uploader")
+            if py_vn_file:
+                # Cache extraction
+                if st.session_state.get("py_vn_last_filename") != py_vn_file.name:
+                    with st.spinner("Extracting prior year VN metadata..."):
+                        py_vn_file.seek(0)
+                        meta = mex.extract_first_table_metadata(py_vn_file)
+                        st.session_state.py_vn_meta = meta
+                        st.session_state.py_vn_last_filename = py_vn_file.name
+                        st.rerun()
+                
+                # Display metadata
+                meta = st.session_state.get("py_vn_meta")
+                if meta:
+                    with st.expander("📄 PY Vietnamese Metadata", expanded=True):
+                        st.markdown(f"**Company:** {meta.get('company_name', '')}")
+                        st.markdown(f"**Incorporation:** {meta.get('incorporation', '')}")
+                        st.markdown(f"**Tax Code:** {meta.get('tax_code', '')}")
+                        st.markdown(f"**Period:** {meta.get('reporting_period', '')}")
+            else:
+                st.session_state.pop("py_vn_last_filename", None)
+                st.session_state.pop("py_vn_meta", None)
+                        
+        with col_py_2:
+            py_trans_file = st.file_uploader("Select prior year translated report (.docx)", type=["docx"], key="py_trans_uploader")
+            if py_trans_file:
+                # Cache extraction
+                if st.session_state.get("py_trans_last_filename") != py_trans_file.name:
+                    with st.spinner("Extracting prior year translated metadata..."):
+                        py_trans_file.seek(0)
+                        meta = mex.extract_first_table_metadata(py_trans_file)
+                        st.session_state.py_trans_meta = meta
+                        st.session_state.py_trans_last_filename = py_trans_file.name
+                        st.rerun()
+                
+                # Display metadata
+                meta = st.session_state.get("py_trans_meta")
+                if meta:
+                    with st.expander("📄 PY Translated Metadata", expanded=True):
+                        st.markdown(f"**Company:** {meta.get('company_name', '')}")
+                        st.markdown(f"**Incorporation:** {meta.get('incorporation', '')}")
+                        st.markdown(f"**Tax Code:** {meta.get('tax_code', '')}")
+                        st.markdown(f"**Period:** {meta.get('reporting_period', '')}")
+            else:
+                st.session_state.pop("py_trans_last_filename", None)
+                st.session_state.pop("py_trans_meta", None)
+
+        # Build py_dict if both files are uploaded
+        if py_vn_file and py_trans_file:
+            cache_key = f"py_dict_{py_vn_file.name}_{py_trans_file.name}"
+            if st.session_state.get("py_dict_cache_key") != cache_key:
+                with st.spinner("Building prior year translation dictionary..."):
+                    py_dict = tl.build_py_dictionary(py_vn_file, py_trans_file)
+                    st.session_state.py_dict = py_dict
+                    st.session_state.py_dict_cache_key = cache_key
+            else:
+                py_dict = st.session_state.get("py_dict")
+        else:
+            st.session_state.pop("py_dict", None)
+            st.session_state.pop("py_dict_cache_key", None)
+    else:
+        # Clear all cache when suggest_py is unchecked
+        st.session_state.pop("py_vn_last_filename", None)
+        st.session_state.pop("py_vn_meta", None)
+        st.session_state.pop("py_trans_last_filename", None)
+        st.session_state.pop("py_trans_meta", None)
+        st.session_state.pop("py_dict", None)
+        st.session_state.pop("py_dict_cache_key", None)
+
+    st.markdown("<br>", unsafe_allow_html=True)
     st.info("📂 **Upload Financial Statements**")
     uploaded_file = st.file_uploader("Select file (.docx)", type=["docx"], key="report_file")
 
@@ -475,13 +557,19 @@ with tabs[0]:
                         "signer_3": tl.clean_text(st.session_state.meta_signer_3)
                     }
                     
+                    # Inject suggest_py and py_dict
+                    process_settings = dict(st.session_state.process_steps)
+                    process_settings["suggest_py"] = suggest_py
+                    active_py_dict = st.session_state.get("py_dict") if suggest_py else None
+                    
                     processed_file, msg = process_financial_report(
                         uploaded_file, 
                         metadata=metadata, 
                         translation_map=translation_map,
                         case_threshold=st.session_state.case_threshold,
                         target_col=target_col,
-                        process_settings=st.session_state.process_steps
+                        process_settings=process_settings,
+                        py_dict=active_py_dict
                     )
                     
                     if processed_file:

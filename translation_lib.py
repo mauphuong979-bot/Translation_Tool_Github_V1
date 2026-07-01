@@ -1211,18 +1211,25 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
                 best_match_key = matches[0]
                 suggestion = translation_map[best_match_key]
                 
-                # Create combined text: Original VN + Suggested Translation
-                # Using \n for newline within the same professional blue block
-                combined_text = f"[Original: {raw_orig_text}]\n[Suggest: {suggestion}]"
-                
                 # Insert new paragraph IMMEDIATELY after the current one
                 new_p_el = OxmlElement('w:p')
                 para._element.addnext(new_p_el)
                 new_p = Paragraph(new_p_el, para._parent)
                 
-                # Add text and format (Blue, Regular)
-                run = new_p.add_run(combined_text)
-                run.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+                # Add text and format (Labels in Bold Blue, Content in Blue)
+                r1 = new_p.add_run("[Original]\n")
+                r1.font.bold = True
+                r1.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+                
+                r2 = new_p.add_run(f"{raw_orig_text}\n")
+                r2.font.color.rgb = RGBColor(0, 51, 204)
+                
+                r3 = new_p.add_run("[Suggest]\n")
+                r3.font.bold = True
+                r3.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+                
+                r4 = new_p.add_run(f"{suggestion}")
+                r4.font.color.rgb = RGBColor(0, 51, 204)
                 return True
         return False
 
@@ -1953,7 +1960,7 @@ def _get_all_paragraphs(doc):
                             for para in cell.paragraphs:
                                 yield para
 
-def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None):
+def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None, py_dict=None):
     """
     Performs global search and replace in paragraphs, tables, headers and footers.
     Respects process_settings toggles.
@@ -2060,6 +2067,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     # Step 10 & 11: Highlight and Suggest
     if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
+        clear_all_highlights(doc)
         highlight_vietnamese_text(
             doc, 
             translation_map, 
@@ -2067,4 +2075,243 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
             show_suggestions=process_settings.get("suggestion", True)
         )
 
+    # Step 13: Prior Year Report Suggestion
+    if process_settings.get("suggest_py", False) and py_dict:
+        apply_py_report_suggestions(doc, py_dict, original_texts=original_texts)
+
     return total_count
+
+
+def clear_all_highlights(doc):
+    """
+    Clears all existing highlight formatting (sets highlight_color to None) 
+    in all runs of paragraphs, tables, headers, and footers.
+    """
+    def clear_para(para):
+        for run in para.runs:
+            if run.font.highlight_color is not None:
+                run.font.highlight_color = None
+
+    # 1. Body paragraphs
+    for para in doc.paragraphs:
+        clear_para(para)
+        
+    # 2. Table cells
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for para in cell.paragraphs:
+                    clear_para(para)
+                    
+    # 3. Headers and Footers
+    for section in doc.sections:
+        containers = [
+            section.header, section.footer,
+            section.first_page_header, section.first_page_footer
+        ]
+        try:
+            containers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+        
+        for container in containers:
+            if container:
+                for para in container.paragraphs:
+                    clear_para(para)
+                for table in container.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            for para in cell.paragraphs:
+                                clear_para(para)
+
+
+def build_py_dictionary(py_vn_file, py_trans_file):
+    """
+    Parses PY Vietnamese and Translated documents and builds a mapping dictionary.
+    Keys are clean_text(VN), values are the corresponding (VN_original, Translated_original) text.
+    """
+    from docx import Document
+    
+    # Seek to 0 in case files were read before
+    py_vn_file.seek(0)
+    py_trans_file.seek(0)
+    
+    doc_vn = Document(py_vn_file)
+    doc_trans = Document(py_trans_file)
+    
+    py_dict = {}
+    
+    # 1. Map paragraphs (non-empty)
+    p_vn_list = []
+    for p in doc_vn.paragraphs:
+        t = clean_text(p.text)
+        if t:
+            p_vn_list.append((t, p.text.strip()))
+            
+    p_trans_list = []
+    for p in doc_trans.paragraphs:
+        t_clean = clean_text(p.text)
+        if t_clean:
+            p_trans_list.append(p.text.strip())
+            
+    # Pair them
+    for (vn_clean, vn_orig), trans in zip(p_vn_list, p_trans_list):
+        if vn_clean and trans:
+            py_dict[vn_clean] = (vn_orig, trans)
+            
+    # 2. Map table cells
+    for t_idx, (t_vn, t_trans) in enumerate(zip(doc_vn.tables, doc_trans.tables)):
+        if len(t_vn.rows) == len(t_trans.rows) and len(t_vn.columns) == len(t_trans.columns):
+            for r_idx in range(len(t_vn.rows)):
+                for c_idx in range(len(t_vn.columns)):
+                    vn_cell_text = t_vn.rows[r_idx].cells[c_idx].text.strip()
+                    trans_cell_text = t_trans.rows[r_idx].cells[c_idx].text.strip()
+                    vn_clean = clean_text(vn_cell_text)
+                    if vn_clean and trans_cell_text:
+                        py_dict[vn_clean] = (vn_cell_text, trans_cell_text)
+                        
+    # Reset file pointers
+    py_vn_file.seek(0)
+    py_trans_file.seek(0)
+    
+    return py_dict
+
+
+def apply_py_report_suggestions(doc, py_dict, original_texts=None):
+    """
+    Scans the document for paragraphs containing highlighted/Vietnamese text.
+    If a match is found in py_dict, inserts a red suggestion paragraph after it.
+    """
+    if not py_dict:
+        return
+        
+    def check_and_add_py_suggestion(para):
+        curr_text = para.text.strip()
+        if not curr_text:
+            return False
+            
+        # Ignore prior suggestion paragraphs we just added
+        if any(curr_text.startswith(prefix) for prefix in ["[Original]", "[Original:", "[Prior VN:", "[Prior VN]", "[Suggest:", "[Suggest]", "[PY Suggestion -"]):
+            return False
+            
+        if not contains_vietnamese(curr_text):
+            return False
+            
+        curr_clean = clean_text(curr_text)
+        if not curr_clean:
+            return False
+            
+        # Find close match in py_dict keys
+        keys = list(py_dict.keys())
+        matches = difflib.get_close_matches(curr_clean, keys, n=1, cutoff=0.7)
+        if matches:
+            best_match_key = matches[0]
+            py_vn_orig, py_trans_orig = py_dict[best_match_key]
+            
+            orig_text = original_texts.get(para._element, para.text) if original_texts else para.text
+            
+            # Insert new paragraph immediately after current one
+            new_p_el = OxmlElement('w:p')
+            para._element.addnext(new_p_el)
+            new_p = Paragraph(new_p_el, para._parent)
+            
+            # Format (Labels in Bold Red, Content in Red)
+            r1 = new_p.add_run("[Original]\n")
+            r1.font.bold = True
+            r1.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
+            
+            r2 = new_p.add_run(f"{orig_text}\n")
+            r2.font.color.rgb = RGBColor(204, 0, 0)
+            
+            r3 = new_p.add_run("[Prior VN]\n")
+            r3.font.bold = True
+            r3.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
+            
+            # Compare original text and prior year VN text, and highlight differences in prior year VN
+            add_diff_runs(new_p, orig_text, py_vn_orig, RGBColor(204, 0, 0))
+            new_p.add_run("\n")
+            
+            r5 = new_p.add_run("[Suggest]\n")
+            r5.font.bold = True
+            r5.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
+            
+            r6 = new_p.add_run(f"{py_trans_orig}")
+            r6.font.color.rgb = RGBColor(204, 0, 0)
+            return True
+        return False
+
+    # Traverse main body paragraphs, cells, headers, footers
+    # Use list() to avoid modification-during-iteration issues
+    for para in list(doc.paragraphs):
+        check_and_add_py_suggestion(para)
+        
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for para in list(cell.paragraphs):
+                    check_and_add_py_suggestion(para)
+                    
+    for section in doc.sections:
+        containers = [
+            section.header, section.footer,
+            section.first_page_header, section.first_page_footer
+        ]
+        try:
+            containers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+        
+        for container in containers:
+            if container:
+                for para in list(container.paragraphs):
+                    check_and_add_py_suggestion(para)
+                for table in container.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            for para in list(cell.paragraphs):
+                                check_and_add_py_suggestion(para)
+
+
+def add_diff_runs(paragraph, source_text, target_text, base_color):
+    """
+    Compares source_text (current original) and target_text (prior VN) at word level.
+    Adds runs to paragraph. Matches are in base_color.
+    Difs are in base_color with BRIGHT_GREEN highlight.
+    """
+    import difflib
+    from docx.enum.text import WD_COLOR_INDEX
+    
+    if not source_text or not target_text:
+        run = paragraph.add_run(target_text)
+        run.font.color.rgb = base_color
+        return
+        
+    s_words = source_text.split()
+    t_words = target_text.split()
+    
+    matcher = difflib.SequenceMatcher(None, s_words, t_words)
+    last_b = 0
+    first_run = True
+    
+    for block in matcher.get_matching_blocks():
+        a, b, size = block
+        
+        # 1. Handle mismatched words (differences)
+        if b > last_b:
+            diff_str = " ".join(t_words[last_b:b])
+            if not first_run:
+                diff_str = " " + diff_str
+            run = paragraph.add_run(diff_str)
+            run.font.color.rgb = base_color
+            run.font.highlight_color = WD_COLOR_INDEX.BRIGHT_GREEN
+            first_run = False
+            
+        # 2. Handle matched words
+        if size > 0:
+            match_str = " ".join(t_words[b:b+size])
+            if not first_run:
+                match_str = " " + match_str
+            run = paragraph.add_run(match_str)
+            run.font.color.rgb = base_color
+            first_run = False
+            
+        last_b = b + size
+

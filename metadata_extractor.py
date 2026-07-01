@@ -159,3 +159,49 @@ def extract_metadata(file_stream):
         print(f"Error extracting metadata: {e}")
         
     return metadata
+
+
+def extract_first_table_metadata(file_stream):
+    """
+    Extracts metadata from the first table of a docx file stream.
+    Returns a dictionary with keys: company_name, incorporation, tax_code, reporting_period.
+    """
+    try:
+        from docx import Document
+        doc = Document(file_stream)
+        if not doc.tables:
+            return None
+        
+        table = doc.tables[0]
+        rows_text = []
+        for row in table.rows:
+            # Join cell texts if there are multiple columns
+            row_text = " ".join(cell.text.strip() for cell in row.cells).strip()
+            row_text = " ".join(row_text.split())
+            if row_text:
+                rows_text.append(row_text)
+            
+        metadata = {
+            "company_name": "",
+            "incorporation": "",
+            "tax_code": "",
+            "reporting_period": ""
+        }
+        
+        if len(rows_text) > 0:
+            metadata["company_name"] = rows_text[0]
+            
+        for txt in rows_text[1:]:
+            txt_lower = txt.lower()
+            if "(" in txt and ")" in txt:
+                metadata["incorporation"] = txt
+            elif "mã số thuế" in txt_lower or "tax code" in txt_lower:
+                metadata["tax_code"] = txt
+            elif any(k in txt_lower for k in ["giai đoạn", "period", "từ ngày", "đến ngày", "năm tài chính", "năm kết thúc", "financial year", "year ended", "for the"]):
+                metadata["reporting_period"] = txt
+                
+        return metadata
+    except Exception as e:
+        print(f"Error extracting first table metadata: {e}")
+        return None
+
