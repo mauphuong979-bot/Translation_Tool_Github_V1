@@ -281,7 +281,8 @@ with st.sidebar:
                 "textbox": True,
                 "signer_accents": True,
                 "highlight": True,
-                "suggestion": True
+                "suggestion": True,
+                "always_original": True
             }
 
         steps = [
@@ -297,7 +298,8 @@ with st.sidebar:
             ("textbox", "9. Textbox & Draft"),
             ("signer_accents", "10. Signer Accents"),
             ("highlight", "11. Highlight VN"),
-            ("suggestion", "12. Dictionary Suggestion")
+            ("suggestion", "12. Dictionary Suggestion"),
+            ("always_original", "13. Always Show [Original]")
         ]
         
         process_settings = {}

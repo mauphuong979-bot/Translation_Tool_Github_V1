@@ -39,3 +39,14 @@ Timestamp,User,Event Type,Details
 2026-07-01 15:53:40,user,Processing,File: V 2026.docx (Lang: E)
 2026-07-01 16:01:40,user,Login,Successfully signed in
 2026-07-01 16:02:35,user,Processing,File: V 2026.docx (Lang: E)
+2026-07-01 20:48:43,user,Login,Successfully signed in
+2026-07-01 20:49:13,user,Processing,File: V 2026.docx (Lang: E)
+2026-07-01 20:56:36,user,Login,Successfully signed in
+2026-07-01 20:57:04,user,Processing,File: V 2026.docx (Lang: E)
+2026-07-01 21:08:09,user,Login,Successfully signed in
+2026-07-01 21:08:36,user,Processing,File: V 2026.docx (Lang: E)
+2026-07-01 21:25:41,admin,Login,Successfully signed in
+2026-07-01 21:32:22,admin,Template Mgmt,Uploaded and synced ParaTemplate.xlsx
+2026-07-01 21:35:37,admin,Template Mgmt,Uploaded and synced ParaTemplate.xlsx
+2026-07-01 21:36:09,user,Login,Successfully signed in
+2026-07-01 21:36:39,user,Processing,File: V 2026.docx (Lang: E)

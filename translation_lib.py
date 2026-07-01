@@ -1195,6 +1195,8 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
     def handle_suggestions(para, vn_count):
         # Only process if toggled ON, highlighted VN characters > 30 and dictionary is available
         if show_suggestions and vn_count > 30 and translation_map:
+            if has_next_suggestion_paragraph(para):
+                return False
             # Use original text if provided, otherwise fallback to current text
             # Use _element as key because id(para) is not stable across wrapper recreations
             raw_orig_text = original_texts.get(para._element, para.text) if original_texts else para.text
@@ -1224,12 +1226,19 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
                 r2 = new_p.add_run(f"{raw_orig_text}\n")
                 r2.font.color.rgb = RGBColor(0, 51, 204)
                 
-                r3 = new_p.add_run("[Suggest]\n")
+                r3 = new_p.add_run("[Dict VN]\n")
                 r3.font.bold = True
                 r3.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
                 
-                r4 = new_p.add_run(f"{suggestion}")
+                r4 = new_p.add_run(f"{best_match_key}\n")
                 r4.font.color.rgb = RGBColor(0, 51, 204)
+                
+                r5 = new_p.add_run("[Suggest]\n")
+                r5.font.bold = True
+                r5.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+                
+                r6 = new_p.add_run(f"{suggestion}")
+                r6.font.color.rgb = RGBColor(0, 51, 204)
                 return True
         return False
 
@@ -2065,6 +2074,10 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     if process_settings.get("signer_accents", True) and metadata:
         apply_signer_accent_removal(doc, metadata)
 
+    # Step 13: Prior Year Report Suggestion
+    if process_settings.get("suggest_py", False) and py_dict:
+        apply_py_report_suggestions(doc, py_dict, original_texts=original_texts)
+
     # Step 10 & 11: Highlight and Suggest
     if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
         clear_all_highlights(doc)
@@ -2075,11 +2088,28 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
             show_suggestions=process_settings.get("suggestion", True)
         )
 
-    # Step 13: Prior Year Report Suggestion
-    if process_settings.get("suggest_py", False) and py_dict:
-        apply_py_report_suggestions(doc, py_dict, original_texts=original_texts)
+    # Step 14: Always Show Original Suggestion
+    if process_settings.get("always_original", True):
+        apply_always_original_suggestions(doc, original_texts=original_texts)
 
     return total_count
+
+
+def has_next_suggestion_paragraph(para):
+    """
+    Checks if the paragraph immediately after this one is a suggestion paragraph.
+    """
+    next_el = para._element.getnext()
+    if next_el is not None:
+        try:
+            from docx.text.paragraph import Paragraph
+            next_p = Paragraph(next_el, para._parent)
+            next_text = next_p.text.strip()
+            if next_text.startswith("[Original]"):
+                return True
+        except:
+            pass
+    return False
 
 
 def clear_all_highlights(doc):
@@ -2190,7 +2220,7 @@ def apply_py_report_suggestions(doc, py_dict, original_texts=None):
             return False
             
         # Ignore prior suggestion paragraphs we just added
-        if any(curr_text.startswith(prefix) for prefix in ["[Original]", "[Original:", "[Prior VN:", "[Prior VN]", "[Suggest:", "[Suggest]", "[PY Suggestion -"]):
+        if any(curr_text.startswith(prefix) for prefix in ["[Original]", "[Original:", "[Prior VN:", "[Prior VN]", "[Dict VN]", "[Dict VN:", "[Suggest:", "[Suggest]", "[PY Suggestion -"]):
             return False
             
         if not contains_vietnamese(curr_text):
@@ -2219,16 +2249,16 @@ def apply_py_report_suggestions(doc, py_dict, original_texts=None):
             r1.font.bold = True
             r1.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
             
-            r2 = new_p.add_run(f"{orig_text}\n")
-            r2.font.color.rgb = RGBColor(204, 0, 0)
+            # Compare prior year VN text and original text, and highlight differences in original text
+            add_diff_runs(new_p, py_vn_orig, orig_text, RGBColor(204, 0, 0))
+            new_p.add_run("\n")
             
             r3 = new_p.add_run("[Prior VN]\n")
             r3.font.bold = True
             r3.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
             
-            # Compare original text and prior year VN text, and highlight differences in prior year VN
-            add_diff_runs(new_p, orig_text, py_vn_orig, RGBColor(204, 0, 0))
-            new_p.add_run("\n")
+            r4 = new_p.add_run(f"{py_vn_orig}\n")
+            r4.font.color.rgb = RGBColor(204, 0, 0)
             
             r5 = new_p.add_run("[Suggest]\n")
             r5.font.bold = True
@@ -2314,4 +2344,71 @@ def add_diff_runs(paragraph, source_text, target_text, base_color):
             first_run = False
             
         last_b = b + size
+
+
+def apply_always_original_suggestions(doc, original_texts=None):
+    """
+    Scans the document for paragraphs containing highlighted/Vietnamese text.
+    If the paragraph does not already have a suggestion paragraph following it,
+    inserts a blue [Original] suggestion paragraph.
+    """
+    def add_always_original_suggestion(para):
+        curr_text = para.text.strip()
+        if not curr_text:
+            return False
+            
+        # Ignore suggestion paragraphs
+        if any(curr_text.startswith(prefix) for prefix in ["[Original]", "[Original:", "[Prior VN:", "[Prior VN]", "[Dict VN]", "[Dict VN:", "[Suggest:", "[Suggest]", "[PY Suggestion -"]):
+            return False
+            
+        if not contains_vietnamese(curr_text):
+            return False
+            
+        if has_next_suggestion_paragraph(para):
+            return False
+            
+        # Insert new paragraph immediately after current one
+        new_p_el = OxmlElement('w:p')
+        para._element.addnext(new_p_el)
+        new_p = Paragraph(new_p_el, para._parent)
+        
+        # Format (Labels in Bold Blue, Content in Blue)
+        r1 = new_p.add_run("[Original]\n")
+        r1.font.bold = True
+        r1.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+        
+        orig_text = original_texts.get(para._element, para.text) if original_texts else para.text
+        r2 = new_p.add_run(f"{orig_text}")
+        r2.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+        return True
+
+    # Traverse main body paragraphs, cells, headers, footers
+    for para in list(doc.paragraphs):
+        add_always_original_suggestion(para)
+        
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for para in list(cell.paragraphs):
+                    add_always_original_suggestion(para)
+                    
+    for section in doc.sections:
+        containers = [
+            section.header, section.footer,
+            section.first_page_header, section.first_page_footer
+        ]
+        try:
+            containers.extend([section.even_page_header, section.even_page_footer])
+        except: pass
+        
+        for container in containers:
+            if container:
+                for para in list(container.paragraphs):
+                    add_always_original_suggestion(para)
+                for table in container.tables:
+                    for row in table.rows:
+                        for cell in row.cells:
+                            for para in list(cell.paragraphs):
+                                add_always_original_suggestion(para)
+
 
