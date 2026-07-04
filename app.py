@@ -694,12 +694,17 @@ with tabs[1]:
                 cols_to_show = ["Vietnamese"] + available_cols
                 display_df = full_v3_df[cols_to_show].copy()
                 
-                # 4. Filter results based on search query
+                # 4. Filter results based on search query (normalize to NFC for robust matching)
+                search_query_norm = ""
                 if search_query:
+                    import unicodedata
+                    search_query_norm = unicodedata.normalize('NFC', search_query)
+                
+                if search_query_norm:
                     # Search in Vietnamese and all selected translation columns
-                    mask = display_df["Vietnamese"].str.contains(search_query, case=False, na=False)
+                    mask = display_df["Vietnamese"].str.contains(search_query_norm, case=False, na=False)
                     for col in available_cols:
-                        mask |= display_df[col].str.contains(search_query, case=False, na=False)
+                        mask |= display_df[col].str.contains(search_query_norm, case=False, na=False)
                     display_df = display_df[mask]
                 
                 # 5. Sort by Vietnamese text length (shortest first)
@@ -726,10 +731,10 @@ with tabs[1]:
                 """
                 
                 for _, row in current_results.iterrows():
-                    v_text = highlight_match(str(row["Vietnamese"]), search_query)
+                    v_text = highlight_match(str(row["Vietnamese"]), search_query_norm)
                     table_html += f"<tr><td>{v_text}</td>"
                     for col in available_cols:
-                        t_text = highlight_match(str(row[col]), search_query)
+                        t_text = highlight_match(str(row[col]), search_query_norm)
                         table_html += f"<td>{t_text}</td>"
                     table_html += "</tr>"
                 
