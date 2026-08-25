@@ -1189,7 +1189,7 @@ def _process_item_for_word_highlight(para):
     
     return vn_total_len, list(vn_segments)
 
-def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, show_suggestions=True):
+def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, show_suggestions=True, target_col="E"):
     """
     Scans the entire document and highlights only the specific WORDS 
     containing Vietnamese text in yellow.
@@ -1244,6 +1244,12 @@ def highlight_vietnamese_text(doc, translation_map=None, original_texts=None, sh
                 
                 r6 = new_p.add_run(f"{suggestion}")
                 r6.font.color.rgb = RGBColor(0, 51, 204)
+
+                for r in [r1, r2, r3, r4, r5, r6]:
+                    if target_col in ["Hs", "Ht"]:
+                        _set_run_fonts_refined(r, "Times New Roman", "DFKai-SB", 10)
+                    else:
+                        r.font.size = Pt(10)
                 return True
         return False
 
@@ -2081,7 +2087,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     # Step 13: Prior Year Report Suggestion
     if process_settings.get("suggest_py", False) and py_dict:
-        apply_py_report_suggestions(doc, py_dict, original_texts=original_texts)
+        apply_py_report_suggestions(doc, py_dict, original_texts=original_texts, target_col=target_col)
 
     # Step 10 & 11: Highlight and Suggest
     if process_settings.get("highlight", True) or process_settings.get("suggestion", True):
@@ -2090,12 +2096,13 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
             doc, 
             translation_map, 
             original_texts=original_texts,
-            show_suggestions=process_settings.get("suggestion", True)
+            show_suggestions=process_settings.get("suggestion", True),
+            target_col=target_col
         )
 
     # Step 14: Always Show Original Suggestion
     if process_settings.get("always_original", True):
-        apply_always_original_suggestions(doc, original_texts=original_texts)
+        apply_always_original_suggestions(doc, original_texts=original_texts, target_col=target_col)
 
     return total_count
 
@@ -2211,7 +2218,7 @@ def build_py_dictionary(py_vn_file, py_trans_file):
     return py_dict
 
 
-def apply_py_report_suggestions(doc, py_dict, original_texts=None):
+def apply_py_report_suggestions(doc, py_dict, original_texts=None, target_col="E"):
     """
     Scans the document for paragraphs containing highlighted/Vietnamese text.
     If a match is found in py_dict, inserts a red suggestion paragraph after it.
@@ -2255,8 +2262,8 @@ def apply_py_report_suggestions(doc, py_dict, original_texts=None):
             r1.font.color.rgb = RGBColor(204, 0, 0) # Professional Red
             
             # Compare prior year VN text and original text, and highlight differences in original text
-            add_diff_runs(new_p, py_vn_orig, orig_text, RGBColor(204, 0, 0))
-            new_p.add_run("\n")
+            add_diff_runs(new_p, py_vn_orig, orig_text, RGBColor(204, 0, 0), target_col=target_col)
+            r_nl = new_p.add_run("\n")
             
             r3 = new_p.add_run("[Prior VN]\n")
             r3.font.bold = True
@@ -2271,6 +2278,12 @@ def apply_py_report_suggestions(doc, py_dict, original_texts=None):
             
             r6 = new_p.add_run(f"{py_trans_orig}")
             r6.font.color.rgb = RGBColor(204, 0, 0)
+
+            for r in [r1, r_nl, r3, r4, r5, r6]:
+                if target_col in ["Hs", "Ht"]:
+                    _set_run_fonts_refined(r, "Times New Roman", "DFKai-SB", 10)
+                else:
+                    r.font.size = Pt(10)
             return True
         return False
 
@@ -2305,7 +2318,7 @@ def apply_py_report_suggestions(doc, py_dict, original_texts=None):
                                 check_and_add_py_suggestion(para)
 
 
-def add_diff_runs(paragraph, source_text, target_text, base_color):
+def add_diff_runs(paragraph, source_text, target_text, base_color, target_col="E"):
     """
     Compares source_text (current original) and target_text (prior VN) at word level.
     Adds runs to paragraph. Matches are in base_color.
@@ -2317,6 +2330,10 @@ def add_diff_runs(paragraph, source_text, target_text, base_color):
     if not source_text or not target_text:
         run = paragraph.add_run(target_text)
         run.font.color.rgb = base_color
+        if target_col in ["Hs", "Ht"]:
+            _set_run_fonts_refined(run, "Times New Roman", "DFKai-SB", 10)
+        else:
+            run.font.size = Pt(10)
         return
         
     s_words = source_text.split()
@@ -2337,6 +2354,10 @@ def add_diff_runs(paragraph, source_text, target_text, base_color):
             run = paragraph.add_run(diff_str)
             run.font.color.rgb = base_color
             run.font.highlight_color = WD_COLOR_INDEX.BRIGHT_GREEN
+            if target_col in ["Hs", "Ht"]:
+                _set_run_fonts_refined(run, "Times New Roman", "DFKai-SB", 10)
+            else:
+                run.font.size = Pt(10)
             first_run = False
             
         # 2. Handle matched words
@@ -2346,12 +2367,16 @@ def add_diff_runs(paragraph, source_text, target_text, base_color):
                 match_str = " " + match_str
             run = paragraph.add_run(match_str)
             run.font.color.rgb = base_color
+            if target_col in ["Hs", "Ht"]:
+                _set_run_fonts_refined(run, "Times New Roman", "DFKai-SB", 10)
+            else:
+                run.font.size = Pt(10)
             first_run = False
             
         last_b = b + size
 
 
-def apply_always_original_suggestions(doc, original_texts=None):
+def apply_always_original_suggestions(doc, original_texts=None, target_col="E"):
     """
     Scans the document for paragraphs containing highlighted/Vietnamese text.
     If the paragraph does not already have a suggestion paragraph following it,
@@ -2385,6 +2410,12 @@ def apply_always_original_suggestions(doc, original_texts=None):
         orig_text = original_texts.get(para._element, para.text) if original_texts else para.text
         r2 = new_p.add_run(f"{orig_text}")
         r2.font.color.rgb = RGBColor(0, 51, 204) # Professional Blue
+
+        for r in [r1, r2]:
+            if target_col in ["Hs", "Ht"]:
+                _set_run_fonts_refined(r, "Times New Roman", "DFKai-SB", 10)
+            else:
+                r.font.size = Pt(10)
         return True
 
     # Traverse main body paragraphs, cells, headers, footers
