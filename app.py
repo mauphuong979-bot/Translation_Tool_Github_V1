@@ -1,4 +1,4 @@
-import streamlit as st # v1.1 - Fixed case_threshold sync
+﻿import streamlit as st # v1.1 - Fixed case_threshold sync
 import pandas as pd
 import io
 import json
@@ -197,6 +197,8 @@ if 'processed_file_id' not in st.session_state:
     st.session_state.processed_file_id = None
 if 'processed_output_word' not in st.session_state:
     st.session_state.processed_output_word = None
+if 'processed_outputs' not in st.session_state:
+    st.session_state.processed_outputs = {}
 if 'processed_output_excel' not in st.session_state:
     st.session_state.processed_output_excel = None
 if 'process_success_msg' not in st.session_state:
@@ -421,6 +423,7 @@ with tabs[0]:
             # Reset processed data for the new file
             st.session_state.processed_file_id = None
             st.session_state.processed_output_word = None
+            st.session_state.processed_outputs = {}
             st.session_state.processed_output_excel = None
             st.session_state.process_success_msg = None
             
@@ -507,6 +510,13 @@ with tabs[0]:
         col_process_1, col_process_2 = st.columns([1, 2])
         with col_process_1:
             process_btn = st.button("🚀 Process Report", use_container_width=True, type="primary")
+        export_mode = st.selectbox(
+            "Output mode",
+            ["Original output (current)", "Clean output (no inline suggestions)", "Comments + Track Changes", "All outputs"],
+            index=2,
+            key="export_mode",
+            help="The current output is preserved. Review output uses Word Comments and exact-match Track Changes."
+        )
         
         # Manual button click
         trigger_processing = process_btn
@@ -564,16 +574,35 @@ with tabs[0]:
                     process_settings["suggest_py"] = suggest_py
                     active_py_dict = st.session_state.get("py_dict") if suggest_py else None
                     
-                    processed_file, msg = process_financial_report(
-                        uploaded_file, 
-                        metadata=metadata, 
-                        translation_map=translation_map,
-                        case_threshold=st.session_state.case_threshold,
-                        target_col=target_col,
-                        process_settings=process_settings,
-                        py_dict=active_py_dict
-                    )
-                    
+                    mode_specs = {
+                        "Original output (current)": [("original", process_settings)],
+                        "Clean output (no inline suggestions)": [("clean", dict(process_settings))],
+                        "Comments + Track Changes": [("review", dict(process_settings))],
+                        "All outputs": [("original", process_settings), ("clean", dict(process_settings)), ("review", dict(process_settings))],
+                    }
+                    outputs = {}
+                    msg = "Report processed."
+                    for variant_name, variant_settings in mode_specs[export_mode]:
+                        uploaded_file.seek(0)
+                        if variant_name in ("clean", "review"):
+                            variant_settings["suggestion"] = False
+                            variant_settings["always_original"] = False
+                            variant_settings["suggest_py"] = False
+                        variant_settings["review_annotations"] = variant_name == "review"
+                        variant_file, variant_msg = process_financial_report(
+                            uploaded_file,
+                            metadata=metadata,
+                            translation_map=translation_map,
+                            case_threshold=st.session_state.case_threshold,
+                            target_col=target_col,
+                            process_settings=variant_settings,
+                            py_dict=active_py_dict
+                        )
+                        if not variant_file:
+                            processed_file, msg = None, variant_msg
+                            break
+                        outputs[variant_name] = variant_file.getvalue()
+                    processed_file = outputs.get("original") or outputs.get("clean") or outputs.get("review")
                     if processed_file:
                         # Prepare the resolved dictionary for download
                         resolved_dict_output = io.BytesIO()
@@ -592,6 +621,7 @@ with tabs[0]:
                         # Save to session state for persistent display
                         st.session_state.processed_file_id = uploaded_file.name
                         st.session_state.processed_output_word = processed_file
+                        st.session_state.processed_outputs = outputs
                         st.session_state.processed_output_excel = resolved_dict_data
                         st.session_state.process_success_msg = msg
                         st.session_state.processed_filename = processed_filename
@@ -625,14 +655,22 @@ with tabs[0]:
         if st.session_state.get('processed_file_id') == uploaded_file.name:
             # Note: Specific success message removed as requested.
             
-            st.download_button(
-                label="📥 Download Report (.docx)",
-                data=st.session_state.processed_output_word,
-                file_name=st.session_state.processed_filename,
-                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                key="btn_download_final_persist",
-                use_container_width=True
-            )
+            output_labels = {
+                "original": "📥 Download Original Output",
+                "clean": "📥 Download Clean Output",
+                "review": "📥 Download Comments + Track Changes",
+            }
+            output_suffixes = {"original": "_original", "clean": "_clean", "review": "_review"}
+            for output_key, output_data in st.session_state.get("processed_outputs", {}).items():
+                output_name = st.session_state.processed_filename.replace(".docx", f"{output_suffixes[output_key]}.docx")
+                st.download_button(
+                    label=output_labels[output_key],
+                    data=output_data,
+                    file_name=output_name,
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    key=f"btn_download_{output_key}_persist",
+                    use_container_width=True
+                )
 
     st.divider()
 
@@ -1080,3 +1118,12 @@ if st.session_state.authenticated and st.session_state.username == "admin":
 # Footer
 st.divider()
 st.caption("Financial Statements Processor | Professional Streamlit Application")
+
+
+
+
+
+
+
+
+

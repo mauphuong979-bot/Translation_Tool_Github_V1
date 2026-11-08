@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import os
 import re
 import json
@@ -2104,6 +2104,10 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
     if process_settings.get("always_original", True):
         apply_always_original_suggestions(doc, original_texts=original_texts, target_col=target_col)
 
+    if process_settings.get("review_annotations", False):
+        from review_annotations import add_comments_and_track_changes
+        add_comments_and_track_changes(doc, translation_map, py_dict=py_dict, original_texts=original_texts)
+
     return total_count
 
 
@@ -2446,5 +2450,7 @@ def apply_always_original_suggestions(doc, original_texts=None, target_col="E"):
                         for cell in row.cells:
                             for para in list(cell.paragraphs):
                                 add_always_original_suggestion(para)
+
+
 
 
