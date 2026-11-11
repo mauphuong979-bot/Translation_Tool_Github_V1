@@ -1980,7 +1980,7 @@ def _get_all_paragraphs(doc):
                             for para in cell.paragraphs:
                                 yield para
 
-def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None, py_dict=None):
+def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map=None, para_map=None, target_col="E", metadata=None, process_settings=None, py_dict=None, review_items=None):
     """
     Performs global search and replace in paragraphs, tables, headers and footers.
     Respects process_settings toggles.
@@ -2106,7 +2106,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     if process_settings.get("review_annotations", False):
         from review_annotations import add_comments_and_track_changes
-        add_comments_and_track_changes(doc, translation_map, py_dict=py_dict, original_texts=original_texts)
+        add_comments_and_track_changes(doc, translation_map, py_dict=py_dict, original_texts=original_texts, review_items=review_items)
 
     return total_count
 

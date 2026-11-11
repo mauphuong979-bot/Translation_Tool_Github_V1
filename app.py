@@ -8,6 +8,7 @@ import re
 import streamlit.components.v1 as components
 import translation_lib as tl
 from processor import process_financial_report
+from review_export import build_ai_review_document
 from usage_logger import log_event, get_logs, is_local_env
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
@@ -515,7 +516,7 @@ with tabs[0]:
             ["Original output (current)", "Clean output (no inline suggestions)", "Comments + Track Changes", "All outputs"],
             index=2,
             key="export_mode",
-            help="The current output is preserved. Review output uses Word Comments and exact-match Track Changes."
+            help="Review output uses Word Comments and exact-match Track Changes, plus a landscape AI translation worksheet for matches below 100%. All outputs also includes this worksheet."
         )
         
         # Manual button click
@@ -589,6 +590,7 @@ with tabs[0]:
                             variant_settings["always_original"] = False
                             variant_settings["suggest_py"] = False
                         variant_settings["review_annotations"] = variant_name == "review"
+                        review_items = [] if variant_name == "review" else None
                         variant_file, variant_msg = process_financial_report(
                             uploaded_file,
                             metadata=metadata,
@@ -596,12 +598,17 @@ with tabs[0]:
                             case_threshold=st.session_state.case_threshold,
                             target_col=target_col,
                             process_settings=variant_settings,
-                            py_dict=active_py_dict
+                            py_dict=active_py_dict,
+                            review_items=review_items
                         )
                         if not variant_file:
                             processed_file, msg = None, variant_msg
                             break
                         outputs[variant_name] = variant_file.getvalue()
+                        if variant_name == "review":
+                            ai_review_file = build_ai_review_document(review_items, target_col)
+                            if ai_review_file is not None:
+                                outputs["ai_review"] = ai_review_file.getvalue()
                     processed_file = outputs.get("original") or outputs.get("clean") or outputs.get("review")
                     if processed_file:
                         # Prepare the resolved dictionary for download
@@ -659,8 +666,9 @@ with tabs[0]:
                 "original": "📥 Download Original Output",
                 "clean": "📥 Download Clean Output",
                 "review": "📥 Download Comments + Track Changes",
+                "ai_review": "📥 Download AI Translation Worksheet",
             }
-            output_suffixes = {"original": "_original", "clean": "_clean", "review": "_review"}
+            output_suffixes = {"original": "_original", "clean": "_clean", "review": "_review", "ai_review": "_AI_translation_worksheet"}
             for output_key, output_data in st.session_state.get("processed_outputs", {}).items():
                 output_name = st.session_state.processed_filename.replace(".docx", f"{output_suffixes[output_key]}.docx")
                 st.download_button(
@@ -671,6 +679,11 @@ with tabs[0]:
                     key=f"btn_download_{output_key}_persist",
                     use_container_width=True
                 )
+            if "review" in st.session_state.get("processed_outputs", {}):
+                if "ai_review" in st.session_state.processed_outputs:
+                    st.caption("Upload the AI Translation Worksheet to an AI that can edit Word files. Its shared prompt asks the AI to fill only the final column and return a completed .docx file.")
+                else:
+                    st.caption("No comments with matches below 100% were found, so no AI Translation Worksheet was generated.")
 
     st.divider()
 

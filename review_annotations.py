@@ -125,7 +125,36 @@ def _add_formatted_comment(doc, paragraph, original, dictionary_match, prior_mat
     return comment
 
 
-def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_texts=None, author="Translation Tool"):
+def _make_review_item(paragraph, original, dictionary_match, prior_match):
+    references = []
+    if dictionary_match:
+        source, translation, score = dictionary_match
+        references.append({"source": "dictionary", "original": source, "translation": translation, "score": score})
+    if prior_match:
+        _, (source, translation), score = prior_match
+        references.append({"source": "prior", "original": source, "translation": translation, "score": score})
+    if not any(reference["score"] < 1.0 for reference in references):
+        return None
+
+    source_run = _first_review_run(paragraph)
+    formatting = {}
+    for property_name in ("size", "bold", "italic", "underline"):
+        value = getattr(source_run.font, property_name)
+        for initial_style in (source_run.style, paragraph.style):
+            style = initial_style
+            while value is None and style is not None:
+                value = getattr(style.font, property_name)
+                style = style.base_style
+        formatting[property_name] = value.pt if property_name == "size" and value is not None else value
+    formatting["alignment"] = paragraph.alignment
+    style = paragraph.style
+    while formatting["alignment"] is None and style is not None:
+        formatting["alignment"] = style.paragraph_format.alignment
+        style = style.base_style
+    return {"original": original, "references": references, "formatting": formatting}
+
+
+def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_texts=None, author="Translation Tool", review_items=None):
     comments = 0
     revisions = 0
     revision_id = 9000
@@ -149,6 +178,10 @@ def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_
 
         if _add_formatted_comment(doc, paragraph, original, dictionary_match, prior_match, author) is not None:
             comments += 1
+            if review_items is not None:
+                review_item = _make_review_item(paragraph, original, dictionary_match, prior_match)
+                if review_item is not None:
+                    review_items.append(review_item)
 
         # Only unresolved yellow text with an exact prior-report match becomes a revision.
         if prior_match and prior_match[2] >= 0.999999:

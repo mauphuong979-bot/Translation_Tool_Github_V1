@@ -3,7 +3,7 @@ from docx import Document
 import io
 import translation_lib as tl
 
-def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=30, target_col="E", process_settings=None, py_dict=None):
+def process_financial_report(file_stream, metadata=None, translation_map=None, case_threshold=30, target_col="E", process_settings=None, py_dict=None, review_items=None):
     """
     Processes the financial report by applying metadata and global translations.
     """
@@ -30,7 +30,8 @@ def process_financial_report(file_stream, metadata=None, translation_map=None, c
                 target_col=target_col, 
                 metadata=metadata,
                 process_settings=process_settings,
-                py_dict=py_dict
+                py_dict=py_dict,
+                review_items=review_items
             )
         
         # Save to a BytesIO object

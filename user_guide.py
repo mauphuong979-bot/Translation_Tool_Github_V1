@@ -118,6 +118,9 @@ def render_user_guide_sidebar():
             * **Môi trường cục bộ (Windows):** Tệp Word kết quả đã xử lý sẽ tự động được mở trực tiếp bằng ứng dụng Microsoft Word của bạn (nếu chọn *Auto-open/download result*).
             * **Môi trường Cloud hoặc tải thủ công:** Bấm nút **`📥 Download Report (.docx)`** màu xanh nổi bật tại màn hình chính để tải xuống tệp tin kết quả.
             * **Quyền Admin:** Bạn có thể tải bản từ điển đối chiếu đã giải mã thẻ động qua nút **`Download Resolved Dictionary (.xlsx)`** ở tab **Admin**.
+            * **Bảng hoàn thiện bản dịch bằng AI:** Chọn **`Comments + Track Changes`** hoặc **`All outputs`**, rồi tải **`Download AI Translation Worksheet`** nếu có comment chứa gợi ý dưới 100%.
+            * File này có bố cục trang ngang, mỗi comment một bảng bốn cột; cột **Bản dịch hoàn thiện** để trống, không có mã rà soát hay vị trí tài liệu. Một prompt chung ở đầu file quy định đúng ngôn ngữ đích và định dạng tiếng Anh hoặc tiếng Hoa.
+            * Tải file này lên AI có khả năng chỉnh sửa và xuất Word, yêu cầu thực hiện prompt ở đầu file, rồi tải lại file `.docx` đã điền cột cuối. Kiểm tra bản dịch trước khi copy vào báo cáo; không cần copy từng comment hoặc từng prompt.
             """)
 
         elif step == 8:
