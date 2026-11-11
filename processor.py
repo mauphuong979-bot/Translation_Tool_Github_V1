@@ -22,10 +22,10 @@ def process_financial_report(file_stream, metadata=None, translation_map=None, c
             pass
 
         # 2. Apply Global Translations from the (potentially edited) dictionary
-        if translation_map:
+        if translation_map or (process_settings or {}).get("review_annotations", False):
             tl.replace_text_in_document(
                 doc, 
-                translation_map, 
+                translation_map or {}, 
                 case_threshold, 
                 target_col=target_col, 
                 metadata=metadata,
@@ -34,6 +34,10 @@ def process_financial_report(file_stream, metadata=None, translation_map=None, c
                 review_items=review_items
             )
         
+        if review_items:
+            from review_roundtrip import bind_review_manifest
+            bind_review_manifest(doc, review_items, target_col)
+
         # Save to a BytesIO object
         output = io.BytesIO()
         doc.save(output)

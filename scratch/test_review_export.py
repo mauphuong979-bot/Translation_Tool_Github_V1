@@ -64,7 +64,8 @@ class ReviewExportTests(unittest.TestCase):
         counts = add_comments_and_track_changes(
             document, {}, py_dict={CURRENT: (CURRENT, "Exact prior translation")}, review_items=items
         )
-        self.assertEqual(counts, {"comments": 1, "revisions": 1})
+        self.assertEqual(counts, {"comments": 0, "revisions": 1})
+        self.assertFalse(document.comments)
         self.assertEqual(items, [])
         self.assertIn("Exact prior translation", document._element.xml)
 
@@ -73,7 +74,7 @@ class ReviewExportTests(unittest.TestCase):
         _, items = self.collect(document, original_texts={paragraph._element: CURRENT})
         self.assertEqual(items[0]["original"], CURRENT)
 
-    def test_landscape_four_columns_one_table_per_comment(self):
+    def test_landscape_five_columns_one_table_per_comment(self):
         document, _ = self.make_document()
         _, items = self.collect(document)
         output = build_ai_review_document(items + items)
@@ -84,12 +85,13 @@ class ReviewExportTests(unittest.TestCase):
         self.assertEqual(len(worksheet.tables), 2)
         for table in worksheet.tables:
             self.assertEqual([cell.text for cell in table.rows[0].cells], list(HEADERS))
-            self.assertEqual(table.cell(1, 0).text, CURRENT)
-            self.assertEqual(table.cell(1, 3).text, "")
-            self.assertIn(DICTIONARY_SOURCE, table.cell(1, 1).text)
-            self.assertIn(PRIOR_SOURCE, table.cell(1, 1).text)
-            self.assertIn("Dictionary reference translation", table.cell(1, 2).text)
-            self.assertIn("Prior reference translation", table.cell(1, 2).text)
+            self.assertRegex(table.cell(1, 0).text, r"^[0-9A-F]{8}-C\d{3}$")
+            self.assertEqual(table.cell(1, 1).text, CURRENT)
+            self.assertEqual(table.cell(1, 4).text, "")
+            self.assertIn(DICTIONARY_SOURCE, table.cell(1, 2).text)
+            self.assertIn(PRIOR_SOURCE, table.cell(1, 2).text)
+            self.assertIn("Dictionary reference translation", table.cell(1, 3).text)
+            self.assertIn("Prior reference translation", table.cell(1, 3).text)
             self.assertIsNotNone(table.rows[0]._tr.trPr.find(qn("w:tblHeader")))
             self.assertIsNone(table.rows[1]._tr.trPr)
             self.assertEqual(sum(column.width.twips for column in table.columns),
@@ -98,12 +100,15 @@ class ReviewExportTests(unittest.TestCase):
         self.assertEqual(text.count("PROMPT chung cho AI"), 1)
         self.assertNotIn("Mã rà soát", text)
         self.assertNotIn("Vị trí trong tài liệu", text)
+        self.assertIn("bốn cột đầu", text)
+        self.assertNotEqual(worksheet.tables[0].cell(1, 0).text, worksheet.tables[1].cell(1, 0).text)
+        self.assertTrue(worksheet.core_properties.identifier.startswith("TranslationTool:"))
 
     def test_english_result_cell_preserves_source_emphasis_and_size(self):
         document, _ = self.make_document()
         _, items = self.collect(document)
         worksheet = Document(build_ai_review_document(items, "E"))
-        paragraph = worksheet.tables[0].cell(1, 3).paragraphs[0]
+        paragraph = worksheet.tables[0].cell(1, 4).paragraphs[0]
         run = paragraph.runs[0]
         self.assertEqual(run.font.name, "Times New Roman")
         self.assertEqual(run.font.size.pt, 12)
@@ -119,9 +124,9 @@ class ReviewExportTests(unittest.TestCase):
         for target_col, language in (("Hs", "zh-CN"), ("Ht", "zh-TW")):
             with self.subTest(target_col=target_col):
                 worksheet = Document(build_ai_review_document(items, target_col))
-                run = worksheet.tables[0].cell(1, 3).paragraphs[0].runs[0]
+                run = worksheet.tables[0].cell(1, 4).paragraphs[0].runs[0]
                 self.assertEqual(run.font.name, "Times New Roman")
-                self.assertEqual(run.font.size.pt, 10)
+                self.assertEqual(run.font.size.pt, 12)
                 self.assertEqual(run._r.rPr.rFonts.get(qn("w:eastAsia")), "DFKai-SB")
                 self.assertEqual(run._r.rPr.find(qn("w:lang")).get(qn("w:eastAsia")), language)
                 prompt = " ".join(get_ai_review_prompt(target_col))
@@ -138,7 +143,7 @@ class ReviewExportTests(unittest.TestCase):
         paragraph.runs[0].style = "Strong"
         _, items = self.collect(document)
         worksheet = Document(build_ai_review_document(items))
-        result = worksheet.tables[0].cell(1, 3).paragraphs[0]
+        result = worksheet.tables[0].cell(1, 4).paragraphs[0]
         self.assertEqual(result.runs[0].font.size.pt, 11.5)
         self.assertTrue(result.runs[0].bold)
         self.assertEqual(result.alignment, WD_ALIGN_PARAGRAPH.RIGHT)
@@ -154,18 +159,20 @@ class ReviewExportTests(unittest.TestCase):
         item = {"original": CURRENT, "references": [{"source": "dictionary", "original": DICTIONARY_SOURCE,
                 "translation": "Reference", "score": 0.9999999}]}
         worksheet = Document(build_ai_review_document([item]))
-        self.assertIn("99.99%", worksheet.tables[0].cell(1, 1).text)
-        self.assertNotIn("100%", worksheet.tables[0].cell(1, 1).text)
+        self.assertIn("99.99%", worksheet.tables[0].cell(1, 2).text)
+        self.assertNotIn("100%", worksheet.tables[0].cell(1, 2).text)
 
-    def test_exact_companion_reference_is_kept_with_fuzzy_reference(self):
+    def test_exact_prior_with_fuzzy_dictionary_is_revised_not_exported(self):
         document, _ = self.make_document()
         items = []
         add_comments_and_track_changes(document, {DICTIONARY_SOURCE: "Fuzzy reference"},
                                       py_dict={CURRENT: (CURRENT, "Exact prior reference")}, review_items=items)
-        worksheet = Document(build_ai_review_document(items))
-        self.assertEqual(len(worksheet.tables), 1)
-        self.assertIn("100%", worksheet.tables[0].cell(1, 1).text)
-        self.assertIn("Exact prior reference", worksheet.tables[0].cell(1, 2).text)
+        self.assertEqual(items, [])
+        self.assertIsNone(build_ai_review_document(items))
+        self.assertEqual(document.element.xpath(".//w:ins//w:t/text()"), ["Exact prior reference"])
+        self.assertIsNone(build_ai_review_document([{"original": CURRENT, "references": [
+            {"source": "dictionary", "original": DICTIONARY_SOURCE, "translation": "Fuzzy", "score": 0.9},
+            {"source": "prior", "original": CURRENT, "translation": "Exact", "score": 1.0}]}]))
 
     def test_empty_and_exact_only_inputs_do_not_generate_empty_document(self):
         self.assertIsNone(build_ai_review_document([]))
@@ -190,6 +197,7 @@ class ReviewExportTests(unittest.TestCase):
         self.assertEqual(message, "Report processed.")
         self.assertEqual(len(items), 1)
         self.assertEqual(len(Document(output).comments), 1)
+        self.assertIn("review_id", items[0])
 
 
 if __name__ == "__main__":

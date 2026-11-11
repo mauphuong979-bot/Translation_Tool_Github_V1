@@ -1,10 +1,11 @@
 ﻿import difflib
 from copy import deepcopy
-from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.enum.text import WD_COLOR_INDEX
 from docx.shared import RGBColor
+from docx.text.paragraph import Paragraph
 import translation_lib as tl
+from review_revisions import effective_highlight, replace_paragraph_with_revision
+from review_roundtrip import match_percentage
 
 
 def _match(text, mapping, cutoff=None):
@@ -27,58 +28,19 @@ def _match(text, mapping, cutoff=None):
 
 def _first_review_run(paragraph):
     for run in paragraph.runs:
-        if run.font.highlight_color == WD_COLOR_INDEX.YELLOW:
+        if effective_highlight(run, paragraph) == "yellow":
             return run
     return paragraph.runs[0] if paragraph.runs else None
 
 
 def _has_yellow_highlight(paragraph):
     return _first_review_run(paragraph) is not None and any(
-        run.font.highlight_color == WD_COLOR_INDEX.YELLOW for run in paragraph.runs
+        effective_highlight(run, paragraph) == "yellow" for run in paragraph.runs
     )
 
 
-def _add_revision(paragraph, deleted_text, inserted_text, author, revision_id):
-    runs = list(paragraph.runs)
-    if not runs or not inserted_text:
-        return False
-    paragraph_element = paragraph._element
-    first_run = runs[0]._element
-    original_runs = [run._element for run in runs]
-
-    deleted = OxmlElement("w:del")
-    deleted.set(qn("w:author"), author)
-    deleted.set(qn("w:date"), "2026-11-08T00:00:00Z")
-    deleted.set(qn("w:id"), str(revision_id))
-    old_run = OxmlElement("w:r")
-    old_properties = first_run.find(qn("w:rPr"))
-    if old_properties is not None:
-        old_run.append(deepcopy(old_properties))
-    old_text = OxmlElement("w:delText")
-    old_text.set(qn("xml:space"), "preserve")
-    old_text.text = deleted_text
-    old_run.append(old_text)
-    deleted.append(old_run)
-
-    inserted = OxmlElement("w:ins")
-    inserted.set(qn("w:author"), author)
-    inserted.set(qn("w:date"), "2026-11-08T00:00:00Z")
-    inserted.set(qn("w:id"), str(revision_id + 1))
-    new_run = OxmlElement("w:r")
-    new_properties = first_run.find(qn("w:rPr"))
-    if new_properties is not None:
-        new_run.append(deepcopy(new_properties))
-    new_text = OxmlElement("w:t")
-    new_text.set(qn("xml:space"), "preserve")
-    new_text.text = inserted_text
-    new_run.append(new_text)
-    inserted.append(new_run)
-
-    for run in original_runs:
-        paragraph_element.remove(run)
-    paragraph_element.append(deleted)
-    paragraph_element.append(inserted)
-    return True
+def _add_revision(paragraph, deleted_text, inserted_text, author, revision_id, target_col="E"):
+    return replace_paragraph_with_revision(paragraph, inserted_text, target_col, revision_id, author)
 
 
 def _copy_comment_run_format(source_run, target_run, color=None, bold=None):
@@ -109,20 +71,29 @@ def _add_formatted_comment(doc, paragraph, original, dictionary_match, prior_mat
     if anchor_run is None:
         return None
     source_run = anchor_run
-    comment = doc.add_comment(anchor_run, text="", author=author, initials="TT")
+    comment = doc.add_comment([run for run in paragraph.runs if run.text], text="", author=author, initials="TT")
     _add_comment_section(comment, "[Original]", original, source_run, RGBColor(0, 51, 204))
     if dictionary_match:
         key, value, score = dictionary_match
         _add_comment_section(comment, "[Dict VN]", key, source_run, RGBColor(0, 51, 204))
         _add_comment_section(comment, "[Suggest]", value, source_run, RGBColor(0, 51, 204))
-        _add_comment_section(comment, "[Match]", f"{score:.0%}", source_run, RGBColor(0, 51, 204))
+        _add_comment_section(comment, "[Match]", match_percentage(score), source_run, RGBColor(0, 51, 204))
     if prior_match:
         _, value, score = prior_match
         prior_vn, prior_translation = value
         _add_comment_section(comment, "[Prior VN]", prior_vn, source_run, RGBColor(204, 0, 0))
         _add_comment_section(comment, "[Suggest]", prior_translation, source_run, RGBColor(204, 0, 0))
-        _add_comment_section(comment, "[Match]", f"{score:.0%}", source_run, RGBColor(204, 0, 0))
+        _add_comment_section(comment, "[Match]", match_percentage(score), source_run, RGBColor(204, 0, 0))
+    if not dictionary_match and not prior_match:
+        _add_comment_section(comment, "[AI translation needed]", "Chưa có tham chiếu phù hợp. Dịch đầy đủ nội dung nguồn hiện tại.", source_run, RGBColor(204, 0, 0))
     return comment
+
+
+def needs_ai_translation(item):
+    references = item.get("references", [])
+    if any(reference["source"] == "prior" and reference["score"] >= 1.0 for reference in references):
+        return False
+    return not references or any(reference["score"] < 1.0 for reference in references)
 
 
 def _make_review_item(paragraph, original, dictionary_match, prior_match):
@@ -133,7 +104,7 @@ def _make_review_item(paragraph, original, dictionary_match, prior_match):
     if prior_match:
         _, (source, translation), score = prior_match
         references.append({"source": "prior", "original": source, "translation": translation, "score": score})
-    if not any(reference["score"] < 1.0 for reference in references):
+    if not needs_ai_translation({"references": references}):
         return None
 
     source_run = _first_review_run(paragraph)
@@ -154,13 +125,16 @@ def _make_review_item(paragraph, original, dictionary_match, prior_match):
     return {"original": original, "references": references, "formatting": formatting}
 
 
-def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_texts=None, author="Translation Tool", review_items=None):
+def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_texts=None, author="Translation Tool", review_items=None, target_col="E"):
+    from review_roundtrip import _unsafe_reason
+
     comments = 0
     revisions = 0
-    revision_id = 9000
-    for paragraph in tl._get_all_paragraphs(doc):
-        if paragraph.part is not doc.part:
-            continue
+    identifiers = [int(element.get(qn("w:id"))) for element in doc.element.iter()
+                   if (element.get(qn("w:id")) or "").isdigit()]
+    revision_id = max(identifiers, default=0) + 1
+    for paragraph_element in doc.element.body.xpath(".//w:p[not(ancestor::w:txbxContent)]"):
+        paragraph = Paragraph(paragraph_element, doc._body)
         current = paragraph.text.strip()
         original = (original_texts or {}).get(paragraph._element, current)
         if not current or not paragraph.runs or not tl.contains_vietnamese(original):
@@ -168,26 +142,31 @@ def add_comments_and_track_changes(doc, translation_map, py_dict=None, original_
         if current.startswith("["):
             continue
 
-        # Dictionary replacements are already resolved; only visible yellow text is reviewed.
         if not _has_yellow_highlight(paragraph):
             continue
         dictionary_match = _match(original, translation_map) or _match(original, translation_map, 0.6)
         prior_match = _match(original, py_dict) or _match(original, py_dict, 0.7)
-        if not dictionary_match and not prior_match:
-            continue
-
-        if _add_formatted_comment(doc, paragraph, original, dictionary_match, prior_match, author) is not None:
+        manual_reason = None
+        if prior_match and prior_match[2] >= 1.0:
+            manual_reason = _unsafe_reason(paragraph, None, doc, None)
+            prior_translation = str(prior_match[1][1] or "").strip()
+            if not manual_reason and prior_translation and _add_revision(paragraph, original, prior_translation, author, revision_id, target_col):
+                revisions += 1
+                revision_id += 2
+                continue
+            manual_reason = manual_reason or ("Bản dịch kỳ trước trống; cần kiểm tra thủ công." if not prior_translation
+                                               else "Không thể tạo Track Changes an toàn; cần kiểm tra thủ công.")
+        comment = _add_formatted_comment(doc, paragraph, original, dictionary_match, prior_match, author)
+        if comment is not None:
             comments += 1
+            if manual_reason:
+                _add_comment_section(comment, "[Manual review]", manual_reason, _first_review_run(paragraph), RGBColor(204, 0, 0))
+                continue
             if review_items is not None:
                 review_item = _make_review_item(paragraph, original, dictionary_match, prior_match)
                 if review_item is not None:
+                    review_item["comment_id"] = str(comment.comment_id)
                     review_items.append(review_item)
 
-        # Only unresolved yellow text with an exact prior-report match becomes a revision.
-        if prior_match and prior_match[2] >= 0.999999:
-            prior_translation = str(prior_match[1][1])
-            if _add_revision(paragraph, original, prior_translation, author, revision_id):
-                revisions += 1
-                revision_id += 2
     return {"comments": comments, "revisions": revisions}
 

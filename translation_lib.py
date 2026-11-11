@@ -2106,7 +2106,7 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     if process_settings.get("review_annotations", False):
         from review_annotations import add_comments_and_track_changes
-        add_comments_and_track_changes(doc, translation_map, py_dict=py_dict, original_texts=original_texts, review_items=review_items)
+        add_comments_and_track_changes(doc, translation_map, py_dict=py_dict, original_texts=original_texts, review_items=review_items, target_col=target_col)
 
     return total_count
 
@@ -2135,8 +2135,10 @@ def clear_all_highlights(doc):
     """
     def clear_para(para):
         for run in para.runs:
-            if run.font.highlight_color is not None:
-                run.font.highlight_color = None
+            properties = run._r.rPr
+            highlight = properties.find(qn("w:highlight")) if properties is not None else None
+            if highlight is not None:
+                properties.remove(highlight)
 
     # 1. Body paragraphs
     for para in doc.paragraphs:

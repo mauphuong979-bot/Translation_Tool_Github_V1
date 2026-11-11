@@ -7,6 +7,14 @@ body,
     font-family: 'Inter', sans-serif;
 }
 
+[data-testid="stAppViewContainer"] {
+    --review-navy: #183654;
+    --review-blue: #386ca3;
+    --review-border: #dde5ed;
+    --review-muted: #61758a;
+    --review-surface: #f5f8fb;
+}
+
 /* Restored header for sidebar toggle visibility */
 [data-testid="stHeader"] {
     background-color: transparent;
@@ -133,19 +141,19 @@ section[data-testid="stSidebar"] {
 
 /* Button Styling (if we target them directly) */
 div.stButton>button:first-child {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(120deg, #274c70 0%, #183654 100%);
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 0.5rem 2rem;
+    padding: 0.4rem 1rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: background-color 0.15s ease;
     width: 100%;
 }
 
 div.stButton>button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: #254d74;
+    box-shadow: 0 2px 5px rgba(24, 54, 84, 0.12);
     color: white;
 }
 
@@ -271,3 +279,95 @@ footer {visibility: hidden;}
 .stAppDeployButton {display: none;}
 header {visibility: hidden;}
 [data-testid="stHeader"] {display: none;}
+
+[data-testid="stMainBlockContainer"] {
+    padding-top: 1rem;
+}
+
+[data-testid="stWidgetLabel"] p,
+[data-testid="stButton"] p,
+[data-testid="stDownloadButton"] p {
+    font-size: 0.85rem;
+}
+
+.st-key-ai_import_workspace {
+    font-size: 0.85rem;
+}
+
+.st-key-ai_import_workspace [data-testid="stVerticalBlock"] {
+    gap: 0.55rem;
+}
+
+.st-key-ai_import_workspace [data-testid="stCaptionContainer"] p,
+.st-key-ai_import_workspace [data-testid="stMarkdownContainer"] p,
+.st-key-ai_import_workspace [data-testid="stText"] {
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+.st-key-ai_import_workspace [data-testid="stAlertContainer"] {
+    padding: 0.5rem 0.65rem;
+}
+
+.st-key-ai_import_workspace [data-testid="stFileUploaderDropzone"] {
+    padding: 0.65rem;
+    min-height: 5rem;
+    background: var(--review-surface);
+    border: 1px dashed #b5c7d8;
+    border-radius: 8px;
+}
+
+.st-key-ai_import_workspace [data-testid="stMultiSelect"] [data-baseweb="select"] > div {
+    max-height: 6rem;
+    overflow-y: auto;
+}
+
+.ai-review-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    color: var(--review-muted);
+    padding: 0.2rem 0 0.3rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.035em;
+}
+
+.ai-review-steps b {
+    color: var(--review-navy);
+}
+
+.ai-review-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 0.1rem 0 0.3rem;
+}
+
+.ai-review-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    border: 1px solid var(--review-border);
+    border-radius: 8px;
+    background: linear-gradient(120deg, #ffffff 40%, #f1f6fa);
+    padding: 0.6rem 0.75rem;
+    color: var(--review-muted);
+    font-size: 0.75rem;
+}
+
+.ai-review-stat strong {
+    font-size: 1.25rem;
+    color: var(--review-navy);
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .ai-review-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ai-review-steps {
+        gap: 0.5rem 0.75rem;
+    }
+}

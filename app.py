@@ -9,6 +9,8 @@ import streamlit.components.v1 as components
 import translation_lib as tl
 from processor import process_financial_report
 from review_export import build_ai_review_document
+from review_import_ui import render_ai_import
+from review_filenames import review_output_filename
 from usage_logger import log_event, get_logs, is_local_env
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
@@ -622,8 +624,10 @@ with tabs[0]:
                         target_lang = st.session_state.meta_translate
                         # Vietnam Time (GMT+7)
                         vn_tz = timezone(timedelta(hours=7))
-                        timestamp = datetime.now(vn_tz).strftime("%d%m%y %H%M")
-                        processed_filename = f"{original_name}_{target_lang}_tool_{timestamp}.docx"
+                        timestamp = datetime.now(vn_tz).strftime("%d%m%y_%H%M")
+                        processed_filename = f"{original_name}_{target_lang}_{timestamp}.docx"
+                        primary_output_kind = next(output_kind for output_kind in ("original", "clean", "review") if outputs.get(output_kind))
+                        primary_filename = review_output_filename(processed_filename, primary_output_kind)
                         
                         # Save to session state for persistent display
                         st.session_state.processed_file_id = uploaded_file.name
@@ -642,7 +646,7 @@ with tabs[0]:
                                 temp_dir = os.path.join(BASE_DIR, "temp_output")
                                 if not os.path.exists(temp_dir):
                                     os.makedirs(temp_dir)
-                                temp_path = os.path.join(temp_dir, processed_filename)
+                                temp_path = os.path.join(temp_dir, primary_filename)
                                 try:
                                     with open(temp_path, "wb") as f:
                                         # Handle both BytesIO and raw bytes
@@ -652,7 +656,7 @@ with tabs[0]:
                                     st.warning(f"Could not automatically open Word: {e}. You can still download it manually below.")
                             else:
                                 # Cloud / Linux Usage: Trigger automatic browser download
-                                st_auto_download(processed_file, processed_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                                st_auto_download(processed_file, primary_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                     else:
                         st.error(msg)
                 except Exception as e:
@@ -668,10 +672,10 @@ with tabs[0]:
                 "review": "📥 Download Comments + Track Changes",
                 "ai_review": "📥 Download AI Translation Worksheet",
             }
-            output_suffixes = {"original": "_original", "clean": "_clean", "review": "_review", "ai_review": "_AI_translation_worksheet"}
-            for output_key, output_data in st.session_state.get("processed_outputs", {}).items():
-                output_name = st.session_state.processed_filename.replace(".docx", f"{output_suffixes[output_key]}.docx")
-                st.download_button(
+            output_columns = st.columns(2)
+            for output_index, (output_key, output_data) in enumerate(st.session_state.get("processed_outputs", {}).items()):
+                output_name = review_output_filename(st.session_state.processed_filename, output_key)
+                output_columns[output_index % 2].download_button(
                     label=output_labels[output_key],
                     data=output_data,
                     file_name=output_name,
@@ -681,10 +685,11 @@ with tabs[0]:
                 )
             if "review" in st.session_state.get("processed_outputs", {}):
                 if "ai_review" in st.session_state.processed_outputs:
-                    st.caption("Upload the AI Translation Worksheet to an AI that can edit Word files. Its shared prompt asks the AI to fill only the final column and return a completed .docx file.")
+                    st.caption("100% prior-report matches are already tracked in the report. The AI worksheet contains unresolved suggestions and yellow text without references, each with an ID. Ask AI to fill only the final column, then import the returned Word file here.")
                 else:
-                    st.caption("No comments with matches below 100% were found, so no AI Translation Worksheet was generated.")
+                    st.caption("No unresolved AI translation items were found. 100% prior-report matches are handled directly with Track Changes; check any manual-review comments in the report.")
 
+    render_ai_import()
     st.divider()
 
 with tabs[1]:
