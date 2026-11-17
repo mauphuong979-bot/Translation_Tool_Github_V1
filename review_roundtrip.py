@@ -15,7 +15,7 @@ from docx.text.paragraph import Paragraph
 from lxml import etree
 
 import translation_lib as tl
-from review_revisions import replace_paragraph_with_revision
+from review_revisions import effective_highlight, replace_paragraph_with_revision
 
 
 HEADERS = ("Mã", "Nội dung cần dịch", "Tiếng Việt tham chiếu", "Bản dịch tham chiếu", "Bản dịch hoàn thiện")
@@ -59,7 +59,7 @@ def _manifest_part(document):
             if root.tag == "{" + MANIFEST_NAMESPACE + "}manifest":
                 matches.append(part)
     if len(matches) > 1:
-        raise ValueError("This report contains duplicate AI review mappings. Use the original matching report.")
+        raise ValueError("Báo cáo này có dữ liệu liên kết AI bị trùng. Hãy dùng đúng báo cáo gốc đi kèm.")
     return matches[0] if matches else None
 
 
@@ -82,13 +82,13 @@ def _write_manifest(document, manifest):
 def _read_manifest(document):
     part = _manifest_part(document)
     if part is None:
-        raise ValueError("This report has no AI review mapping. Process it again and download the new five-column worksheet and matching Comments + Track Changes report.")
+        raise ValueError("Báo cáo này chưa có dữ liệu liên kết AI. Hãy xử lý lại báo cáo và tải bảng AI_Form 5 cột mới cùng báo cáo Comments + Track Changes đi kèm.")
     root = etree.fromstring(part.blob, parser=etree.XMLParser(resolve_entities=False, no_network=True))
     if root.tag != "{" + MANIFEST_NAMESPACE + "}manifest":
-        raise ValueError("The report contains an invalid AI review mapping.")
+        raise ValueError("Dữ liệu liên kết AI trong báo cáo không hợp lệ.")
     manifest = json.loads(root.text or "{}")
     if manifest.get("version") != 1 or manifest.get("target_col") not in LANGUAGES:
-        raise ValueError("The report contains an unsupported AI review mapping.")
+        raise ValueError("Dữ liệu liên kết AI trong báo cáo không được hỗ trợ.")
     return manifest
 
 
@@ -130,7 +130,7 @@ def bind_review_manifest(document, items, target_col):
     if not items:
         return
     if target_col not in LANGUAGES:
-        raise ValueError("Unsupported translation language.")
+        raise ValueError("Ngôn ngữ dịch không được hỗ trợ.")
     batch = uuid4().hex[:8].upper()
     existing_ids = [int(element.get(qn("w:id"))) for element in document.element.iter()
                     if (element.get(qn("w:id")) or "").isdigit()]
@@ -167,25 +167,52 @@ def _read_document(source):
     return Document(source)
 
 
+YELLOW_FILLS = {"FFFF00", "FFFF66", "FFF200", "FFEB3B", "FFFF99"}
+
+
+def _is_yellow(run, paragraph):
+    if effective_highlight(run, paragraph) == "yellow":
+        return True
+    shading = run._r.rPr.find(qn("w:shd")) if run._r.rPr is not None else None
+    return shading is not None and (shading.get(qn("w:fill")) or "").upper() in YELLOW_FILLS
+
+
+def _yellow_ranges(cell):
+    """Character ranges of cell.text that the AI marked with a yellow highlight or yellow run shading."""
+    ranges, offset = [], 0
+    for index, paragraph in enumerate(cell.paragraphs):
+        if index:
+            offset += 1
+        for run in paragraph.runs:
+            length = len(run.text)
+            if length and _is_yellow(run, paragraph):
+                if ranges and ranges[-1][1] == offset:
+                    ranges[-1] = (ranges[-1][0], offset + length)
+                else:
+                    ranges.append((offset, offset + length))
+            offset += length
+    return ranges
+
+
 def _worksheet_rows(document):
     rows = []
     for table in document.tables:
         if len(table.rows) != 2 or any(len(row.cells) != 5 for row in table.rows):
-            raise ValueError("Use the new five-column AI worksheet, with one header and one content row per table. Do not merge or split its tables.")
+            raise ValueError("Hãy dùng bảng AI_Form 5 cột mới, mỗi bảng gồm một dòng tiêu đề và một dòng nội dung. Không gộp hoặc tách bảng.")
         if any(len({cell._tc for cell in row.cells}) != 5 for row in table.rows):
-            raise ValueError("The worksheet contains merged cells. Restore the original table structure.")
+            raise ValueError("Bảng AI có ô bị gộp. Hãy khôi phục cấu trúc bảng ban đầu.")
         if [_normalize(cell.text).casefold() for cell in table.rows[0].cells] != [_normalize(header).casefold() for header in HEADERS]:
-            raise ValueError("The worksheet headers have changed or this is not an AI translation worksheet.")
+            raise ValueError("Tiêu đề cột đã bị sửa hoặc đây không phải bảng AI_Form.")
         cells = table.rows[1].cells
         if any(cell.tables for cell in cells):
-            raise ValueError("Nested tables are not supported in the AI worksheet.")
+            raise ValueError("Bảng AI không được chứa bảng lồng bên trong.")
         rows.append({"review_id": cells[0].text.strip(), "source_values": [cell.text for cell in cells[1:4]],
-                     "translation": cells[4].text,
+                     "translation": cells[4].text, "highlights": _yellow_ranges(cells[4]),
                      "has_revisions": bool(cells[4]._tc.xpath(".//w:ins | .//w:del | .//w:moveFrom | .//w:moveTo | .//w:rPrChange")),
                      "has_objects": any(element.tag == qn(f"w:{tag}") for element in cells[4]._tc.iter()
                                         for tag in ("fldChar", "instrText", "fldSimple", "hyperlink", "drawing", "object", "sdt"))})
     if not rows:
-        raise ValueError("The AI worksheet contains no review tables.")
+        raise ValueError("Bảng AI không có mục nào để nhập.")
     return rows
 
 
@@ -202,12 +229,12 @@ def _bookmark_reason(paragraph, document, anchor_name):
     starts = list(paragraph._p.iter(qn("w:bookmarkStart")))
     ends = list(paragraph._p.iter(qn("w:bookmarkEnd")))
     if anchor_name is not None and sum(start.get(qn("w:name")) == anchor_name for start in starts) != 1:
-        return "The AI review bookmark is missing or ambiguous; manual review is required."
+        return "Bookmark liên kết AI bị mất hoặc không rõ ràng. Cần xử lý thủ công."
     if not starts and not ends:
         return ""
     content_runs = [run for run in paragraph.runs if run.text]
     if not content_runs:
-        return "The source paragraph has no editable text."
+        return "Đoạn nguồn không có chữ để thay."
     first_position = paragraph._p.index(content_runs[0]._r)
     last_position = paragraph._p.index(content_runs[-1]._r)
     all_starts = list(document.element.iter(qn("w:bookmarkStart")))
@@ -216,54 +243,54 @@ def _bookmark_reason(paragraph, document, anchor_name):
         matching_starts = [element for element in all_starts if element.get(qn("w:id")) == bookmark_id]
         matching_ends = [element for element in all_ends if element.get(qn("w:id")) == bookmark_id]
         if not bookmark_id or len(matching_starts) != 1 or len(matching_ends) != 1:
-            return "Contains an incomplete or duplicate bookmark; manual review is required."
+            return "Đoạn có bookmark thiếu hoặc bị trùng. Cần xử lý thủ công."
         start, end = matching_starts[0], matching_ends[0]
         name = start.get(qn("w:name"))
         if (not name or sum(element.get(qn("w:name")) == name for element in all_starts) != 1
                 or any(start.get(qn(f"w:{attribute}")) is not None for attribute in ("colFirst", "colLast"))):
-            return "Contains an ambiguous or table-column bookmark; manual review is required."
+            return "Đoạn có bookmark không rõ ràng hoặc bookmark theo cột bảng. Cần xử lý thủ công."
         if start.getparent() is not paragraph._p or end.getparent() is not paragraph._p:
-            return "Contains a bookmark spanning paragraph boundaries; manual review is required."
+            return "Đoạn có bookmark trải qua nhiều đoạn. Cần xử lý thủ công."
         start_position, end_position = paragraph._p.index(start), paragraph._p.index(end)
         if start_position >= end_position:
-            return "Contains an invalid bookmark range; manual review is required."
+            return "Đoạn có phạm vi bookmark không hợp lệ. Cần xử lý thủ công."
         if name == anchor_name:
             continue
         if (end_position < first_position or start_position > last_position
                 or (start_position < first_position and end_position > last_position)):
             continue
-        return "Contains a partial-text bookmark that cannot be mapped safely to the translation; manual review is required."
+        return "Đoạn có bookmark bao một phần câu, không thể chuyển an toàn sang bản dịch. Cần xử lý thủ công."
     return ""
 
 
 def _unsafe_reason(paragraph, comment_id, document, anchor_name):
     if tl.has_fields(paragraph):
-        return "Contains an Excel link or Word field; manual review is required."
+        return "Đoạn có liên kết Excel hoặc field Word. Cần xử lý thủ công."
     revision_tags = ("ins", "del", "moveFrom", "moveTo", "rPrChange", "pPrChange")
     if any(any(True for _ in paragraph._p.iter(qn(f"w:{tag}"))) for tag in revision_tags):
-        return "Track Changes already existed in the source report before AI import. This AI result will not be applied; existing revisions and comments are kept unchanged."
+        return "Báo cáo nguồn đã có Track Changes ở đoạn này từ trước khi nhập AI. Bản dịch AI không được áp dụng; Track Changes và comment hiện có được giữ nguyên."
     complex_tags = ("hyperlink", "drawing", "pict", "object", "sdt")
     if any(any(True for _ in paragraph._p.iter(qn(f"w:{tag}"))) for tag in complex_tags):
-        return "Contains a link, content control or embedded object; manual review is required."
+        return "Đoạn có liên kết, content control hoặc đối tượng nhúng. Cần xử lý thủ công."
     if reason := _bookmark_reason(paragraph, document, anchor_name):
         return reason
     allowed_children = {qn(f"w:{tag}") for tag in ("pPr", "r", "commentRangeStart", "commentRangeEnd", "bookmarkStart", "bookmarkEnd", "proofErr")}
     allowed_run_children = {qn(f"w:{tag}") for tag in ("rPr", "t", "tab", "br", "cr", "commentReference")}
     for child in paragraph._p:
         if child.tag not in allowed_children:
-            return "Contains unsupported paragraph content; manual review is required."
+            return "Đoạn có nội dung không được hỗ trợ. Cần xử lý thủ công."
         if child.tag == qn("w:r") and any(element.tag not in allowed_run_children for element in child):
-            return "Contains unsupported inline content; manual review is required."
+            return "Đoạn có thành phần trong dòng không được hỗ trợ. Cần xử lý thủ công."
     for tag in ("commentRangeStart", "commentRangeEnd", "commentReference"):
         if any(element.get(qn("w:id")) != comment_id for element in paragraph._p.iter(qn(f"w:{tag}"))):
-            return "Another comment overlaps this paragraph; manual review is required."
+            return "Có comment khác chồng lên đoạn này. Cần xử lý thủ công."
     active_comments, active_bookmarks = set(), set()
     for element in document.element.iter():
         if element is paragraph._p:
             if active_comments - {comment_id}:
-                return "Another comment spans this paragraph; manual review is required."
+                return "Có comment khác trải qua đoạn này. Cần xử lý thủ công."
             if active_bookmarks:
-                return "Another bookmark spans this paragraph; manual review is required."
+                return "Có bookmark khác trải qua đoạn này. Cần xử lý thủ công."
             break
         if element.tag == qn("w:commentRangeStart"):
             active_comments.add(element.get(qn("w:id")))
@@ -274,11 +301,11 @@ def _unsafe_reason(paragraph, comment_id, document, anchor_name):
         elif element.tag == qn("w:bookmarkEnd"):
             active_bookmarks.discard(element.get(qn("w:id")))
     if not paragraph.runs or not any(run.text for run in paragraph.runs):
-        return "The source paragraph has no editable text."
+        return "Đoạn nguồn không có chữ để thay."
     if any(element.get(qn("w:type"), "textWrapping") != "textWrapping" for element in paragraph._p.iter(qn("w:br"))):
-        return "Contains a page or column break; manual review is required."
+        return "Đoạn có ngắt trang hoặc ngắt cột. Cần xử lý thủ công."
     if len({_format_signature(run) for run in paragraph.runs if run.text.strip()}) > 1:
-        return "Contains mixed text formatting that cannot be mapped safely to a translated sentence; manual review is required."
+        return "Đoạn có định dạng chữ hỗn hợp, không thể chuyển an toàn sang câu dịch. Cần xử lý thủ công."
     return ""
 
 
@@ -289,51 +316,52 @@ def _inspect(report_source, worksheet_source):
     supplied = _worksheet_rows(worksheet)
     expected = {item["review_id"]: item for item in manifest["items"]}
     if any(row["review_id"] not in expected for row in supplied):
-        raise ValueError("One or more review IDs do not belong to this report. Upload the matching Comments + Track Changes report and AI worksheet.")
+        raise ValueError("Có mã không thuộc báo cáo này. Hãy tải đúng cặp báo cáo Comments + Track Changes và bảng AI_Form.")
     identifier = worksheet.core_properties.identifier
     if identifier.startswith("TranslationTool:") and identifier != f"TranslationTool:{manifest['batch']}:{manifest['target_col']}":
-        raise ValueError("The worksheet belongs to another report or translation language.")
+        raise ValueError("Bảng AI này thuộc báo cáo khác hoặc ngôn ngữ dịch khác.")
     counts = Counter(row["review_id"] for row in supplied)
     comments = {str(comment.comment_id) for comment in report.comments}
     applied = set(manifest.get("applied_ids", []))
     results = []
     for row in supplied:
         item = expected[row["review_id"]]
-        result = {"review_id": row["review_id"], "original": item["original"], "translation": row["translation"], "status": "ready", "reason": ""}
+        result = {"review_id": row["review_id"], "original": item["original"], "translation": row["translation"],
+                  "highlights": row["highlights"], "status": "ready", "reason": ""}
         expected_values = [item["original"], reference_text(item["references"], "original"), reference_text(item["references"], "translation")]
         paragraph, comment_id = _resolve_anchor(report, item)
         result["comment_id"] = comment_id
         result["source_has_revisions"] = paragraph is not None and bool(paragraph._p.xpath(".//w:ins | .//w:del | .//w:moveFrom | .//w:moveTo | .//w:rPrChange | .//w:pPrChange"))
         result["source_current_text"] = _visible_text(paragraph) if paragraph is not None else ""
         if counts[row["review_id"]] > 1:
-            result.update(status="blocked", reason="Duplicate review ID; none of its rows will be applied.")
+            result.update(status="blocked", reason="Mã bị trùng; không áp dụng dòng nào của mã này.")
         elif row["review_id"] in applied:
-            result.update(status="applied", reason="Already applied to this report.")
+            result.update(status="applied", reason="Đã áp dụng vào báo cáo này.")
         elif [_normalize(value) for value in row["source_values"]] != [_normalize(value) for value in expected_values]:
-            result.update(status="blocked", reason="The source or reference columns were changed by AI.")
+            result.update(status="blocked", reason="AI đã sửa cột nội dung gốc hoặc cột tham chiếu.")
         elif row["has_revisions"]:
-            result.update(status="blocked", reason="Accept or reject revisions in the AI result cell before importing it.")
+            result.update(status="blocked", reason="Hãy Accept hoặc Reject các Track Changes trong ô kết quả AI trước khi nhập.")
         elif row["has_objects"]:
-            result.update(status="blocked", reason="The AI result cell must contain plain translation text, not fields, links or objects.")
+            result.update(status="blocked", reason="Ô kết quả AI chỉ được chứa chữ bản dịch, không chứa field, liên kết hay đối tượng.")
         elif not row["translation"].strip():
-            result.update(status="blank", reason="No completed translation; the source and comment will be kept.")
+            result.update(status="blank", reason="AI chưa điền bản dịch; giữ nguyên nội dung gốc và comment.")
         elif paragraph is None or comment_id not in comments:
-            result.update(status="blocked", reason="The original comment was changed, or its anchor is missing or ambiguous.")
+            result.update(status="blocked", reason="Comment gốc đã bị sửa, hoặc vị trí neo bị mất/không rõ ràng.")
         elif _normalize(_visible_text(paragraph)) != _normalize(item["report_text"]):
-            result.update(status="blocked", reason="The report text has changed since the worksheet was exported.")
+            result.update(status="blocked", reason="Nội dung báo cáo đã thay đổi kể từ khi xuất bảng AI.")
         elif reason := _unsafe_reason(paragraph, comment_id, report, item["anchor_name"]):
             if (result["source_has_revisions"] and any(reference["source"] == "prior" and reference["score"] >= 0.999999 for reference in item["references"])
                     and any(element.get(qn("w:author")) == "Translation Tool" for element in paragraph._p.iter(qn("w:ins")))):
-                reason = ("Already translated during initial processing from a 100% prior-report match. "
-                          "These Track Changes were present in the source report BEFORE AI import. "
-                          "This AI result is NOT applied; the existing translation, revisions and comment are kept unchanged.")
+                reason = ("Đã được dịch ở bước xử lý ban đầu do khớp 100% với báo cáo năm trước. "
+                          "Track Changes này có sẵn trong báo cáo nguồn TRƯỚC khi nhập AI. "
+                          "Bản dịch AI KHÔNG được áp dụng; bản dịch, Track Changes và comment hiện có được giữ nguyên.")
             result.update(status="blocked", reason=reason)
         elif _normalize(row["translation"]) == _normalize(paragraph.text):
-            result.update(status="unchanged", reason="The AI result is identical to the current report text.")
+            result.update(status="unchanged", reason="Bản dịch AI giống hệt nội dung hiện tại của báo cáo.")
         results.append(result)
     for review_id, item in expected.items():
         if review_id not in counts and review_id not in applied:
-            results.append({"review_id": review_id, "original": item["original"], "translation": "", "status": "missing", "reason": "This table is missing from the AI worksheet; the source and comment will be kept."})
+            results.append({"review_id": review_id, "original": item["original"], "translation": "", "status": "missing", "reason": "Bảng AI thiếu mục này; giữ nguyên nội dung gốc và comment."})
     return report, manifest, results
 
 
@@ -342,8 +370,8 @@ def preview_ai_translations(report_source, worksheet_source):
     return {"target_col": manifest["target_col"], "rows": rows, "counts": dict(Counter(row["status"] for row in rows))}
 
 
-def _replace_with_revision(document, paragraph, comment_id, translation, target_col, revision_id, anchor_name):
-    replace_paragraph_with_revision(paragraph, translation, target_col, revision_id, "Translation Tool AI")
+def _replace_with_revision(document, paragraph, comment_id, translation, target_col, revision_id, anchor_name, highlights=None):
+    replace_paragraph_with_revision(paragraph, translation, target_col, revision_id, "Translation Tool AI", highlights)
 
     for tag in ("commentRangeStart", "commentRangeEnd", "commentReference"):
         for element in list(paragraph._p.iter(qn(f"w:{tag}"))):
@@ -367,7 +395,7 @@ def apply_ai_translations(report_source, worksheet_source, selected_ids=None):
     ready = {row["review_id"]: row for row in rows if row["status"] == "ready"}
     selected = set(ready) if selected_ids is None else set(selected_ids)
     if not selected or not selected.issubset(ready):
-        raise ValueError("Select at least one ready translation. Blocked, blank or missing rows cannot be applied.")
+        raise ValueError("Hãy chọn ít nhất một bản dịch sẵn sàng. Không thể áp dụng các dòng bị chặn, trống hoặc thiếu.")
     identifiers = [int(element.get(qn("w:id"))) for part in report.part.package.parts if hasattr(part, "element")
                    for element in part.element.iter() if (element.get(qn("w:id")) or "").isdigit()]
     revision_id = max(identifiers, default=0) + 1
@@ -375,7 +403,8 @@ def apply_ai_translations(report_source, worksheet_source, selected_ids=None):
     for review_id in sorted(selected):
         item = items[review_id]
         paragraph, comment_id = _resolve_anchor(report, item)
-        _replace_with_revision(report, paragraph, comment_id, ready[review_id]["translation"], manifest["target_col"], revision_id, item["anchor_name"])
+        _replace_with_revision(report, paragraph, comment_id, ready[review_id]["translation"], manifest["target_col"], revision_id, item["anchor_name"],
+                               ready[review_id]["highlights"])
         revision_id += 2
     manifest["applied_ids"] = sorted(set(manifest.get("applied_ids", [])) | selected)
     _write_manifest(report, manifest)

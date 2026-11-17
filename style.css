@@ -15,11 +15,6 @@ body,
     --review-surface: #f5f8fb;
 }
 
-/* Restored header for sidebar toggle visibility */
-[data-testid="stHeader"] {
-    background-color: transparent;
-}
-
 .block-container {
     padding-top: 1.5rem !important;
     padding-bottom: 1rem !important;
@@ -197,7 +192,7 @@ div.stButton>button:hover {
     font-size: 1.5rem;
     font-weight: 700;
     color: #182848;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.25rem;
     text-align: center;
 }
 
@@ -228,7 +223,7 @@ div.stButton>button:hover {
 }
 
 /* Red color for specific manual check fields (content only) */
-div[data-testid="stTextInput"] input[aria-label="Translated Name (not capitalized)"] {
+div[data-testid="stTextInput"] input[aria-label="Tên công ty đã dịch (không viết hoa toàn bộ)"] {
     color: #ff4b4b !important;
     font-weight: 600 !important;
 }
@@ -280,8 +275,134 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 [data-testid="stHeader"] {display: none;}
 
+/* No sidebar: all settings live in the top bar, so the main area uses the full width */
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="stExpandSidebarButton"] {display: none !important;}
+
 [data-testid="stMainBlockContainer"] {
-    padding-top: 1rem;
+    padding-top: 0.75rem;
+    max-width: 1280px;
+}
+
+/* Top bar */
+.st-key-top_bar {
+    border-bottom: 1px solid var(--review-border);
+    padding-bottom: 0.35rem;
+    gap: 0.35rem;
+}
+
+.app-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--review-navy);
+    white-space: nowrap;
+}
+
+.st-key-top_bar [data-testid="stPopover"] button,
+.st-key-top_bar .stButton > button {
+    background: transparent !important;
+    color: var(--review-navy) !important;
+    border: 1px solid var(--review-border) !important;
+    border-radius: 8px;
+    padding: 0.2rem 0.65rem !important;
+    min-height: 2.1rem;
+    width: auto !important;
+    box-shadow: none !important;
+}
+
+.st-key-top_bar [data-testid="stPopover"] button:hover,
+.st-key-top_bar .stButton > button:hover {
+    background: var(--review-surface) !important;
+}
+
+/* Vietnamese text for Streamlit's built-in file uploader (its own labels are English-only) */
+[data-testid="stFileUploaderDropzone"] button [data-testid="stMarkdownContainer"] p {
+    font-size: 0 !important;
+}
+
+[data-testid="stFileUploaderDropzone"] button [data-testid="stMarkdownContainer"] p::after {
+    content: "Chọn file";
+    font-size: 0.85rem;
+}
+
+[data-testid="stFileUploaderDropzoneInstructions"] span {
+    font-size: 0 !important;
+}
+
+[data-testid="stFileUploaderDropzoneInstructions"] span::after {
+    content: "Kéo thả file vào đây · tối đa 200MB";
+    font-size: 0.8rem;
+}
+
+/* Section cards on the Process tab */
+.section-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--review-navy);
+    margin: 0;
+    padding-bottom: 0.15rem;
+    line-height: 1.6;
+}
+
+.st-key-report_box [data-testid="stElementContainer"]:has(.section-title),
+.st-key-py_box [data-testid="stElementContainer"]:has(.section-title) {
+    margin-bottom: 0.35rem;
+}
+
+.st-key-report_box [data-testid="stMarkdownContainer"]:has(.section-title),
+.st-key-py_box [data-testid="stMarkdownContainer"]:has(.section-title) {
+    margin-bottom: 0 !important;
+}
+
+.section-title span {
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--review-muted);
+    margin-left: 0.4rem;
+}
+
+.st-key-report_box,
+.st-key-py_box,
+.st-key-action_box {
+    gap: 0.4rem;
+}
+
+.st-key-py_box [data-testid="stFileUploaderDropzone"] {
+    padding: 0.4rem 0.75rem;
+    min-height: 0;
+}
+
+.st-key-py_box [data-testid="stFileUploaderDropzoneInstructions"] small {
+    display: none;
+}
+
+.st-key-py_box [data-testid="stCaptionContainer"] p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+/* Login card */
+.st-key-login_box {
+    margin-top: 12vh;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: white;
+}
+
+.login-sub {
+    text-align: center;
+    color: var(--review-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Wide, readable user guide dialog */
+div[role="dialog"] [data-testid="stMarkdownContainer"] p,
+div[role="dialog"] [data-testid="stMarkdownContainer"] li {
+    font-size: 0.92rem;
+    line-height: 1.6;
 }
 
 [data-testid="stWidgetLabel"] p,

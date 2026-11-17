@@ -13,7 +13,12 @@ WORKFLOW_SUFFIX = re.compile(r"(?:_AI_translation_worksheet|_AI_reviewed|_AI_For
 LEGACY_TIMESTAMP = re.compile(r"_(E|Hs|Ht)_tool_(\d{6})[ _](\d{4})$", re.IGNORECASE)
 
 
+SHORT_NAMES = {"ai_review": "AI_Form.docx"}
+
+
 def review_output_filename(filename, output_kind):
+    if output_kind in SHORT_NAMES:
+        return SHORT_NAMES[output_kind]
     stem = PureWindowsPath(Path(filename).name).stem
     while match := WORKFLOW_SUFFIX.search(stem):
         stem = stem[:match.start()]

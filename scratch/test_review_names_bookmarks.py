@@ -44,9 +44,10 @@ class ReviewNameBookmarkTests(unittest.TestCase):
         for language in ("E", "Hs", "Ht"):
             with self.subTest(language=language):
                 prompt = " ".join(get_ai_review_prompt(language))
-                for required in ("Công ty TNHH ABC", "Công ty Cổ phần XYZ", "Nguyễn Văn A", "không tự dịch, phiên âm",
+                for required in ("Công ty TNHH ABC", "Công ty Cổ phần XYZ", "Nguyễn Văn A", "Nguyen Van A", "không tự dịch, phiên âm",
+                                 "masothue.com", "thuvienphapluat.vn", "tô nền vàng", "không dấu",
                                  "đúng tên chính thức", "Phân biệt tên pháp lý", "vẫn dịch theo ngữ cảnh",
-                                 "chép đúng tên nguồn vào cột cuối thay vì để trống"):
+                                 "vào cột cuối thay vì để trống"):
                     self.assertIn(required, prompt)
 
     def test_prompts_do_not_treat_template_markers_as_a_reason_to_skip(self):
@@ -136,6 +137,36 @@ class ReviewNameBookmarkTests(unittest.TestCase):
                 self.assertEqual(fixture.preview(report, worksheet)["counts"], {"blocked": 1})
                 with self.assertRaises(ValueError):
                     apply_ai_translations(saved(report), saved(worksheet))
+
+    def test_yellow_marked_company_name_stays_yellow_in_the_report(self):
+        from docx.enum.text import WD_COLOR_INDEX
+        name = "Công ty TNHH ABC"
+        for target, marking in (("E", "highlight"), ("Ht", "highlight"), ("E", "shading")):
+            with self.subTest(target=target, marking=marking):
+                fixture = roundtrip_fixtures.ReviewRoundtripTests()
+                report, worksheet, _ = fixture.pair(target=target, source=f"Giao dịch với {name} trong năm.")
+                cell = worksheet.tables[0].cell(1, 4)
+                paragraph = cell.paragraphs[0]
+                for run in list(paragraph.runs):
+                    paragraph._p.remove(run._r)
+                prefix = "與" if target == "Ht" else "Transactions with "
+                suffix = "之交易。" if target == "Ht" else " during the year."
+                paragraph.add_run(prefix)
+                marked = paragraph.add_run(name)
+                if marking == "highlight":
+                    marked.font.highlight_color = WD_COLOR_INDEX.YELLOW
+                else:
+                    shading = OxmlElement("w:shd")
+                    shading.set(qn("w:val"), "clear")
+                    shading.set(qn("w:fill"), "FFFF00")
+                    marked._r.get_or_add_rPr().append(shading)
+                paragraph.add_run(suffix)
+                self.assertEqual(fixture.preview(report, worksheet)["counts"], {"ready": 1})
+                output, _ = apply_ai_translations(saved(report), saved(worksheet))
+                result = resolved(Document(output)).paragraphs[0]
+                self.assertEqual(result.text, prefix + name + suffix)
+                yellow = "".join(run.text for run in result.runs if run.font.highlight_color == WD_COLOR_INDEX.YELLOW)
+                self.assertEqual(yellow, name)
 
     def test_a_name_copied_unchanged_is_not_forced_into_a_fake_translation(self):
         for name in ("Công ty TNHH ABC", "Nguyễn Văn A"):

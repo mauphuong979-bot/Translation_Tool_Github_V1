@@ -1,160 +1,115 @@
 import streamlit as st
 
-def render_user_guide_sidebar():
-    """
-    Renders an interactive, step-by-step User Guide inside the Streamlit sidebar.
-    Optimized for new users, using English UI headers and Vietnamese content.
-    The navigation buttons are rendered compactly at the top of the guide.
-    """
-    # 1. Initialize session state for user guide step if not existing
-    if "user_guide_step" not in st.session_state:
-        st.session_state.user_guide_step = 1
 
-    # 2. Render the outer expander to keep it compact
-    with st.sidebar.expander("📘 Quick User Guide", expanded=False):
-        # Inject custom CSS to make these specific expander buttons very compact
-        st.markdown("""
-            <style>
-            [data-testid="stSidebar"] .stExpander div.stButton > button {
-                padding: 0.3rem 0.5rem !important;
-                font-size: 0.8rem !important;
-                min-height: 28px !important;
-                height: 30px !important;
-                line-height: 1.2 !important;
-            }
-            </style>
-        """, unsafe_allow_html=True)
+QUICK_START = """
+**Ứng dụng dịch báo cáo tài chính Word (.docx) từ tiếng Việt sang tiếng Anh (E), tiếng Hoa giản thể (Hs) hoặc phồn thể (Ht).**
+Chỉ hỗ trợ file **.docx**; không hỗ trợ .doc, .pdf, .xlsx.
 
-        total_steps = 9
-        step = st.session_state.user_guide_step
+| Bước | Việc cần làm | Ở đâu |
+|---|---|---|
+| 1 | Tải báo cáo tiếng Việt cần dịch | **📂 Báo cáo cần dịch** |
+| 2 | (Tùy chọn) Tải cặp báo cáo năm trước: bản tiếng Việt + bản đã dịch | **📅 Báo cáo năm trước** |
+| 3 | Kiểm tra thông tin tự điền, chọn ngôn ngữ đích | **📝 Thông tin báo cáo** |
+| 4 | Chọn **Chế độ xuất file**, bấm **🚀 Xử lý báo cáo** | Hàng nút xử lý |
+| 5 | Tải file kết quả; nếu còn đoạn chưa dịch, tải **AI_Form.docx** gửi AI | Các nút **📥 Tải…** |
+| 6 | Nhập file AI đã điền để ghi bản dịch bằng Track Changes | **📤 Nhập bản dịch từ AI** |
 
-        # Render navigation buttons at the TOP of the expander
-        col_prev, col_next = st.columns(2)
-        
-        with col_prev:
-            if step > 1:
-                if st.button("← Previous", key="guide_prev_btn", use_container_width=True):
-                    st.session_state.user_guide_step -= 1
-                    st.rerun()
-            else:
-                st.button("← Previous", key="guide_prev_btn_disabled", disabled=True, use_container_width=True)
+**Các nút ở góc phải trên cùng**
+* **❓** – mở hướng dẫn này.
+* **⚙️** – bật/tắt **Các bước xử lý** và tùy chọn **Tự mở/tải kết quả**.
+* **👤** – thông tin tài khoản và nút **Đăng xuất**.
+"""
 
-        with col_next:
-            if step < total_steps:
-                if st.button("Next →", key="guide_next_btn", use_container_width=True):
-                    st.session_state.user_guide_step += 1
-                    st.rerun()
-            else:
-                st.button("Next →", key="guide_next_btn_disabled", disabled=True, use_container_width=True)
+PROCESS = """
+**1. Báo cáo cần dịch**
+* Tải file .docx tiếng Việt. Ứng dụng tự trích tên công ty, ngày kết thúc năm tài chính, ngày lập báo cáo, kỳ báo cáo và tên người ký vào **Thông tin báo cáo**.
 
-        # Divider between navigation and content
-        st.markdown("<hr style='margin: 8px 0; border: none; border-top: 1px solid #e9ecef;' />", unsafe_allow_html=True)
+**2. Báo cáo năm trước (tùy chọn, nên dùng)**
+* Bật **Dùng báo cáo năm trước để gợi ý**, tải **Bản tiếng Việt năm trước** (trái) và **Bản đã dịch năm trước** (phải).
+* Dưới mỗi ô hiện một dòng tóm tắt: tên file đầy đủ, tên công ty, mã số thuế, kỳ báo cáo – dùng để kiểm tra đã chọn đúng cặp file.
+* Nếu ô **Tên công ty đã dịch** còn trống hoặc là giá trị mẫu, ứng dụng tự điền tên công ty lấy từ bản dịch năm trước. Hãy kiểm tra lại.
 
-        # Define headers and content for each step
-        if step == 1:
-            st.markdown("### **Step 1/9: Overview & Supported Formats**")
-            st.markdown("""
-            **Tổng quan:**
-            Công cụ chuyên dùng để tự động hóa quá trình phân tích, căn chỉnh định dạng bảng biểu và dịch thuật báo cáo tài chính chuyên nghiệp từ Tiếng Việt sang các ngôn ngữ khác (Tiếng Anh, Tiếng Trung Giản thể, Tiếng Trung Phồn thể).
-            
-            **Supported File Formats (Định dạng hỗ trợ):**
-            * Chỉ hỗ trợ duy nhất tài liệu Word có đuôi mở rộng **`.docx`**.
-            * Các định dạng khác như `.doc` (Word cũ), `.pdf`, `.xlsx` (Excel) hoặc `.txt` đều **không được hỗ trợ** bởi hệ thống.
-            """)
+**3. Thông tin báo cáo**
+* **Dịch sang:** `E` tiếng Anh, `Hs` tiếng Hoa giản thể, `Ht` tiếng Hoa phồn thể.
+* **Tên công ty đã dịch** (chữ đỏ) là tên công ty bằng ngôn ngữ đích – luôn kiểm tra kỹ; chữ in hoa toàn bộ được tự chuyển sang dạng viết hoa chữ cái đầu.
+* **Tên công ty tiếng Việt, ngày, kỳ báo cáo, người ký:** sửa nếu trích xuất chưa đúng.
 
-        elif step == 2:
-            st.markdown("### **Step 2/9: Upload Document**")
-            st.markdown("""
-            **Tải tệp tin đầu vào:**
-            1. Tại giao diện chính, di chuyển tới tab **🚀 Process**.
-            2. Nhấp vào vùng kéo thả hoặc bấm nút duyệt tại mục **Upload Financial Statements** để chọn tệp báo cáo tài chính `.docx` cần xử lý từ máy tính (ví dụ: báo cáo của năm nay).
-            3. Hệ thống sẽ tự động quét tệp tin ngay khi tải lên để trích xuất các thông tin siêu dữ liệu cần thiết.
-            """)
+**4. Chế độ xuất file và xử lý**
+* **Comments + Track Changes (khuyên dùng):** báo cáo có Track Changes cho câu khớp 100% với báo cáo năm trước, comment gợi ý cho câu chưa khớp, kèm bảng **AI_Form.docx**.
+* **Bản sạch:** báo cáo đã dịch, không chèn gợi ý trong đoạn.
+* **Bản gốc:** kiểu cũ, gợi ý `[Original] / [Prior VN] / [Suggest]` chèn ngay trong văn bản.
+* **Tất cả các bản:** tạo tất cả các file trên.
+* Bấm **🚀 Xử lý báo cáo**. Sau khi xong, ô tóm tắt cho biết số Track Changes, số comment và số mục cần AI.
 
-        elif step == 3:
-            st.markdown("### **Step 3/9: Prior Year Suggestion**")
-            st.markdown("""
-            **Sử dụng báo cáo năm trước để gợi ý dịch:**
-            1. Tích chọn **Suggest based on prior year report** (mặc định có chọn). Khi bỏ chọn, các giao diện liên quan sẽ tự động ẩn đi.
-            2. **Tải tệp đối chiếu song song:**
-               * **Bên trái (Vietnamese):** Tải báo cáo tiếng Việt năm trước (ví dụ: `V 2025.docx`).
-               * **Bên phải (Translated):** Tải báo cáo dịch tương ứng của năm trước (Tiếng Anh hoặc Tiếng Hoa, ví dụ: `Dich 2025.docx`).
-            3. **Trích xuất Metadata:** Hệ thống sẽ tự động trích xuất bảng đầu tiên của 2 báo cáo năm trước (Tên doanh nghiệp, mã số thuế, niên độ...) và hiển thị trong mục thông tin để bạn dễ đối chiếu.
-            """)
+**5. Tên file kết quả**
+* `…_TC.docx` – báo cáo Comments + Track Changes.
+* `AI_Form.docx` – bảng/prompt gửi AI (tên cố định, ngắn gọn).
+* `…_AI_TC.docx` – báo cáo sau khi nhập bản dịch AI.
+* Việc ghép dữ liệu dựa trên mã ID bên trong file, không dựa vào tên file.
 
-        elif step == 4:
-            st.markdown("### **Step 4/9: Metadata Selection**")
-            st.markdown("""
-            **Tùy chọn dịch & Chỉnh sửa:**
-            1. Rà soát thông tin được trích xuất tự động tại phần **Report Metadata** (Tên doanh nghiệp, ngày lập báo cáo, niên độ, danh sách người ký).
-            2. **Translate into:** Chọn ngôn ngữ dịch mục tiêu (`E` cho Tiếng Anh, `Hs` cho Tiếng Trung Giản thể, `Ht` cho Tiếng Trung Phồn thể).
-            3. **Translated Name:** Nhập tên dịch của công ty. Trường này sẽ tự động viết hoa chữ cái đầu (Proper Case) và được in đỏ nổi bật trên giao diện để nhắc nhở kiểm tra kỹ.
-            """)
+**6. Các bước xử lý (nút ⚙️)**
+* Gồm 14 bước tự động: chuẩn hóa Unicode, CleanV, mẫu đoạn văn, dịch theo từ điển, font kép tiếng Hoa, đổi định dạng số, căn chỉnh bảng, định dạng ngày, textbox, dấu tên người ký, tô vàng tiếng Việt chưa dịch, gợi ý từ điển…
+* Mặc định bật tất cả. Chỉ tắt khi biết rõ mục đích.
+* **Tự mở/tải kết quả:** tự mở file kết quả bằng Word (máy Windows) hoặc tự tải xuống (bản cloud).
+"""
 
-        elif step == 5:
-            st.markdown("### **Step 5/9: Pipeline Configuration**")
-            st.markdown("""
-            **Cấu hình quy trình xử lý:**
-            * Phía dưới phần hướng dẫn này trên thanh Sidebar là mục **PROCESSING PIPELINE**.
-            * Tập hợp các bước xử lý tự động (chuẩn hóa Unicode, căn chỉnh bảng, phông chữ kép CJK...).
-            * **Lưu ý các tính năng thông minh mới:**
-              * **11. Highlight VN:** Tự động **xóa toàn bộ highlight cũ** trước khi đánh dấu chữ tiếng Việt mới để tránh nhầm lẫn.
-              * **13. Always Show [Original]:** Luôn hiển thị khối gốc tiếng Việt cho các câu chưa được dịch để dễ so sánh (mặc định được bật).
-            """)
+AI_FLOW = """
+**Khi nào dùng:** sau khi xử lý ở chế độ **Comments + Track Changes** hoặc **Tất cả các bản**, các đoạn còn tô vàng hoặc chỉ có gợi ý dưới 100% được đưa vào **AI_Form.docx**.
 
-        elif step == 6:
-            st.markdown("### **Step 6/9: Execute Process**")
-            st.markdown("""
-            **Kích hoạt xử lý báo cáo:**
-            1. Sau khi hoàn thành rà soát các trường thông tin, bấm nút **`🚀 Process Report`** màu tím/xanh nổi bật dưới phần Metadata ở giao diện chính để thực thi.
-            2. Hệ thống sẽ tiến hành chạy ngầm quy trình biên dịch toàn bộ văn bản và định dạng lại các bảng biểu XML phức tạp.
-            3. Thời gian xử lý dao động từ vài giây tới một phút tùy thuộc vào độ lớn của tài liệu.
-            """)
+**Bước 1 – Tải AI_Form.docx**
+* File trang ngang, mỗi mục là một bảng 5 cột: **Mã**, **Nội dung cần dịch**, **Tiếng Việt tham chiếu**, **Bản dịch tham chiếu**, **Bản dịch hoàn thiện**.
+* Đầu file có **PROMPT chung cho AI** quy định ngôn ngữ đích, font, cách viết ngày, số.
 
-        elif step == 7:
-            st.markdown("### **Step 7/9: Download Output Files**")
-            st.markdown("""
-            **Nhận tệp tin kết quả:**
-            * **Môi trường cục bộ (Windows):** Tệp Word kết quả đã xử lý sẽ tự động được mở trực tiếp bằng ứng dụng Microsoft Word của bạn (nếu chọn *Auto-open/download result*).
-            * **Môi trường Cloud hoặc tải thủ công:** Bấm nút **`📥 Download Report (.docx)`** màu xanh nổi bật tại màn hình chính để tải xuống tệp tin kết quả.
-            * **Quyền Admin:** Bạn có thể tải bản từ điển đối chiếu đã giải mã thẻ động qua nút **`Download Resolved Dictionary (.xlsx)`** ở tab **Admin**.
-            * **Khớp báo cáo kỳ trước 100%:** Ứng dụng tạo Track Changes ngay ở bước xử lý, áp dụng font theo ngôn ngữ đích và không đưa đoạn đã khớp này vào worksheet AI, kể cả khi từ điển có thêm gợi ý dưới 100%. Đoạn đã thay thành công không được tạo thêm comment, nên sau Accept không có comment thừa cần xóa. Nếu cấu trúc không thể thay an toàn, comment ghi rõ cần kiểm tra thủ công; comment có sẵn của người dùng luôn được giữ lại.
-            * **Tên file ngắn:** **_TC.docx** là báo cáo Comments + Track Changes; **_AI_Form.docx** là bảng/prompt gửi AI; **_AI_TC.docx** là báo cáo đã áp dụng bản dịch AI bằng Track Changes. Ứng dụng giữ tên báo cáo, ngôn ngữ và thời điểm xử lý, bỏ phần **tool** thừa và không cộng dồn hậu tố **review_AI_reviewed**. Việc ghép nội dung vẫn dựa trên mã ID và dữ liệu liên kết, không dựa vào tên file.
-            * **Bảng hoàn thiện bản dịch bằng AI:** Chọn **`Comments + Track Changes`** hoặc **`All outputs`**, rồi tải **`Download AI Translation Worksheet`**. File gồm gợi ý chưa khớp và các đoạn tiếng Việt tô vàng chưa tìm thấy tham chiếu; mỗi đoạn có comment và mã riêng. Hai cột tham chiếu có thể trống; AI vẫn phải dịch đầy đủ nguồn hiện tại.
-            * File này có bố cục trang ngang, mỗi comment một bảng năm cột: **Mã**, **Nội dung cần dịch**, **Tiếng Việt tham chiếu**, **Bản dịch tham chiếu**, **Bản dịch hoàn thiện**. Mã đối chiếu giúp nhập đúng comment; không có vị trí tài liệu hay thông tin thừa. Một prompt chung quy định ngôn ngữ đích và định dạng tiếng Anh hoặc tiếng Hoa.
-            * **Tên riêng:** Prompt yêu cầu giữ nguyên tên pháp lý công ty (ví dụ **Công ty TNHH ABC**) và tên người (ví dụ **Nguyễn Văn A**), không tự dịch, phiên âm hoặc bỏ dấu. Chỉ dùng tên đích chính thức khi được người dùng cung cấp/xác nhận. Cách gọi chung **Công ty** trong câu vẫn được dịch theo ngữ cảnh; nếu cả ô chỉ là tên riêng, AI điền lại đúng tên nguồn, không để trống.
-            * **Thẻ mẫu và bookmark:** Thẻ hiển thị như **【自年月日至年月日止階段】** không chặn nhập bản dịch hoặc tạo Track Changes. Nếu nguồn chưa cung cấp giá trị thay thế, AI giữ nguyên thẻ và dịch phần còn lại, không chèn cảnh báo vào ô kết quả. Bookmark Word rỗng ở đầu/cuối hoặc bao toàn bộ đoạn được bảo toàn và không còn bị chặn chỉ vì có bookmark; bookmark lỗi, bao một phần câu hoặc đi qua nhiều đoạn vẫn cần xử lý thủ công để tránh làm hỏng liên kết.
-            * Tải file này lên AI có khả năng chỉnh sửa và xuất Word, yêu cầu thực hiện prompt ở đầu file, chỉ điền cột cuối và giữ nguyên bốn cột đầu. Tải lại file Word đã hoàn thiện; có thể copy cột cuối vào báo cáo hoặc nhập tự động như sau.
-            * Mở **Import AI translations** trong tab xử lý. Dùng bản **Comments + Track Changes** của phiên hiện tại hoặc tải lên đúng bản báo cáo đi kèm worksheet; sau đó đính kèm worksheet đã được AI điền.
-            * Bấm **Check AI translations**, xem trạng thái từng mã và chọn các bản dịch hợp lệ. Ô trống, mã trùng, nguồn/comment bị sửa, liên kết Excel hay cấu trúc phức tạp (kể cả định dạng nhấn mạnh hỗn hợp không thể ánh xạ an toàn) sẽ không được tự thay thế. Không ghép gần đúng theo nội dung; kiểm tra này không thay cho rà soát chất lượng dịch.
-            * Giao diện nhập AI có hai cột tải file, các thẻ thống kê và bảng rà soát gọn. Cột **Note** được ưu tiên độ rộng; chọn mã tại **Full row details and note** để đọc ghi chú đầy đủ, mở **Compare source and AI translation** để so sánh nội dung mà không làm bảng quá cao.
-            * **Source Track Changes** là thay đổi đã có trong báo cáo trước khi nhập AI, chẳng hạn bản dịch khớp 100% từ báo cáo kỳ trước ở bước xử lý ban đầu. Mã này không được áp dụng thêm từ AI; bỏ chọn không hoàn tác các thay đổi có sẵn. Sau khi áp dụng, giao diện liệt kê riêng các mã AI thực sự đã thay và các mã giữ nguyên.
-            * Xác nhận đã rà soát rồi bấm **Apply AI translations** và tải báo cáo mới qua **Download report with AI Track Changes**. Ứng dụng ghi xóa đoạn cũ và chèn bản dịch bằng Track Changes, giữ định dạng đoạn, cỡ chữ nguồn và quy tắc font DFKai-SB cho tiếng Hoa, Times New Roman cho chữ Latin/số; chỉ xóa comment của những dòng đã áp dụng thành công.
-            * **Lưu ý:** Giữ bản báo cáo gốc để dự phòng. Reject khôi phục nội dung cũ nhưng không khôi phục comment đã xóa. Các file cũ chưa có mã liên kết phải được tạo lại bằng phiên bản mới; không thể nhập ngược an toàn.
-            * Bản dịch chèn mới không giữ màu tô vàng đánh dấu cần dịch, kể cả màu kế thừa từ style; bản gốc trong phần xóa vẫn được giữ để Reject. Sau khi cập nhật ứng dụng, hãy xử lý lại báo cáo nguồn để tạo đủ comment, mã và worksheet mới; worksheet cũ không có các đoạn mới được phát hiện.
-            """)
+**Bước 2 – Gửi cho AI**
+* Dùng AI có khả năng **sửa và xuất file Word** (và truy cập web để tra tên công ty). Yêu cầu AI làm theo prompt ở đầu file, chỉ điền cột cuối.
+* Quy tắc tên riêng trong prompt:
+  * **Tên công ty** (ví dụ *Công ty TNHH ABC*): AI tra tên quốc tế trên **masothue.com** hoặc **thuvienphapluat.vn**. Không tìm thấy thì giữ nguyên tên tiếng Việt và **tô vàng** để bạn kiểm tra.
+  * **Tên người** (ví dụ *Nguyễn Văn A*): chuyển thành không dấu – *Nguyen Van A*.
+  * Thẻ mẫu như **【自年月日至年月日止階段】** được giữ nguyên, không làm trống ô.
 
-        elif step == 8:
-            st.markdown("### **Step 8/9: Smart Output Verification**")
-            st.markdown("""
-            **Cách đọc và rà soát kết quả dịch thông minh:**
-            * **Vùng bôi màu vàng (Yellow Highlights):** Đây là các cụm từ Tiếng Việt chưa được dịch.
-            * **Định dạng gợi ý trực quan (Bold & Color):** Các nhãn được tách dòng riêng và in đậm để phân biệt với nội dung.
-            * **Gợi ý Báo cáo năm trước (Màu Đỏ - Có độ ưu tiên cao hơn):**
-              * Hiển thị dạng: `[Original]`, `[Prior VN]`, `[Suggest]`.
-              * **Tự động đối chiếu:** Hệ thống sẽ tự động so sánh và **tô highlight xanh lá sáng (bright green)** cho những từ/cụm từ khác biệt ở phần nội dung **`[Original]`** so với **`[Prior VN]`** để bạn chú ý và hiệu chỉnh chính xác.
-            * **Gợi ý Từ điển (Màu Xanh Dương):**
-              * Hiển thị dạng: `[Original]`, `[Dict VN]`, `[Suggest]`. Không tô highlight xanh lá.
-            * **Standalone `[Original]` (Màu Xanh Dương):**
-              * Hiển thị cho các câu tô vàng còn lại không có so khớp (khi bật bước 13).
-            """)
+**Bước 3 – Nhập lại (📤 Nhập bản dịch từ AI)**
+* Chọn báo cáo `_TC` của phiên hiện tại (mặc định) hoặc tải đúng báo cáo đi kèm, rồi tải file AI đã điền.
+* Bấm **Kiểm tra bản dịch AI**, xem trạng thái từng mã: *Sẵn sàng*, *Ô trống*, *Cần xử lý thủ công*, *Thiếu bảng*, *Đã áp dụng*, *Không đổi*, *Track Changes có sẵn*.
+* Chọn các mã hợp lệ, đánh dấu xác nhận đã rà soát, bấm **Áp dụng bản dịch AI**, rồi tải **…_AI_TC.docx**.
+* Bản dịch được ghi bằng Track Changes, giữ định dạng đoạn và cỡ chữ; font DFKai-SB cho chữ Hoa, Times New Roman cho chữ Latin/số. Phần AI **tô vàng** (tên công ty chưa tra được) vẫn được **giữ tô vàng** trong báo cáo.
+* Comment của các mã đã áp dụng được xóa; Reject sẽ khôi phục câu gốc (không khôi phục comment).
 
-        elif step == 9:
-            st.markdown("### **Step 9/9: Common Issues & Fixes**")
-            st.markdown("""
-            **Common Issues & Fixes (Sự cố thường gặp):**
-            * **Không tải được tệp/Lỗi định dạng:** Đảm bảo tệp tin đúng định dạng `.docx`, không bị lỗi mã hóa XML và không ở trạng thái khóa bảo vệ (Protected/Read-only).
-            * **Xử lý lâu với tệp lớn:** Việc phân tích và dịch từng phần tử XML bảng biểu báo cáo tài chính lớn cần thời gian xử lý. Hãy kiên nhẫn và không tải lại trang khi hệ thống đang chạy.
-            * **Không tải được tệp kết quả:** Thử tải lại bằng cách bấm nút tải thủ công `Download Report (.docx)` hiển thị bền vững ở giao diện chính.
-            * **Streamlit Cloud ngủ đông:** Nếu ứng dụng không được sử dụng trong thời gian dài, Streamlit Cloud sẽ tự động chuyển sang trạng thái ngủ (Sleep). Khi truy cập lại, vui lòng đợi 1-2 phút để máy chủ ảo khởi chạy lại hệ thống trước khi bắt đầu tải tệp.
-            """)
+**Các trường hợp không tự thay (cần xử lý tay)**
+* Ô trống, mã trùng, AI sửa 4 cột đầu, nguồn/comment đã bị sửa trong báo cáo.
+* Đoạn có liên kết Excel, field Word, hyperlink, định dạng hỗn hợp trong câu, bookmark bao một phần câu hoặc nhiều đoạn.
+* Đoạn đã có Track Changes từ trước (ví dụ khớp 100% với báo cáo năm trước) – được giữ nguyên.
+"""
+
+READ_RESULT = """
+**Trong báo cáo kết quả**
+* **Tô vàng:** cụm tiếng Việt chưa dịch được.
+* **Track Changes:** câu được thay tự động (khớp 100% báo cáo năm trước, hoặc bản dịch AI đã nhập). Accept để giữ, Reject để quay về câu gốc.
+* **Comment:** gợi ý dịch dưới 100% kèm nguồn (báo cáo năm trước / từ điển) và tỷ lệ tương đồng.
+
+**Chế độ Bản gốc (gợi ý trong văn bản)**
+* **Màu đỏ – gợi ý từ báo cáo năm trước** (ưu tiên cao): `[Original]`, `[Prior VN]`, `[Suggest]`; khác biệt giữa `[Original]` và `[Prior VN]` được tô xanh lá.
+* **Màu xanh dương – gợi ý từ từ điển:** `[Original]`, `[Dict VN]`, `[Suggest]`.
+* **`[Original]` đứng riêng:** câu tô vàng không có gợi ý (khi bật bước 13).
+
+**Tab 📖 Tra từ điển**
+* Tra cứu từ điển theo tiếng Việt hoặc bản dịch; chọn ngôn ngữ hiển thị E / Hs / Ht hoặc tất cả.
+"""
+
+TROUBLESHOOTING = """
+* **Không tải được file:** kiểm tra đúng đuôi .docx, file không bị khóa (Protected/Read-only), không đang mở ở chế độ chỉ đọc.
+* **Xử lý lâu:** báo cáo lớn cần vài chục giây; không tải lại trang khi đang chạy.
+* **Tải lại trang (F5) sẽ phải đăng nhập lại** và mất các file đã tải lên trong phiên.
+* **Thông tin tự điền sai:** sửa trực tiếp trong **Thông tin báo cáo** trước khi bấm **Xử lý báo cáo**.
+* **Nhập AI báo lỗi “thuộc báo cáo khác hoặc ngôn ngữ dịch khác”:** file AI không cùng báo cáo/ngôn ngữ với báo cáo `_TC` đang chọn – tải đúng cặp file.
+* **Worksheet cũ không có mã ID:** xử lý lại báo cáo nguồn để tạo AI_Form.docx mới.
+* **Bản cloud ngủ đông:** lần truy cập đầu sau thời gian dài cần đợi 1–2 phút.
+* **Quyền Admin:** tab **📈 Quản trị** có nhật ký sử dụng, quản lý người dùng, đồng bộ mẫu Excel và tải từ điển đã giải mã.
+"""
+
+
+@st.dialog("📘 Hướng dẫn sử dụng", width="large")
+def show_user_guide():
+    sections = st.tabs(["🚀 Bắt đầu nhanh", "📂 Xử lý báo cáo", "🤖 Dịch bằng AI", "🔍 Đọc kết quả", "🛠️ Sự cố thường gặp"])
+    for tab, content in zip(sections, (QUICK_START, PROCESS, AI_FLOW, READ_RESULT, TROUBLESHOOTING)):
+        with tab:
+            st.markdown(content)

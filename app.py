@@ -14,15 +14,27 @@ from review_filenames import review_output_filename
 from usage_logger import log_event, get_logs, is_local_env
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
-from user_guide import render_user_guide_sidebar
+from user_guide import show_user_guide
+from review_annotations import needs_ai_translation
+from docx import Document
+import time
 
+
+# Display names (stored values stay unchanged)
+LANGUAGE_NAMES = {"E": "E – Tiếng Anh", "Hs": "Hs – Tiếng Hoa giản thể", "Ht": "Ht – Tiếng Hoa phồn thể"}
+OUTPUT_MODE_NAMES = {
+    "Original output (current)": "Bản gốc (gợi ý chèn trong văn bản)",
+    "Clean output (no inline suggestions)": "Bản sạch (không chèn gợi ý)",
+    "Comments + Track Changes": "Comments + Track Changes (khuyên dùng)",
+    "All outputs": "Tất cả các bản",
+}
 
 # Page Configuration
 st.set_page_config(
     page_title="Financial Statements Processor",
     page_icon="📄",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Load CSS
@@ -50,6 +62,19 @@ def st_auto_download(filedata, filename, mime):
         </script>
     """
     components.html(js, height=0)
+
+def summarize_outputs(outputs, review_items, seconds):
+    """Quick counts shown after processing: Track Changes, comments and items left for AI."""
+    stats = [("Thời gian xử lý", f"{seconds:.0f}s")]
+    if outputs.get("review"):
+        document = Document(io.BytesIO(outputs["review"]))
+        insertions = len(document.element.xpath(".//w:ins"))
+        stats += [("Track Changes", insertions), ("Comment gợi ý", len(document.comments)),
+                  ("Mục cần AI", sum(1 for item in review_items or [] if needs_ai_translation(item)))]
+    else:
+        stats.append(("File kết quả", len(outputs)))
+    return stats
+
 
 def simple_date_format(d_str):
     """
@@ -93,7 +118,7 @@ def save_user(username, password, role, auto_fill=False):
     users = load_users()
     # Check if user already exists
     if any(u["username"] == username for u in users):
-        return False, f"Username '{username}' already exists."
+        return False, f"Tên đăng nhập '{username}' đã tồn tại."
     
     users.append({
         "username": username,
@@ -105,9 +130,9 @@ def save_user(username, password, role, auto_fill=False):
     try:
         with open(USERS_FILE, "w") as f:
             json.dump({"users": users}, f, indent=4)
-        return True, f"User '{username}' added successfully."
+        return True, f"Đã thêm người dùng '{username}'."
     except Exception as e:
-        return False, f"Error saving user: {e}"
+        return False, f"Lỗi khi lưu người dùng: {e}"
 
 def remove_user(username):
     users = load_users()
@@ -116,9 +141,9 @@ def remove_user(username):
     try:
         with open(USERS_FILE, "w") as f:
             json.dump({"users": updated_users}, f, indent=4)
-        return True, f"User '{username}' deleted successfully."
+        return True, f"Đã xóa người dùng '{username}'."
     except Exception as e:
-        return False, f"Error deleting user: {e}"
+        return False, f"Lỗi khi xóa người dùng: {e}"
 
 def update_user_data(old_username, new_username, new_password, new_role, auto_fill):
     users = load_users()
@@ -126,7 +151,7 @@ def update_user_data(old_username, new_username, new_password, new_role, auto_fi
     # Check if new username is already taken (if changing name)
     if old_username != new_username:
         if any(u["username"] == new_username for u in users):
-            return False, f"Username '{new_username}' already exists."
+            return False, f"Tên đăng nhập '{new_username}' đã tồn tại."
     
     for user in users:
         if user["username"] == old_username:
@@ -139,9 +164,9 @@ def update_user_data(old_username, new_username, new_password, new_role, auto_fi
     try:
         with open(USERS_FILE, "w") as f:
             json.dump({"users": users}, f, indent=4)
-        return True, f"User '{new_username}' updated successfully."
+        return True, f"Đã cập nhật người dùng '{new_username}'."
     except Exception as e:
-        return False, f"Error updating user: {e}"
+        return False, f"Lỗi khi cập nhật người dùng: {e}"
 
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
@@ -161,9 +186,15 @@ def handle_name_cap_change():
         st.session_state.meta_name_cap = tl.ensure_proper_case(st.session_state.meta_name_cap)
 
 def login_screen():
-    st.markdown('<div class="login-container">', unsafe_allow_html=True)
-    st.markdown('<div class="login-header">🔐 User Login</div>', unsafe_allow_html=True)
-    
+    _, login_column, _ = st.columns([1, 1.1, 1])
+    with login_column, st.container(border=True, key="login_box"):
+        login_form()
+
+
+def login_form():
+    st.markdown('<div class="login-header">📄 Financial Statements Processor</div>', unsafe_allow_html=True)
+    st.markdown('<div class="login-sub">🔐 Đăng nhập để tiếp tục</div>', unsafe_allow_html=True)
+
     users = load_users()
     usernames = [u["username"] for u in users]
     
@@ -173,12 +204,12 @@ def login_screen():
         handle_autofill() # Set initial password if needed
 
     # User Selection with callback
-    st.selectbox("Select Username", usernames, key="login_user", on_change=handle_autofill)
+    st.selectbox("Tên đăng nhập", usernames, key="login_user", on_change=handle_autofill)
     
     with st.form("login_form"):
         # Password field linked to session state key
-        password = st.text_input("Password", key="login_password", type="password")
-        submit = st.form_submit_button("Sign In")
+        password = st.text_input("Mật khẩu", key="login_password", type="password")
+        submit = st.form_submit_button("Đăng nhập", type="primary", use_container_width=True)
         
         if submit:
             if check_credentials(st.session_state.login_user, password):
@@ -187,9 +218,7 @@ def login_screen():
                 log_event(st.session_state.username, "Login", "Successfully signed in")
                 st.rerun()
             else:
-                st.error("Invalid username or password")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+                st.error("Sai tên đăng nhập hoặc mật khẩu.")
 
 if not st.session_state.authenticated:
     login_screen()
@@ -229,195 +258,86 @@ metadata_defaults = {
 }
 
 for key, default_val in metadata_defaults.items():
-    if key not in st.session_state:
-        st.session_state[key] = default_val
+    # Re-assigning keeps the value even when an upload triggers st.rerun() before the
+    # metadata widgets are drawn; otherwise Streamlit drops the widget state and the
+    # field silently falls back to its default.
+    st.session_state[key] = st.session_state.get(key, default_val)
+st.session_state.export_mode = st.session_state.get("export_mode", "Comments + Track Changes")
 
 
 
-st.markdown('<div class="app-logo">📄</div>', unsafe_allow_html=True)
-st.markdown('<div class="main-header">Financial Statements Processor</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-header">Automated analysis and formatting of Word-based financial statements</div>', unsafe_allow_html=True)
+PROCESS_STEPS = [
+    ("unicode", "1. Chuẩn hóa Unicode (NFC)"),
+    ("clean_v", "2. Sửa lỗi theo CleanV"),
+    ("para_template", "3. Mẫu đoạn văn"),
+    ("dictionary", "4. Dịch theo từ điển"),
+    ("dual_font", "5. Font kép tiếng Hoa"),
+    ("number_swap", "6. Đổi định dạng số"),
+    ("table_size", "7. Bảng & bố cục"),
+    ("table_7pt", "7.5. Bảng >10 cột thu về cỡ 7pt"),
+    ("date_format", "8. Định dạng ngày"),
+    ("textbox", "9. Textbox & chữ Draft"),
+    ("signer_accents", "10. Dấu tên người ký"),
+    ("highlight", "11. Tô vàng tiếng Việt chưa dịch"),
+    ("suggestion", "12. Gợi ý từ điển"),
+    ("always_original", "13. Luôn hiện [Original]"),
+]
+if 'process_steps' not in st.session_state:
+    st.session_state.process_steps = {key: True for key, _ in PROCESS_STEPS}
+for key, _ in PROCESS_STEPS:
+    st.session_state.setdefault(f"step_{key}", st.session_state.process_steps.get(key, True))
 
-# Sidebar Configuration
-with st.sidebar:
-    # 1. User Profile Section
-    st.markdown(f"""
-    <div class="sidebar-section">
-        <span class="sidebar-label">User Profile</span>
-        <div class="sidebar-user-card">
-            <div class="sidebar-user-icon">👤</div>
-            <div class="sidebar-user-info">
-                <div class="sidebar-user-name">{st.session_state.username}</div>
-                <div class="sidebar-user-role">{"Administrator" if st.session_state.username == "admin" else "Standard User"}</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    if st.button("🚪 Sign Out", use_container_width=True):
-        st.session_state.authenticated = False
-        st.rerun()
-        
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # User Guide Section
-    render_user_guide_sidebar()
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # 2. Processing Steps Section
-    with st.container():
-        st.markdown('<div class="sidebar-section">', unsafe_allow_html=True)
-        st.markdown('<span class="sidebar-label">Processing Pipeline</span>', unsafe_allow_html=True)
-        st.markdown("### 🛠️ Configuration")
-        
-        # Initialize process settings in session state if not existing
-        if 'process_steps' not in st.session_state:
-            st.session_state.process_steps = {
-                "unicode": True,
-                "clean_v": True,
-                "para_template": True,
-                "dictionary": True,
-                "dual_font": True,
-                "number_swap": True,
-                "table_size": True,
-                "table_7pt": True,
-                "date_format": True,
-                "textbox": True,
-                "signer_accents": True,
-                "highlight": True,
-                "suggestion": True,
-                "always_original": True
-            }
 
-        steps = [
-            ("unicode", "1. Unicode Sync (NFC)"),
-            ("clean_v", "2. CleanV Fixes"),
-            ("para_template", "3. Paragraph Templates"),
-            ("dictionary", "4. Dictionary Translation"),
-            ("dual_font", "5. Dual-font (CN)"),
-            ("number_swap", "6. Number Swap"),
-            ("table_size", "7. Table & Layout"),
-            ("table_7pt", "7.5. Shrink >10 Cols Table to 7pt"),
-            ("date_format", "8. Date Formatting"),
-            ("textbox", "9. Textbox & Draft"),
-            ("signer_accents", "10. Signer Accents"),
-            ("highlight", "11. Highlight VN"),
-            ("suggestion", "12. Dictionary Suggestion"),
-            ("always_original", "13. Always Show [Original]")
-        ]
-        
-        process_settings = {}
-        for key, label in steps:
-            process_settings[key] = st.checkbox(label, value=st.session_state.process_steps.get(key, True), key=f"step_{key}")
-            st.session_state.process_steps[key] = process_settings[key]
-        
-        st.markdown('</div>', unsafe_allow_html=True)
+def set_all_steps(value):
+    for key, _ in PROCESS_STEPS:
+        st.session_state[f"step_{key}"] = value
 
-    # 3. Application Settings Section (at the bottom)
-    st.markdown('<div class="sidebar-section">', unsafe_allow_html=True)
-    st.markdown('<span class="sidebar-label">Preferences</span>', unsafe_allow_html=True)
-    st.checkbox(
-        "Auto-open/download result", 
-        value=st.session_state.get("auto_open", True), 
-        key="auto_open", 
-        help="Automatically open in Word (local Windows) or trigger download (cloud/Linux) after processing completes."
-    )
-    st.markdown('</div>', unsafe_allow_html=True)
+
+# Top bar: compact title on the left, help / settings / account on the right
+with st.container(key="top_bar", horizontal=True, vertical_alignment="center"):
+    st.markdown('<div class="app-title">📄 Financial Statements Processor</div>', unsafe_allow_html=True)
+    st.space("stretch")
+    if st.button("❓", key="open_guide", help="Hướng dẫn sử dụng"):
+        show_user_guide()
+    with st.popover("⚙️", help="Các bước xử lý và tùy chọn"):
+        st.markdown("**Các bước xử lý**")
+        all_col, none_col = st.columns(2)
+        all_col.button("Chọn tất cả", key="steps_all", on_click=set_all_steps, args=(True,), use_container_width=True)
+        none_col.button("Bỏ chọn tất cả", key="steps_none", on_click=set_all_steps, args=(False,), use_container_width=True)
+        step_columns = st.columns(2)
+        for index, (key, label) in enumerate(PROCESS_STEPS):
+            with step_columns[0 if index < (len(PROCESS_STEPS) + 1) // 2 else 1]:
+                st.checkbox(label, key=f"step_{key}")
+        st.divider()
+        st.markdown("**Tùy chọn**")
+        st.checkbox(
+            "Tự mở/tải kết quả",
+            key="auto_open",
+            help="Xử lý xong sẽ tự mở file bằng Word (máy Windows) hoặc tự tải xuống (bản cloud/Linux)."
+        )
+    role = "Quản trị viên" if st.session_state.username == "admin" else "Người dùng"
+    with st.popover(f"👤 {st.session_state.username}"):
+        st.markdown(f"**{st.session_state.username}**  \n{role}")
+        if st.button("🚪 Đăng xuất", use_container_width=True):
+            st.session_state.authenticated = False
+            st.rerun()
+
+for key, _ in PROCESS_STEPS:
+    st.session_state.process_steps[key] = st.session_state[f"step_{key}"]
 
 # Main Interface Tabs Setup
-tab_titles = ["🚀 Process", "📖 Dictionary Search"]
+tab_titles = ["🚀 Xử lý", "📖 Tra từ điển"]
 if st.session_state.authenticated and st.session_state.username == "admin":
-    tab_titles.append("📈 Admin")
+    tab_titles.append("📈 Quản trị")
 
 tabs = st.tabs(tab_titles)
 
 with tabs[0]:
     # --- Tab 1: Process ---
-    # Prior Year Suggestions Configuration
-    st.markdown("### 📅 Prior Year Report Settings")
-    suggest_py = st.checkbox(
-        "Suggest based on prior year report", 
-        value=st.session_state.get("suggest_py", True), 
-        key="suggest_py"
-    )
-    
-    py_dict = None
-    if suggest_py:
-        col_py_1, col_py_2 = st.columns(2)
-        with col_py_1:
-            py_vn_file = st.file_uploader("Select prior year Vietnamese report (.docx)", type=["docx"], key="py_vn_uploader")
-            if py_vn_file:
-                # Cache extraction
-                if st.session_state.get("py_vn_last_filename") != py_vn_file.name:
-                    with st.spinner("Extracting prior year VN metadata..."):
-                        py_vn_file.seek(0)
-                        meta = mex.extract_first_table_metadata(py_vn_file)
-                        st.session_state.py_vn_meta = meta
-                        st.session_state.py_vn_last_filename = py_vn_file.name
-                        st.rerun()
-                
-                # Display metadata
-                meta = st.session_state.get("py_vn_meta")
-                if meta:
-                    with st.expander("📄 PY Vietnamese Metadata", expanded=True):
-                        st.markdown(f"**Company:** {meta.get('company_name', '')}")
-                        st.markdown(f"**Incorporation:** {meta.get('incorporation', '')}")
-                        st.markdown(f"**Tax Code:** {meta.get('tax_code', '')}")
-                        st.markdown(f"**Period:** {meta.get('reporting_period', '')}")
-            else:
-                st.session_state.pop("py_vn_last_filename", None)
-                st.session_state.pop("py_vn_meta", None)
-                        
-        with col_py_2:
-            py_trans_file = st.file_uploader("Select prior year translated report (.docx)", type=["docx"], key="py_trans_uploader")
-            if py_trans_file:
-                # Cache extraction
-                if st.session_state.get("py_trans_last_filename") != py_trans_file.name:
-                    with st.spinner("Extracting prior year translated metadata..."):
-                        py_trans_file.seek(0)
-                        meta = mex.extract_first_table_metadata(py_trans_file)
-                        st.session_state.py_trans_meta = meta
-                        st.session_state.py_trans_last_filename = py_trans_file.name
-                        st.rerun()
-                
-                # Display metadata
-                meta = st.session_state.get("py_trans_meta")
-                if meta:
-                    with st.expander("📄 PY Translated Metadata", expanded=True):
-                        st.markdown(f"**Company:** {meta.get('company_name', '')}")
-                        st.markdown(f"**Incorporation:** {meta.get('incorporation', '')}")
-                        st.markdown(f"**Tax Code:** {meta.get('tax_code', '')}")
-                        st.markdown(f"**Period:** {meta.get('reporting_period', '')}")
-            else:
-                st.session_state.pop("py_trans_last_filename", None)
-                st.session_state.pop("py_trans_meta", None)
-
-        # Build py_dict if both files are uploaded
-        if py_vn_file and py_trans_file:
-            cache_key = f"py_dict_{py_vn_file.name}_{py_trans_file.name}"
-            if st.session_state.get("py_dict_cache_key") != cache_key:
-                with st.spinner("Building prior year translation dictionary..."):
-                    py_dict = tl.build_py_dictionary(py_vn_file, py_trans_file)
-                    st.session_state.py_dict = py_dict
-                    st.session_state.py_dict_cache_key = cache_key
-            else:
-                py_dict = st.session_state.get("py_dict")
-        else:
-            st.session_state.pop("py_dict", None)
-            st.session_state.pop("py_dict_cache_key", None)
-    else:
-        # Clear all cache when suggest_py is unchecked
-        st.session_state.pop("py_vn_last_filename", None)
-        st.session_state.pop("py_vn_meta", None)
-        st.session_state.pop("py_trans_last_filename", None)
-        st.session_state.pop("py_trans_meta", None)
-        st.session_state.pop("py_dict", None)
-        st.session_state.pop("py_dict_cache_key", None)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.info("📂 **Upload Financial Statements**")
-    uploaded_file = st.file_uploader("Select file (.docx)", type=["docx"], key="report_file")
+    # 1. Report to translate
+    with st.container(border=True, key="report_box"):
+        st.markdown('<div class="section-title">📂 Báo cáo cần dịch <span>file Word .docx</span></div>', unsafe_allow_html=True)
+        uploaded_file = st.file_uploader("Chọn file báo cáo (.docx)", type=["docx"], key="report_file", label_visibility="collapsed")
 
     # Automatic Metadata Extraction
     if uploaded_file:
@@ -429,13 +349,14 @@ with tabs[0]:
             st.session_state.processed_outputs = {}
             st.session_state.processed_output_excel = None
             st.session_state.process_success_msg = None
-            
-            with st.spinner("Extracting metadata from document..."):
+            st.session_state.process_stats = None
+
+            with st.spinner("Đang trích xuất thông tin báo cáo..."):
                 # We need to seek(0) in case the file pointer was moved
                 uploaded_file.seek(0)
                 ext_meta = mex.extract_metadata(uploaded_file)
                 uploaded_file.seek(0) # Reset again for later processing
-                
+
                 # Update session state fields
                 if ext_meta.get("name_vn"):
                     st.session_state.meta_name_lc = ext_meta["name_vn"]
@@ -453,79 +374,140 @@ with tabs[0]:
                     st.session_state.meta_signer_2 = ext_meta["signer_2"]
                 if ext_meta.get("signer_3"):
                     st.session_state.meta_signer_3 = ext_meta["signer_3"]
-                    
+
                 st.session_state.last_extracted_id = uploaded_file.name
                 st.rerun() # Refresh to show extracted values in inputs
 
-    st.divider()
+    # 2. Prior year reports (compact)
+    def prior_year_summary(meta, filename):
+        if not meta:
+            return f"✓ {filename}"
+        tax_code = re.sub(r"^[^:]*:\s*", "", meta.get("tax_code", "") or "")
+        details = " · ".join(value for value in (meta.get("company_name", ""), f"MST {tax_code}" if tax_code else "",
+                                                 meta.get("reporting_period", "")) if value)
+        return f"✓ **{filename}**  \n{details}"
 
-    with st.expander("📝 **Report Metadata**", expanded=True):
+    def prior_year_uploader(label, uploader_key, prefix, spinner_text):
+        uploaded = st.file_uploader(label, type=["docx"], key=uploader_key)
+        if uploaded:
+            if st.session_state.get(f"{prefix}_last_filename") != uploaded.name:
+                with st.spinner(spinner_text):
+                    uploaded.seek(0)
+                    st.session_state[f"{prefix}_meta"] = mex.extract_first_table_metadata(uploaded)
+                    st.session_state[f"{prefix}_last_filename"] = uploaded.name
+                    company = (st.session_state[f"{prefix}_meta"] or {}).get("company_name", "")
+                    if prefix == "py_trans" and company and st.session_state.meta_name_cap in ("", metadata_defaults["meta_name_cap"]):
+                        st.session_state.meta_name_cap = tl.ensure_proper_case(company)
+                    st.rerun()
+            st.caption(prior_year_summary(st.session_state.get(f"{prefix}_meta"), uploaded.name))
+        else:
+            st.session_state.pop(f"{prefix}_last_filename", None)
+            st.session_state.pop(f"{prefix}_meta", None)
+        return uploaded
+
+    py_dict = None
+    with st.container(border=True, key="py_box"):
+        title_column, toggle_column = st.columns([3, 2], vertical_alignment="center")
+        with title_column:
+            st.markdown('<div class="section-title">📅 Báo cáo năm trước <span>tùy chọn</span></div>', unsafe_allow_html=True)
+        with toggle_column:
+            suggest_py = st.toggle(
+                "Dùng báo cáo năm trước để gợi ý",
+                value=st.session_state.get("suggest_py", True),
+                key="suggest_py"
+            )
+        if suggest_py:
+            col_py_1, col_py_2 = st.columns(2)
+            with col_py_1:
+                py_vn_file = prior_year_uploader("Bản tiếng Việt năm trước (.docx)", "py_vn_uploader", "py_vn",
+                                                 "Đang đọc báo cáo tiếng Việt năm trước...")
+            with col_py_2:
+                py_trans_file = prior_year_uploader("Bản đã dịch năm trước (.docx)", "py_trans_uploader", "py_trans",
+                                                    "Đang đọc báo cáo đã dịch năm trước...")
+
+            # Build py_dict if both files are uploaded
+            if py_vn_file and py_trans_file:
+                cache_key = f"py_dict_{py_vn_file.name}_{py_trans_file.name}"
+                if st.session_state.get("py_dict_cache_key") != cache_key:
+                    with st.spinner("Đang tạo từ điển từ báo cáo năm trước..."):
+                        py_dict = tl.build_py_dictionary(py_vn_file, py_trans_file)
+                        st.session_state.py_dict = py_dict
+                        st.session_state.py_dict_cache_key = cache_key
+                else:
+                    py_dict = st.session_state.get("py_dict")
+            else:
+                st.session_state.pop("py_dict", None)
+                st.session_state.pop("py_dict_cache_key", None)
+        else:
+            # Clear all cache when suggest_py is unchecked
+            for state_key in ("py_vn_last_filename", "py_vn_meta", "py_trans_last_filename", "py_trans_meta", "py_dict", "py_dict_cache_key"):
+                st.session_state.pop(state_key, None)
+
+    # 3. Report metadata
+    with st.expander("📝 **Thông tin báo cáo**", expanded=True):
         col_metadata_1, col_metadata_2 = st.columns(2)
-        
+
         with col_metadata_1:
             # 1. Translate into
-            lang_options = ["E", "Hs", "Ht"] 
-            default_index = 0
-            if st.session_state.meta_translate in lang_options:
-                default_index = lang_options.index(st.session_state.meta_translate)
-            
-            st.selectbox(
-                "Translate into", 
-                options=lang_options, 
-                key="meta_translate",
-                index=default_index
-            )
+            lang_options = ["E", "Hs", "Ht"]
+            if st.session_state.meta_translate not in lang_options:
+                st.session_state.meta_translate = "E"
+            st.selectbox("Dịch sang", options=lang_options, key="meta_translate", format_func=LANGUAGE_NAMES.get)
 
             # 2. Translated Name (not capitalized)
-            st.text_input("Translated Name (not capitalized)", placeholder="CustomerName", key="meta_name_cap", on_change=handle_name_cap_change)
+            st.text_input("Tên công ty đã dịch (không viết hoa toàn bộ)", placeholder="Tên công ty bằng ngôn ngữ đích", key="meta_name_cap", on_change=handle_name_cap_change)
 
             # 3. Name in Vietnamese (not capitalized)
-            st.text_input("Name in Vietnamese (not capitalized)", placeholder="ABC Company Co., Ltd...", key="meta_name_lc")
-            
-        with col_metadata_2:
-            # 4. Year-end date
-            st.text_input("Year-end date", placeholder="31/12/2025", key="meta_year_end")
-            
-            # 5. Reporting date
-            st.text_input("Reporting date", placeholder="08/04/2026", key="meta_date")
-
-            # 6. Period 1 (in table)
-            st.text_input("Period 1 (in table)", placeholder="From xx/xx/20xx to xx/xx/20xx", key="meta_period_short")
-            
-            # 7. Period 2 (in table)
-            st.text_input("Period 2 (in table)", placeholder="From xx/xx/20xx to xx/xx/20xx", key="meta_period_short_2")
+            st.text_input("Tên công ty tiếng Việt (không viết hoa toàn bộ)", placeholder="Công ty TNHH ABC...", key="meta_name_lc")
 
             # 8. Signer Names (extracted from last table)
             c_s1, c_s2, c_s3 = st.columns(3)
             with c_s1:
-                st.text_input("Signer 1", key="meta_signer_1")
+                st.text_input("Người ký 1", key="meta_signer_1")
             with c_s2:
-                st.text_input("Signer 2", key="meta_signer_2")
+                st.text_input("Người ký 2", key="meta_signer_2")
             with c_s3:
-                st.text_input("Signer 3", key="meta_signer_3")
+                st.text_input("Người ký 3", key="meta_signer_3")
 
-    st.divider()
+        with col_metadata_2:
+            date_1, date_2 = st.columns(2)
+            with date_1:
+                # 4. Year-end date
+                st.text_input("Ngày kết thúc năm tài chính", placeholder="31/12/2025", key="meta_year_end")
+            with date_2:
+                # 5. Reporting date
+                st.text_input("Ngày lập báo cáo", placeholder="08/04/2026", key="meta_date")
 
+            # 6. Period 1 (in table)
+            st.text_input("Kỳ báo cáo 1 (trong bảng)", placeholder="Từ xx/xx/20xx đến xx/xx/20xx", key="meta_period_short")
+
+            # 7. Period 2 (in table)
+            st.text_input("Kỳ báo cáo 2 (trong bảng)", placeholder="Từ xx/xx/20xx đến xx/xx/20xx", key="meta_period_short_2")
+
+    # 4. Output mode + Process
+    if not uploaded_file:
+        st.caption("⬆️ Tải báo cáo cần dịch lên để bắt đầu xử lý.")
     if uploaded_file:
-        st.info(f"📂 **Current file:** {uploaded_file.name}")
-        
-        # 1. Action Buttons
-        col_process_1, col_process_2 = st.columns([1, 2])
-        with col_process_1:
-            process_btn = st.button("🚀 Process Report", use_container_width=True, type="primary")
-        export_mode = st.selectbox(
-            "Output mode",
-            ["Original output (current)", "Clean output (no inline suggestions)", "Comments + Track Changes", "All outputs"],
-            index=2,
-            key="export_mode",
-            help="Review output uses Word Comments and exact-match Track Changes, plus a landscape AI translation worksheet for matches below 100%. All outputs also includes this worksheet."
-        )
-        
+        with st.container(border=True, key="action_box"):
+            mode_column, button_column = st.columns([3, 1], vertical_alignment="bottom")
+            with mode_column:
+                export_mode = st.selectbox(
+                    "Chế độ xuất file",
+                    ["Original output (current)", "Clean output (no inline suggestions)", "Comments + Track Changes", "All outputs"],
+                    key="export_mode",
+                    format_func=OUTPUT_MODE_NAMES.get,
+                    help="Comments + Track Changes: câu khớp 100% với báo cáo năm trước được thay bằng Track Changes, câu chưa khớp có comment gợi ý, kèm bảng AI_Form.docx cho các mục dưới 100%. Tất cả các bản cũng tạo bảng này."
+                )
+            with button_column:
+                process_btn = st.button("🚀 Xử lý báo cáo", use_container_width=True, type="primary")
+            st.caption(f"📄 {uploaded_file.name}")
+
         # Manual button click
         trigger_processing = process_btn
 
         if trigger_processing:
-            with st.spinner("Processing report..."):
+            with st.spinner("Đang xử lý báo cáo..."):
+                started_at = time.perf_counter()
                 try:
                     target_col = st.session_state.meta_translate
                     
@@ -550,10 +532,10 @@ with tabs[0]:
                             display_df = v3_df[['Vietnamese', target_col]].dropna().copy()
                             st.session_state.current_dict = display_df
                         else:
-                            st.error(f"Target column '{target_col}' not found in Dictionary_v3.")
+                            st.error(f"Không tìm thấy cột ngôn ngữ '{target_col}' trong Dictionary_v3.")
                             st.stop()
                     else:
-                        st.error("Could not load or process Dictionary_v3.xlsx.")
+                        st.error("Không đọc được Dictionary_v3.xlsx.")
                         st.stop()
 
                     # Translation map is now built from the dynamically filled dictionary
@@ -636,6 +618,7 @@ with tabs[0]:
                         st.session_state.processed_output_excel = resolved_dict_data
                         st.session_state.process_success_msg = msg
                         st.session_state.processed_filename = processed_filename
+                        st.session_state.process_stats = summarize_outputs(outputs, review_items, time.perf_counter() - started_at)
                         
                         log_event(st.session_state.username, "Processing", f"File: {uploaded_file.name} (Lang: {target_col})")
                         
@@ -653,25 +636,30 @@ with tabs[0]:
                                         f.write(processed_file.getvalue() if hasattr(processed_file, "getvalue") else processed_file)
                                     os.startfile(temp_path)
                                 except Exception as e:
-                                    st.warning(f"Could not automatically open Word: {e}. You can still download it manually below.")
+                                    st.warning(f"Không tự mở được Word: {e}. Bạn vẫn có thể tải file bằng nút bên dưới.")
                             else:
                                 # Cloud / Linux Usage: Trigger automatic browser download
                                 st_auto_download(processed_file, primary_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                     else:
                         st.error(msg)
                 except Exception as e:
-                    st.error(f"An error occurred during processing: {str(e)}")
+                    st.error(f"Đã xảy ra lỗi khi xử lý: {str(e)}")
 
         # PERSISTENT DOWNLOAD BUTTONS - Shown if processing was successful for current file
         if st.session_state.get('processed_file_id') == uploaded_file.name:
             # Note: Specific success message removed as requested.
             
             output_labels = {
-                "original": "📥 Download Original Output",
-                "clean": "📥 Download Clean Output",
-                "review": "📥 Download Comments + Track Changes",
-                "ai_review": "📥 Download AI Translation Worksheet",
+                "original": "📥 Tải bản gốc",
+                "clean": "📥 Tải bản sạch",
+                "review": "📥 Tải báo cáo Comments + Track Changes",
+                "ai_review": "📥 Tải bảng dịch AI (AI_Form)",
             }
+            stats = st.session_state.get("process_stats")
+            if stats:
+                st.markdown('<div class="ai-review-summary">' + ''.join(
+                    f'<div class="ai-review-stat"><span>{label}</span><strong>{value}</strong></div>'
+                    for label, value in stats) + '</div>', unsafe_allow_html=True)
             output_columns = st.columns(2)
             for output_index, (output_key, output_data) in enumerate(st.session_state.get("processed_outputs", {}).items()):
                 output_name = review_output_filename(st.session_state.processed_filename, output_key)
@@ -685,17 +673,16 @@ with tabs[0]:
                 )
             if "review" in st.session_state.get("processed_outputs", {}):
                 if "ai_review" in st.session_state.processed_outputs:
-                    st.caption("100% prior-report matches are already tracked in the report. The AI worksheet contains unresolved suggestions and yellow text without references, each with an ID. Ask AI to fill only the final column, then import the returned Word file here.")
+                    st.caption("Câu khớp 100% với báo cáo năm trước đã được ghi bằng Track Changes. Bảng AI_Form gồm các gợi ý chưa khớp và đoạn tô vàng chưa có tham chiếu, mỗi mục có một mã riêng. Gửi bảng cho AI điền cột cuối, rồi nhập file AI trả về ở mục bên dưới.")
                 else:
-                    st.caption("No unresolved AI translation items were found. 100% prior-report matches are handled directly with Track Changes; check any manual-review comments in the report.")
+                    st.caption("Không còn mục nào cần AI dịch. Câu khớp 100% với báo cáo năm trước đã được ghi bằng Track Changes; hãy xem các comment cần rà soát thủ công trong báo cáo.")
 
     render_ai_import()
-    st.divider()
 
 with tabs[1]:
     # --- Tab 2: Dictionary Search ---
-    st.markdown("### 📖 **Dictionary Search**")
-    search_query = st.text_input("🔍 Search terms (Vietnamese or Translation)", placeholder="Enter keyword...", key="dict_search")
+    st.markdown("### 📖 **Tra từ điển**")
+    search_query = st.text_input("🔍 Từ khóa (tiếng Việt hoặc bản dịch)", placeholder="Nhập từ khóa...", key="dict_search")
 
     # 1. Load and resolve dictionary with current UI metadata
     metadata_for_display = {
@@ -713,15 +700,15 @@ with tabs[1]:
     # 2. Language Selection UI
     current_lang = st.session_state.get("meta_translate", "E")
     dict_lang_choices = [
-        f"Current ({current_lang})",
+        f"Đang chọn ({current_lang})",
         "E",
         "Hs",
         "Ht",
-        "All"
+        "Tất cả"
     ]
     
     selected_lang_choice = st.radio(
-        "Display translation in:",
+        "Hiển thị bản dịch:",
         options=dict_lang_choices,
         index=0,
         horizontal=True,
@@ -740,7 +727,7 @@ with tabs[1]:
                 target_cols = ["Hs"]
             elif selected_lang_choice == "Ht":
                 target_cols = ["Ht"]
-            else: # All (selected_lang_choice == "All")
+            else: # "Tất cả"
                 target_cols = ["E", "Hs", "Ht"]
 
             # Filter columns that actually exist in the DataFrame
@@ -779,7 +766,7 @@ with tabs[1]:
                     <table class="dict-table">
                         <thead>
                             <tr>
-                                <th>Vietnamese</th>
+                                <th>Tiếng Việt</th>
                                 {headers_html}
                             </tr>
                         </thead>
@@ -797,15 +784,15 @@ with tabs[1]:
                 table_html += "</tbody></table></div>"
                 
                 if len(display_df) > max_rows:
-                    st.caption(f"💡 Showing top {max_rows}/{len(display_df)} results. Refine search for more.")
+                    st.caption(f"💡 Đang hiện {max_rows}/{len(display_df)} kết quả đầu tiên. Gõ thêm từ khóa để thu hẹp.")
                 elif len(display_df) == 0:
-                    st.warning("No matching results found.")
+                    st.warning("Không tìm thấy kết quả phù hợp.")
                 
                 st.markdown(table_html, unsafe_allow_html=True)
             else:
-                st.error(f"Selected language columns not found in dictionary.")
+                st.error("Từ điển không có cột ngôn ngữ đã chọn.")
     except Exception as e:
-        st.error(f"Error loading dictionary: {e}")
+        st.error(f"Lỗi khi đọc từ điển: {e}")
 
 # Admin & Template Management Tab Indexing
 next_tab_idx = 2
@@ -813,19 +800,19 @@ next_tab_idx = 2
 if st.session_state.authenticated and st.session_state.username == "admin":
     with tabs[next_tab_idx]:
         # --- Tab 3: Admin (Admin Only) ---
-        st.markdown("### 📈 Admin Section")
+        st.markdown("### 📈 Quản trị")
         
         # 0. Logging Status
         is_local = is_local_env()
         status_color = "#2ecc71" if is_local else "#3498db"
-        status_label = "Local Logging (CSV)" if is_local else "Cloud Logging (Google Sheets)"
+        status_label = "Lưu trên máy (CSV)" if is_local else "Lưu trên cloud (Google Sheets)"
         status_icon = "💻" if is_local else "☁️"
         
         st.markdown(f"""
         <div style="padding: 15px; border-radius: 10px; border-left: 5px solid {status_color}; background-color: rgba(0,0,0,0.05); margin-bottom: 20px;">
-            <div style="font-weight: bold; font-size: 1.1em;">{status_icon} Logging System: <span style="color: {status_color};">{status_label}</span></div>
+            <div style="font-weight: bold; font-size: 1.1em;">{status_icon} Nhật ký sử dụng: <span style="color: {status_color};">{status_label}</span></div>
             <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                { "Logs are being recorded to <code>usage_log.csv</code> on your local machine." if is_local else "Logs are being recorded to your Google Sheet. Ensure secrets are configured on Streamlit Cloud." }
+                { "Nhật ký đang được ghi vào <code>usage_log.csv</code> trên máy này." if is_local else "Nhật ký đang được ghi vào Google Sheet. Hãy đảm bảo đã cấu hình secrets trên Streamlit Cloud." }
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -840,18 +827,18 @@ if st.session_state.authenticated and st.session_state.username == "admin":
             pass
         
         if not is_local and not gs_configured:
-            st.error("⚠️ **Google Sheets Configuration Missing!** Please set up your secrets in the Streamlit Cloud dashboard.")
+            st.error("⚠️ **Chưa cấu hình Google Sheets!** Hãy khai báo secrets trên trang quản lý Streamlit Cloud.")
             # ... setup guide code ...
         elif not is_local and st.session_state.get("gsheet_error"):
-            st.error(f"❌ **Google Sheets Logging Error:** {st.session_state.gsheet_error}")
-            if st.button("Clear Error"):
+            st.error(f"❌ **Lỗi ghi nhật ký Google Sheets:** {st.session_state.gsheet_error}")
+            if st.button("Xóa thông báo lỗi"):
                 del st.session_state["gsheet_error"]
                 st.rerun()
-            with st.expander("ℹ️ How to set up Google Sheets Logging"):
+            with st.expander("ℹ️ Cách cấu hình ghi nhật ký bằng Google Sheets"):
                 st.markdown("""
-                1. Create a Google Service Account and get the JSON key.
-                2. Share your Google Sheet with the service account email.
-                3. Add the following to your Streamlit Cloud **Secrets**:
+                1. Tạo Google Service Account và tải khóa JSON.
+                2. Chia sẻ Google Sheet với email của service account.
+                3. Thêm nội dung sau vào mục **Secrets** của Streamlit Cloud:
                 ```toml
                 [connections.gsheets]
                 spreadsheet = "https://docs.google.com/spreadsheets/d/..."
@@ -869,30 +856,30 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 """)
 
         # 1. Translation Tools (including Resolved Dictionary)
-        st.markdown("#### 🛠️ Translation Tools")
+        st.markdown("#### 🛠️ Công cụ dịch")
         if st.session_state.get('processed_output_excel') is not None:
             # Use the stored file ID (filename) to generate the download name
             file_ref = st.session_state.get('processed_file_id', 'document').replace('.docx', '')
             st.download_button(
-                label="📥 Download Resolved Dictionary (.xlsx)",
+                label="📥 Tải từ điển đã giải mã thẻ (.xlsx)",
                 data=st.session_state.processed_output_excel,
                 file_name=f"Resolved_Dictionary_{file_ref}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 key="admin_download_resolved_dict",
                 use_container_width=True,
-                help="Download the dictionary where tags like [v_name], [e_day] are replaced by actual values."
+                help="Tải từ điển trong đó các thẻ như [v_name], [e_day] đã được thay bằng giá trị thực."
             )
         else:
-            st.info("💡 No resolved dictionary available. This button will appear after you process a document in the 'Process' tab.")
+            st.info("💡 Chưa có từ điển đã giải mã. Nút tải sẽ xuất hiện sau khi bạn xử lý một báo cáo ở tab 'Xử lý'.")
         
         st.divider()
 
-        with st.expander("📈 Usage Logs", expanded=True):
-            st.markdown("### Recent Tool Activity")
+        with st.expander("📈 Nhật ký sử dụng", expanded=True):
+            st.markdown("### Hoạt động gần đây")
             if not is_local_env():
-                st.info("🌐 Viewing logs from **Google Sheets**.")
+                st.info("🌐 Đang xem nhật ký từ **Google Sheets**.")
                 if not gs_configured:
-                    st.warning("Logs cannot be displayed because Google Sheets is not configured.")
+                    st.warning("Không hiển thị được nhật ký vì chưa cấu hình Google Sheets.")
             logs = get_logs()
             if logs:
                 log_df = pd.DataFrame(logs)
@@ -900,7 +887,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 log_df['Timestamp'] = pd.to_datetime(log_df['Timestamp'])
                 
                 # Filter Section UI
-                st.markdown("#### 🔍 Filters")
+                st.markdown("#### 🔍 Bộ lọc")
                 c1, c2, c3, c4 = st.columns([1.5, 1, 1, 1.5])
                 
                 with c1:
@@ -909,7 +896,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                     max_date = log_df['Timestamp'].max().date()
                     # Default to show all
                     date_range = st.date_input(
-                        "Date Range",
+                        "Khoảng ngày",
                         value=(min_date, max_date),
                         min_value=min_date,
                         max_value=max_date,
@@ -919,16 +906,16 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 with c2:
                     # User filter
                     all_users = sorted(log_df['User'].unique().tolist())
-                    selected_users = st.multiselect("Users", options=all_users, key="log_filter_user")
+                    selected_users = st.multiselect("Người dùng", options=all_users, key="log_filter_user")
                 
                 with c3:
                     # Event Type filter
                     all_events = sorted(log_df['Event Type'].unique().tolist())
-                    selected_events = st.multiselect("Event Types", options=all_events, key="log_filter_event")
+                    selected_events = st.multiselect("Loại sự kiện", options=all_events, key="log_filter_event")
                 
                 with c4:
                     # Keyword search
-                    search_query = st.text_input("Search Details", placeholder="Search text...", key="log_filter_search")
+                    search_query = st.text_input("Tìm trong chi tiết", placeholder="Nhập nội dung...", key="log_filter_search")
 
                 # Apply Filters to the DataFrame
                 filtered_df = log_df.copy()
@@ -959,7 +946,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 # Metrics Row
                 col_m1, col_m2 = st.columns(2)
                 with col_m1:
-                    st.info(f"📊 Displaying **{len(filtered_df)}** of **{len(log_df)}** total records.")
+                    st.info(f"📊 Đang hiện **{len(filtered_df)}** / **{len(log_df)}** bản ghi.")
                 
                 with col_m2:
                     # Export Filtered Logs to Excel
@@ -972,7 +959,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                     log_excel_data = output_log.getvalue()
                     
                     st.download_button(
-                        label="📥 Download Filtered Logs (Excel)",
+                        label="📥 Tải nhật ký đã lọc (Excel)",
                         data=log_excel_data,
                         file_name=f"Usage_Log_Export_{datetime.now().strftime('%Y%m%d')}.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -980,17 +967,17 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                         use_container_width=True
                     )
             else:
-                st.write("No logs found yet.")
+                st.write("Chưa có nhật ký.")
 
 
-        with st.expander("👤 User Management", expanded=False):
-            st.markdown("### Add New User")
+        with st.expander("👤 Quản lý người dùng", expanded=False):
+            st.markdown("### Thêm người dùng mới")
             with st.form("add_user_form", clear_on_submit=True):
-                new_user = st.text_input("New Username")
-                new_pass = st.text_input("New Password", type="password")
-                new_role = st.selectbox("Role", ["user", "admin"], index=0)
-                new_auto_fill = st.checkbox("Auto-fill Password", value=False)
-                add_btn = st.form_submit_button("➕ Add User")
+                new_user = st.text_input("Tên đăng nhập mới")
+                new_pass = st.text_input("Mật khẩu mới", type="password")
+                new_role = st.selectbox("Vai trò", ["user", "admin"], index=0)
+                new_auto_fill = st.checkbox("Tự điền mật khẩu", value=False)
+                add_btn = st.form_submit_button("➕ Thêm người dùng")
                 
                 if add_btn:
                     if new_user and new_pass:
@@ -1001,10 +988,10 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                         else:
                             st.error(msg)
                     else:
-                        st.warning("Please fill in both username and password.")
+                        st.warning("Vui lòng nhập cả tên đăng nhập và mật khẩu.")
             
             st.divider()
-            st.markdown("### Current Users (Edit/Delete)")
+            st.markdown("### Người dùng hiện có (sửa/xóa)")
             
             current_users = load_users()
             
@@ -1018,24 +1005,24 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                     with c1:
                         # Admin username is protected
                         if is_admin_user:
-                            edit_name = st.text_input("Name", value=user["username"], disabled=True, key=f"un_{idx}")
+                            edit_name = st.text_input("Tên", value=user["username"], disabled=True, key=f"un_{idx}")
                         else:
-                            edit_name = st.text_input("Name", value=user["username"], key=f"un_{idx}")
+                            edit_name = st.text_input("Tên", value=user["username"], key=f"un_{idx}")
                     
                     with c2:
                         # Password is editable for everyone
-                        edit_pass = st.text_input("Password", value=user["password"], type="password", key=f"pw_{idx}")
+                        edit_pass = st.text_input("Mật khẩu", value=user["password"], type="password", key=f"pw_{idx}")
                     
                     with c3:
                         # Role is editable for everyone
-                        edit_role = st.selectbox("Role", ["admin", "user"], index=0 if user["role"]=="admin" else 1, key=f"rl_{idx}")
+                        edit_role = st.selectbox("Vai trò", ["admin", "user"], index=0 if user["role"]=="admin" else 1, key=f"rl_{idx}")
                     
                     with c4:
                         # Auto-fill toggle
-                        edit_auto = st.checkbox("Auto-fill", value=user.get("auto_fill", False), key=f"af_{idx}")
+                        edit_auto = st.checkbox("Tự điền", value=user.get("auto_fill", False), key=f"af_{idx}")
 
                     with c5:
-                        if st.button("💾 Save", key=f"upd_{idx}", use_container_width=True):
+                        if st.button("💾 Lưu", key=f"upd_{idx}", use_container_width=True):
                             success, msg = update_user_data(user["username"], edit_name, edit_pass, edit_role, edit_auto)
                             if success:
                                 st.success(msg)
@@ -1047,9 +1034,9 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                     with c6:
                         # Admin account cannot be deleted
                         if is_admin_user:
-                            st.button("🚫", disabled=True, key=f"del_dis_{idx}", help="Cannot delete main admin", use_container_width=True)
+                            st.button("🚫", disabled=True, key=f"del_dis_{idx}", help="Không thể xóa tài khoản admin chính", use_container_width=True)
                         else:
-                            if st.button("🗑️", key=f"del_{idx}", use_container_width=True, help=f"Delete {user['username']}"):
+                            if st.button("🗑️", key=f"del_{idx}", use_container_width=True, help=f"Xóa {user['username']}"):
                                 success, msg = remove_user(user["username"])
                                 if success:
                                     st.success(msg)
@@ -1059,20 +1046,20 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                                     st.error(msg)
                     st.markdown("---")
 
-        with st.expander("⚙️ System Settings", expanded=False):
-            st.markdown("### Translation Settings")
+        with st.expander("⚙️ Cài đặt hệ thống", expanded=False):
+            st.markdown("### Cài đặt dịch")
             st.number_input(
-                "Case-sensitivity threshold (length)",
+                "Ngưỡng phân biệt chữ hoa/thường (độ dài)",
                 min_value=1,
                 max_value=1000,
                 value=st.session_state.case_threshold,
                 key="case_threshold",
-                help="If the Vietnamese text length is less than this value, translation will be case-sensitive. If greater or equal, it will be case-insensitive."
+                help="Câu tiếng Việt ngắn hơn giá trị này sẽ được so khớp có phân biệt chữ hoa/thường; dài bằng hoặc hơn thì không phân biệt."
             )
 
-        with st.expander("📊 Template Management", expanded=False):
-            st.markdown("### Excel Template Management")
-            st.markdown("Manage Excel templates and synchronize system data.")
+        with st.expander("📊 Quản lý mẫu Excel", expanded=False):
+            st.markdown("### Quản lý mẫu Excel")
+            st.markdown("Tải về, cập nhật các file mẫu Excel và đồng bộ dữ liệu hệ thống.")
             
             # Helper for Template Row
             def tab_template_management_row(label, xlsx_path, sync_func, file_name):
@@ -1082,7 +1069,7 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                     if os.path.exists(xlsx_path):
                         with open(xlsx_path, "rb") as f:
                             st.download_button(
-                                label=f"📥 Download {file_name}",
+                                label=f"📥 Tải {file_name}",
                                 data=f,
                                 file_name=file_name,
                                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1090,36 +1077,36 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                                 use_container_width=True
                             )
                     else:
-                        st.warning(f"Missing {file_name}")
+                        st.warning(f"Thiếu file {file_name}")
                 
                 with c2:
-                    uploaded = st.file_uploader(f"Update {file_name}", type=["xlsx"], key=f"tab_up_{file_name}", label_visibility="collapsed")
+                    uploaded = st.file_uploader(f"Cập nhật {file_name}", type=["xlsx"], key=f"tab_up_{file_name}", label_visibility="collapsed")
                     if uploaded:
                         try:
                             with open(xlsx_path, "wb") as f:
                                 f.write(uploaded.getbuffer())
                             success, msg = sync_func()
                             if success:
-                                st.success(f"✅ Updated & synced {file_name}")
+                                st.success(f"✅ Đã cập nhật và đồng bộ {file_name}")
                                 log_event(st.session_state.username, "Template Mgmt", f"Uploaded and synced {file_name}")
                             else:
-                                st.error(f"Sync error: {msg}")
+                                st.error(f"Lỗi đồng bộ: {msg}")
                         except Exception as e:
-                            st.error(f"File save error: {e}")
+                            st.error(f"Lỗi lưu file: {e}")
                 st.divider()
 
             # 1. Dictionary V3
-            tab_template_management_row("1. Translation Dictionary (V3)", tl.DICTIONARY_V3_XLSX, tl.sync_dictionary_v3, "Dictionary_v3.xlsx")
+            tab_template_management_row("1. Từ điển dịch (V3)", tl.DICTIONARY_V3_XLSX, tl.sync_dictionary_v3, "Dictionary_v3.xlsx")
             
             # 2. ParaTemplate
-            tab_template_management_row("2. Paragraph Templates", tl.PARA_TEMPLATE_XLSX, tl.sync_para_template, "ParaTemplate.xlsx")
+            tab_template_management_row("2. Mẫu đoạn văn", tl.PARA_TEMPLATE_XLSX, tl.sync_para_template, "ParaTemplate.xlsx")
             
             # 3. Text Normalization (CleanV)
-            tab_template_management_row("3. Text Normalization (CleanV)", tl.CLEANV_XLSX, tl.sync_clean_v, "CleanV.xlsx")
+            tab_template_management_row("3. Chuẩn hóa văn bản (CleanV)", tl.CLEANV_XLSX, tl.sync_clean_v, "CleanV.xlsx")
 
             # Sync All Button
-            if st.button("🔄 Full System Sync", key="tab_sync_all", use_container_width=True, help="Update all system JSON files from available Excel templates."):
-                with st.spinner("Syncing..."):
+            if st.button("🔄 Đồng bộ toàn bộ hệ thống", key="tab_sync_all", use_container_width=True, help="Cập nhật toàn bộ file JSON của hệ thống từ các mẫu Excel hiện có."):
+                with st.spinner("Đang đồng bộ..."):
                     results = tl.sync_all_templates()
                     all_success = True
                     for name, (success, msg) in results.items():
@@ -1127,15 +1114,14 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                             st.error(f"Lỗi {name}: {msg}")
                             all_success = False
                     if all_success:
-                        st.success("✅ All data synced from Excel to JSON!")
+                        st.success("✅ Đã đồng bộ toàn bộ dữ liệu từ Excel sang JSON!")
                         log_event(st.session_state.username, "Template Mgmt", "Full synchronization triggered")
                         st.rerun()
     next_tab_idx += 1
 
 
 # Footer
-st.divider()
-st.caption("Financial Statements Processor | Professional Streamlit Application")
+st.caption("Financial Statements Processor | Ứng dụng xử lý và dịch báo cáo tài chính")
 
 
 

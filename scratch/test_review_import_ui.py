@@ -48,7 +48,7 @@ if {current!r}:
 def uploaded(label, **kwargs):
     if {empty!r}:
         return None
-    return worksheet if label == "AI-completed translation worksheet" else report
+    return worksheet if label == "Bảng AI_Form đã được AI điền" else report
 with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
     render_ai_import()
 '''
@@ -107,7 +107,7 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         self.assertFalse(app.get("download_button"))
         app.button(key="ai_check_translations").click().run()
         self.assertFalse(app.exception)
-        self.assertIn("do not belong", app.error[0].value)
+        self.assertIn("không thuộc báo cáo này", app.error[0].value)
 
     def test_missing_uploads_show_instructions_without_exception(self):
         app = self.app(current=False, empty=True)
@@ -120,12 +120,12 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app.button(key="ai_check_translations").click().run()
         self.assertFalse(app.exception)
         columns = json.loads(app.dataframe[0].proto.columns)
-        self.assertGreater(columns["Note"]["width"], columns["Source"]["width"])
-        self.assertGreater(columns["Note"]["width"], columns["AI translation"]["width"])
-        self.assertTrue(columns["ID"]["pinned"])
+        self.assertGreater(columns["Ghi chú"]["width"], columns["Nội dung gốc"]["width"])
+        self.assertGreater(columns["Ghi chú"]["width"], columns["Bản dịch AI"]["width"])
+        self.assertTrue(columns["Mã"]["pinned"])
         self.assertGreater(app.dataframe[0].proto.row_height, 32)
         self.assertEqual(len(app.selectbox), 1)
-        self.assertTrue(any("Note (full text)" in element.value for element in app.markdown))
+        self.assertTrue(any("Ghi chú (đầy đủ)" in element.value for element in app.markdown))
 
     def test_c009_is_shown_as_existing_not_selected_and_not_newly_applied(self):
         report, worksheet, items = fixtures.ReviewRoundtripTests().pair(count=10, prior_revision_indices=(8,))
@@ -140,8 +140,8 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         self.assertFalse(app.exception)
         self.assertNotIn(c009, app.multiselect[0].options)
         self.assertEqual(app.selectbox[0].value, 8)
-        self.assertEqual(app.dataframe[0].value.iloc[8]["Status"], "Source Track Changes")
-        self.assertTrue(any("BEFORE AI import" in element.value for element in app.info))
+        self.assertEqual(app.dataframe[0].value.iloc[8]["Trạng thái"], "Track Changes có sẵn")
+        self.assertTrue(any("TRƯỚC khi nhập AI" in element.value for element in app.info))
         self.assertTrue(any("Existing prior-report translation" in element.value for element in app.text))
         app.multiselect[0].set_value([selected]).run()
         app.checkbox[1].check().run()
@@ -155,7 +155,7 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         output = Document(io.BytesIO(result["data"]))
         self.assertEqual(output.paragraphs[8]._p.xml, original_c009)
         self.assertEqual(len(output.comments), 9)
-        self.assertTrue(any(element.value == "New AI changes applied ONLY to: " + selected for element in app.caption))
+        self.assertTrue(any(element.value == "Bản dịch AI CHỈ được áp dụng cho: " + selected for element in app.caption))
 
     def test_old_preview_is_invalidated_without_reading_old_result_fields(self):
         app = self.app()
@@ -166,7 +166,7 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app.run()
         self.assertFalse(app.exception)
         self.assertFalse(app.dataframe)
-        self.assertTrue(any("Click Check AI translations again" in element.value for element in app.info))
+        self.assertTrue(any("Kiểm tra bản dịch AI lần nữa" in element.value for element in app.info))
 
 
 if __name__ == "__main__":

@@ -144,15 +144,15 @@ class ReviewRoundtripTests(unittest.TestCase):
     def test_wrong_report_unknown_id_and_language_are_rejected(self):
         report, worksheet, _ = self.pair()
         other_report, _, _ = self.pair()
-        with self.assertRaisesRegex(ValueError, "do not belong"):
+        with self.assertRaisesRegex(ValueError, "không thuộc báo cáo này"):
             self.preview(other_report, worksheet)
         identifier = worksheet.core_properties.identifier
         worksheet.core_properties.identifier = identifier.rsplit(":", 1)[0] + ":E"
-        with self.assertRaisesRegex(ValueError, "language"):
+        with self.assertRaisesRegex(ValueError, "ngôn ngữ dịch khác"):
             self.preview(report, worksheet)
         worksheet.core_properties.identifier = identifier
         worksheet.tables[0].cell(1, 0).text = "UNKNOWN-C001"
-        with self.assertRaisesRegex(ValueError, "do not belong"):
+        with self.assertRaisesRegex(ValueError, "không thuộc báo cáo này"):
             self.preview(report, worksheet)
 
     def test_duplicate_ids_block_all_copies(self):
@@ -160,7 +160,7 @@ class ReviewRoundtripTests(unittest.TestCase):
         worksheet.tables[1].cell(1, 0).text = worksheet.tables[0].cell(1, 0).text
         preview = self.preview(report, worksheet)
         self.assertEqual(preview["counts"], {"blocked": 2, "missing": 1})
-        self.assertTrue(all("Duplicate" in row["reason"] for row in preview["rows"][:2]))
+        self.assertTrue(all("Mã bị trùng" in row["reason"] for row in preview["rows"][:2]))
 
     def test_changed_source_or_reference_is_blocked(self):
         for column in (1, 2, 3):
@@ -172,11 +172,11 @@ class ReviewRoundtripTests(unittest.TestCase):
     def test_modified_report_and_missing_anchor_are_blocked(self):
         report, worksheet, _ = self.pair()
         report.paragraphs[0].runs[0].text += " Changed report"
-        self.assertIn("report text has changed", self.preview(report, worksheet)["rows"][0]["reason"])
+        self.assertIn("Nội dung báo cáo đã thay đổi", self.preview(report, worksheet)["rows"][0]["reason"])
         report, worksheet, _ = self.pair()
         anchor = report.element.xpath(".//w:commentRangeEnd")[0]
         anchor.getparent().remove(anchor)
-        self.assertIn("anchor is missing", self.preview(report, worksheet)["rows"][0]["reason"])
+        self.assertIn("vị trí neo", self.preview(report, worksheet)["rows"][0]["reason"])
 
     def test_fields_objects_and_existing_revisions_are_blocked(self):
         for tag in ("fldChar", "instrText", "drawing", "object", "bookmarkStart", "ins", "del", "rPrChange"):
@@ -194,13 +194,13 @@ class ReviewRoundtripTests(unittest.TestCase):
     def test_overlapping_and_spanning_comments_are_blocked(self):
         report, worksheet, _ = self.pair()
         report.add_comment(report.paragraphs[0].runs[0], "Second comment", author="Reviewer")
-        self.assertIn("overlaps", self.preview(report, worksheet)["rows"][0]["reason"])
+        self.assertIn("chồng lên đoạn này", self.preview(report, worksheet)["rows"][0]["reason"])
         report, worksheet, _ = self.pair()
         first = report.add_paragraph("Before")
         last = report.add_paragraph("After")
         report.element.body.insert(0, first._p)
         report.add_comment([first.runs[0], last.runs[0]], "Spanning comment", author="Reviewer")
-        self.assertIn("spans", self.preview(report, worksheet)["rows"][0]["reason"])
+        self.assertIn("trải qua", self.preview(report, worksheet)["rows"][0]["reason"])
 
     def test_mixed_emphasis_requires_manual_review(self):
         report, worksheet, _ = self.pair()
@@ -208,7 +208,7 @@ class ReviewRoundtripTests(unittest.TestCase):
         first.text = SOURCE[:10]
         second = report.paragraphs[0].add_run(SOURCE[10:])
         second.bold = False
-        self.assertIn("mixed text formatting", self.preview(report, worksheet)["rows"][0]["reason"])
+        self.assertIn("định dạng chữ hỗn hợp", self.preview(report, worksheet)["rows"][0]["reason"])
 
     def test_multi_run_deletions_and_line_breaks_survive_accept_reject(self):
         source = "Công ty\tcó vốn\n1.234,56 đồng."
@@ -245,10 +245,10 @@ class ReviewRoundtripTests(unittest.TestCase):
 
     def test_legacy_reports_and_merged_worksheets_are_rejected(self):
         report, worksheet, _ = self.pair()
-        with self.assertRaisesRegex(ValueError, "no AI review mapping"):
+        with self.assertRaisesRegex(ValueError, "chưa có dữ liệu liên kết AI"):
             self.preview(Document(), worksheet)
         worksheet.tables[0].cell(1, 0).merge(worksheet.tables[0].cell(1, 1))
-        with self.assertRaisesRegex(ValueError, "merged"):
+        with self.assertRaisesRegex(ValueError, "ô bị gộp"):
             self.preview(report, worksheet)
 
     def test_revision_ids_are_unique_and_timestamp_is_current(self):
@@ -321,8 +321,8 @@ class ReviewRoundtripTests(unittest.TestCase):
         c009 = items[8]["review_id"]
         row = next(row for row in preview["rows"] if row["review_id"] == c009)
         self.assertTrue(row["source_has_revisions"])
-        self.assertIn("100% prior-report match", row["reason"])
-        self.assertIn("BEFORE AI import", row["reason"])
+        self.assertIn("khớp 100% với báo cáo năm trước", row["reason"])
+        self.assertIn("TRƯỚC khi nhập AI", row["reason"])
         self.assertEqual(row["source_current_text"], "Existing prior-report translation")
         selected_ids = [items[1]["review_id"], items[6]["review_id"]]
         original_paragraphs = [paragraph._p.xml for paragraph in report.paragraphs]

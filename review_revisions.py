@@ -2,6 +2,7 @@ import re
 from copy import deepcopy
 from datetime import datetime, timezone
 
+from docx.enum.text import WD_COLOR_INDEX
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.text.run import Run
@@ -54,7 +55,21 @@ def _clear_yellow(run, paragraph):
         properties.append(highlight)
 
 
-def replace_paragraph_with_revision(paragraph, translation, target_col, revision_id, author):
+def _segments(translation, target_col, highlights):
+    """Split the translation into (text, highlighted) pieces at script and highlight boundaries."""
+    cuts = {0, len(translation)}
+    if target_col in ("Hs", "Ht"):
+        for match in re.finditer(r"[一-鿿㐀-䶿豈-﫿]+", translation):
+            cuts.update(match.span())
+    for start, end in highlights or ():
+        cuts.update((max(0, min(start, len(translation))), max(0, min(end, len(translation)))))
+    points = sorted(cuts)
+    for start, end in zip(points, points[1:]):
+        if start < end:
+            yield translation[start:end], any(a <= start and end <= b for a, b in highlights or ())
+
+
+def replace_paragraph_with_revision(paragraph, translation, target_col, revision_id, author, highlights=None):
     content_runs = [run for run in paragraph.runs if run.text]
     if not content_runs or not translation:
         return False
@@ -73,14 +88,18 @@ def replace_paragraph_with_revision(paragraph, translation, target_col, revision
             reference.getparent().remove(reference)
         deleted.append(old_run)
 
-    parts = re.split(r"([\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]+)", translation) if target_col in ("Hs", "Ht") else [translation]
-    for text in filter(None, parts):
+    for text, highlighted in _segments(translation, target_col, highlights):
         element = OxmlElement("w:r")
         if source_run._r.rPr is not None:
             element.append(deepcopy(source_run._r.rPr))
         new_run = Run(element, paragraph)
         new_run.text = text
         _clear_yellow(new_run, paragraph)
+        if highlighted:
+            properties = element.get_or_add_rPr()
+            for old in properties.findall(qn("w:highlight")):
+                properties.remove(old)
+            new_run.font.highlight_color = WD_COLOR_INDEX.YELLOW
         tl._set_run_fonts_refined(new_run, "Times New Roman", "DFKai-SB" if target_col in ("Hs", "Ht") else "Times New Roman", _effective_size(source_run, paragraph))
         properties = element.get_or_add_rPr()
         fonts = properties.get_or_add_rFonts()

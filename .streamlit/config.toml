@@ -2,5 +2,4 @@
 toolbarMode = "minimal"
 
 [ui]
-hideSidebarNav = true
 hideTopBar = true
