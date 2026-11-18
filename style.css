@@ -152,6 +152,15 @@ div.stButton>button:hover {
     color: white;
 }
 
+/* Disabled buttons (e.g. waiting for a confirmation checkbox) must look unavailable */
+div.stButton>button:disabled,
+div.stButton>button:disabled:hover {
+    background: #d5dde6;
+    color: #6b7b8c;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
 /* Logo icon styling */
 .app-logo {
     font-size: 1.5rem;
@@ -491,4 +500,73 @@ div[role="dialog"] [data-testid="stMarkdownContainer"] li {
     .ai-review-steps {
         gap: 0.5rem 0.75rem;
     }
+}
+
+/* "Xem dữ liệu sẽ gửi": readable table of the AI_Form content sent to the API */
+table.ai-payload {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--review-navy);
+}
+
+table.ai-payload th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--review-surface);
+    text-align: left;
+    font-weight: 600;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--review-border);
+}
+
+table.ai-payload th:first-child { width: 8.5rem; }
+
+table.ai-payload td {
+    vertical-align: top;
+    padding: 0.5rem 0.6rem;
+    border: none;
+    border-bottom: 1px solid var(--review-border);
+    overflow-wrap: anywhere;
+}
+
+td.ai-payload-id {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--review-muted);
+}
+
+.ai-payload-ref + .ai-payload-ref {
+    margin-top: 0.45rem;
+    padding-top: 0.45rem;
+    border-top: 1px dashed var(--review-border);
+}
+
+.ai-payload-ref b {
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: var(--review-blue);
+}
+
+.ai-payload-arrow,
+.ai-payload-empty {
+    color: var(--review-muted);
+}
+
+.ai-payload-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.6rem;
+}
+
+.ai-payload-names span {
+    border: 1px solid var(--review-border);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.78rem;
+    background: var(--review-surface);
 }

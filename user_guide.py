@@ -12,7 +12,7 @@ Chỉ hỗ trợ file **.docx**; không hỗ trợ .doc, .pdf, .xlsx.
 | 3 | Kiểm tra thông tin tự điền, chọn ngôn ngữ đích | **📝 Thông tin báo cáo** |
 | 4 | Chọn **Chế độ xuất file**, bấm **🚀 Xử lý báo cáo** | Hàng nút xử lý |
 | 5 | Tải file kết quả; nếu còn đoạn chưa dịch, tải **AI_Form.docx** gửi AI | Các nút **📥 Tải…** |
-| 6 | Nhập file AI đã điền để ghi bản dịch bằng Track Changes | **📤 Nhập bản dịch từ AI** |
+| 6 | Dịch tự động bằng AI, hoặc nhập file AI đã điền, để ghi bản dịch bằng Track Changes | **📤 Nhập bản dịch từ AI** |
 
 **Các nút ở góc phải trên cùng**
 * **❓** – mở hướng dẫn này.
@@ -56,6 +56,18 @@ PROCESS = """
 AI_FLOW = """
 **Khi nào dùng:** sau khi xử lý ở chế độ **Comments + Track Changes** hoặc **Tất cả các bản**, các đoạn còn tô vàng hoặc chỉ có gợi ý dưới 100% được đưa vào **AI_Form.docx**.
 
+**Cách 1 – Dịch tự động bằng AI (khi quản trị viên đã cấu hình khóa API)**
+* Mở **📤 Nhập bản dịch từ AI**, chọn **🤖 Dịch tự động bằng AI**, dùng báo cáo `_TC` của phiên hiện tại hoặc tải lên.
+* Chỉ nội dung của bảng AI_Form được gửi đi: mã, nội dung cần dịch và câu tham chiếu. Không gửi file, các đoạn khác của báo cáo, comment hay tên file. Bấm **Xem dữ liệu sẽ gửi** để kiểm tra.
+* (Tùy chọn) Bấm **Ước tính chi phí**, đánh dấu đồng ý gửi dữ liệu, rồi bấm **Dịch bằng AI**.
+* Kết quả được kiểm tra giống như khi nhập file (xem Bước 3). Mục AI không trả được hiện là *Thiếu bảng*; bấm **Dịch lại … mục còn thiếu** để thử lại.
+* Nếu quản trị viên bật **tra tên công ty**, ứng dụng tìm tên quốc tế trên **masothue.com** và **thuvienphapluat.vn** trước khi dịch – chỉ với tên công ty đứng độc lập trong một bảng (tên nằm trong câu, đoạn văn không tra). Bước này chỉ gửi tên công ty. Danh sách tên tìm được, kèm đường dẫn nguồn, hiện trong mục **Tên công ty đã tra cứu được** để bạn kiểm tra.
+* Tên công ty không tra được (hoặc khi không bật tra cứu) được giữ tiếng Việt và **tô vàng** để bạn kiểm tra.
+* **Lưu tên đã xác nhận:** trong bảng **Tên công ty**, kiểm tra hoặc sửa tên quốc tế (tên chưa tìm thấy có thể tự nhập), đánh dấu cột **Lưu** rồi bấm **💾 Lưu … tên đã xác nhận**. Tên đã lưu dùng chung cho mọi người: tự thay khi **xử lý báo cáo**, gửi kèm khi dịch bằng AI và không phải tra web lại.
+* Có thể tải **kết quả AI (.json)** để lưu hồ sơ.
+
+**Cách 2 – Gửi AI_Form cho AI bằng tay**
+
 **Bước 1 – Tải AI_Form.docx**
 * File trang ngang, mỗi mục là một bảng 5 cột: **Mã**, **Nội dung cần dịch**, **Tiếng Việt tham chiếu**, **Bản dịch tham chiếu**, **Bản dịch hoàn thiện**.
 * Đầu file có **PROMPT chung cho AI** quy định ngôn ngữ đích, font, cách viết ngày, số.
@@ -63,6 +75,7 @@ AI_FLOW = """
 **Bước 2 – Gửi cho AI**
 * Dùng AI có khả năng **sửa và xuất file Word** (và truy cập web để tra tên công ty). Yêu cầu AI làm theo prompt ở đầu file, chỉ điền cột cuối.
 * Quy tắc tên riêng trong prompt:
+  * Hai quy tắc dưới đây chỉ áp dụng khi tên **đứng độc lập** (cả ô *Nội dung cần dịch* chỉ là tên đó). Tên nằm trong câu, đoạn văn được dịch theo ngữ cảnh như bình thường.
   * **Tên công ty** (ví dụ *Công ty TNHH ABC*): AI tra tên quốc tế trên **masothue.com** hoặc **thuvienphapluat.vn**. Không tìm thấy thì giữ nguyên tên tiếng Việt và **tô vàng** để bạn kiểm tra.
   * **Tên người** (ví dụ *Nguyễn Văn A*): chuyển thành không dấu – *Nguyen Van A*.
   * Thẻ mẫu như **【自年月日至年月日止階段】** được giữ nguyên, không làm trống ô.
@@ -103,7 +116,7 @@ TROUBLESHOOTING = """
 * **Nhập AI báo lỗi “thuộc báo cáo khác hoặc ngôn ngữ dịch khác”:** file AI không cùng báo cáo/ngôn ngữ với báo cáo `_TC` đang chọn – tải đúng cặp file.
 * **Worksheet cũ không có mã ID:** xử lý lại báo cáo nguồn để tạo AI_Form.docx mới.
 * **Bản cloud ngủ đông:** lần truy cập đầu sau thời gian dài cần đợi 1–2 phút.
-* **Quyền Admin:** tab **📈 Quản trị** có nhật ký sử dụng, quản lý người dùng, đồng bộ mẫu Excel và tải từ điển đã giải mã.
+* **Quyền Admin:** tab **📈 Quản trị** có nhật ký sử dụng, quản lý người dùng, đồng bộ mẫu Excel, tải từ điển đã giải mã và danh sách **tên công ty đã xác nhận** (tải về theo mẫu Dictionary_v3 để gộp vào từ điển).
 """
 
 

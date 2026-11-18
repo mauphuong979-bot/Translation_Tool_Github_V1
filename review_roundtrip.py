@@ -309,15 +309,24 @@ def _unsafe_reason(paragraph, comment_id, document, anchor_name):
     return ""
 
 
+def _expected_values(item):
+    """The first three content columns of an AI_Form row, as exported for this manifest item."""
+    return [item["original"], reference_text(item["references"], "original"), reference_text(item["references"], "translation")]
+
+
 def _inspect(report_source, worksheet_source):
     report = _read_document(report_source)
     manifest = _read_manifest(report)
     worksheet = _read_document(worksheet_source)
     supplied = _worksheet_rows(worksheet)
+    return _validate(report, manifest, supplied, worksheet.core_properties.identifier)
+
+
+def _validate(report, manifest, supplied, identifier=""):
+    """Check supplied translation rows against the report manifest; shared by the AI_Form file and API flows."""
     expected = {item["review_id"]: item for item in manifest["items"]}
     if any(row["review_id"] not in expected for row in supplied):
         raise ValueError("Có mã không thuộc báo cáo này. Hãy tải đúng cặp báo cáo Comments + Track Changes và bảng AI_Form.")
-    identifier = worksheet.core_properties.identifier
     if identifier.startswith("TranslationTool:") and identifier != f"TranslationTool:{manifest['batch']}:{manifest['target_col']}":
         raise ValueError("Bảng AI này thuộc báo cáo khác hoặc ngôn ngữ dịch khác.")
     counts = Counter(row["review_id"] for row in supplied)
@@ -328,7 +337,7 @@ def _inspect(report_source, worksheet_source):
         item = expected[row["review_id"]]
         result = {"review_id": row["review_id"], "original": item["original"], "translation": row["translation"],
                   "highlights": row["highlights"], "status": "ready", "reason": ""}
-        expected_values = [item["original"], reference_text(item["references"], "original"), reference_text(item["references"], "translation")]
+        expected_values = _expected_values(item)
         paragraph, comment_id = _resolve_anchor(report, item)
         result["comment_id"] = comment_id
         result["source_has_revisions"] = paragraph is not None and bool(paragraph._p.xpath(".//w:ins | .//w:del | .//w:moveFrom | .//w:moveTo | .//w:rPrChange | .//w:pPrChange"))
@@ -365,9 +374,72 @@ def _inspect(report_source, worksheet_source):
     return report, manifest, results
 
 
+def _preview(manifest, rows):
+    return {"target_col": manifest["target_col"], "rows": rows, "counts": dict(Counter(row["status"] for row in rows))}
+
+
 def preview_ai_translations(report_source, worksheet_source):
     _, manifest, rows = _inspect(report_source, worksheet_source)
-    return {"target_col": manifest["target_col"], "rows": rows, "counts": dict(Counter(row["status"] for row in rows))}
+    return _preview(manifest, rows)
+
+
+def read_review_manifest(report_source):
+    """Items still awaiting AI translation, limited to the AI_Form content columns (no report text, comments or metadata)."""
+    from review_annotations import needs_ai_translation
+
+    manifest = _read_manifest(_read_document(report_source))
+    applied = set(manifest.get("applied_ids", []))
+    items = [{"review_id": item["review_id"], "original": item["original"],
+              "references": [{field: reference[field] for field in ("source", "score", "original", "translation")}
+                             for reference in item["references"]]}
+             for item in manifest["items"] if item["review_id"] not in applied and needs_ai_translation(item)]
+    return {"batch": manifest["batch"], "target_col": manifest["target_col"], "items": items}
+
+
+def _highlight_ranges(translation, phrases):
+    """Character ranges of every occurrence of the given phrases, merged and sorted."""
+    spans = []
+    for phrase in phrases:
+        if not isinstance(phrase, str) or not phrase:
+            continue
+        start = translation.find(phrase)
+        while start != -1:
+            spans.append((start, start + len(phrase)))
+            start = translation.find(phrase, start + len(phrase))
+    merged = []
+    for start, end in sorted(spans):
+        if merged and start <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+    return merged
+
+
+def rows_from_ai_results(manifest, results):
+    """Turn API results [{review_id, translation, highlight: [phrases]}] into rows in the AI_Form worksheet shape."""
+    expected = {item["review_id"]: item for item in manifest["items"]}
+    rows = []
+    for result in results:
+        if not isinstance(result, dict) or not isinstance(result.get("review_id"), str) or not isinstance(result.get("translation", ""), str):
+            raise ValueError("Kết quả AI không đúng định dạng.")
+        translation = result.get("translation", "")
+        item = expected.get(result["review_id"].strip())
+        rows.append({"review_id": result["review_id"].strip(),
+                     "source_values": _expected_values(item) if item is not None else [],
+                     "translation": translation, "highlights": _highlight_ranges(translation, result.get("highlight") or []),
+                     "has_revisions": False, "has_objects": False})
+    return rows
+
+
+def _inspect_results(report_source, results):
+    report = _read_document(report_source)
+    manifest = _read_manifest(report)
+    return _validate(report, manifest, rows_from_ai_results(manifest, results))
+
+
+def preview_ai_results(report_source, results):
+    _, manifest, rows = _inspect_results(report_source, results)
+    return _preview(manifest, rows)
 
 
 def _replace_with_revision(document, paragraph, comment_id, translation, target_col, revision_id, anchor_name, highlights=None):
@@ -391,7 +463,14 @@ def _replace_with_revision(document, paragraph, comment_id, translation, target_
 
 
 def apply_ai_translations(report_source, worksheet_source, selected_ids=None):
-    report, manifest, rows = _inspect(report_source, worksheet_source)
+    return _apply(*_inspect(report_source, worksheet_source), selected_ids)
+
+
+def apply_ai_results(report_source, results, selected_ids=None):
+    return _apply(*_inspect_results(report_source, results), selected_ids)
+
+
+def _apply(report, manifest, rows, selected_ids=None):
     ready = {row["review_id"]: row for row in rows if row["status"] == "ready"}
     selected = set(ready) if selected_ids is None else set(selected_ids)
     if not selected or not selected.issubset(ready):

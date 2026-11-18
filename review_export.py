@@ -47,13 +47,18 @@ def get_ai_review_prompt(target_col):
         "Dịch đầy đủ và cập nhật mọi khác biệt theo nguồn hiện tại; không bỏ sót, tự thêm ý hoặc mang thông tin cũ sang. "
         "Xử lý tên riêng theo quy tắc tên riêng bên dưới; giữ chính xác số liệu, dấu âm, tỷ lệ phần trăm, ngày tháng, kỳ báo cáo, đơn vị tiền tệ và ý nghĩa phủ định. "
         "Quy đổi cách trình bày số theo báo cáo đích: 1.234,56 thành 1,234.56, không thay đổi giá trị hay đổi dấu phân cách trong ngày tháng.",
-        "Tên riêng – tên công ty (ví dụ “Công ty TNHH ABC”, “Công ty Cổ phần XYZ”): không tự dịch, phiên âm hay tự đặt tên. "
+        "Tên riêng – tên công ty (ví dụ “Công ty TNHH ABC”, “Công ty Cổ phần XYZ”): quy tắc này chỉ áp dụng khi tên công ty đứng độc lập, "
+        "tức toàn bộ “Nội dung cần dịch” của bảng chỉ là tên công ty đó. Nếu tên công ty nằm trong một câu hoặc đoạn văn, không cần tra cứu "
+        "và không tô vàng; dịch cả câu theo ngữ cảnh và tham chiếu như bình thường. "
+        "Với tên đứng độc lập: không tự dịch, phiên âm hay tự đặt tên. "
         "Tra cứu tên quốc tế (tên nước ngoài) chính thức của đúng công ty đó trên https://masothue.com hoặc https://thuvienphapluat.vn/ "
         "(có thể tìm theo tên tiếng Việt hoặc mã số thuế nếu nguồn có) và dùng đúng tên quốc tế tìm được trong bản dịch. "
         "Nếu không tìm thấy tên quốc tế, không chắc là đúng công ty hoặc không truy cập được hai trang trên, giữ nguyên tên tiếng Việt có dấu "
         "như trong nguồn và tô nền vàng (highlight vàng) riêng phần tên đó trong ô “Bản dịch hoàn thiện” để người dùng kiểm tra. "
         "Không lấy tên công ty khác từ báo cáo tham chiếu.",
-        "Tên riêng – tên người (ví dụ “Nguyễn Văn A”): chuyển thành chữ Latin không dấu, giữ nguyên thứ tự họ tên và viết hoa chữ cái đầu, "
+        "Tên riêng – tên người (ví dụ “Nguyễn Văn A”): quy tắc này chỉ áp dụng khi tên người đứng độc lập, tức toàn bộ “Nội dung cần dịch” "
+        "của bảng chỉ là tên người đó; nếu tên người nằm trong một câu hoặc đoạn văn, không cần chuyển đổi, dịch cả câu theo ngữ cảnh "
+        "và tham chiếu như bình thường. Với tên đứng độc lập: chuyển thành chữ Latin không dấu, giữ nguyên thứ tự họ tên và viết hoa chữ cái đầu, "
         "ví dụ “Nguyen Van A”; “Đ/đ” chuyển thành “D/d”. Áp dụng cho cả bản dịch tiếng Anh và tiếng Hoa; không phiên âm sang chữ Hoa. "
         "Chỉ dùng tên đích khác khi người dùng đã cung cấp hoặc xác nhận đúng tên chính thức của công ty/người trong nguồn hiện tại. "
         "Phân biệt tên pháp lý với cách gọi chung: “Công ty” chỉ chủ thể trong câu như “Công ty có vốn điều lệ…” vẫn dịch theo ngữ cảnh, "
@@ -70,7 +75,7 @@ def get_ai_review_prompt(target_col):
         "Giữ các ký hiệu, đánh số, tab và ngắt dòng vốn có nếu cần cho cấu trúc nguồn; không tự tạo danh sách hay đánh số mới.",
         "Giữ nguyên toàn bộ nội dung của bốn cột đầu, số lượng và thứ tự bảng, tiêu đề cột, độ rộng cột, bố cục trang ngang "
         "và định dạng ô kết quả. Chỉ điền cột cuối; không gộp, tách hoặc xóa bảng. Không thêm Track Changes, comment, màu chữ hay highlight vào bản dịch cuối, "
-        "trừ highlight vàng cho tên công ty không tìm được tên quốc tế theo quy tắc tên riêng.",
+        "trừ highlight vàng cho tên công ty đứng độc lập không tìm được tên quốc tế theo quy tắc tên riêng.",
         "Kiểm tra lại toàn bộ các ô kết quả với nguồn hiện tại trước khi trả file. Nếu thiếu căn cứ để dịch chính xác, "
         "để trống ô đó và nêu rõ nội dung cần xác nhận trong tin nhắn trả lời, không chèn cảnh báo vào ô bản dịch. "
         "Việc xử lý tên riêng hoặc giữ thẻ mẫu theo các quy tắc trên không được coi là thiếu căn cứ để dịch và không được làm trống ô kết quả.",

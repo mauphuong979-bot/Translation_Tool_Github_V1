@@ -34,7 +34,11 @@ class ReviewRoundtripTests(unittest.TestCase):
     def pair(self, count=1, target="Ht", size=10, in_table=False, source=SOURCE, prior_revision_indices=()):
         report = Document()
         items = []
+        sources = list(source) if isinstance(source, (list, tuple)) else None
+        if sources:
+            count = len(sources)
         for index in range(count):
+            source = sources[index] if sources else source
             paragraph = report.add_table(rows=1, cols=1).cell(0, 0).paragraphs[0] if in_table else report.add_paragraph()
             paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
             paragraph.paragraph_format.left_indent = Inches(0.2)

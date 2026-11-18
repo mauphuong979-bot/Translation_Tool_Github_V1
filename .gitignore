@@ -20,3 +20,6 @@ Thumbs.db
 !dictionary.json
 !Demo_2025 avg Report.docx
 NumCompare.xlsx
+
+# Secrets
+.streamlit/secrets.toml

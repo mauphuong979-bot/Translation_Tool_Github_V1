@@ -540,7 +540,14 @@ with tabs[0]:
 
                     # Translation map is now built from the dynamically filled dictionary
                     translation_map = dict(zip(st.session_state.current_dict['Vietnamese'], st.session_state.current_dict[target_col]))
-                    
+                    # Company names confirmed by users (shared table); dictionary entries keep priority
+                    try:
+                        from company_names_store import company_name_map
+                        for company_vn, company_international in company_name_map().items():
+                            translation_map.setdefault(company_vn, company_international)
+                    except Exception as company_error:
+                        st.warning(f"Không đọc được bảng tên công ty đã xác nhận: {company_error}")
+
                     # Prepare metadata
                     metadata = {
                         "Name (not capitalized)": tl.clean_text(st.session_state.meta_name_lc),
@@ -1103,6 +1110,26 @@ if st.session_state.authenticated and st.session_state.username == "admin":
             
             # 3. Text Normalization (CleanV)
             tab_template_management_row("3. Chuẩn hóa văn bản (CleanV)", tl.CLEANV_XLSX, tl.sync_clean_v, "CleanV.xlsx")
+
+            # 4. Confirmed company names (shared table, saved by users from the AI import panel)
+            try:
+                from company_names_store import dictionary_rows, load_company_names
+                company_entries = load_company_names(use_cache=False)
+                st.markdown(f"**4. Tên công ty đã xác nhận** ({len(company_entries)} tên)")
+                st.caption("Người dùng lưu từ mục 📤 Nhập bản dịch từ AI. Tên được tự thay khi xử lý báo cáo và gửi kèm khi dịch bằng AI. "
+                           "Tải về theo mẫu Dictionary_v3 (cột Vietnamese, E, Hs, Ht) để gộp vào từ điển khi cần.")
+                if company_entries:
+                    st.dataframe([{"Tên tiếng Việt": entry["vietnamese"], "Tên quốc tế": entry["international"],
+                                   "Người lưu": entry["saved_by"], "Thời gian": entry["saved_at"]}
+                                  for entry in company_entries.values()], hide_index=True, use_container_width=True)
+                    company_buffer = io.BytesIO()
+                    pd.DataFrame(dictionary_rows(use_cache=False)).to_excel(company_buffer, index=False)
+                    st.download_button("📥 Tải tên công ty (mẫu Dictionary_v3)", company_buffer.getvalue(), file_name="Company_names_for_Dictionary_v3.xlsx",
+                                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", key="tab_company_names_download",
+                                       use_container_width=True)
+            except Exception as company_error:
+                st.warning(f"Không đọc được bảng tên công ty đã xác nhận: {company_error}")
+            st.divider()
 
             # Sync All Button
             if st.button("🔄 Đồng bộ toàn bộ hệ thống", key="tab_sync_all", use_container_width=True, help="Cập nhật toàn bộ file JSON của hệ thống từ các mẫu Excel hiện có."):

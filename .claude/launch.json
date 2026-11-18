@@ -4,8 +4,62 @@
     {
       "name": "translation-tool",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "streamlit", "run", "app.py", "--server.port", "8501", "--server.headless", "true"],
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "app.py",
+        "--server.port",
+        "8501",
+        "--server.headless",
+        "true"
+      ],
       "port": 8501
+    },
+    {
+      "name": "ai-import-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_ai_import.py",
+        "--server.port",
+        "8502",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8502
+    },
+    {
+      "name": "company-names-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_company_names.py",
+        "--server.port",
+        "8503",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8503
+    },
+    {
+      "name": "payload-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_payload.py",
+        "--server.port",
+        "8504",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8504
     }
   ]
 }
