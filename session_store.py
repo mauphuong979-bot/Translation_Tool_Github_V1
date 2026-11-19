@@ -56,17 +56,17 @@ def _delete_rows(worksheet, predicate):
 
 
 def create(username):
-    """New token for username (expired rows are cleaned up on the way). Returns the token, or None on error."""
+    """New token for username (expired rows are cleaned up on the way). Returns (token, None) or (None, error)."""
     token = secrets.token_urlsafe(32)
     try:
         worksheet = _worksheet()
         _delete_rows(worksheet, lambda row: _expired(row[2]))
         expires = (_now() + timedelta(days=REMEMBER_DAYS)).strftime(_FORMAT)
         worksheet.append_row([_hash(token), username, expires, _now().strftime(_FORMAT)], value_input_option="RAW")
-        return token
+        return token, None
     except Exception as e:
         print(f"Remember-me token not saved: {e}")
-        return None
+        return None, str(e)
 
 
 def username_for(token):
@@ -116,4 +116,39 @@ def _cookie_script(cookie):
     return f"""<script>
         var secure = window.parent.location.protocol === 'https:' ? '; Secure' : '';
         window.parent.document.cookie = "{cookie}; path=/; SameSite=Lax" + secure;
+    </script>"""
+
+
+BRIDGE_PARAM = "rt"
+
+
+def bridge_script():
+    """Fallback for hosts whose proxy does not pass cookies to the app (e.g. Streamlit Community Cloud):
+    the browser reads its own cookie and reloads the app page once with the token as a query parameter."""
+    return f"""<script>
+        try {{
+            var page = window.parent;
+            var match = page.document.cookie.match(/(?:^|; ){COOKIE_NAME}=([^;]+)/);
+            var url = new URL(page.location.href);
+            if (match && !url.searchParams.has("{BRIDGE_PARAM}")) {{
+                url.searchParams.set("{BRIDGE_PARAM}", match[1]);
+                // The component iframe is sandboxed without top-navigation, so the reload must be started
+                // by a script running in the app page itself.
+                var run = page.document.createElement("script");
+                run.textContent = "window.location.replace(" + JSON.stringify(url.toString()) + ");";
+                page.document.body.appendChild(run);
+            }}
+        }} catch (e) {{ console.log("remember-me bridge:", e); }}
+    </script>"""
+
+
+def debug_script():
+    """Shows, from the browser side, whether the remember-me cookie exists (never its value)."""
+    return f"""<div style="font:13px sans-serif;color:#555" id="d">...</div><script>
+        var d = document.getElementById("d");
+        try {{
+            var has = window.parent.document.cookie.indexOf("{COOKIE_NAME}=") >= 0;
+            d.textContent = "Trình duyệt có cookie ghi nhớ: " + (has ? "CÓ" : "KHÔNG")
+                + " | Trang: " + window.parent.location.host + window.parent.location.pathname;
+        }} catch (e) {{ d.textContent = "Không đọc được cookie từ trình duyệt: " + e; }}
     </script>"""

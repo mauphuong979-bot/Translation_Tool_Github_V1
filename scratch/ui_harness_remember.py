@@ -27,4 +27,19 @@ usage_logger.open_spreadsheet = shared_sheet
 user_store._local_users = lambda: TEST_USERS
 user_store._sync_local_backup = lambda users: None
 
+class _NoCookieContext:
+    """?sim_nocookie=1 imitates a proxy (like Streamlit Community Cloud) that does not pass cookies to the app."""
+
+    def __init__(self, real):
+        self._real = real
+
+    cookies = {}
+
+    def __getattr__(self, name):
+        return getattr(self._real, name)
+
+
+if st.query_params.get("sim_nocookie") and not isinstance(st.context, _NoCookieContext):
+    st.context = _NoCookieContext(st.context)
+
 runpy.run_path(os.path.join(ROOT, "app.py"), run_name="__main__")

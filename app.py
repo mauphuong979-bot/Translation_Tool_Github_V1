@@ -118,13 +118,36 @@ if "cookie_script" in st.session_state:
     components.html(st.session_state.pop("cookie_script"), height=0)
 
 # "Remember me": a valid token in this browser's cookie signs the user in without the password (once per visit).
+# The token normally arrives with the cookie; where the host's proxy drops cookies (Streamlit Community Cloud),
+# the login screen's bridge script reloads the page once with the token in the "rt" query parameter instead.
+server_cookie_token = st.context.cookies.get(session_store.COOKIE_NAME)
+bridge_token = st.query_params.get(session_store.BRIDGE_PARAM)
+if bridge_token:
+    del st.query_params[session_store.BRIDGE_PARAM]
+    st.session_state.bridge_used = True
 if not st.session_state.authenticated and not st.session_state.get("auto_login_checked"):
     st.session_state.auto_login_checked = True
-    remembered_token = st.context.cookies.get(session_store.COOKIE_NAME)
-    remembered_user = session_store.username_for(remembered_token)
-    if remembered_user and any(u["username"] == remembered_user for u in load_users()):
-        st.session_state.remember_token = remembered_token
-        sign_in(remembered_user, "Signed in from a remembered browser")
+    remembered_token = server_cookie_token or bridge_token
+    if remembered_token:
+        st.session_state.remember_source = "cookie" if server_cookie_token else "bridge"
+        remembered_user = session_store.username_for(remembered_token)
+        if remembered_user and any(u["username"] == remembered_user for u in load_users()):
+            st.session_state.remember_token = remembered_token
+            sign_in(remembered_user, f"Signed in from a remembered browser ({st.session_state.remember_source})")
+        else:
+            # Expired or revoked: forget it in the browser so the bridge does not try it again.
+            components.html(session_store.clear_cookie_script(), height=0)
+
+if st.query_params.get("debug_login"):
+    with st.expander("🔎 Chẩn đoán ghi nhớ đăng nhập", expanded=True):
+        st.write({
+            "Server nhận được cookie": bool(server_cookie_token),
+            "Đã dùng đường dự phòng (rt)": bool(st.session_state.get("bridge_used")),
+            "Nguồn token lần này": st.session_state.get("remember_source"),
+            "Đang đăng nhập": st.session_state.authenticated,
+            "Lỗi lưu ghi nhớ gần nhất": st.session_state.get("remember_error"),
+        })
+        components.html(session_store.debug_script(), height=40)
 
 def handle_name_cap_change():
     """Callback to automatically convert Translated Name to Proper Case if all caps."""
@@ -163,17 +186,26 @@ def login_form():
             elif check_credentials(username, password):
                 sign_in(username, "Successfully signed in")
                 if remember:
-                    token = session_store.create(username)
+                    token, error = session_store.create(username)
                     if token:
                         st.session_state.remember_token = token
                         st.session_state.cookie_script = session_store.set_cookie_script(token)
+                    else:
+                        st.session_state.remember_error = error
                 st.rerun()
             else:
                 st.error("Sai tên đăng nhập hoặc mật khẩu.")
 
 if not st.session_state.authenticated:
+    # Bridge: once per visit, unless this visit already came through it or the user just signed out.
+    if not server_cookie_token and not st.session_state.get("bridge_used") and not st.session_state.get("signed_out"):
+        components.html(session_store.bridge_script(), height=0)
     login_screen()
     st.stop()
+
+if st.session_state.get("remember_error"):
+    st.warning("⚠️ Đã đăng nhập nhưng chưa lưu được ghi nhớ đăng nhập (lần sau vẫn phải nhập mật khẩu): "
+               f"{st.session_state.pop('remember_error')}")
 
 # Initialize Settings
 if 'processed_file_id' not in st.session_state:
@@ -292,6 +324,7 @@ with st.container(key="top_bar", horizontal=True, vertical_alignment="center"):
             session_store.revoke(st.session_state.pop("remember_token", None)
                                  or st.context.cookies.get(session_store.COOKIE_NAME))
             st.session_state.cookie_script = session_store.clear_cookie_script()
+            st.session_state.signed_out = True
             st.session_state.authenticated = False
             st.rerun()
 
