@@ -47,6 +47,21 @@
       "port": 8503
     },
     {
+      "name": "remember-login-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_remember.py",
+        "--server.port",
+        "8505",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8505
+    },
+    {
       "name": "payload-harness",
       "runtimeExecutable": "python",
       "runtimeArgs": [

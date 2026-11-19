@@ -2,6 +2,7 @@ import csv
 import os
 import time
 import random
+import re
 from datetime import datetime, timedelta, timezone
 import streamlit as st
 
@@ -20,7 +21,19 @@ def is_local_env():
     # Fallback to the original method
     return hasattr(os, 'startfile')
 
-# --- Google Sheets Logic (Cloud) ---
+# --- Google Sheets Logic ---
+def normalize_private_key(key):
+    """Rebuild a PEM private key pasted in a slightly wrong shape: literal or doubled \\n, Windows line ends,
+    indented lines, stray quotes, or the whole key on one line with spaces instead of line breaks."""
+    text = key.replace("\\\\n", "\n").replace("\\n", "\n").replace("\r", "")
+    match = re.search(r"-----BEGIN ([A-Z ]+)-----(.*?)-----END \1-----", text, re.S)
+    if not match:
+        return text
+    body = re.sub(r"[^A-Za-z0-9+/=]", "", match.group(2))
+    lines = [body[i:i + 64] for i in range(0, len(body), 64)]
+    return "\n".join([f"-----BEGIN {match.group(1)}-----", *lines, f"-----END {match.group(1)}-----"]) + "\n"
+
+
 def get_gsheet_client():
     """Initializes gspread client using Streamlit secrets."""
     try:
@@ -41,9 +54,8 @@ def get_gsheet_client():
         if not spreadsheet_url:
             return None, "Spreadsheet URL (spreadsheet) not found in secrets"
             
-        # Fix private key formatting (replace literal \n with actual newlines if necessary)
         if "private_key" in creds_dict and isinstance(creds_dict["private_key"], str):
-            creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+            creds_dict["private_key"] = normalize_private_key(creds_dict["private_key"])
 
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
@@ -52,83 +64,81 @@ def get_gsheet_client():
     except Exception as e:
         return None, f"Client init error: {str(e)}"
 
-def log_to_gsheet(user, event_type, details):
-    """Appends a log entry to Google Sheets with retry logic to handle rate limits and concurrency."""
-    client, sheet_url_or_err = get_gsheet_client()
+@st.cache_resource(show_spinner=False)
+def _cached_spreadsheet():
+    client, url_or_error = get_gsheet_client()
     if not client:
-        print(f"GSheet client failed: {sheet_url_or_err}")
-        return
-    
+        raise RuntimeError(url_or_error)
+    return client.open_by_url(url_or_error)
+
+
+def open_spreadsheet():
+    """The logging spreadsheet, opened once and reused (a failed attempt is not cached, so it is retried)."""
+    try:
+        return _cached_spreadsheet()
+    except Exception as e:
+        raise RuntimeError(f"Không kết nối được Google Sheet: {e}") from e
+
+
+def _timestamp():
+    return datetime.now(timezone(timedelta(hours=7))).strftime("%Y-%m-%d %H:%M:%S")
+
+
+def log_to_gsheet(user, event_type, details):
+    """Appends a log entry to Google Sheets, retrying on rate limits. Returns True when written."""
+    row = [_timestamp(), user, event_type, details]
     for attempt in range(3):
         try:
-            spreadsheet = client.open_by_url(sheet_url_or_err)
-            worksheet = spreadsheet.get_worksheet(0)
-            
-            vn_tz = timezone(timedelta(hours=7))
-            timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")
-            
-            worksheet.append_row([timestamp, user, event_type, details])
-            break  # Success, exit the retry loop
+            open_spreadsheet().get_worksheet(0).append_row(row)
+            return True
         except Exception as e:
-            if attempt == 2:
-                # Store error in session state for UI display if all retries fail
+            if attempt == 2 or "Không kết nối được" in str(e):
                 st.session_state["gsheet_error"] = str(e)
-                print(f"GSheet logging failed after 3 attempts: {e}")
-            else:
-                # Exponential backoff with jitter to reduce congestion
-                sleep_time = 1 + attempt + random.random()
-                time.sleep(sleep_time)
+                print(f"GSheet logging failed: {e}")
+                return False
+            # Exponential backoff with jitter to reduce congestion
+            time.sleep(1 + attempt + random.random())
+    return False
 
 def get_gsheet_logs():
-    """Fetches all logs from Google Sheets."""
-    client, sheet_url = get_gsheet_client()
-    if not client or not sheet_url:
-        return []
-    
+    """Fetches all logs from Google Sheets (newest first); raises when the sheet cannot be read."""
+    return open_spreadsheet().get_worksheet(0).get_all_records()[::-1]
+
+
+def _log_to_csv(user, event_type, details):
+    file_exists = os.path.isfile(LOG_FILE)
     try:
-        spreadsheet = client.open_by_url(sheet_url)
-        worksheet = spreadsheet.get_worksheet(0)
-        data = worksheet.get_all_records()
-        return data[::-1] # Reverse for newest first
+        with open(LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(["Timestamp", "User", "Event Type", "Details"])
+            writer.writerow([_timestamp(), user, event_type, details])
+    except Exception as e:
+        print(f"Error logging event: {e}")
+
+
+def _csv_logs():
+    if not os.path.exists(LOG_FILE):
+        return []
+    try:
+        with open(LOG_FILE, mode='r', encoding='utf-8') as f:
+            return list(csv.DictReader(f))[::-1]
     except Exception:
         return []
 
 # --- Public API ---
 
 def log_event(user, event_type, details):
-    """Logs an event to the appropriate destination based on environment."""
-    if is_local_env():
-        # Local logging to CSV
-        vn_tz = timezone(timedelta(hours=7))
-        timestamp = datetime.now(vn_tz).strftime("%Y-%m-%d %H:%M:%S")
-        file_exists = os.path.isfile(LOG_FILE)
-        
-        try:
-            with open(LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                if not file_exists:
-                    writer.writerow(["Timestamp", "User", "Event Type", "Details"])
-                writer.writerow([timestamp, user, event_type, details])
-        except Exception as e:
-            print(f"Error logging event: {e}")
-    else:
-        # Cloud logging to Google Sheets
-        log_to_gsheet(user, event_type, details)
+    """Logs to Google Sheets on every machine; falls back to usage_log.csv when the sheet is unreachable."""
+    if not log_to_gsheet(user, event_type, details):
+        _log_to_csv(user, event_type, details)
 
 def get_logs():
-    """Reads logs from the appropriate destination based on environment."""
-    if is_local_env():
-        if not os.path.exists(LOG_FILE):
-            return []
-        try:
-            logs = []
-            with open(LOG_FILE, mode='r', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    logs.append(row)
-            return logs[::-1]
-        except Exception:
-            return []
-    else:
-        # Fetch from Google Sheets
-        return get_gsheet_logs()
+    """Logs from Google Sheets; usage_log.csv only when the sheet cannot be read."""
+    try:
+        logs = get_gsheet_logs()
+        st.session_state.pop("gsheet_read_error", None)
+        return logs
+    except Exception as e:
+        st.session_state["gsheet_read_error"] = str(e)
+        return _csv_logs()

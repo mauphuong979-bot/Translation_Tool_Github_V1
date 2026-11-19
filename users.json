@@ -1,6 +1,54 @@
 {
     "users": [
         {
+            "username": "hoaltm",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "duylt",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "tamntt",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "phuonglhm",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "quyentt",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "khuongnt",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "myctt",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
+            "username": "phuonglmd",
+            "password": "1",
+            "role": "user",
+            "auto_fill": false
+        },
+        {
             "username": "admin",
             "password": "9",
             "role": "admin",
@@ -8,7 +56,7 @@
         },
         {
             "username": "user",
-            "password": "ui123",
+            "password": "9",
             "role": "user",
             "auto_fill": false
         }

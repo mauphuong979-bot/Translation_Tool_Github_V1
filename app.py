@@ -12,6 +12,8 @@ from review_export import build_ai_review_document
 from review_import_ui import render_ai_import
 from review_filenames import review_output_filename
 from usage_logger import log_event, get_logs, is_local_env
+import session_store
+from user_store import load_users, check_credentials, save_user, remove_user, update_user_data, change_password
 from datetime import datetime, timedelta, timezone
 import metadata_extractor as mex
 from user_guide import show_user_guide
@@ -97,88 +99,32 @@ def highlight_match(text, keyword):
     return pattern.sub(lambda m: f'<span class="dict-highlight">{m.group(0)}</span>', text)
 
 # Authentication Logic
-# Load Users with absolute path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-USERS_FILE = os.path.join(BASE_DIR, "users.json")
 
-def load_users():
-    if os.path.exists(USERS_FILE):
-        with open(USERS_FILE, "r") as f:
-            return json.load(f)["users"]
-    return []
-
-def check_credentials(username, password):
-    users = load_users()
-    for user in users:
-        if user["username"] == username and user["password"] == password:
-            return True
-    return False
-
-def save_user(username, password, role, auto_fill=False):
-    users = load_users()
-    # Check if user already exists
-    if any(u["username"] == username for u in users):
-        return False, f"Tên đăng nhập '{username}' đã tồn tại."
-    
-    users.append({
-        "username": username,
-        "password": password,
-        "role": role,
-        "auto_fill": auto_fill
-    })
-    
-    try:
-        with open(USERS_FILE, "w") as f:
-            json.dump({"users": users}, f, indent=4)
-        return True, f"Đã thêm người dùng '{username}'."
-    except Exception as e:
-        return False, f"Lỗi khi lưu người dùng: {e}"
-
-def remove_user(username):
-    users = load_users()
-    updated_users = [u for u in users if u["username"] != username]
-    
-    try:
-        with open(USERS_FILE, "w") as f:
-            json.dump({"users": updated_users}, f, indent=4)
-        return True, f"Đã xóa người dùng '{username}'."
-    except Exception as e:
-        return False, f"Lỗi khi xóa người dùng: {e}"
-
-def update_user_data(old_username, new_username, new_password, new_role, auto_fill):
-    users = load_users()
-    
-    # Check if new username is already taken (if changing name)
-    if old_username != new_username:
-        if any(u["username"] == new_username for u in users):
-            return False, f"Tên đăng nhập '{new_username}' đã tồn tại."
-    
-    for user in users:
-        if user["username"] == old_username:
-            user["username"] = new_username
-            user["password"] = new_password
-            user["role"] = new_role
-            user["auto_fill"] = auto_fill
-            break
-            
-    try:
-        with open(USERS_FILE, "w") as f:
-            json.dump({"users": users}, f, indent=4)
-        return True, f"Đã cập nhật người dùng '{new_username}'."
-    except Exception as e:
-        return False, f"Lỗi khi cập nhật người dùng: {e}"
+# Users are stored in the "Users" worksheet of the logging Google Sheet (see user_store.py)
 
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
-def handle_autofill():
-    """Callback to update password field when user selection changes."""
-    users = load_users()
-    selected_user = next((u for u in users if u["username"] == st.session_state.login_user), None)
-    if selected_user and selected_user.get("auto_fill"):
-        st.session_state.login_password = selected_user["password"]
-    else:
-        st.session_state.login_password = ""
+
+def sign_in(username, how):
+    st.session_state.authenticated = True
+    st.session_state.username = username
+    log_event(username, "Login", how)
+
+
+# Cookie changes queued before a rerun (set on "remember me", cleared on sign-out) run here, on the next page draw.
+if "cookie_script" in st.session_state:
+    components.html(st.session_state.pop("cookie_script"), height=0)
+
+# "Remember me": a valid token in this browser's cookie signs the user in without the password (once per visit).
+if not st.session_state.authenticated and not st.session_state.get("auto_login_checked"):
+    st.session_state.auto_login_checked = True
+    remembered_token = st.context.cookies.get(session_store.COOKIE_NAME)
+    remembered_user = session_store.username_for(remembered_token)
+    if remembered_user and any(u["username"] == remembered_user for u in load_users()):
+        st.session_state.remember_token = remembered_token
+        sign_in(remembered_user, "Signed in from a remembered browser")
 
 def handle_name_cap_change():
     """Callback to automatically convert Translated Name to Proper Case if all caps."""
@@ -197,25 +143,30 @@ def login_form():
 
     users = load_users()
     usernames = [u["username"] for u in users]
-    
-    # Initialize session state for login widgets if not present
-    if "login_user" not in st.session_state:
-        st.session_state.login_user = "user" if "user" in usernames else (usernames[0] if usernames else "")
-        handle_autofill() # Set initial password if needed
+    if st.session_state.get("users_store_error"):
+        st.warning("⚠️ Không kết nối được Google Sheet, đang dùng danh sách tài khoản dự phòng trên máy "
+                   "(mật khẩu đã đổi gần đây có thể chưa có hiệu lực).")
+        with st.expander("Chi tiết lỗi"):
+            st.code(st.session_state.users_store_error, language=None, wrap_lines=True)
 
-    # User Selection with callback
-    st.selectbox("Tên đăng nhập", usernames, key="login_user", on_change=handle_autofill)
-    
     with st.form("login_form"):
-        # Password field linked to session state key
-        password = st.text_input("Mật khẩu", key="login_password", type="password")
+        username = st.selectbox("Tên đăng nhập", usernames, index=None, placeholder="Chọn tên đăng nhập")
+        password = st.text_input("Mật khẩu", type="password")
+        remember = st.checkbox("Ghi nhớ đăng nhập trên máy này", value=True,
+                               help=f"Không cần nhập mật khẩu trong {session_store.REMEMBER_DAYS} ngày trên trình duyệt này. "
+                                    "Không dùng trên máy dùng chung.")
         submit = st.form_submit_button("Đăng nhập", type="primary", use_container_width=True)
-        
+
         if submit:
-            if check_credentials(st.session_state.login_user, password):
-                st.session_state.authenticated = True
-                st.session_state.username = st.session_state.login_user
-                log_event(st.session_state.username, "Login", "Successfully signed in")
+            if not username:
+                st.error("Vui lòng chọn tên đăng nhập.")
+            elif check_credentials(username, password):
+                sign_in(username, "Successfully signed in")
+                if remember:
+                    token = session_store.create(username)
+                    if token:
+                        st.session_state.remember_token = token
+                        st.session_state.cookie_script = session_store.set_cookie_script(token)
                 st.rerun()
             else:
                 st.error("Sai tên đăng nhập hoặc mật khẩu.")
@@ -318,7 +269,29 @@ with st.container(key="top_bar", horizontal=True, vertical_alignment="center"):
     role = "Quản trị viên" if st.session_state.username == "admin" else "Người dùng"
     with st.popover(f"👤 {st.session_state.username}"):
         st.markdown(f"**{st.session_state.username}**  \n{role}")
+        with st.expander("🔑 Đổi mật khẩu"):
+            with st.form("change_password_form", clear_on_submit=True):
+                current_pass = st.text_input("Mật khẩu hiện tại", type="password")
+                new_pass_1 = st.text_input("Mật khẩu mới", type="password")
+                new_pass_2 = st.text_input("Nhập lại mật khẩu mới", type="password")
+                if st.form_submit_button("Lưu mật khẩu mới", use_container_width=True):
+                    if not current_pass or not new_pass_1:
+                        st.warning("Vui lòng nhập mật khẩu hiện tại và mật khẩu mới.")
+                    elif new_pass_1 != new_pass_2:
+                        st.error("Hai lần nhập mật khẩu mới không khớp.")
+                    elif new_pass_1 == current_pass:
+                        st.warning("Mật khẩu mới phải khác mật khẩu hiện tại.")
+                    else:
+                        success, msg = change_password(st.session_state.username, current_pass, new_pass_1)
+                        if success:
+                            st.success(msg)
+                            log_event(st.session_state.username, "User Management", "Changed own password")
+                        else:
+                            st.error(msg)
         if st.button("🚪 Đăng xuất", use_container_width=True):
+            session_store.revoke(st.session_state.pop("remember_token", None)
+                                 or st.context.cookies.get(session_store.COOKIE_NAME))
+            st.session_state.cookie_script = session_store.clear_cookie_script()
             st.session_state.authenticated = False
             st.rerun()
 
@@ -810,16 +783,12 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         st.markdown("### 📈 Quản trị")
         
         # 0. Logging Status
-        is_local = is_local_env()
-        status_color = "#2ecc71" if is_local else "#3498db"
-        status_label = "Lưu trên máy (CSV)" if is_local else "Lưu trên cloud (Google Sheets)"
-        status_icon = "💻" if is_local else "☁️"
-        
+        status_color = "#3498db"
         st.markdown(f"""
         <div style="padding: 15px; border-radius: 10px; border-left: 5px solid {status_color}; background-color: rgba(0,0,0,0.05); margin-bottom: 20px;">
-            <div style="font-weight: bold; font-size: 1.1em;">{status_icon} Nhật ký sử dụng: <span style="color: {status_color};">{status_label}</span></div>
+            <div style="font-weight: bold; font-size: 1.1em;">☁️ Nhật ký & tài khoản: <span style="color: {status_color};">Lưu trên Google Sheets</span></div>
             <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                { "Nhật ký đang được ghi vào <code>usage_log.csv</code> trên máy này." if is_local else "Nhật ký đang được ghi vào Google Sheet. Hãy đảm bảo đã cấu hình secrets trên Streamlit Cloud." }
+                Cả máy Windows và Streamlit Cloud đều ghi nhật ký và đọc tài khoản từ cùng một Google Sheet (tab đầu tiên: nhật ký, tab <code>Users</code>: tài khoản). Khi không kết nối được, nhật ký tạm ghi vào <code>usage_log.csv</code>.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -833,10 +802,10 @@ if st.session_state.authenticated and st.session_state.username == "admin":
         except Exception:
             pass
         
-        if not is_local and not gs_configured:
-            st.error("⚠️ **Chưa cấu hình Google Sheets!** Hãy khai báo secrets trên trang quản lý Streamlit Cloud.")
+        if not gs_configured:
+            st.error("⚠️ **Chưa cấu hình Google Sheets!** Hãy khai báo secrets (file .streamlit/secrets.toml trên máy, hoặc mục Secrets trên Streamlit Cloud).")
             # ... setup guide code ...
-        elif not is_local and st.session_state.get("gsheet_error"):
+        elif st.session_state.get("gsheet_error"):
             st.error(f"❌ **Lỗi ghi nhật ký Google Sheets:** {st.session_state.gsheet_error}")
             if st.button("Xóa thông báo lỗi"):
                 del st.session_state["gsheet_error"]
@@ -883,11 +852,12 @@ if st.session_state.authenticated and st.session_state.username == "admin":
 
         with st.expander("📈 Nhật ký sử dụng", expanded=True):
             st.markdown("### Hoạt động gần đây")
-            if not is_local_env():
-                st.info("🌐 Đang xem nhật ký từ **Google Sheets**.")
-                if not gs_configured:
-                    st.warning("Không hiển thị được nhật ký vì chưa cấu hình Google Sheets.")
             logs = get_logs()
+            if st.session_state.get("gsheet_read_error"):
+                st.warning(f"Không đọc được Google Sheet ({st.session_state.gsheet_read_error}), "
+                           "đang hiển thị nhật ký dự phòng trong usage_log.csv.")
+            else:
+                st.info("🌐 Đang xem nhật ký từ **Google Sheets**.")
             if logs:
                 log_df = pd.DataFrame(logs)
                 # Convert Timestamp to datetime for filtering
@@ -983,12 +953,11 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                 new_user = st.text_input("Tên đăng nhập mới")
                 new_pass = st.text_input("Mật khẩu mới", type="password")
                 new_role = st.selectbox("Vai trò", ["user", "admin"], index=0)
-                new_auto_fill = st.checkbox("Tự điền mật khẩu", value=False)
                 add_btn = st.form_submit_button("➕ Thêm người dùng")
-                
+
                 if add_btn:
                     if new_user and new_pass:
-                        success, msg = save_user(new_user, new_pass, new_role, new_auto_fill)
+                        success, msg = save_user(new_user, new_pass, new_role)
                         if success:
                             st.success(msg)
                             log_event(st.session_state.username, "User Management", f"Created user: {new_user} ({new_role})")
@@ -1025,12 +994,15 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                         edit_role = st.selectbox("Vai trò", ["admin", "user"], index=0 if user["role"]=="admin" else 1, key=f"rl_{idx}")
                     
                     with c4:
-                        # Auto-fill toggle
-                        edit_auto = st.checkbox("Tự điền", value=user.get("auto_fill", False), key=f"af_{idx}")
+                        if st.button("🚪", key=f"out_{idx}", use_container_width=True,
+                                     help=f"Hủy ghi nhớ đăng nhập của {user['username']} trên mọi máy"):
+                            session_store.revoke_user(user["username"])
+                            st.success(f"Đã hủy ghi nhớ đăng nhập của {user['username']}.")
+                            log_event(st.session_state.username, "User Management", f"Signed out remembered browsers: {user['username']}")
 
                     with c5:
                         if st.button("💾 Lưu", key=f"upd_{idx}", use_container_width=True):
-                            success, msg = update_user_data(user["username"], edit_name, edit_pass, edit_role, edit_auto)
+                            success, msg = update_user_data(user["username"], edit_name, edit_pass, edit_role, False)
                             if success:
                                 st.success(msg)
                                 log_event(st.session_state.username, "User Management", f"Updated user: {edit_name}")
