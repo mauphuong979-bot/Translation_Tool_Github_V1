@@ -122,28 +122,61 @@ def _cookie_script(cookie):
 BRIDGE_PARAM = "rt"
 
 
+BRIDGE_INPUT_KEY = "fsp_rt"
+
+
 def bridge_script():
-    """Fallback for hosts whose proxy does not pass cookies to the app (e.g. Streamlit Community Cloud):
-    the browser reads its own cookie and reloads the app page once with the token as a query parameter."""
+    """Fallback for hosts whose proxy does not pass cookies to the app (e.g. Streamlit Community Cloud).
+    The browser reads its own cookie and types the token into a hidden text box (key BRIDGE_INPUT_KEY), which
+    makes the app rerun with it, without reloading the page. If that box cannot be found, it reloads the page
+    once with the token as a query parameter instead."""
     return f"""<script>
-        try {{
+        (function () {{
             var page = window.parent;
-            var match = page.document.cookie.match(/(?:^|; ){COOKIE_NAME}=([^;]+)/);
-            var url = new URL(page.location.href);
-            if (match && !url.searchParams.has("{BRIDGE_PARAM}")) {{
-                url.searchParams.set("{BRIDGE_PARAM}", match[1]);
-                // The component iframe is sandboxed without top-navigation, so the reload must be started
-                // by a script running in the app page itself.
-                var run = page.document.createElement("script");
-                run.textContent = "window.location.replace(" + JSON.stringify(url.toString()) + ");";
-                page.document.body.appendChild(run);
-            }} else {{
-                page.document.body.classList.add("fsp-no-remember");  // no cookie: show the login form now
+            function noRemember() {{ page.document.body.classList.add("fsp-no-remember"); }}
+            try {{
+                var match = page.document.cookie.match(/(?:^|; ){COOKIE_NAME}=([^;]+)/);
+                if (!match) {{ noRemember(); return; }}
+                var token = match[1], tries = 0, sends = 0;
+                function type(input) {{
+                    // React only sees values set through the native setter followed by an input event;
+                    // Streamlit applies a text box value on Enter.
+                    var setValue = Object.getOwnPropertyDescriptor(page.HTMLInputElement.prototype, "value").set;
+                    setValue.call(input, "");
+                    input.dispatchEvent(new page.Event("input", {{ bubbles: true }}));
+                    setValue.call(input, token);
+                    input.dispatchEvent(new page.Event("input", {{ bubbles: true }}));
+                    ["keydown", "keypress", "keyup"].forEach(function (kind) {{
+                        input.dispatchEvent(new page.KeyboardEvent(kind, {{ key: "Enter", code: "Enter",
+                            keyCode: 13, which: 13, charCode: 13, bubbles: true }}));
+                    }});
+                }}
+                (function send() {{
+                    var input = page.document.querySelector(".st-key-{BRIDGE_INPUT_KEY} input");
+                    if (input) {{
+                        setTimeout(function () {{
+                            type(input);
+                            // Still on this page after 3 s (the first try was not picked up)? Try once more.
+                            if (++sends < 2) setTimeout(function () {{
+                                if (input.isConnected) send();
+                            }}, 3000);
+                        }}, 300);
+                    }} else if (++tries < 30) {{
+                        setTimeout(send, 100);
+                    }} else {{
+                        var url = new URL(page.location.href);
+                        url.searchParams.set("{BRIDGE_PARAM}", token);
+                        // The component iframe may not navigate the page itself; a script in the page can.
+                        var run = page.document.createElement("script");
+                        run.textContent = "window.location.replace(" + JSON.stringify(url.toString()) + ");";
+                        page.document.body.appendChild(run);
+                    }}
+                }})();
+            }} catch (e) {{
+                console.log("remember-me bridge:", e);
+                try {{ noRemember(); }} catch (ignored) {{}}
             }}
-        }} catch (e) {{
-            console.log("remember-me bridge:", e);
-            try {{ window.parent.document.body.classList.add("fsp-no-remember"); }} catch (ignored) {{}}
-        }}
+        }})();
     </script>"""
 
 

@@ -136,35 +136,36 @@ def waiting_overlay(text, auto_hide=False):
 
 
 # "Remember me": a valid token in this browser's cookie signs the user in without the password (once per visit).
-# The token normally arrives with the cookie; where the host's proxy drops cookies (Streamlit Community Cloud),
-# the login screen's bridge script reloads the page once with the token in the "rt" query parameter instead.
+# The token normally arrives with the cookie. Where the host's proxy drops cookies (Streamlit Community Cloud),
+# the login screen's bridge script reads the cookie in the browser and hands the token back through a hidden
+# text box (or, failing that, an "rt" query parameter), while one steady "Đang đăng nhập…" screen stays up.
 server_cookie_token = st.context.cookies.get(session_store.COOKIE_NAME)
 bridge_token = st.query_params.get(session_store.BRIDGE_PARAM)
 if bridge_token:
     del st.query_params[session_store.BRIDGE_PARAM]
     st.session_state.bridge_used = True
-if not st.session_state.authenticated and not st.session_state.get("auto_login_checked"):
-    st.session_state.auto_login_checked = True
-    remembered_token = server_cookie_token or bridge_token
-    if remembered_token:
-        st.session_state.remember_source = "cookie" if server_cookie_token else "bridge"
-        overlay = st.empty()
-        overlay.markdown(waiting_overlay("Đang đăng nhập…"), unsafe_allow_html=True)
-        remembered_user = session_store.username_for(remembered_token)
-        valid = remembered_user and any(u["username"] == remembered_user for u in load_users())
-        overlay.empty()
-        if valid:
-            st.session_state.remember_token = remembered_token
-            sign_in(remembered_user, f"Signed in from a remembered browser ({st.session_state.remember_source})")
-        else:
-            # Expired or revoked: forget it in the browser so the bridge does not try it again.
-            components.html(session_store.clear_cookie_script(), height=0)
+remembered_token = server_cookie_token or bridge_token or st.session_state.get(session_store.BRIDGE_INPUT_KEY)
+if (not st.session_state.authenticated and not st.session_state.get("signed_out")
+        and remembered_token and remembered_token != st.session_state.get("tried_token")):
+    st.session_state.remember_source = ("cookie" if server_cookie_token else "query" if bridge_token else "bridge")
+    overlay = st.empty()
+    overlay.markdown(waiting_overlay("Đang đăng nhập…"), unsafe_allow_html=True)
+    remembered_user = session_store.username_for(remembered_token)
+    # Marked only once checked: a run interrupted mid-check (e.g. by a second bridge try) checks again.
+    st.session_state.tried_token = remembered_token
+    if remembered_user and any(u["username"] == remembered_user for u in load_users()):
+        st.session_state.remember_token = remembered_token
+        sign_in(remembered_user, f"Signed in from a remembered browser ({st.session_state.remember_source})")
+        st.rerun()  # straight to the main page, the waiting screen stays up until it is drawn
+    overlay.empty()
+    # Expired or revoked: forget it in the browser so the bridge does not try it again.
+    components.html(session_store.clear_cookie_script(), height=0)
 
 if st.query_params.get("debug_login"):
     with st.expander("🔎 Chẩn đoán ghi nhớ đăng nhập", expanded=True):
         st.write({
             "Server nhận được cookie": bool(server_cookie_token),
-            "Đã dùng đường dự phòng (rt)": bool(st.session_state.get("bridge_used")),
+            "Đã dùng đường dự phòng": bool(st.session_state.get("tried_token")) and not server_cookie_token,
             "Nguồn token lần này": st.session_state.get("remember_source"),
             "Đang đăng nhập": st.session_state.authenticated,
             "Lỗi lưu ghi nhớ gần nhất": st.session_state.get("remember_error"),
@@ -220,11 +221,15 @@ def login_form():
 
 if not st.session_state.authenticated:
     # Bridge: once per visit, unless this visit already came through it or the user just signed out.
-    if not server_cookie_token and not st.session_state.get("bridge_used") and not st.session_state.get("signed_out"):
-        if not st.session_state.get("bridge_checked"):
-            # First draw of this visit: cover the form until the browser says whether a remembered sign-in exists.
-            st.markdown(waiting_overlay("Đang kiểm tra đăng nhập…", auto_hide=True), unsafe_allow_html=True)
-            st.session_state.bridge_checked = True
+    if (not server_cookie_token and not st.session_state.get("tried_token")
+            and not st.session_state.get("bridge_used") and not st.session_state.get("signed_out")):
+        # Cover the form until the browser says whether a remembered sign-in exists (same text as the next step,
+        # so the screen does not change), and give the bridge its hidden text box.
+        st.markdown(waiting_overlay("Đang đăng nhập…", auto_hide=True), unsafe_allow_html=True)
+        st.markdown(f"<style>.st-key-{session_store.BRIDGE_INPUT_KEY}_box {{ position: absolute; left: -10000px; "
+                    "height: 0; overflow: hidden; }</style>", unsafe_allow_html=True)
+        with st.container(key=f"{session_store.BRIDGE_INPUT_KEY}_box"):
+            st.text_input("remember", key=session_store.BRIDGE_INPUT_KEY, label_visibility="collapsed")
         components.html(session_store.bridge_script(), height=0)
     login_screen()
     st.stop()
