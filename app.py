@@ -113,17 +113,12 @@ def sign_in(username, how):
     log_event(username, "Login", how)
 
 
-# Cookie changes queued before a rerun (set on "remember me", cleared on sign-out) run here, on the next page draw.
-if "cookie_script" in st.session_state:
-    components.html(st.session_state.pop("cookie_script"), height=0)
-
-def waiting_overlay(text, auto_hide=False):
-    """Full-page spinner shown while a remembered sign-in is checked, so the login form does not flash.
-    auto_hide: the browser-side bridge hides it when there is no cookie; it also disappears by itself after
-    8 seconds in case that script never runs, so nobody is left in front of a spinner."""
-    hide = ("body.fsp-no-remember .fsp-overlay { display: none; }"
-            ".fsp-overlay { animation: fsp-giveup 0s 8s forwards; }"
-            "@keyframes fsp-giveup { to { visibility: hidden; } }") if auto_hide else ""
+def waiting_overlay(text, give_up_after=15):
+    """Full-page spinner shown while a remembered sign-in is checked and the main page is drawn, so neither the
+    login form nor a half-built page flashes. It disappears by itself after give_up_after seconds in case
+    something goes wrong, so nobody is left in front of it."""
+    hide = (f".fsp-overlay {{ animation: fsp-giveup 0s {give_up_after}s forwards; }}"
+            "@keyframes fsp-giveup { to { visibility: hidden; } }")
     return f"""<style>
         .fsp-overlay {{ position: fixed; inset: 0; z-index: 999990; background: #fff; display: flex;
             flex-direction: column; align-items: center; justify-content: center; gap: 14px;
@@ -135,6 +130,21 @@ def waiting_overlay(text, auto_hide=False):
     </style><div class="fsp-overlay"><div class="fsp-spin"></div><div>{text}</div></div>"""
 
 
+# One fixed spot for the waiting screen, used by every step of a remembered sign-in (browser check, token check,
+# drawing the main page), so the screen stays the same from the first draw until the main page is complete.
+# It covers every run of a visit until either the login form or the whole main page has been drawn.
+# Drawn straight into its slot (not an empty placeholder filled afterwards), so it never blinks between runs.
+# Identical content in every run, so the browser keeps the same screen instead of redrawing it.
+if (st.session_state.get("cover_main_page")  # cleared only once a run draws the whole main page
+        or (not st.session_state.authenticated and not st.session_state.get("login_form_shown"))):
+    entry_overlay = st.html(waiting_overlay("Đang đăng nhập…", give_up_after=10))
+else:
+    entry_overlay = st.empty()
+
+# Cookie changes queued before a rerun (set on "remember me", cleared on sign-out) run here, on the next page draw.
+if "cookie_script" in st.session_state:
+    components.html(st.session_state.pop("cookie_script"), height=0)
+
 # "Remember me": a valid token in this browser's cookie signs the user in without the password (once per visit).
 # The token normally arrives with the cookie. Where the host's proxy drops cookies (Streamlit Community Cloud),
 # the login screen's bridge script reads the cookie in the browser and hands the token back through a hidden
@@ -144,20 +154,22 @@ bridge_token = st.query_params.get(session_store.BRIDGE_PARAM)
 if bridge_token:
     del st.query_params[session_store.BRIDGE_PARAM]
     st.session_state.bridge_used = True
-remembered_token = server_cookie_token or bridge_token or st.session_state.get(session_store.BRIDGE_INPUT_KEY)
+bridge_value = st.session_state.get(session_store.BRIDGE_INPUT_KEY)
+if bridge_value == session_store.NO_TOKEN or st.query_params.get("login") == "password":
+    st.session_state.bridge_used = True  # the browser has no remembered sign-in: show the login form
+    bridge_value = None
+remembered_token = server_cookie_token or bridge_token or bridge_value
 if (not st.session_state.authenticated and not st.session_state.get("signed_out")
         and remembered_token and remembered_token != st.session_state.get("tried_token")):
     st.session_state.remember_source = ("cookie" if server_cookie_token else "query" if bridge_token else "bridge")
-    overlay = st.empty()
-    overlay.markdown(waiting_overlay("Đang đăng nhập…"), unsafe_allow_html=True)
     remembered_user = session_store.username_for(remembered_token)
     # Marked only once checked: a run interrupted mid-check (e.g. by a second bridge try) checks again.
     st.session_state.tried_token = remembered_token
     if remembered_user and any(u["username"] == remembered_user for u in load_users()):
         st.session_state.remember_token = remembered_token
         sign_in(remembered_user, f"Signed in from a remembered browser ({st.session_state.remember_source})")
-        st.rerun()  # straight to the main page, the waiting screen stays up until it is drawn
-    overlay.empty()
+        st.session_state.cover_main_page = True  # keep the waiting screen up until the main page is drawn
+        st.rerun()
     # Expired or revoked: forget it in the browser so the bridge does not try it again.
     components.html(session_store.clear_cookie_script(), height=0)
 
@@ -223,15 +235,23 @@ if not st.session_state.authenticated:
     # Bridge: once per visit, unless this visit already came through it or the user just signed out.
     if (not server_cookie_token and not st.session_state.get("tried_token")
             and not st.session_state.get("bridge_used") and not st.session_state.get("signed_out")):
-        # Cover the form until the browser says whether a remembered sign-in exists (same text as the next step,
-        # so the screen does not change), and give the bridge its hidden text box.
-        st.markdown(waiting_overlay("Đang đăng nhập…", auto_hide=True), unsafe_allow_html=True)
+        # Only the waiting screen until the browser says whether a remembered sign-in exists (the login form is
+        # not drawn yet, so it cannot flash), plus the bridge's hidden text box. If the browser never answers, a
+        # link to the password form appears after a few seconds.
+        st.html("""<style>.fsp-fallback { text-align: center; margin-top: 30vh; visibility: hidden;
+                    font-family: sans-serif; color: #555; animation: fsp-reveal 0s 10s forwards; }
+                    @keyframes fsp-reveal { to { visibility: visible; } }</style>
+                <div class="fsp-fallback">Chưa tự đăng nhập được.
+                    <a href="?login=password" target="_self">Đăng nhập bằng mật khẩu</a></div>""")
         st.markdown(f"<style>.st-key-{session_store.BRIDGE_INPUT_KEY}_box {{ position: absolute; left: -10000px; "
                     "height: 0; overflow: hidden; }</style>", unsafe_allow_html=True)
         with st.container(key=f"{session_store.BRIDGE_INPUT_KEY}_box"):
             st.text_input("remember", key=session_store.BRIDGE_INPUT_KEY, label_visibility="collapsed")
         components.html(session_store.bridge_script(), height=0)
+        st.stop()
     login_screen()
+    st.session_state.login_form_shown = True
+    entry_overlay.empty()  # lifted only now that the form is drawn, so nothing blank shows in between
     st.stop()
 
 if st.session_state.get("remember_error"):
@@ -1185,6 +1205,10 @@ if st.session_state.authenticated and st.session_state.username == "admin":
 
 # Footer
 st.caption("Financial Statements Processor | Ứng dụng xử lý và dịch báo cáo tài chính")
+
+# The main page is complete: lift the waiting screen of a remembered sign-in (no-op otherwise).
+st.session_state.pop("cover_main_page", None)
+entry_overlay.empty()
 
 
 

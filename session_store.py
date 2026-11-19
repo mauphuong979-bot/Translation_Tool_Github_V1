@@ -123,6 +123,7 @@ BRIDGE_PARAM = "rt"
 
 
 BRIDGE_INPUT_KEY = "fsp_rt"
+NO_TOKEN = "-"  # what the bridge sends when this browser has no remember-me cookie
 
 
 def bridge_script():
@@ -133,11 +134,9 @@ def bridge_script():
     return f"""<script>
         (function () {{
             var page = window.parent;
-            function noRemember() {{ page.document.body.classList.add("fsp-no-remember"); }}
             try {{
                 var match = page.document.cookie.match(/(?:^|; ){COOKIE_NAME}=([^;]+)/);
-                if (!match) {{ noRemember(); return; }}
-                var token = match[1], tries = 0, sends = 0;
+                var token = match ? match[1] : "{NO_TOKEN}", tries = 0, sends = 0;
                 function type(input) {{
                     // React only sees values set through the native setter followed by an input event;
                     // Streamlit applies a text box value on Enter.
@@ -156,11 +155,13 @@ def bridge_script():
                     if (input) {{
                         setTimeout(function () {{
                             type(input);
-                            // Still on this page after 3 s (the first try was not picked up)? Try once more.
-                            if (++sends < 2) setTimeout(function () {{
-                                if (input.isConnected) send();
-                            }}, 3000);
-                        }}, 300);
+                            // Not picked up yet (the app has not started a new run, which marks this box
+                            // stale)? Type it again shortly; once a run has started, leave it alone.
+                            if (++sends < 6) setTimeout(function () {{
+                                var box = input.closest("[data-stale]");
+                                if (input.isConnected && !(box && box.getAttribute("data-stale") === "true")) send();
+                            }}, 700);
+                        }}, 150);
                     }} else if (++tries < 30) {{
                         setTimeout(send, 100);
                     }} else {{
@@ -174,7 +175,6 @@ def bridge_script():
                 }})();
             }} catch (e) {{
                 console.log("remember-me bridge:", e);
-                try {{ noRemember(); }} catch (ignored) {{}}
             }}
         }})();
     </script>"""
