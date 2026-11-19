@@ -117,6 +117,24 @@ def sign_in(username, how):
 if "cookie_script" in st.session_state:
     components.html(st.session_state.pop("cookie_script"), height=0)
 
+def waiting_overlay(text, auto_hide=False):
+    """Full-page spinner shown while a remembered sign-in is checked, so the login form does not flash.
+    auto_hide: the browser-side bridge hides it when there is no cookie; it also disappears by itself after
+    8 seconds in case that script never runs, so nobody is left in front of a spinner."""
+    hide = ("body.fsp-no-remember .fsp-overlay { display: none; }"
+            ".fsp-overlay { animation: fsp-giveup 0s 8s forwards; }"
+            "@keyframes fsp-giveup { to { visibility: hidden; } }") if auto_hide else ""
+    return f"""<style>
+        .fsp-overlay {{ position: fixed; inset: 0; z-index: 999990; background: #fff; display: flex;
+            flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+            font-family: sans-serif; color: #555; font-size: 15px; }}
+        .fsp-spin {{ width: 38px; height: 38px; border-radius: 50%; border: 4px solid #e6e6e6;
+            border-top-color: #ff4b4b; animation: fsp-rotate 0.8s linear infinite; }}
+        @keyframes fsp-rotate {{ to {{ transform: rotate(360deg); }} }}
+        {hide}
+    </style><div class="fsp-overlay"><div class="fsp-spin"></div><div>{text}</div></div>"""
+
+
 # "Remember me": a valid token in this browser's cookie signs the user in without the password (once per visit).
 # The token normally arrives with the cookie; where the host's proxy drops cookies (Streamlit Community Cloud),
 # the login screen's bridge script reloads the page once with the token in the "rt" query parameter instead.
@@ -130,8 +148,12 @@ if not st.session_state.authenticated and not st.session_state.get("auto_login_c
     remembered_token = server_cookie_token or bridge_token
     if remembered_token:
         st.session_state.remember_source = "cookie" if server_cookie_token else "bridge"
+        overlay = st.empty()
+        overlay.markdown(waiting_overlay("Đang đăng nhập…"), unsafe_allow_html=True)
         remembered_user = session_store.username_for(remembered_token)
-        if remembered_user and any(u["username"] == remembered_user for u in load_users()):
+        valid = remembered_user and any(u["username"] == remembered_user for u in load_users())
+        overlay.empty()
+        if valid:
             st.session_state.remember_token = remembered_token
             sign_in(remembered_user, f"Signed in from a remembered browser ({st.session_state.remember_source})")
         else:
@@ -199,6 +221,10 @@ def login_form():
 if not st.session_state.authenticated:
     # Bridge: once per visit, unless this visit already came through it or the user just signed out.
     if not server_cookie_token and not st.session_state.get("bridge_used") and not st.session_state.get("signed_out"):
+        if not st.session_state.get("bridge_checked"):
+            # First draw of this visit: cover the form until the browser says whether a remembered sign-in exists.
+            st.markdown(waiting_overlay("Đang kiểm tra đăng nhập…", auto_hide=True), unsafe_allow_html=True)
+            st.session_state.bridge_checked = True
         components.html(session_store.bridge_script(), height=0)
     login_screen()
     st.stop()

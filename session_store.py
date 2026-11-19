@@ -137,8 +137,13 @@ def bridge_script():
                 var run = page.document.createElement("script");
                 run.textContent = "window.location.replace(" + JSON.stringify(url.toString()) + ");";
                 page.document.body.appendChild(run);
+            }} else {{
+                page.document.body.classList.add("fsp-no-remember");  // no cookie: show the login form now
             }}
-        }} catch (e) {{ console.log("remember-me bridge:", e); }}
+        }} catch (e) {{
+            console.log("remember-me bridge:", e);
+            try {{ window.parent.document.body.classList.add("fsp-no-remember"); }} catch (ignored) {{}}
+        }}
     </script>"""
 
 

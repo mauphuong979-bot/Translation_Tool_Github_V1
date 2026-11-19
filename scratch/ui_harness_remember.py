@@ -42,4 +42,20 @@ class _NoCookieContext:
 if st.query_params.get("sim_nocookie") and not isinstance(st.context, _NoCookieContext):
     st.context = _NoCookieContext(st.context)
 
+if st.query_params.get("sim_slow"):
+    # ?sim_slow=1 makes the token check take 3 s, so the waiting screen can be seen.
+    import time
+
+    import session_store
+
+    if not getattr(session_store.username_for, "slow", False):
+        _check = session_store.username_for
+
+        def _slow_check(token):
+            time.sleep(3)
+            return _check(token)
+
+        _slow_check.slow = True
+        session_store.username_for = _slow_check
+
 runpy.run_path(os.path.join(ROOT, "app.py"), run_name="__main__")
