@@ -75,6 +75,36 @@
         "true"
       ],
       "port": 8504
+    },
+    {
+      "name": "review-table-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_review_table.py",
+        "--server.port",
+        "8506",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8506
+    },
+    {
+      "name": "api-word-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_api_word.py",
+        "--server.port",
+        "8507",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8507
     }
   ]
 }

@@ -100,9 +100,48 @@ def log_to_gsheet(user, event_type, details):
             time.sleep(1 + attempt + random.random())
     return False
 
+LOG_COLUMNS = ["Timestamp", "User", "Event Type", "Details"]
+_COLUMN_ALIASES = {
+    "timestamp": "Timestamp", "time": "Timestamp", "date": "Timestamp", "datetime": "Timestamp",
+    "thoi gian": "Timestamp", "thời gian": "Timestamp",
+    "user": "User", "username": "User", "người dùng": "User",
+    "event type": "Event Type", "eventtype": "Event Type", "event": "Event Type", "type": "Event Type",
+    "action": "Event Type", "loại": "Event Type", "sự kiện": "Event Type",
+    "details": "Details", "detail": "Details", "description": "Details", "chi tiết": "Details",
+}
+_TIMESTAMP_LIKE = re.compile(r"^\s*\d{4}-\d{2}-\d{2}")
+
+
+def normalize_log_rows(rows):
+    """Turn raw sheet/CSV rows into dicts with exactly LOG_COLUMNS, newest first.
+
+    Copes with a sheet whose header is missing (rows were appended to an empty tab), whose header names
+    differ (e.g. "Event" instead of "Event Type"), or that has extra or missing columns."""
+    rows = [list(row) for row in rows if any(str(cell).strip() for cell in row)]
+    if not rows:
+        return []
+    columns = list(LOG_COLUMNS)
+    if _TIMESTAMP_LIKE.match(str(rows[0][0])):
+        data = rows  # no header row
+    else:
+        header, data = rows[0], rows[1:]
+        named = [_COLUMN_ALIASES.get(" ".join(str(h).replace("_", " ").split()).lower()) for h in header]
+        # Known names win; any of the four still unplaced keeps its usual position.
+        columns = [name or (LOG_COLUMNS[i] if i < 4 and LOG_COLUMNS[i] not in named else None)
+                   for i, name in enumerate(named)]
+    logs = []
+    for row in data:
+        entry = dict.fromkeys(LOG_COLUMNS, "")
+        for column, value in zip(columns, row):
+            if column:
+                entry[column] = str(value)
+        logs.append(entry)
+    return logs[::-1]
+
+
 def get_gsheet_logs():
     """Fetches all logs from Google Sheets (newest first); raises when the sheet cannot be read."""
-    return open_spreadsheet().get_worksheet(0).get_all_records()[::-1]
+    return normalize_log_rows(open_spreadsheet().get_worksheet(0).get_all_values())
 
 
 def _log_to_csv(user, event_type, details):
@@ -122,7 +161,7 @@ def _csv_logs():
         return []
     try:
         with open(LOG_FILE, mode='r', encoding='utf-8') as f:
-            return list(csv.DictReader(f))[::-1]
+            return normalize_log_rows(csv.reader(f))
     except Exception:
         return []
 

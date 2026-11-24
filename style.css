@@ -570,3 +570,35 @@ td.ai-payload-id {
     font-size: 0.78rem;
     background: var(--review-surface);
 }
+
+/* Numbered sections of the AI import flow: 1 Dịch · 2 Sửa bằng Word · 3 Rà soát & áp dụng */
+.ai-section {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.9rem 0 0.1rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--review-border);
+    color: var(--review-navy);
+    font-weight: 600;
+}
+
+.ai-section b {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--review-navy);
+    color: #ffffff;
+    font-size: 0.8rem;
+}
+
+.ai-section em {
+    margin-left: auto;
+    color: var(--review-muted);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+}

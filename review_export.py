@@ -6,12 +6,12 @@ from docx import Document
 from docx.enum.section import WD_ORIENT
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_COLOR_INDEX
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Inches, Pt, RGBColor, Twips
 
-from review_roundtrip import HEADERS, reference_label
+from review_roundtrip import HEADERS, highlight_ranges, reference_label
 from review_annotations import needs_ai_translation
 
 
@@ -163,7 +163,37 @@ def _prepare_result_cell(cell, formatting, target_col):
     paragraph._p.get_or_add_pPr().append(deepcopy(run._r.rPr))
 
 
-def build_ai_review_document(review_items, target_col="E"):
+def _fill_result_cell(document, cell, result):
+    """Prefill the result cell with a translation: highlight phrases in yellow, the AI's note as a Word comment."""
+    paragraph = cell.paragraphs[0]
+    template = paragraph.runs[0]
+    translation = result.get("translation") or ""
+    spans = highlight_ranges(translation, result.get("highlight") or [])
+    pieces, position = [], 0
+    for start, end in spans:
+        if start > position:
+            pieces.append((translation[position:start], False))
+        pieces.append((translation[start:end], True))
+        position = end
+    if position < len(translation):
+        pieces.append((translation[position:], False))
+    runs = []
+    for index, (text, yellow) in enumerate(pieces):
+        run = template if index == 0 else paragraph.add_run()
+        if index:
+            run._r.append(deepcopy(template._r.rPr))
+        run.text = text
+        if yellow:
+            run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+        runs.append(run)
+    note = (result.get("note") or "").strip()
+    if note:
+        document.add_comment(runs or [template], text="AI ghi chú: " + note, author="Translation Tool AI", initials="AI")
+
+
+def build_ai_review_document(review_items, target_col="E", results=None):
+    """AI_Form worksheet. results ({review_id: {"translation", "highlight", "note"}}) prefills the result column,
+    e.g. with API translations, so translators can review them in Word and import the file again."""
     prompt = get_ai_review_prompt(target_col)
     items = [item for item in review_items if needs_ai_translation(item)]
     if not items:
@@ -234,6 +264,8 @@ def build_ai_review_document(review_items, target_col="E"):
         _fill_references(reference_cell, item["references"], "translation", target_col)
         _shade_cell(result_cell, "F2F7F0")
         _prepare_result_cell(result_cell, item.get("formatting", {}), target_col)
+        if results and item.get("review_id") in results:
+            _fill_result_cell(document, result_cell, results[item["review_id"]])
 
     output = io.BytesIO()
     document.save(output)

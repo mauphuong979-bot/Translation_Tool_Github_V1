@@ -11,6 +11,7 @@ from docx.opc.packuri import PackURI
 from docx.opc.part import Part
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from docx.table import _Cell
 from docx.text.paragraph import Paragraph
 from lxml import etree
 
@@ -194,6 +195,34 @@ def _yellow_ranges(cell):
     return ranges
 
 
+REVISION_XPATH = ".//w:ins | .//w:del | .//w:moveFrom | .//w:moveTo | .//w:rPrChange | .//w:pPrChange"
+
+
+def _accepted_cell(cell):
+    """A copy of the cell with all Track Changes accepted (the final text a reviewer sees with All Markup off)."""
+    tc = deepcopy(cell._tc)
+    for element in tc.xpath(".//w:del | .//w:moveFrom | .//w:rPrChange | .//w:pPrChange | .//w:moveFromRangeStart | .//w:moveFromRangeEnd"
+                            " | .//w:moveToRangeStart | .//w:moveToRangeEnd"):
+        element.getparent().remove(element)
+    for wrapper in tc.xpath(".//w:ins | .//w:moveTo"):
+        parent = wrapper.getparent()
+        if parent.tag == qn("w:rPr") or parent.tag == qn("w:pPr") or wrapper.getparent().tag == qn("w:trPr"):
+            parent.remove(wrapper)  # a paragraph-mark or row insertion mark: nothing to keep
+            continue
+        index = parent.index(wrapper)
+        for child in list(wrapper):
+            parent.insert(index, child)
+            index += 1
+        parent.remove(wrapper)
+    for paragraph in tc.xpath(".//w:p"):
+        properties = paragraph.find(qn("w:pPr"))
+        marks = properties.find(qn("w:rPr")) if properties is not None else None
+        if marks is not None:
+            for mark in marks.xpath("./w:del | ./w:ins"):
+                marks.remove(mark)
+    return _Cell(tc, cell._parent)
+
+
 def _worksheet_rows(document):
     rows = []
     for table in document.tables:
@@ -206,9 +235,13 @@ def _worksheet_rows(document):
         cells = table.rows[1].cells
         if any(cell.tables for cell in cells):
             raise ValueError("Bảng AI không được chứa bảng lồng bên trong.")
+        result_cell = cells[4]
+        accepted = bool(result_cell._tc.xpath(REVISION_XPATH))
+        if accepted:
+            result_cell = _accepted_cell(result_cell)
         rows.append({"review_id": cells[0].text.strip(), "source_values": [cell.text for cell in cells[1:4]],
-                     "translation": cells[4].text, "highlights": _yellow_ranges(cells[4]),
-                     "has_revisions": bool(cells[4]._tc.xpath(".//w:ins | .//w:del | .//w:moveFrom | .//w:moveTo | .//w:rPrChange")),
+                     "translation": result_cell.text, "highlights": _yellow_ranges(result_cell),
+                     "has_revisions": False, "accepted_revisions": accepted,
                      "has_objects": any(element.tag == qn(f"w:{tag}") for element in cells[4]._tc.iter()
                                         for tag in ("fldChar", "instrText", "fldSimple", "hyperlink", "drawing", "object", "sdt"))})
     if not rows:
@@ -314,11 +347,38 @@ def _expected_values(item):
     return [item["original"], reference_text(item["references"], "original"), reference_text(item["references"], "translation")]
 
 
-def _inspect(report_source, worksheet_source):
+def apply_overrides(manifest, rows, overrides):
+    """Replace translations with the user's in-app edits ({review_id: text}); edited rows go through the same checks.
+
+    Highlighted phrases of the original translation stay highlighted wherever they still occur in the edited text.
+    An edit for a code the supplied rows lack (for example a batch that failed) adds a row for it.
+    Edited text is plain text typed in the app, so the cell's own Track Changes or objects no longer apply.
+    """
+    if not overrides:
+        return rows
+    expected = {item["review_id"]: item for item in manifest["items"]}
+    applied = set(manifest.get("applied_ids", []))
+    updated, present = [], set()
+    for row in rows:
+        row = dict(row)
+        if row["review_id"] in overrides:
+            present.add(row["review_id"])
+            text = str(overrides[row["review_id"]] or "")
+            phrases = [row["translation"][start:end] for start, end in row.get("highlights", [])]
+            row.update(translation=text, highlights=highlight_ranges(text, phrases), has_revisions=False, has_objects=False, edited=True)
+        updated.append(row)
+    for review_id, text in overrides.items():
+        if review_id not in present and review_id in expected and review_id not in applied:
+            updated.append({"review_id": review_id, "source_values": _expected_values(expected[review_id]),
+                            "translation": str(text or ""), "highlights": [], "has_revisions": False, "has_objects": False, "edited": True})
+    return updated
+
+
+def _inspect(report_source, worksheet_source, overrides=None):
     report = _read_document(report_source)
     manifest = _read_manifest(report)
     worksheet = _read_document(worksheet_source)
-    supplied = _worksheet_rows(worksheet)
+    supplied = apply_overrides(manifest, _worksheet_rows(worksheet), overrides)
     return _validate(report, manifest, supplied, worksheet.core_properties.identifier)
 
 
@@ -336,7 +396,9 @@ def _validate(report, manifest, supplied, identifier=""):
     for row in supplied:
         item = expected[row["review_id"]]
         result = {"review_id": row["review_id"], "original": item["original"], "translation": row["translation"],
-                  "highlights": row["highlights"], "status": "ready", "reason": ""}
+                  "highlights": row["highlights"], "status": "ready", "reason": "", "edited": row.get("edited", False)}
+        if row.get("accepted_revisions") and not row.get("edited"):
+            result["reason"] = "Đã tự lấy nội dung cuối cùng của Track Changes trong ô bản dịch (như Accept All)."
         expected_values = _expected_values(item)
         paragraph, comment_id = _resolve_anchor(report, item)
         result["comment_id"] = comment_id
@@ -375,11 +437,13 @@ def _validate(report, manifest, supplied, identifier=""):
 
 
 def _preview(manifest, rows):
+    order = {item["review_id"]: index for index, item in enumerate(manifest["items"])}
+    rows = sorted(rows, key=lambda row: order.get(row["review_id"], len(order)))
     return {"target_col": manifest["target_col"], "rows": rows, "counts": dict(Counter(row["status"] for row in rows))}
 
 
-def preview_ai_translations(report_source, worksheet_source):
-    _, manifest, rows = _inspect(report_source, worksheet_source)
+def preview_ai_translations(report_source, worksheet_source, overrides=None):
+    _, manifest, rows = _inspect(report_source, worksheet_source, overrides)
     return _preview(manifest, rows)
 
 
@@ -396,7 +460,7 @@ def read_review_manifest(report_source):
     return {"batch": manifest["batch"], "target_col": manifest["target_col"], "items": items}
 
 
-def _highlight_ranges(translation, phrases):
+def highlight_ranges(translation, phrases):
     """Character ranges of every occurrence of the given phrases, merged and sorted."""
     spans = []
     for phrase in phrases:
@@ -426,19 +490,19 @@ def rows_from_ai_results(manifest, results):
         item = expected.get(result["review_id"].strip())
         rows.append({"review_id": result["review_id"].strip(),
                      "source_values": _expected_values(item) if item is not None else [],
-                     "translation": translation, "highlights": _highlight_ranges(translation, result.get("highlight") or []),
+                     "translation": translation, "highlights": highlight_ranges(translation, result.get("highlight") or []),
                      "has_revisions": False, "has_objects": False})
     return rows
 
 
-def _inspect_results(report_source, results):
+def _inspect_results(report_source, results, overrides=None):
     report = _read_document(report_source)
     manifest = _read_manifest(report)
-    return _validate(report, manifest, rows_from_ai_results(manifest, results))
+    return _validate(report, manifest, apply_overrides(manifest, rows_from_ai_results(manifest, results), overrides))
 
 
-def preview_ai_results(report_source, results):
-    _, manifest, rows = _inspect_results(report_source, results)
+def preview_ai_results(report_source, results, overrides=None):
+    _, manifest, rows = _inspect_results(report_source, results, overrides)
     return _preview(manifest, rows)
 
 
@@ -462,12 +526,12 @@ def _replace_with_revision(document, paragraph, comment_id, translation, target_
             comment._element.getparent().remove(comment._element)
 
 
-def apply_ai_translations(report_source, worksheet_source, selected_ids=None):
-    return _apply(*_inspect(report_source, worksheet_source), selected_ids)
+def apply_ai_translations(report_source, worksheet_source, selected_ids=None, overrides=None):
+    return _apply(*_inspect(report_source, worksheet_source, overrides), selected_ids)
 
 
-def apply_ai_results(report_source, results, selected_ids=None):
-    return _apply(*_inspect_results(report_source, results), selected_ids)
+def apply_ai_results(report_source, results, selected_ids=None, overrides=None):
+    return _apply(*_inspect_results(report_source, results, overrides), selected_ids)
 
 
 def _apply(report, manifest, rows, selected_ids=None):

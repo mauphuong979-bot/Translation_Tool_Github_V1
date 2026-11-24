@@ -14,7 +14,7 @@
         "Hs": "[têncôngty]董事成员【管理阶层】【总经理/所有主】公鉴：",
         "Ht": "[têncôngty]董事成員【董事會】【總經理】【所有主】公鑒："
     },
-    "Chúng tôi đã kiểm toán Báo cáo tài chính kèm theo": {
+    "bao gồm Bảng cân đối kế toán tại ngày": {
         "E": "We have audited the accompanying financial statements of [têncôngty] (“the Company”), approved on [ngàybáocáo], which comprise the balance sheet as at [ngàykếtthúcnăm], the related income statement, the cash flow statement for the year then ended, and the notes to the financial statements, as set out on pages [số] to [số]. CậpNhậtĐốiVớiBáoCáoGiaiĐoạn",
         "Hs": "[têncôngty]（简称为“公司”）的财务报表，在[ngàybáocáo]编制，自第[số]页至第[số]页，包括[ngàykếtthúcnăm]的资产负债表，暨同日结束财务年度的利润表、现金流量表和财务报表附注，已经过本会计师查核竣事。CậpNhậtĐốiVớiBáoCáoGiaiĐoạn",
         "Ht": "[têncôngty]（簡稱為“公司”）之財務報表，於[ngàybáocáo]編製，自第[số]頁至第[số]頁，包括[ngàykếtthúcnăm]之資產負債表，暨同日結束財務年度之損益表、現金流量表及財務報表附註，業經本會計師查核竣事。CậpNhậtĐốiVớiBáoCáoGiaiĐoạn"
@@ -168,5 +168,370 @@
         "E": "Certain reclassifications have been made to the prior year’s figures to enhance comparability with current year’s figures. Specifically, in the current year, because of the adjustments on misstatements of prior years relevant to distribute profits, the financial statements for year nămsosánh, which were released on ngàyđãpháthành, have been affected as following:",
         "Hs": "上年度的若干信息经重新分类后与本年度的财务信息相互比较。具体而言，由于本年度内发生【以前年度的费用认列/会计科目分类在本年度内得以更正】【会计政策/会计估计/会计错误在本年度内得以变更】，导致已在ngàyđãpháthành日出具的nămsosánh年度的财务报表受此影响，详细如下：",
         "Ht": "上年度之若干資訊經重新分類後與本年度之財務資訊相互比較。具體而言，由於本年度內發生【以前年度的費用認列/會計科目分類於本年度內得以更正】【會計政策/會計估計/會計錯誤於本年度內得以變更】 /chọn，導致已於ngàyđãpháthành日出具之nămsosánh年度之財務報表受此影響，詳細如下："
+    },
+    "bao gồm Báo cáo tình hình tài chính tại ngày": {
+        "E": "We have audited the accompanying financial statements of [têncôngty] (“the Company”), prepared on [ngàybáocáo], as set out on pages [số] to [số], which comprise the statement of financial position as at [ngàykếtthúcnăm], the income statement, the cash flow statement for the year then ended, and the notes to the financial statements.",
+        "Hs": "后附[têncôngty]（简称为“公司”）的财务报表，在[ngàybáocáo]编制，自第[số]页至第[số]页，包括[ngàykếtthúcnăm]的财务状况表，暨同日结束财务年度的利润表、现金流量表和财务报表附注，已经过本会计师查核竣事。",
+        "Ht": "後附[têncôngty]（簡稱為“公司”）之財務報表，於[ngàybáocáo]編製，自第[số]頁至第[số]頁，包括[ngàykếtthúcnăm]之財務狀況表，暨同日結束財務年度之損益表、現金流量表及財務報表附註，業經本會計師查核竣事。"
+    },
+    "trên Báo cáo tình hình tài chính được căn cứ vào số liệu kế toán": {
+        "E": "The opening balances (as at [số]) disclosed in the statement of financial position are based on the Company’s accounting figures as at the end of the prior year. We were not able to conduct necessary audit procedures to ensure such opening balances. As a result, we are not able to either evaluate the sufficiency and accuracy of the opening balances of items stated in the statement of financial position or make conclusion of potential influences to the income statement and the cash flow statement for the year ended [ngàykếtthúcnăm] due to potential impact on the opening balances of assets and liabilities.",
+        "Hs": "财务状况表中的年初余额（[số]余额）基于公司在上年度末的会计数据。本会计师无法通过实施必要的查核程序对年初余额取得合理保证。因此，本会计师无法评估财务状况表项目的年初余额的充分性与准确性，且由于其对资产及负债项目的年初余额的隐形影响，而无法针对其对截至[ngàykếtthúcnăm]止财务年度的利润表和现金流量表的隐形影响作出结论。",
+        "Ht": "財務狀況表中之年初餘額（[số]餘額）基於公司於上年度末之會計數據。本會計師無法通過實施必要之查核程序對年初餘額取得合理保證。因此，本會計師無法評估財務狀況表項目之年初餘額之充分性與準確性，且由於其對資產及負債項目之年初餘額之隱形影響，而無法針對其對截至[ngàykếtthúcnăm]止財務年度之損益表及現金流量表之隱形影響作出結論。"
+    },
+    "Các thủ tục kiểm toán thay thế cũng không cung cấp cho chúng tôi đầy đủ bằng chứng kiểm toán thích hợp đối với số dư quỹ tiền mặt": {
+        "E": "We were not able to observe the count of cash fund as at [ngàykếtthúcnăm], nor as at the end of the prior year due to limitations of the Company. Alternative audit procedures also did not provide us with sufficient appropriate audit evidence of the balances of the cash fund as at the end of the current year and the prior year, of which the amounts disclosed in the Notes to the financial statements are [số] {VND/USD} and [số] {VND/USD} respectively. Due to the influence of the aforesaid matters, we are unable to determine whether or not adjustments are required to the cash fund, the profit and the net cash flow in the financial statements.",
+        "Hs": "由于公司方面的限制，本会计师不能参加在[ngàykếtthúcnăm]及在上年度末的库存现金监盘作业。本会计师亦无法通过实施其他查核程序对财务报表附注所列金额分别为[số] {VND/USD}及[số] {VND/USD}的库存现金本年年底余额及去年年底余额取得足够及适切的查核证据。由于上述事项的影响，本会计师无法确定应否对财务报表中的库存现金、年度净利及现金流量净额作出适当调整。",
+        "Ht": "由於公司方面之限制，本會計師不能參加於[ngàykếtthúcnăm]及於上年度末之庫存現金監盤作業。本會計師亦無法通過實施其他查核程序對財務報表附註所列金額分別為[số] {VND/USD}及[số] {VND/USD}之庫存現金本年年底餘額及去年年底餘額取得足夠及適切之查核證據。由於上述事項之影響，本會計師無法確定應否對財務報表中之庫存現金、年度淨利及現金流量淨額作出適當調整。"
+    },
+    "vì tại thời điểm đó chúng tôi chưa được bổ nhiệm làm kiểm toán. Với những tài liệu hiện có tại Công ty, chúng tôi cũng không thể kiểm tra được tính đúng đắn của số dư quỹ tiền mặt, số lượng hàng tồn kho và tài sản cố định": {
+        "E": "We were not able to observe the count of cash fund, inventories and fixed assets as at [ngàykếtthúcnăm] because we had not been appointed as the Company’s auditor at that time. Owing to the nature of the Company’s records, we were unable to determine by other audit procedures in respect of true and fair presentation the balances of cash fund, the quantities of inventories and fixed assets of which the amounts disclosed in the statement of financial position are [số] {VND/USD}, [số] {VND/USD} and [số] {VND/USD} respectively at that date.",
+        "Hs": "由于本会计师当时未受托查核财务报表，所以本会计师不能参加观察在[ngàykếtthúcnăm]的库存现金、存货、固定资产盘点。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证财务状况表所列金额分别为[số] {VND/USD}、[số] {VND/USD}及[số] {VND/USD}的库存现金、存货数量、固定资产当日余额的真实、公允列报。",
+        "Ht": "由於本會計師當時未受託查核財務報表，所以本會計師不能參加觀察於[ngàykếtthúcnăm]之庫存現金、存貨、固定資產盤點。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證財務狀況表所列金額分別為[số] {VND/USD}、[số] {VND/USD}及[số] {VND/USD}之庫存現金、存貨數量、固定資產當日餘額之真實、公允列報。"
+    },
+    "do những hạn chế từ phía Công ty. Với những tài liệu hiện có tại Công ty, chúng tôi cũng không thể kiểm tra được tính đúng đắn": {
+        "E": "We were not able to observe the count of cash fund, inventories and fixed assets as at [ngàykếtthúcnăm] due to limitations of the Company. Owing to the nature of the Company’s records, we were unable to determine by other audit procedures in respect of true and fair presentation the balances of cash fund, the quantities of inventories and fixed assets of which the amounts disclosed in the statement of financial position are [số] {VND/USD}, [số] {VND/USD} and [số] {VND/USD} respectively at that date.",
+        "Hs": "由于查核范围受到公司方面的限制，本会计师不能参加在[ngàykếtthúcnăm]的库存现金、存货及固定资产监盘作业。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证财务状况表所列金额分别为[số] {VND/USD}、[số] {VND/USD}及[số] {VND/USD}的库存现金、存货数量、固定资产当日余额的真实、公允列报。",
+        "Ht": "由於查核範圍受到公司方面之限制，本會計師不能參加於[ngàykếtthúcnăm]之庫存現金、存貨及固定資產監盤作業。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證財務狀況表所列金額分別為[số] {VND/USD}、[số] {VND/USD}及[số] {VND/USD}之庫存現金、存貨數量、固定資產當日餘額之真實、公允列報。"
+    },
+    "Tuy nhiên, chúng tôi không thể đối chiếu và xác định được sự phù hợp giữa số lượng hàng tồn kho theo kiểm kê thực tế": {
+        "E": "We observed the count of inventories and fixed assets as at [ngàykếtthúcnăm]. However, we were unable to reconcile and determine the consistency between the quantities of inventories per the physical count and the quantities of inventories and fixed assets per the accounting records. Owing to the nature of the Company’s records, we were unable to determine by other audit procedures the accuracy of the actual quantities of inventories and fixed assets of which the amounts disclosed in the statement of financial position are [số] {VND/USD} and [số] {VND/USD} respectively at that date.",
+        "Hs": "本会计师已参加观察在[ngàykếtthúcnăm]的存货及固定资产盘点。然而，本会计师无法将实际盘点的存货数量与会计帐簿所载的存货及固定资产数量进行核对并确定其是否相符。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证财务状况表所列金额分别为[số] {VND/USD}及[số] {VND/USD}的存货及固定资产当日实际数量的正确性。",
+        "Ht": "本會計師已參加觀察於[ngàykếtthúcnăm]之存貨及固定資產盤點。然而，本會計師無法將實際盤點之存貨數量與會計帳簿所載之存貨及固定資產數量進行核對並確定其是否相符。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證財務狀況表所列金額分別為[số] {VND/USD}及[số] {VND/USD}之存貨及固定資產當日實際數量之正確性。"
+    },
+    "chúng tôi vẫn chưa thu thập được đầy đủ các bằng chứng thích hợp để kết luận về tính trung thực và hợp lý của số dư các khoản mục phải thu khách hàng và phải trả người bán": {
+        "E": "Up to the date of this report, we have not obtained sufficient appropriate evidence to conclude in respect of true and fair presentation the balances of trade accounts receivable and trade accounts payable of which the amounts disclosed in the statement of financial position as at [ngàykếtthúcnăm] are [số] {VND/USD} and [số] {VND/USD} respectively.",
+        "Hs": "截至查核报告日，本会计师未能获取足够及适切的查核证据以对[ngàykếtthúcnăm]财务状况表所列金额分别为[số] {VND/USD}及[số] {VND/USD}的应收帐款和应付帐款余额的真实、公允列报作出结论。",
+        "Ht": "截至查核報告日，本會計師未能獲取足夠及適切之查核證據以對[ngàykếtthúcnăm]財務狀況表所列金額分別為[số] {VND/USD}及[số] {VND/USD}之應收帳款和應付帳款餘額之真實、公允列報作出結論。"
+    },
+    "Ý kiến kiểm toán ngoại trừ của chúng tôi không liên quan đến vấn đề nhấn mạnh này": {
+        "E": "We would like to draw attention to note III.2 of the Notes to the financial statements, in which, as at [ngàykếtthúcnăm], the Company incurred an accumulated loss of [số] {VND/USD} from its business operation and, as at that date, total current liabilities exceeded total current assets by [số]{VND/USD} and total liabilities exceeded total assets by [số]{VND/USD}. These conditions indicate the existence of a material uncertainty that may cast significant doubt on the Company’s ability to continue as a going concern. These financial statements do not include any adjustments that might result should the Company be unable to continue as a going concern. Our qualified opinion is expressed apart from this emphasis of matter.",
+        "Hs": "本会计师建议关注本财务报表附注第III.2项的陈述内容，在[ngàykếtthúcnăm]，公司已承担一笔金额为[số] {VND/USD}的累计营业亏损，而在同日短期负债总额已超过短期资产总额[số]{VND/USD}，且负债总额已超过资产总额[số]{VND/USD}。上述情况表明存在可能导致对公司持续经营能力产生重大疑虑的重大不确定性。本财务报表不包括公司不能持续经营时可能发生的各项调整。本会计师的保留意见与此强调事项并无关联。",
+        "Ht": "本會計師建議關注本財務報表附註第III.2項之陳述內容，於[ngàykếtthúcnăm]，公司業已承擔一筆金額為[số] {VND/USD}之累計營業虧損，而於同日短期負債總額業已超過短期資產總額[số]{VND/USD}，且負債總額業已超過資產總額[số]{VND/USD}。上述情況表明存在可能導致對公司持續經營能力產生重大疑慮之重大不確定性。本財務報表不包括公司不能持續經營時可能發生之各項調整。本會計師之保留意見與此強調事項並無關聯。"
+    },
+    "Việc từ chối đưa ra ý kiến của chúng tôi không liên quan đến vấn đề nhấn mạnh này": {
+        "E": "We would like to draw attention to note III.2 of the Notes to the financial statements, in which, as at [ngàykếtthúcnăm], the Company incurred an accumulated loss of [số] {VND/USD} from its business operation and, as at that date, total current liabilities exceeded total current assets by [số]{VND/USD} and total liabilities exceeded total assets by [số]{VND/USD}. These conditions indicate the existence of a material uncertainty that may cast significant doubt on the Company’s ability to continue as a going concern. These financial statements do not include any adjustments that might result should the Company be unable to continue as a going concern. Our disclaimer of opinion is expressed apart from this emphasis of matter.",
+        "Hs": "本会计师建议关注本财务报表附注第III.2项的陈述内容，在[ngàykếtthúcnăm]，公司已承担一笔金额为[số] {VND/USD}的累计营业亏损，而在同日短期负债总额已超过短期资产总额[số]{VND/USD}，且负债总额已超过资产总额[số]{VND/USD}。上述情况表明存在可能导致对公司持续经营能力产生重大疑虑的重大不确定性。本财务报表不包括公司不能持续经营时可能发生的各项调整。本会计师的无法表示意见与此强调事项并无关联。",
+        "Ht": "本會計師建議關注本財務報表附註第III.2項之陳述內容，於[ngàykếtthúcnăm]，公司業已承擔一筆金額為[số] {VND/USD}之累計營業虧損，而於同日短期負債總額業已超過短期資產總額[số]{VND/USD}，且負債總額業已超過資產總額[số]{VND/USD}。上述情況表明存在可能導致對公司持續經營能力產生重大疑慮之重大不確定性。本財務報表不包括公司不能持續經營時可能發生之各項調整。本會計師之無法表示意見與此強調事項並無關聯。"
+    },
+    "chúng tôi vẫn chưa thu thập được đầy đủ các bằng chứng thích hợp để kết luận về tính trung thực và hợp lý của số dư các khoản mục phải trả người bán trị giá": {
+        "E": "Up to the date of this report, we have not obtained sufficient appropriate evidence to conclude in respect of true and fair presentation the balance of trade accounts payable amounting to VND [số] out of a total of VND [số] and the balance of advances from customers amounting to VND [số] presented in the statement of financial position as at [ngàykếtthúcnăm].",
+        "Hs": "截至查核报告日，本会计师未能获取足够及适切的查核证据以对[ngàykếtthúcnăm]财务状况表所列应付帐款余额中金额为越南盾[số]（总额为越南盾[số]）的部分，以及金额为越南盾[số]的向客户预收的款项余额的真实、公允列报作出结论。",
+        "Ht": "截至查核報告日，本會計師未能獲取足夠及適切之查核證據以對[ngàykếtthúcnăm]財務狀況表所列應付帳款餘額中金額為越南盾[số]（總額為越南盾[số]）之部分，以及金額為越南盾[số]之向客戶預收之款項餘額之真實、公允列報作出結論。"
+    },
+    "được thành lập tại Việt Nam theo giấy phép đầu tư số": {
+        "E": "[têncôngty] (“the Company”) is a joint stock company/ 100% foreign-owned limited liability company established in Vietnam under Investment License No. 00/GP-KCN issued by the Management Board of Binh Duong Industrial Zones/ the People’s Committee of Binh Duong Province (now the Ho Chi Minh City Export Processing and Industrial Zones Authority/ the People’s Committee of Ho Chi Minh City) on [số]/[số]/[số], which was replaced by Investment Certificate No. 00000 issued on [số]/[số]/[số], Investment Registration Certificate with project code 00000 issued on [số]/[số]/[số] and Enterprise Registration Certificate No. 00000 dated [số]/[số]/[số], together with the amended certificates.",
+        "Hs": "[têncôngty]（简称为“公司”）为一家依据平阳省工业区管理委员会/平阳省人民委员会（现为胡志明市出口加工区及工业区管理委员会/胡志明市人民委员会）于[số]年[số]月[số]日核发的第00/GP-KCN号投资许可证在越南成立的股份公司/100%外商独资有限责任公司。该投资许可证已由[số]年[số]月[số]日核发的第00000号投资证书、[số]年[số]月[số]日核发的项目编号为00000的投资登记证书及[số]年[số]月[số]日的第00000号企业登记证书所取代，连同各次变更证书。",
+        "Ht": "[têncôngty]（簡稱為“公司”）為一家依據平陽省工業區管理委員會/平陽省人民委員會（現為胡志明市出口加工區及工業區管理委員會/胡志明市人民委員會）於[số]年[số]月[số]日核發之第00/GP-KCN號投資許可證在越南成立之股份公司/100%外商獨資有限責任公司。該投資許可證業經[số]年[số]月[số]日核發之第00000號投資證書、[số]年[số]月[số]日核發之項目編號為00000之投資登記證書及[số]年[số]月[số]日之第00000號企業登記證書所取代，連同各次變更證書。"
+    },
+    "được thành lập tại Việt Nam theo giấy chứng nhận đầu tư số": {
+        "E": "[têncôngty] (“the Company”) is a joint stock company/ 100% foreign-owned limited liability company established in Vietnam under Investment Certificate No. 00000 issued by the Management Board of Binh Duong Industrial Zones/ the People’s Committee of Binh Duong Province (now the Ho Chi Minh City Export Processing and Industrial Zones Authority/ the People’s Committee of Ho Chi Minh City) on [số]/[số]/[số], which was replaced by Investment Registration Certificate with project code 00000 issued on [số]/[số]/[số] and Enterprise Registration Certificate No. 00000 dated [số]/[số]/[số], together with the amended certificates.",
+        "Hs": "[têncôngty]（简称为“公司”）为一家依据平阳省工业区管理委员会/平阳省人民委员会（现为胡志明市出口加工区及工业区管理委员会/胡志明市人民委员会）于[số]年[số]月[số]日核发的第00000号投资证书在越南成立的股份公司/100%外商独资有限责任公司。该投资证书已由[số]年[số]月[số]日核发的项目编号为00000的投资登记证书及[số]年[số]月[số]日的第00000号企业登记证书所取代，连同各次变更证书。",
+        "Ht": "[têncôngty]（簡稱為“公司”）為一家依據平陽省工業區管理委員會/平陽省人民委員會（現為胡志明市出口加工區及工業區管理委員會/胡志明市人民委員會）於[số]年[số]月[số]日核發之第00000號投資證書在越南成立之股份公司/100%外商獨資有限責任公司。該投資證書業經[số]年[số]月[số]日核發之項目編號為00000之投資登記證書及[số]年[số]月[số]日之第00000號企業登記證書所取代，連同各次變更證書。"
+    },
+    "được thành lập tại Việt Nam theo giấy chứng nhận đăng ký doanh nghiệp số": {
+        "E": "[têncôngty] (“the Company”) is a joint stock company/ 100% foreign-owned limited liability company established in Vietnam under Enterprise Registration Certificate No. 00000 issued by the Department of Planning and Investment of Binh Duong Province (now the Department of Finance of Ho Chi Minh City) on [số]/[số]/[số] and Investment Registration Certificate with code 00000 issued by the Management Board of Binh Duong Industrial Zones/ the People’s Committee of Binh Duong Province (now the Ho Chi Minh City Export Processing and Industrial Zones Authority/ the People’s Committee of Ho Chi Minh City) on [số]/[số]/[số], together with the amended certificates.",
+        "Hs": "[têncôngty]（简称为“公司”）为一家依据平阳省计划投资厅（现为胡志明市财政厅）于[số]年[số]月[số]日核发的第00000号企业登记证书及平阳省工业区管理委员会/平阳省人民委员会（现为胡志明市出口加工区及工业区管理委员会/胡志明市人民委员会）于[số]年[số]月[số]日核发的编号为00000的投资登记证书在越南成立的股份公司/100%外商独资有限责任公司，连同各次变更证书。",
+        "Ht": "[têncôngty]（簡稱為“公司”）為一家依據平陽省計劃投資廳（現為胡志明市財政廳）於[số]年[số]月[số]日核發之第00000號企業登記證書及平陽省工業區管理委員會/平陽省人民委員會（現為胡志明市出口加工區及工業區管理委員會/胡志明市人民委員會）於[số]年[số]月[số]日核發之編號為00000之投資登記證書在越南成立之股份公司/100%外商獨資有限責任公司，連同各次變更證書。"
+    },
+    "Công ty mới hoạt động năm đầu tiên/tiến hành chuyển đổi niên độ": {
+        "E": "For the fiscal year from [số] to [ngàykếtthúcnăm], as the Company has just commenced its first year of operation/ changed its fiscal year, the accounting period of the transition year covers only 06 months; therefore, the information in the financial statements for the year [số] is not comparable with the information in the financial statements for this transition fiscal year.",
+        "Hs": "自[số]至[ngàykếtthúcnăm]的会计年度，由于公司为营运第一年/进行会计年度转换，转换年度的会计期间仅为06个月，故[số]年度财务报表的信息与本转换财务年度财务报表的信息不具可比性。",
+        "Ht": "自[số]至[ngàykếtthúcnăm]之會計年度，由於公司為營運第一年/進行會計年度轉換，轉換年度之會計期間僅為06個月，故[số]年度財務報表之資訊與本轉換財務年度財務報表之資訊不具可比性。"
+    },
+    "Kỳ kế toán đầu tiên của Công ty bắt đầu từ ngày": {
+        "E": "The Company’s first accounting period started on [số]/[số]/[số] and ended on [ngàykếtthúcnăm]. Subsequent accounting periods will start on January 01 and end on December 31.",
+        "Hs": "公司首个会计期间自[số]年[số]月[số]日起至[ngàykếtthúcnăm]止。以后各会计期间将自01月01日起至12月31日止。",
+        "Ht": "公司首個會計期間自[số]年[số]月[số]日起至[ngàykếtthúcnăm]止。以後各會計期間將自01月01日起至12月31日止。"
+    },
+    "Tình hình góp vốn điều lệ": {
+        "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] (equivalent to USD [số]) and VND [số] (equivalent to USD [số]) respectively. The contribution of charter capital of the Company as at [ngàykếtthúcnăm] is as follows:",
+        "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为越南盾[số]（相当于美元[số]）和越南盾[số]（相当于美元[số]）。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：",
+        "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為越南盾[số]（相當於美元[số]）和越南盾[số]（相當於美元[số]）。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下："
+    },
+    "Công ty đã góp vượt vốn điều lệ là": {
+        "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] (equivalent to USD [số]) and VND [số] (equivalent to USD [số]) respectively. The contribution of charter capital of the Company as at [ngàykếtthúcnăm] is as follows: As at [ngàykếtthúcnăm], the Company has contributed capital in excess of its charter capital by USD [số], details are as follows:",
+        "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为越南盾[số]（相当于美元[số]）和越南盾[số]（相当于美元[số]）。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：在[ngàykếtthúcnăm]，与注册资本额相比，公司溢缴资本额为美元[số]，详细如下：",
+        "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為越南盾[số]（相當於美元[số]）和越南盾[số]（相當於美元[số]）。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下：於[ngàykếtthúcnăm]，與註冊資本額相比，公司溢繳資本額為美元[số]，詳細如下："
+    },
+    "Công ty đã góp thiếu vốn điều lệ là": {
+        "E": "According to the Company’s investment registration certificate and enterprise registration certificate, the Company’s investment capital and charter capital are VND [số] (equivalent to USD [số]) and VND [số] (equivalent to USD [số]) respectively. The contribution of charter capital of the Company as at [ngàykếtthúcnăm] is as follows: As at [ngàykếtthúcnăm], the Company has contributed capital short of its charter capital by USD [số], details are as follows:",
+        "Hs": "依据公司投资登记证书和企业登记证书，公司投资资金和注册资本额分别为越南盾[số]（相当于美元[số]）和越南盾[số]（相当于美元[số]）。在[ngàykếtthúcnăm]，公司注册资本金投入状况如下：在[ngàykếtthúcnăm]，与注册资本额相比，公司欠缴资本额为美元[số]，详细如下：",
+        "Ht": "依據公司投資登記證書及企業登記證書，公司投資資金和註冊資本額分別為越南盾[số]（相當於美元[số]）和越南盾[số]（相當於美元[số]）。於[ngàykếtthúcnăm]，公司註冊資本金投入狀況如下：於[ngàykếtthúcnăm]，與註冊資本額相比，公司欠繳資本額為美元[số]，詳細如下："
+    },
+    "Công ty đã ký kết hợp đồng thuê đất số": {
+        "E": "On [số]/[số]/[số], the Company entered into Land Lease Contract No. 000.TĐ with the Department of Natural Resources and Environment of Binh Duong Province in the form of an operating lease. As at [ngàykếtthúcnăm], the future lease payments under the lease contract are presented as follows:",
+        "Hs": "公司于[số]年[số]月[số]日与平阳省资源环境厅签订第000.TĐ号土地租赁合同，以经营租赁方式承租。在[ngàykếtthúcnăm]，依租赁合同未来应付的租金列示如下：",
+        "Ht": "公司於[số]年[số]月[số]日與平陽省資源環境廳簽訂第000.TĐ號土地租賃合同，以營業租賃方式承租。於[ngàykếtthúcnăm]，依租賃合同未來應付之租金列示如下："
+    },
+    "về việc điều chỉnh đơn giá thuê đất": {
+        "E": "On [số]/[số]/[số], the Company received Decision No. 000/QĐ-STC of the Department of Finance of Binh Duong Province on the adjustment of the land rental unit price. Accordingly, the Company’s future lease payments as calculated as at [ngàykếtthúcnăm] decreased compared to those as at [số].",
+        "Hs": "公司于[số]年[số]月[số]日收到平阳省财政厅关于调整土地租金单价的第000/QĐ-STC号决定。据此，公司在[ngàykếtthúcnăm]计算的未来应付租金较[số]有所减少。",
+        "Ht": "公司於[số]年[số]月[số]日收到平陽省財政廳關於調整土地租金單價之第000/QĐ-STC號決定。據此，公司於[ngàykếtthúcnăm]計算之未來應付租金較[số]有所減少。"
+    },
+    "Thành viên (bổ nhiệm ngày": {
+        "E": "Member (appointed on [số]/[số]/[số])",
+        "Hs": "成员（于[số]年[số]月[số]日任命）",
+        "Ht": "成員（於[số]年[số]月[số]日任命）"
+    },
+    "Thành viên (từ nhiệm ngày": {
+        "E": "Member (resigned on [số]/[số]/[số])",
+        "Hs": "成员（于[số]年[số]月[số]日辞任）",
+        "Ht": "成員（於[số]年[số]月[số]日辭任）"
+    },
+    "Do ảnh hưởng của những vấn đề nêu trên, chúng tôi không thể xác định liệu có cần điều chỉnh đối với": {
+        "E": "Due to the influence of the aforesaid matters, we are unable to determine whether or not adjustments are required to the cash fund/ inventories and fixed assets and related items…, the profit and the net cash flow in the financial statements.",
+        "Hs": "由于上述事项的影响，本会计师无法确定应否对财务报表中的库存现金/存货及固定资产及相关项目…、年度净利及现金流量净额作出适当调整。",
+        "Ht": "由於上述事項之影響，本會計師無法確定應否對財務報表中之庫存現金/存貨及固定資產及相關項目…、年度淨利及現金流量淨額作出適當調整。"
+    },
+    "cho năm tài chính liền trước được kiểm toán bởi đơn vị kiểm toán khác, phát hành báo cáo kiểm toán ngày": {
+        "E": "The Company’s financial statements for the preceding fiscal year were audited by another auditor, whose audit report dated [số]/[số]/[số] expressed an unqualified opinion (or a qualified opinion due to …).",
+        "Hs": "公司上一财务年度的财务报表经由其他审计单位负责查核，并于[số]年[số]月[số]日出具查核报告，会计师对该财务报表表示无保留意见（或由于…表示保留意见）。",
+        "Ht": "公司上一財務年度之財務報表業經其他審計單位負責查核，並於[số]年[số]月[số]日出具查核報告，會計師對該財務報表表示無保留意見（或由於…表示保留意見）。"
+    },
+    "Chúng tôi đã không thể tham gia kiểm kê quỹ tiền mặt và hàng tồn kho vào thời điểm cuối năm trước, vì tại thời điểm đó chúng tôi chưa được bổ nhiệm làm kiểm toán": {
+        "E": "We were not able to observe the count of cash fund and inventories as at the end of the prior year because we had not been appointed as the Company’s auditor at that time. Owing to the nature of the Company’s records, we were unable to determine by other audit procedures in respect of true and fair presentation the balance of cash fund amounting to VND [số] and inventories amounting to VND [số] at that date.",
+        "Hs": "由于本会计师当时未受托查核财务报表，所以本会计师不能参加观察在上年度末的库存现金及存货盘点。根据公司现有资料，本会计师亦无法通过实施其他查核程序检证金额为越南盾[số]的库存现金余额及金额为越南盾[số]的存货当日余额的真实、公允列报。",
+        "Ht": "由於本會計師當時未受託查核財務報表，所以本會計師不能參加觀察於上年度末之庫存現金及存貨盤點。根據公司現有資料，本會計師亦無法通過實施其他查核程序檢證金額為越南盾[số]之庫存現金餘額及金額為越南盾[số]之存貨當日餘額之真實、公允列報。"
+    },
+    "Thời gian hoạt động của dự án đầu tư của Công ty là": {
+        "E": "The operating duration of the Company’s investment project is [số] years from [số]/[số]/[số].",
+        "Hs": "公司投资项目的经营期限为[số]年，自[số]年[số]月[số]日起算。",
+        "Ht": "公司投資項目之經營期限為[số]年，自[số]年[số]月[số]日起算。"
+    },
+    "Chủ sở hữu của Công ty là": {
+        "E": "The owner of the Company is XXX, established in xxx.",
+        "Hs": "公司所有者为XXX，于xxx成立。",
+        "Ht": "公司所有者為XXX，於xxx成立。"
+    },
+    "Số lượng người lao động tại thời điểm cuối năm là": {
+        "E": "The number of employees as at the year-end is [số].",
+        "Hs": "年底员工人数为[số]人。",
+        "Ht": "年底員工人數為[số]人。"
+    },
+    "Lĩnh vực kinh doanh của Công ty là [": {
+        "E": "The Company’s business sector is [industrial manufacturing / trading / service provision /construction and installation/agriculture/real estate/other sectors] (or a combination of several business sectors).",
+        "Hs": "公司的经营领域为[工业生产 / 商业贸易 / 提供服务 /建筑安装/农业/不动产/其他领域]（或多个经营领域的综合）。",
+        "Ht": "公司之經營領域為[工業生產 / 商業貿易 / 提供服務 /建築安裝/農業/不動產/其他領域]（或多個經營領域之綜合）。"
+    },
+    "Kỳ kế toán cuối cùng của Công ty bắt đầu từ ngày": {
+        "E": "The Company’s final accounting period starts from [số] and ends on [số]/[số]/[số].",
+        "Hs": "公司最后一个会计期间自[số]起至[số]年[số]月[số]日止。",
+        "Ht": "公司最後一個會計期間自[số]起至[số]年[số]月[số]日止。"
+    },
+    "Theo quy định tại Điều 6 Thông tư số 99/2025/TT-BTC": {
+        "E": "In accordance with Article 6 of Circular No. 99/2025/TT-BTC, the Company’s Board of Directors has converted the financial statements prepared in US Dollars (USD) into Vietnamese Dongs (VND) for public disclosure and submission to the Vietnamese State management agencies in accordance with the following principles:",
+        "Hs": "依据《第99/2025/TT-BTC号公告》第6条规定，公司董事会已依下列原则将以美元（USD）计值的财务报表折算为越南盾（VND）后对外公布并递交给越南政府管辖机关：",
+        "Ht": "依據《第99/2025/TT-BTC號公告》第6條規定，公司董事會已依下列原則將以美元（USD）計值之財務報表折算為越南盾（VND）後對外公佈並遞交給越南政府管轄機關："
+    },
+    "Tài sản và nợ phải trả được quy đổi ra VND theo tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại": {
+        "E": "Assets and liabilities are converted into VND at the average of the buying and selling transfer exchange rates of the commercial bank with which the Company regularly transacts at the end of the accounting period, which is [số] VND/USD;",
+        "Hs": "资产及负债项目按照公司经常交易往来的商业银行于会计期间结束时的平均转账买卖汇率折算为越南盾，即[số] VND/USD；",
+        "Ht": "資產及負債項目按照公司經常交易往來之商業銀行於會計期間結束時之平均轉帳買賣匯率折算為越南盾，即[số] VND/USD；"
+    },
+    "Các khoản mục thuộc Báo cáo kết quả hoạt động kinh doanh và Báo cáo lưu chuyển tiền tệ được quy đổi ra VND theo tỷ giá giao dịch thực tế tại thời điểm phát sinh giao dịch": {
+        "E": "Items in the Income statement and the Cash flow statement are converted into VND at the actual transaction exchange rate at the transaction date.",
+        "Hs": "属利润表及现金流量表中的各项目按照交易发生时的实际交易汇率折算为越南盾。",
+        "Ht": "屬損益表及現金流量表中之各項目按照交易發生時之實際交易匯率折算為越南盾。"
+    },
+    "Công ty áp dụng tỷ giá này do tỷ giá bình quân kỳ kế toán xấp xỉ với tỷ giá giao dịch thực tế tại thời điểm phát sinh giao dịch, với chênh lệch không vượt quá biên độ tỷ giá giao ngay theo quy định của Ngân hàng Nhà nước Việt Nam": {
+        "E": "Items in the Income statement and the Cash flow statement are converted into VND at the average exchange rate for the accounting period of [số] VND/USD. The Company applies this rate because the average exchange rate for the accounting period approximates the actual transaction exchange rate at the transaction date, with the difference not exceeding the spot exchange rate band prescribed by the State Bank of Vietnam.",
+        "Hs": "属利润表及现金流量表中的各项目按照会计期间的平均汇率[số] VND/USD折算为越南盾。由于会计期间的平均汇率与交易发生时的实际交易汇率相近，且差额未超过越南国家银行规定的即期汇率波动幅度，故公司采用此汇率。",
+        "Ht": "屬損益表及現金流量表中之各項目按照會計期間之平均匯率[số] VND/USD折算為越南盾。由於會計期間之平均匯率與交易發生時之實際交易匯率相近，且差額未超過越南國家銀行規定之即期匯率波動幅度，故公司採用此匯率。"
+    },
+    "Chênh lệch tỷ giá phát sinh khi chuyển đổi Báo cáo tài chính được lập bằng đồng Đô la Mỹ ra Đồng Việt Nam được ghi nhận trên chỉ tiêu “Chênh lệch tỷ giá hối đoái” - Mã số 417 thuộc phần vốn chủ sở hữu của Báo cáo tình hình tài chính": {
+        "E": "Foreign exchange differences arising when converting the financial statements prepared in US Dollars into Vietnamese Dongs are recognised under the item “Foreign exchange differences” - Code 417 in the owner’s equity section of the Statement of financial position. The converted financial statements, presented in VND, are set out in the Appendix from page [số] to page [số].",
+        "Hs": "以美元计值的财务报表折算为越南盾后产生的汇兑差额列入财务状况表中所有者权益项下编号417「汇兑差额」项目。折算后的财务报表以越南盾呈列，并列示于附录自第[số]页至第[số]页。",
+        "Ht": "以美元計值之財務報表折算為越南盾後產生之匯兌差額列入財務狀況表中所有者權益項下編號417「匯兌差額」項目。折算後之財務報表以越南盾呈列，並列示於附錄自第[số]頁至第[số]頁。"
+    },
+    "Chứng khoán kinh doanh là các loại chứng khoán và công cụ tài chính khác được": {
+        "E": "Trading securities are securities and other financial instruments held by the Company for trading purposes to earn profit, including [shares/bonds/fund certificates/share purchase rights/covered warrants/options/futures contracts/debts and loans purchased for resale/other financial instruments].",
+        "Hs": "交易性证券系公司以买卖获利为目的而持有的证券及其他金融工具，包含[股票/债券/基金凭证/认股权/认股权证/期权/期货合约/为转售而购入的债权及贷款/其他金融工具]。",
+        "Ht": "交易性證券係公司以買賣獲利為目的而持有之證券及其他金融工具，包含[股票/債券/基金憑證/認股權/認股權證/選擇權/期貨合約/為轉售而購入之債權及貸款/其他金融工具]。"
+    },
+    "Đối với chứng khoán niêm yết, thời điểm ghi nhận là": {
+        "E": "For listed securities, the recognition date is [the order matching date (T+0)/another date in accordance with the regulations on ownership]. For unlisted securities, the recognition date is the date on which the Company officially obtains ownership in accordance with the law.",
+        "Hs": "上市证券的认列时点为[撮合成交时点（T+0）/依所有权相关规定的其他时点]。未上市证券的认列时点为公司依法正式取得所有权的时点。",
+        "Ht": "上市證券之認列時點為[撮合成交時點（T+0）/依所有權相關規定之其他時點]。未上市證券之認列時點為公司依法正式取得所有權之時點。"
+    },
+    "Đầu tư nắm giữ đến ngày đáo hạn là các khoản đầu tư mà Công ty có ý định và khả": {
+        "E": "Held-to-maturity investments are investments which the Company intends and is able to hold until maturity to earn periodic interest or other benefits under the investment terms, including [term deposits/valuable papers/treasury bills, promissory notes, certificates of deposit/bonds/preference shares classified as liabilities/loans/other held-to-maturity investments]. These investments exclude derivatives and debt instruments held for trading purposes.",
+        "Hs": "持有至到期投资指公司有明确意图与能力持有至到期，以定期获取利息或依投资条款取得收益的投资，包含[定期存款/有价证券/国库券、本票、存单/债券/分类为负债的优先股/各项贷款/其他持有至到期投资]。此类投资不包含以买卖获利为目的而持有的衍生工具及债务工具。",
+        "Ht": "持有至到期投資乃公司有明確意圖與能力持有至到期，以定期獲取利息或依投資條款取得收益之投資，包含[定期存款/有價證券/國庫券、本票、存單/債券/分類為負債之優先股/各項貸款/其他持有至到期投資]。此類投資不包含以買賣獲利為目的而持有之衍生工具及債務工具。"
+    },
+    "Sau ghi nhận ban đầu, các khoản đầu tư được trình bày theo": {
+        "E": "After initial recognition, investments are presented at [cost/another method under the applicable regulations] less provision for impairment of investments, if any.",
+        "Hs": "原始认列后，各项投资按照[原始成本/适用规定的其他方法]减去投资损失准备（如有）列示。",
+        "Ht": "原始認列後，各項投資按照[原始成本/適用規定之其他方法]減去投資損失準備（如有）列示。"
+    },
+    "Tại thời điểm kết thúc kỳ kế toán, Công ty xem xét trích lập dự phòng tổn thất": {
+        "E": "At the end of the accounting period, the Company considers making provision for impairment when there are indications of impairment or evidence that the Company is likely to lose its capital. Impairment losses are determined based on the investee’s [separate financial statements/consolidated financial statements/other appropriate financial information]. Additional provisions or reversals of provisions are recognised in financial expenses for the period.",
+        "Hs": "于会计期间结束时，公司若有减值迹象或有证据显示公司可能损失资本，则考虑提列损失准备。损失金额依据被投资者的[单独财务报表/合并财务报表/其他适当财务信息]确定。补提或转回的准备金额列入当期财务费用。",
+        "Ht": "於會計期間結束時，公司若有減值跡象或有證據顯示公司可能損失資本，則考慮提列損失準備。損失金額依據被投資者之[單獨財務報表/合併財務報表/其他適當財務資訊]確定。補提或迴轉之準備金額列入當期財務費用。"
+    },
+    "Đầu tư góp vốn vào đơn vị khác bao gồm các khoản đầu tư vào công cụ vốn của đơn": {
+        "E": "Investments in other units comprise investments in equity instruments of other units over which the Company has no control, joint control or significant influence; and [investments in business cooperation contracts in which the Company has no joint control but is entitled to benefits depending on the contract’s profit after tax/other investments].",
+        "Hs": "投资入股其他单位包含公司对被投资者不具控制、联合控制或重大影响的其他单位权益工具投资；以及[公司不具联合控制但依合同税后利润享有收益的合作经营合同投资/其他投资]。",
+        "Ht": "投資入股其他單位包含公司對被投資者不具控制、聯合控制或重大影響之其他單位權益工具投資；以及[公司不具聯合控制但依合約稅後利潤享有收益之合作經營合約投資/其他投資]。"
+    },
+    "Tại thời điểm kết thúc kỳ kế toán, Công ty trích lập dự phòng tổn thất khi có": {
+        "E": "At the end of the accounting period, the Company makes provision for impairment when there are indications of impairment that may result in a loss of capital. Impairment losses are determined based on [the market value or fair value that can be reliably determined/the losses of the investee/other appropriate financial information]. Additional provisions or reversals of provisions are recognised in financial expenses for the period.",
+        "Hs": "于会计期间结束时，公司若有可能导致资本损失的减值迹象，则提列损失准备。损失金额依据[市场价值或能可靠确定的公允价值/被投资者的亏损/其他适当财务信息]确定。补提或转回的准备金额列入当期财务费用。",
+        "Ht": "於會計期間結束時，公司若有可能導致資本損失之減值跡象，則提列損失準備。損失金額依據[市場價值或能可靠確定之公允價值/被投資者之虧損/其他適當財務資訊]確定。補提或迴轉之準備金額列入當期財務費用。"
+    },
+    "Tài sản sinh học bao gồm súc vật nuôi cho sản phẩm định kỳ, súc vật nuôi lấy": {
+        "E": "Biological assets, comprising livestock for periodic products, livestock for one-time products, and seasonal crops or crops for one-time products, are presented in the Statement of financial position at cost less [accumulated depreciation of livestock for periodic products that have reached the mature stage] and provision for impairment of biological assets, if any.",
+        "Hs": "生物资产包含定期产出的牲畜、一次性产出的牲畜、季节性或一次性收获的作物，于财务状况表中按照原始成本减去[已达成熟阶段的定期产出的牲畜的累计折旧]及生物资产减值准备（如有）列示。",
+        "Ht": "生物資產包含定期產出之牲畜、一次性產出之牲畜、季節性或一次性收穫之作物，於財務狀況表中按照原始成本減去[已達成熟階段之定期產出之牲畜之累計折舊]及生物資產減值準備（如有）列示。"
+    },
+    "Chi phí chăm sóc, nuôi dưỡng và khấu hao của súc vật nuôi cho sản phẩm định kỳ": {
+        "E": "Care, breeding and depreciation costs of livestock for periodic products incurred after the mature stage are allocated to [the parent biological assets/newly generated biological assets/agricultural produce] based on [[số]] criteria and are applied consistently between accounting periods.",
+        "Hs": "定期产出的牲畜于成熟阶段后发生的照料、饲养费用及折旧，按照[[số]]标准分摊至[母生物资产/新生成的生物资产/农产品]，且于各会计期间一致适用。",
+        "Ht": "定期產出之牲畜於成熟階段後發生之照料、飼養費用及折舊，按照[[số]]標準分攤至[母生物資產/新生成之生物資產/農產品]，且於各會計期間一致適用。"
+    },
+    "Khi sản phẩm nông nghiệp được thu hoạch, sản phẩm đó được chuyển sang": {
+        "E": "When agricultural produce is harvested, it is transferred to [raw materials and supplies/work in progress/inventories] and accounted for in accordance with the Company’s inventory policy. When biological assets are sold, their carrying amount and the related provision, if any, are derecognised; revenue and cost of sales are recognised in accordance with the relevant accounting policies.",
+        "Hs": "农产品收获时转入[原料、材料/在制费用（在制品）/存货]，并依公司存货政策进行会计处理。生物资产出售时，其帐面价值及相关准备（如有）予以冲减；收入及销货成本依相关会计政策认列。",
+        "Ht": "農產品收穫時轉入[原料、材料/在製費用（在製品）/存貨]，並依公司存貨政策進行會計處理。生物資產出售時，其帳面價值及相關準備（如有）予以沖減；收入及銷貨成本依相關會計政策認列。"
+    },
+    "Chi phí chờ phân bổ dài hạn chủ yếu bao gồm": {
+        "E": "Long-term deferred expenses mainly comprise [infrastructure rental and operating lease expenses of fixed assets/insurance premiums paid in a lump sum for multiple periods/tools, supplies, circulating packaging and articles for lease/repair and maintenance expenses of fixed assets/other expenses relating to multiple accounting periods].",
+        "Hs": "长期待摊费用主要包含[基础设施租金、固定资产经营租赁费用/一次性支付多期的保险费用/工具、用具、周转包装物、出租用品/固定资产修理及维护费用/涉及多个会计期间的其他费用]。",
+        "Ht": "長期待攤費用主要包含[基礎設施租金、固定資產營業租賃費用/一次性支付多期之保險費用/工具、用具、周轉包裝物、出租用品/固定資產修理及維護費用/涉及多個會計期間之其他費用]。"
+    },
+    "Chi phí chờ phân bổ được phân bổ vào chi phí sản xuất, kinh doanh theo phương": {
+        "E": "Deferred expenses are allocated to production and business expenses using the [straight-line method/level of usage or economic benefits obtained/another appropriate method] over [[số] months/[số] years/the contract term/the period in which economic benefits are expected to be obtained]. The allocation method and period are applied consistently to items of the same nature.",
+        "Hs": "待摊费用按照[直线法/使用程度或所获经济利益/其他适当方法]于[[số]个月/[số]年/合同期限/预计取得经济利益的期间]内摊入生产、营业费用。摊销方法及期间对性质相同的项目一致适用。",
+        "Ht": "待攤費用按照[直線法/使用程度或所獲經濟利益/其他適當方法]於[[số]個月/[số]年/合約期限/預計取得經濟利益之期間]內攤入生產、營業費用。攤銷方法及期間對性質相同之項目一致適用。"
+    },
+    "Doanh thu chờ phân bổ bao gồm các khoản tiền Công ty đã thực thu trước của": {
+        "E": "Deferred revenue comprises amounts received in advance by the Company from customers for one or more accounting periods for the lease of [factories/offices/machinery and equipment/other assets] and other deferred revenue such as [revenue corresponding to the value of goods, services or discounts and price reductions granted to customers under customer loyalty programmes/other amounts as regulated].",
+        "Hs": "递延收入包含公司已向客户预收一个或多个会计期间的[厂房/办公室/机器设备/其他资产]租金，以及其他递延收入，如[客户忠诚计划中给予客户的货物、服务价值或折扣、减价所对应的收入/依规定的其他款项]。",
+        "Ht": "遞延收入包含公司已向客戶預收一個或多個會計期間之[廠房/辦公室/機器設備/其他資產]租金，以及其他遞延收入，如[客戶忠誠計畫中給予客戶之貨物、服務價值或折扣、減價所對應之收入/依規定之其他款項]。"
+    },
+    "Vay và nợ thuê tài chính bao gồm các khoản tiền vay, mượn và nghĩa vụ nợ thuê": {
+        "E": "Borrowings and finance lease obligations comprise the Company’s loans, borrowings and finance lease obligations.",
+        "Hs": "借款及融资租赁负债包含公司的各项借款、借入款项及融资租赁负债。",
+        "Ht": "借款及融資租賃負債包含公司之各項借款、借入款項及融資租賃負債。"
+    },
+    "Các khoản vay dưới hình thức phát hành trái phiếu được kế toán theo nguyên tắc riêng áp dụng đối với các công cụ này": {
+        "E": "Borrowings and finance lease obligations comprise the Company’s loans, borrowings and finance lease obligations. Borrowings in the form of bond issuance are accounted for under separate principles applicable to these instruments.",
+        "Hs": "借款及融资租赁负债包含公司的各项借款、借入款项及融资租赁负债。以发行债券形式取得的借款依适用于该类工具的专门原则进行会计处理。",
+        "Ht": "借款及融資租賃負債包含公司之各項借款、借入款項及融資租賃負債。以發行債券形式取得之借款依適用於該類工具之專門原則進行會計處理。"
+    },
+    "Các khoản vay dưới hình thức phát hành cổ phiếu ưu đãi được phân loại là nợ phải trả được kế toán theo nguyên tắc riêng áp dụng đối với các công cụ này": {
+        "E": "Borrowings and finance lease obligations comprise the Company’s loans, borrowings and finance lease obligations. Borrowings in the form of issued preference shares that are classified as liabilities are accounted for under the specific principles applicable to such instruments.",
+        "Hs": "借款及融资租赁负债包括公司的各项借款、借用款项及融资租赁负债。以发行优先股形式取得且分类为负债的借款，按适用于该等工具的特定原则进行会计处理。",
+        "Ht": "借款及融資租賃負債包括公司之各項借款、借用款項及融資租賃負債。以發行優先股形式取得且分類為負債之借款，按適用於該等工具之特定原則進行會計處理。"
+    },
+    "Các khoản vay được ghi nhận theo số tiền thực tế nhận được. Chi phí liên quan": {
+        "E": "Borrowings are recognized at the amounts actually received. Costs directly attributable to borrowings, other than interest payable, such as [appraisal fees/audit fees/loan documentation fees/loan arrangement fees/other costs], are allocated over the loan term using the [straight-line/effective interest] method and recognized in financial expenses, except where they are capitalized in accordance with the Company’s accounting policy on borrowing costs.",
+        "Hs": "借款按实际收到的金额认列。除应付借款利息外，与借款直接相关的费用，如[评估费/审计费/借款文件编制费/借款安排费/其他费用]，按借款期限采用[直线法/实际利率法]逐期摊销并计入财务费用，但依公司借款费用会计政策予以资本化者除外。",
+        "Ht": "借款按實際收到之金額認列。除應付借款利息外，與借款直接相關之費用，如[評估費/審計費/借款文件編製費/借款安排費/其他費用]，按借款期限採用[直線法/實際利率法]逐期攤銷並計入財務費用，但依公司借款費用會計政策予以資本化者除外。"
+    },
+    "Tiền lãi bao gồm [lãi tiền gửi/lãi cho vay/lãi bán hàng trả chậm, trả góp/lãi": {
+        "E": "Interest, including [interest on deposits/interest on loans/interest on deferred payment and instalment sales/interest on investments in debt instruments/other interest], is recognized on an accrual basis when its collection is reasonably certain, based on the principal balance and the actual interest rate of each period. Interest receivable is not recognized when the principal is subject to a provision, unless there is reliable evidence of its recoverability.",
+        "Hs": "利息收入包括[存款利息/贷款利息/延期付款及分期付款销售利息/债务工具投资利息/其他利息]，在确定可收回时以权责发生制（应计制）为基础认列，并按照每期本金余额及实际利率计算。若本金属于须计提准备的情况，则不认列应收利息，但有确凿证据证明可收回者除外。",
+        "Ht": "利息收入包括[存款利息/貸款利息/延期付款及分期付款銷售利息/債務工具投資利息/其他利息]，於確定可收回時以權責發生制（應計制）為基礎認列，並按照每期本金餘額及實際利率計算。若本金屬於須計提準備之情況，則不認列應收利息，但有確鑿證據證明可收回者除外。"
+    },
+    "Cổ tức nhận bằng cổ phiếu không được ghi nhận là doanh thu hoạt động tài chính": {
+        "E": "Dividends received in shares are not recognized as financial income or as an increase in the value of the investment; the Company only tracks [the number of additional shares/the value of the additional capital] in the notes to the financial statements.",
+        "Hs": "股票股息不认列为财务收入，亦不增加投资的帐面价值；公司仅于财务报表附注中追踪[新增股数/新增资本价值]。",
+        "Ht": "股票股息不認列為財務收入，亦不增加投資之帳面價值；公司僅於財務報表附註中追蹤[新增股數/新增資本價值]。"
+    },
+    "Thu nhập khác bao gồm các khoản thu nhập ngoài hoạt động sản xuất, kinh doanh": {
+        "E": "Other income comprises income arising outside the ordinary production and business activities, such as [proceeds from transfer and disposal of fixed assets/penalties received for breaches of contract/compensation from third parties/recoveries of debts previously written off/payables with unidentified creditors or no longer payable/other income].",
+        "Hs": "营业外收入包括正常生产、营业活动以外的各项收入，如[固定资产处置、转让收益/收取的合同违约罚款/第三方赔偿款/收回已核销的坏账/无法确定债权人或无需支付的应付款项/其他收入]。",
+        "Ht": "營業外收入包括正常生產、營業活動以外之各項收入，如[固定資產處置、轉讓收益/收取之合約違約罰款/第三方賠償款/收回已核銷之壞帳/無法確定債權人或無需支付之應付款項/其他收入]。"
+    },
+    "Các khoản giảm trừ doanh thu bao gồm": {
+        "E": "Sales deductions comprise [trade discounts/sales allowances/sales returns] arising in the period in relation to products, goods and services sold; they do not include taxes deducted from revenue, such as output value added tax payable under the direct method.",
+        "Hs": "抵减项目包括本期发生的与已销售产品、商品及劳务相关的[商业折扣/销售折让/销货退回]；不包括自收入中扣除的税款，如按直接法应缴纳的销项增值税。",
+        "Ht": "抵減項目包括本期發生之與已銷售產品、商品及勞務相關之[商業折扣/銷售折讓/銷貨退回]；不包括自收入中扣除之稅款，如按直接法應繳納之銷項增值稅。"
+    },
+    "Giá vốn hàng bán phản ánh trị giá vốn của": {
+        "E": "Cost of sales reflects the cost of [products / goods / services / construction products / biological assets (excluding perennial plants for periodic products and working animals accounted for as fixed assets) / investment property] sold or supplied during the period.",
+        "Hs": "销货成本反映本期已销售或已提供的[产品 / 商品 / 劳务 / 建安产品 / 生物资产（不含作为固定资产核算的定期产出的多年生植物及役畜） / 投资性不动产]的成本。",
+        "Ht": "銷貨成本反映本期已銷售或已提供之[產品 / 商品 / 勞務 / 建安產品 / 生物資產（不含作為固定資產核算之定期產出之多年生植物及役畜） / 投資性不動產]之成本。"
+    },
+    "Giá vốn hàng bán còn bao gồm": {
+        "E": "Cost of sales also includes [provisions made or reversed for devaluation of inventory / provisions for high-risk contracts relating to inventories / losses and shortages of inventories (net of compensation, if any) / abnormal costs of materials and labour and unallocated fixed production overheads], if incurred during the period.",
+        "Hs": "销货成本亦包括本期发生的[存货跌价损失准备的计提或转回 / 与存货相关的重大风险合同准备 / 存货损耗、短缺价值（扣除赔偿款后，如有） / 超出正常水平的原材料、人工费用及未分摊的固定制造费用]。",
+        "Ht": "銷貨成本亦包括本期發生之[存貨跌價損失準備之計提或轉回 / 與存貨相關之重大風險合約準備 / 存貨損耗、短缺價值（扣除賠償款後，如有） / 超出正常水準之原材料、人工費用及未分攤之固定製造費用]。"
+    },
+    "Chi phí tài chính bao gồm các chi phí và khoản lỗ liên quan đến hoạt động tài": {
+        "E": "Financial expenses comprise expenses and losses relating to financial activities, such as [interest expense, interest on deferred payment purchases, finance lease interest/costs of purchasing or selling financial investments/losses on transfer and disposal of financial investments/foreign exchange losses/payment discounts granted to customers/provisions made or reversed for diminution in value of trading securities and provision for impairment of investments/differences arising from early redemption of issued bonds/other items as regulated].",
+        "Hs": "财务费用包括与财务活动相关的各项费用及损失，如[借款利息费用、延期付款购货利息、融资租赁利息/购买或出售金融投资的交易费用/转让、处置金融投资的损失/汇兑损失/给予客户的现金折扣/交易性证券跌价准备及投资损失准备的计提或转回/提前赎回已发行债券产生的差额/依规定的其他项目]。",
+        "Ht": "財務費用包括與財務活動相關之各項費用及損失，如[借款利息費用、延期付款購貨利息、融資租賃利息/購買或出售金融投資之交易費用/轉讓、處置金融投資之損失/匯兌損失/給予客戶之現金折扣/交易性證券跌價準備及投資損失準備之計提或轉回/提前贖回已發行債券產生之差額/依規定之其他項目]。"
+    },
+    "Chi phí bán hàng bao gồm các chi phí thực tế phát sinh trong quá trình bán sản": {
+        "E": "Selling expenses comprise expenses actually incurred in the process of selling products and goods and providing services, such as [sales staff costs/salary-based contributions/marketing, advertising and commission expenses/storage, packaging and transportation expenses/warranty expenses/materials, packaging, tools and supplies/depreciation of fixed assets/outsourced services/other cash expenses]. Incremental costs incurred by the Company to obtain contracts with customers are allocated to selling expenses over the appropriate periods.",
+        "Hs": "销售费用包括在销售产品、商品及提供劳务过程中实际发生的各项费用，如[销售人员费用/按工资计提的各项费用/推销、广告及佣金费用/保管、包装及运输费用/保修费用/材料、包装物、工具及用品费用/固定资产折旧/外购服务/其他现金支出]。公司为取得客户合同而发生的增量成本按各相关期间分摊计入销售费用。",
+        "Ht": "銷售費用包括於銷售產品、商品及提供勞務過程中實際發生之各項費用，如[銷售人員費用/按工資計提之各項費用/推銷、廣告及佣金費用/保管、包裝及運輸費用/保固費用/材料、包裝物、工具及用品費用/固定資產折舊/外購服務/其他現金支出]。公司為取得客戶合約而發生之增量成本按各相關期間分攤計入銷售費用。"
+    },
+    "Chi phí quản lý doanh nghiệp bao gồm các chi phí quản lý chung, như": {
+        "E": "General and administration expenses comprise general administrative expenses, such as [administrative staff costs/salary-based contributions/office materials and supplies/depreciation of fixed assets used for administration/taxes, fees and charges/provision for doubtful debts, provision for restructuring/outsourced services/other cash expenses].",
+        "Hs": "营业管理费用包括一般管理费用，如[管理人员费用/按工资计提的各项费用/办公材料及用品费用/管理用固定资产折旧/税金、费用及规费/坏账准备、重组准备/外购服务/其他现金支出]。",
+        "Ht": "營業管理費用包括一般管理費用，如[管理人員費用/按工資計提之各項費用/辦公材料及用品費用/管理用固定資產折舊/稅金、費用及規費/壞帳準備、重組準備/外購服務/其他現金支出]。"
+    },
+    "Thuế thu nhập doanh nghiệp hiện hành bao gồm chi phí thuế thu nhập doanh nghiệp": {
+        "E": "Current corporate income tax comprises the current corporate income tax expense under the Law on Corporate Income Tax and [the top-up corporate income tax expense under the global minimum tax regulations, if applicable]. Current corporate income tax is determined based on taxable income and the tax rate applicable for the year. Taxable income may differ from accounting profit due to adjustments for temporary differences between accounting and tax, non-deductible expenses, non-taxable or tax-exempt income and tax losses carried forward in accordance with tax laws, if any. The top-up corporate income tax expense under the global minimum tax regulations is the additional corporate income tax payable to the State budget, determined in accordance with the relevant laws.",
+        "Hs": "当期企业所得税包括依《企业所得税法》计算的当期企业所得税费用及[依全球最低税规定计算的补充企业所得税费用（如适用）]。当期企业所得税依据课税所得及该年度适用税率确定。课税所得可能因会计与税务间暂时性差异的调整、不可扣除费用、不征税或免税收入以及依税法规定结转的亏损（如有）而与会计利润有所不同。依全球最低税规定计算的补充企业所得税费用，是依相关法律规定确定的须向国家预算补缴的企业所得税金额。",
+        "Ht": "當期企業所得稅包括依《企業所得稅法》計算之當期企業所得稅費用及[依全球最低稅規定計算之補充企業所得稅費用（如適用）]。當期企業所得稅依據課稅所得及該年度適用稅率確定。課稅所得可能因會計與稅務間暫時性差異之調整、不可扣除費用、不徵稅或免稅收入以及依稅法規定結轉之虧損（如有）而與會計利潤有所不同。依全球最低稅規定計算之補充企業所得稅費用，係依相關法律規定確定之須向國家預算補繳之企業所得稅金額。"
+    },
+    "Trái phiếu phát hành vào ngày": {
+        "E": "- 250 Bonds issued on [số], with a par value of [số] per Bond. These Bonds have a term of 10 years, maturing on [số], and bear a floating interest rate (adjusted periodically) determined as the Reference Interest Rate + 1,2% per annum.",
+        "Hs": "- 于[số]发行250张债券，每张债券面值为[số]。该等债券期限为10年，于[số]到期，采用浮动利率（定期调整利率），按参考利率 + 1,2%/年确定。",
+        "Ht": "- 於[số]發行250張債券，每張債券面值為[số]。該等債券期限為10年，於[số]到期，採用浮動利率（定期調整利率），按參考利率 + 1,2%/年確定。"
+    },
+    "Các khoản vay này không có tài sản đảm bảo và được quy định chi tiết theo các hợp đồng sau": {
+        "E": "(b): These are loans from Mr. XXX. These loans are unsecured and are specified in detail under the following agreements:",
+        "Hs": "(b): 此为向XXX先生取得的借款。该等借款为无担保借款，详列于以下协议：",
+        "Ht": "(b): 此為向XXX先生取得之借款。該等借款為無擔保借款，詳列於以下協議："
+    },
+    "theo các hợp đồng thuê tài chính sau": {
+        "E": "(d): The Company has entered into finance lease agreements with XXX Finance Leasing Company under the following finance lease contracts:",
+        "Hs": "(d): 公司与XXX融资租赁公司签订下列融资租赁合同：",
+        "Ht": "(d): 公司與XXX融資租賃公司簽訂下列融資租賃合約："
+    },
+    "Hội đồng Thành viên Công ty đã quyết định phân phối lợi nhuận của năm trước": {
+        "E": "(*) According to the Minutes of Meeting dated [số]/[số]/[số], the Board of Members of the Company decided to distribute the prior year’s profit with a total amount of [số] USD as follows:",
+        "Hs": "(*) 依据[số]年[số]月[số]日会议记录，公司董事会决议分配上年度利润，总金额为[số]美元，详细如下：",
+        "Ht": "(*) 依據[số]年[số]月[số]日會議記錄，公司董事會決議分配上年度利潤，總金額為[số]美元，詳細如下："
+    },
+    "Căn cứ vào Biên bản kiểm tra quyết toán thuế": {
+        "E": "Pursuant to the Minutes of Tax Finalization Inspection of the Ho Chi Minh City Tax Department dated [số]/[số]/[số], the year [số] is year [số] in which the Company has taxable income (the first year the Company has taxable income: [số]) and the first year the Company is entitled to a 50% reduction of corporate income tax. Accordingly, in the year [số], the Company is entitled to a 50% reduction of current corporate income tax at the tax rate of [số] % for production and business activities.",
+        "Hs": "依据胡志明市税务局于[số]年[số]月[số]日出具的税务结算检查记录，[số]年是公司有课税所得的第[số]年（公司第一年有课税所得：[số]年），且是公司享受企业所得税减半（50%）的第一年。据此，在[số]年度内，公司生产、营业活动所得可以按照[số] %税率获得当期企业所得税减半（50%）。",
+        "Ht": "依據胡志明市稅務局於[số]年[số]月[số]日出具之稅務結算檢查記錄，[số]年為公司有課稅所得之第[số]年（公司第一年有課稅所得：[số]年），且為公司享受企業所得稅減半（50%）之第一年。據此，於[số]年度內，公司生產、營業活動所得可以按照[số] %稅率獲得當期企業所得稅減半（50%）。"
+    },
+    "là trị giá tài sản cố định và chi phí xây dựng cơ bản dở dang tăng trong năm được tài trợ bởi chủ sở hữu": {
+        "E": "Cash out flow on acquisition and construction of fixed assets and cash in flow on capital contribution by the owners in the year [số] do not include the amount of [số] {VND/USD}, which is the value of fixed assets and construction in progress added during the year, financed by the owners in the form of capital contribution.",
+        "Hs": "[số]年度的购建固定资产（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为[số] {VND/USD}的款项，而此乃本年度由所有者（股东）以出资形式投入形成的固定资产及在建工程增添价值。",
+        "Ht": "[số]年度之購建固定資產（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為[số] {VND/USD}之款項，而此乃本年度由所有者（股東）以出資形式投入形成之固定資產及在建工程增添價值。"
+    },
+    "là số tiền mua tài sản cố định và chi phí xây dựng cơ bản dở dang trong năm nhưng chưa được thanh toán": {
+        "E": "Cash out flow on acquisition and construction of fixed assets in the year [số] does not include the amount of [số] {VND/USD} (the year [số]: [số] {VND/USD}), which is the amount of fixed assets purchased and construction in progress incurred during the year but not yet paid.",
+        "Hs": "[số]年度的购建固定资产的现金流出，未包含金额为[số] {VND/USD}的款项（[số]年度金额为[số] {VND/USD}），而此乃本年度购置固定资产及在建工程尚未支付的金额。",
+        "Ht": "[số]年度之購建固定資產之現金流出，未包含金額為[số] {VND/USD}之款項（[số]年度金額為[số] {VND/USD}），而此乃本年度購置固定資產及在建工程尚未支付之金額。"
+    },
+    "là khoản góp vốn của chủ sở hữu dưới hình thức chuyển đổi từ khoản vay": {
+        "E": "Cash out flow on repayment of loan principals and cash in flow on capital contribution by the owners in the year [số] do not include the amount of [số] {VND/USD}, which is the owners’ capital contribution made by converting loans.",
+        "Hs": "[số]年度的支付借款本金（现金流出）与收取所有者（股东）投资资金（现金流入）的现金流，未包含金额为[số] {VND/USD}的款项，而此乃所有者（股东）以借款转为出资的金额。",
+        "Ht": "[số]年度之支付借款本金（現金流出）與收取所有者（股東）投資資金（現金流入）之現金流，未包含金額為[số] {VND/USD}之款項，而此乃所有者（股東）以借款轉為出資之金額。"
+    },
+    "Công ty được miễn tiền thuê đất trong": {
+        "E": "The Company is exempt from land rental for [số] years from [số]/[số]/[số] to [số]/[số]/[số] under Decision No. 000/QĐ-CT issued by the Binh Duong Provincial Tax Department on [số]/[số]/[số].",
+        "Hs": "依平阳省税务局于[số]年[số]月[số]日颁发的第000/QĐ-CT号决定，公司自[số]年[số]月[số]日至[số]年[số]月[số]日获免[số]年土地租金。",
+        "Ht": "依平陽省稅務局於[số]年[số]月[số]日頒發之第000/QĐ-CT號決定，公司自[số]年[số]月[số]日至[số]年[số]月[số]日獲免[số]年土地租金。"
+    },
+    "Rủi ro lãi suất là rủi ro mà giá trị hợp lý của các luồng tiền trong tương lai": {
+        "E": "Interest rate risk is the risk that fair value of expected cash flows of a financial instrument will fluctuate because of changes in market interest rates. The Company’s interest rate risk is mainly in relation to [cash, borrowings… of the Company]. The Company manages this risk by analysing the competitive situation in the market to obtain favourable interest rates while remaining within its risk management limits.",
+        "Hs": "利率风险是指市场利率波动的不确定性对某项金融工具未来现金流量的公允价值的潜在不利影响。公司的利率风险主要涉及其[现金、各项借款…]。公司通过分析市场竞争状况以取得有利利率，同时仍维持在其风险管理限额之内。",
+        "Ht": "利率風險乃市場利率波動之不確定性對某項金融工具未來現金流量之公允價值之潛在不利影響。公司的利率風險主要涉及其[現金、各項借款…]。公司透過分析市場競爭狀況以取得有利利率，同時仍維持於其風險管理限額之內。"
+    },
+    "Rủi ro tín dụng xảy ra khi một khách hàng hoặc đối tác không đáp ứng được các": {
+        "E": "Credit risk arises when a customer or counterparty fails to meet its contractual obligations, resulting in financial losses to the Company. The Company’s credit risk mainly arises from [trade receivables, loans and bank deposits…]",
+        "Hs": "信用风险是指客户或交易对方未能履行合同义务而导致公司发生财务损失的风险。公司的信用风险主要来自[应收客户款项、贷款及银行存款…]",
+        "Ht": "信用風險乃客戶或交易對方未能履行合約義務而導致公司發生財務損失之風險。公司的信用風險主要來自[應收客戶款項、貸款及銀行存款…]"
     }
 }

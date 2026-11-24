@@ -1250,14 +1250,14 @@
     {
         "Vietnamese": "Mrs.",
         "E": "Ms.",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "1 tháng",
         "E": "01 month",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "%/năm",
@@ -4915,7 +4915,7 @@
     },
     {
         "Vietnamese": "Không",
-        "E": NaN,
+        "E": "",
         "Hs": "无",
         "Ht": "無"
     },
@@ -4927,7 +4927,7 @@
     },
     {
         "Vietnamese": "Không có",
-        "E": NaN,
+        "E": "",
         "Hs": "无",
         "Ht": "無"
     },
@@ -11983,27 +11983,27 @@
     },
     {
         "Vietnamese": "Trong năm tài chính kết thúc 2025年12月31日, Công ty có các nghiệp vụ kinh tế quan trọng và các khoản phải trả với các bên liên quan được trình bày ở bảng sau:",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Cho mượn",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Các khoản đầu tư nắm giữ đến ngày đáo hạn là khoản cho vay nắm giữ đến ngày đáo hạn.",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Công ty không phát sinh các nghiệp vụ kinh tế quan trọng và các khoản phải thu, phải trả với các bên liên quan.",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "HĐVT",
@@ -12014,62 +12014,62 @@
     {
         "Vietnamese": "Số Giấy CNĐKHN:",
         "E": "Registered No.:",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "CÔNG TY TNHH KẾ TOÁN ES VIỆT NAM",
         "E": "ES ACCOUNTING VIETNAM CO., LTD",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "2Bis-4-6 Lê Thánh Tôn, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam",
         "E": "2Bis-4-6 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City, Vietnam",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Chi nhánh Fair Consulting Co., LTD Nhật Bản tại Việt Nam",
         "E": "Branch of Fair Consulting Co., Ltd. Japan in Vietnam",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Chi nhánh Fair Consulting Co., LTD Nhật Bản \ntại Việt Nam",
         "E": "Branch of Fair Consulting Co., Ltd. Japan in Vietnam",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Tầng 3, tòa nhà Sentinel Place, 41A Lý Thái Tổ, \nphường Lý Thái Tổ, quận Hoàn Kiếm, \nthành phố Hà Nội",
         "E": "Level 3, Sentinel Place Building, 41A Ly Thai To Street, Ly Thai To Ward, Hoan Kiem District, Hanoi City",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Tầng 3, tòa nhà Sentinel Place, 41A Lý Thái Tổ, phường Lý Thái Tổ, quận Hoàn Kiếm, thành phố Hà Nội",
         "E": "Level 3, Sentinel Place Building, 41A Ly Thai To Street, Ly Thai To Ward, Hoan Kiem District, Hanoi City",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Công ty TNHH Can International Advisory Vietnam",
         "E": "Can International Advisory Vietnam Company Limited",
-        "Hs": NaN,
-        "Ht": NaN
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Thuê lại quyền sử dụng đất",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Do ảnh hưởng các vấn đề nêu trên, chúng tôi none thể xác định liệu có cần điều chỉnh đối với các khoản mục trên bảng cân đối kế toán và lợi nhuận cho năm tài chính được báo cáo trong Income Statement và lưu chuyển tiền thuần trong Cash flow statement hay none.",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "HĐTG",
@@ -12079,45 +12079,45 @@
     },
     {
         "Vietnamese": "Các khoản đầu tư nắm giữ đến ngày đáo hạn bao gồm tiền gửi ngân hàng có kỳ hạn và các khoản cho vay nắm giữ đến ngày đáo hạn với mục đích thu lãi hàng kỳ. ",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Chi tiết các khoản cho vay như sau:",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Phí dịch vụ tư vấn kỹ thuật",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Điều chỉnh giảm thuế thu nhập doanh nghiệp tối thiểu toàn cầu năm trước",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Các khoản đầu tư nắm giữ đến ngày đáo hạn bao gồm tiền gửi ngân hàng có kỳ hạn và các khoản cho vay nắm giữ đến ngày đáo hạn với mục đích thu lãi hàng kỳ.",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "[nautilus] Công ty none lập dự phòng chi phí thuế thu nhập doanh nghiệp hiện hành trong năm 2025 vì Công ty none thu nhập tính thuế sau khi trừ khoản lỗ của các năm trước vào lợi nhuận chịu thuế trong năm hiện hành.",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Nhận lại tiền cho vay",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "HĐTD",
@@ -12127,9 +12127,9 @@
     },
     {
         "Vietnamese": "Các chủ đầu tư của Công ty bao gồm",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Công ty có nghĩa vụ nộp thuế thu nhập doanh nghiệp theo thuế suất 20%.",
@@ -12139,9 +12139,9 @@
     },
     {
         "Vietnamese": "Thu nhập từ tiền lãi",
-        "E": NaN,
-        "Hs": NaN,
-        "Ht": NaN
+        "E": "",
+        "Hs": "",
+        "Ht": ""
     },
     {
         "Vietnamese": "Nhữ Đức Trường",
@@ -12166,5 +12166,2039 @@
         "E": "Ha Thi Thu Thuy",
         "Hs": "Ha Thi Thu Thuy",
         "Ht": "Ha Thi Thu Thuy"
+    },
+    {
+        "Vietnamese": "x",
+        "E": "x",
+        "Hs": "x",
+        "Ht": "x"
+    },
+    {
+        "Vietnamese": "Ban Giám đốc xác nhận rằng Báo cáo tài chính kèm theo đã được soạn lập đúng đắn, phù hợp với các Chuẩn mực kế toán Việt Nam và Chế độ kế toán doanh nghiệp Việt Nam và phản ánh trung thực và hợp lý tình hình tài chính của Công ty tại thời điểm ngày [e_day] tháng [e_month] năm [e_year] và kết quả hoạt động kinh doanh và lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày.",
+        "E": "The Board of Management confirms that the accompanying financial statements have been properly prepared in accordance with Vietnamese Accounting Standards and Vietnamese enterprise accounting system and give a true and fair view of the financial position of the Company as at [e_month] [e_day], [e_year], and its financial performance and its cash flows for the year then ended.",
+        "Hs": "管理阶层确认，随附财务报表已按照《越南会计准则》及《越南企业会计制度》适当编制，并真实、公允地反映公司在[e_year]年[e_month]月[e_day]日的财务状况以及同日结束财务年度的经营成果和现金流量状况。",
+        "Ht": "管理階層確認，隨附財務報表已按照《越南會計準則》及《越南企業會計制度》適當編製，並真實、公允地反映公司於[e_year]年[e_month]月[e_day]日之財務狀況以及同日結束財務年度之經營成果及現金流量狀況。"
+    },
+    {
+        "Vietnamese": "Tại ngày [e_day] tháng [e_month] năm [e_year], Công ty không có công ty con, công ty liên doanh, công ty liên kết và đơn vị trực thuộc.",
+        "E": "As at [e_month] [e_day], [e_year], the Company had no subsidiaries, joint ventures, associates or dependent units.",
+        "Hs": "于[e_year]年[e_month]月[e_day]日，公司并无子公司、合资公司、关联公司及直属单位。",
+        "Ht": "於[e_year]年[e_month]月[e_day]日，公司並無子公司、合資公司、關聯公司及直屬單位。"
+    },
+    {
+        "Vietnamese": "Tại ngày [e_day] tháng [e_month] năm [e_year], cấu trúc của Công ty bao gồm các công ty con, công ty liên doanh, công ty liên kết và đơn vị trực thuộc được trình bày dưới đây:",
+        "E": "As at [e_month] [e_day], [e_year], the structure of the Company, including its subsidiaries, joint ventures, associates and dependent units, is presented below:",
+        "Hs": "于[e_year]年[e_month]月[e_day]日，公司结构包括子公司、合资公司、关联公司及直属单位，列示如下：",
+        "Ht": "於[e_year]年[e_month]月[e_day]日，公司結構包括子公司、合資公司、關聯公司及直屬單位，列示如下："
+    },
+    {
+        "Vietnamese": "Trong năm tài chính kết thúc vào ngày [e_day] tháng [e_month] năm [e_year], Công ty bắt đầu áp dụng Chế độ kế toán doanh nghiệp theo quy định tại Thông tư số 99/2025/TT-BTC ngày 27 tháng 10 năm 2025 (“Thông tư số 99/2025/TT-BTC”) của Bộ Tài chính, thay thế Thông tư số 200/2014/TT-BTC ngày 22 tháng 12 năm 2014.",
+        "E": "In the fiscal year ended [e_month] [e_day], [e_year], the Company started to apply the enterprise accounting system prescribed in Circular No. 99/2025/TT-BTC dated October 27, 2025 (“Circular No. 99/2025/TT-BTC”) issued by the Ministry of Finance, replacing Circular No. 200/2014/TT-BTC dated December 22, 2014.",
+        "Hs": "在截至[e_year]年[e_month]月[e_day]日止财务年度内，公司开始采用财政部2025年10月27日发布的《第99/2025/TT-BTC号公告》（「第99/2025/TT-BTC号公告」）所规定的企业会计制度，取代2014年12月22日发布的《第200/2014/TT-BTC号公告》。",
+        "Ht": "在截至[e_year]年[e_month]月[e_day]日止財務年度內，公司開始採用財政部2025年10月27日發布之《第99/2025/TT-BTC號公告》（「第99/2025/TT-BTC號公告」）所規定之企業會計制度，取代2014年12月22日發布之《第200/2014/TT-BTC號公告》。"
+    },
+    {
+        "Vietnamese": "Tại ngày [e_day] tháng [e_month] năm [e_year], Công ty chưa thu thập đầy đủ các thông tin cần thiết để xác định được giá trị hợp lý của bất động sản đầu tư.",
+        "E": "As at [e_month] [e_day], [e_year], the Company has not collected sufficient information necessary to determine the fair value of its investment property.",
+        "Hs": "于[e_year]年[e_month]月[e_day]日，公司尚未收集足够的必要资料以确定投资性不动产的公允价值。",
+        "Ht": "於[e_year]年[e_month]月[e_day]日，公司尚未收集足夠之必要資料以確定投資性不動產之公允價值。"
+    },
+    {
+        "Vietnamese": "Theo đó, đối với năm tài chính kết thúc ngày [e_day] tháng [e_month] năm [e_year], Công ty áp dụng cơ chế Thuế thu nhập doanh nghiệp bổ sung tối thiểu nội địa đạt chuẩn (QDMTT), cụ thể:",
+        "E": "Accordingly, for the fiscal year ended [e_month] [e_day], [e_year], the Company applies the Qualified Domestic Minimum Top-up Tax (QDMTT) mechanism, specifically:",
+        "Hs": "据此，对于截至[e_year]年[e_month]月[e_day]日止财务年度，公司适用合格国内最低补充税（QDMTT）机制，具体如下：",
+        "Ht": "據此，對於截至[e_year]年[e_month]月[e_day]日止財務年度，公司適用合格國內最低補充稅（QDMTT）機制，具體如下："
+    },
+    {
+        "Vietnamese": "Tại ngày [e_day] tháng [e_month] năm [e_year], Công ty không có số vay và nợ thuê tài chính quá hạn chưa thanh toán.",
+        "E": "As at [e_month] [e_day], [e_year], the Company had no outstanding overdue borrowings and finance lease obligations.",
+        "Hs": "于[e_year]年[e_month]月[e_day]日，公司没有逾期未付的借款及融资租赁负债。",
+        "Ht": "於[e_year]年[e_month]月[e_day]日，公司並無逾期未付之借款及融資租賃負債。"
+    },
+    {
+        "Vietnamese": "Tại ngày [e_day] tháng [e_month] năm [e_year], Công ty không có nợ phải trả người bán quá hạn chưa thanh toán.",
+        "E": "As at [e_month] [e_day], [e_year], the Company had no outstanding overdue trade accounts payable.",
+        "Hs": "于[e_year]年[e_month]月[e_day]日，公司没有逾期未付的应付帐款。",
+        "Ht": "於[e_year]年[e_month]月[e_day]日，公司並無逾期未付之應付帳款。"
+    },
+    {
+        "Vietnamese": "Tài sản thuế thu nhập hoãn lại không được ghi nhận vì Ban Giám đốc cho rằng không có sự chắc chắn là tài sản thuế hoãn lại có thể được sử dụng để tính thu nhập chịu thuế trong tương lai. Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong năm [e_year].",
+        "E": "No deferred income tax assets are recognized to the extent as the Board of Management believes that it is uncertain that future taxable profit will be available against which a deferred tax asset could be utilized. Accordingly, no deferred corporate income tax expense was recognized in the year [e_year].",
+        "Hs": "由于管理阶层认为并无可靠依据显示递延所得税资产有可能用于计算未来应课税所得，所以递延所得税资产不得认列。因此，[e_year]年并无认列递延所得税费用。",
+        "Ht": "由於管理階層認為並無可靠依據顯示遞延所得稅資產有可能用於計算未來應課稅所得，所以遞延所得稅資產不得認列。因此，[e_year]年並無認列遞延所得稅費用。"
+    },
+    {
+        "Vietnamese": "Công ty không ghi nhận tài sản thuế thu nhập hoãn lại vì không có chênh lệch đáng kể giữa giá trị ghi sổ của các khoản mục tài sản hoặc nợ phải trả trên Báo cáo tình hình tài chính và cơ sở tính thuế của các khoản mục này. Do đó, không có chi phí thuế thu nhập doanh nghiệp hoãn lại được ghi nhận trong năm [e_year].",
+        "E": "There are no deferred income tax assets recognized to the extent as there are no considerable differences between the carrying amount of items of assets or liabilities stated in the statement of financial position and their tax bases. Accordingly, no deferred corporate income tax expense was recognized in the year [e_year].",
+        "Hs": "资产或负债于财务状况表的帐面价值与其课税基础并无重大差异，所以公司不认列递延所得税资产。因此，[e_year]年并无认列递延所得税费用。",
+        "Ht": "資產或負債於財務狀況表之帳面價值與其課稅基礎並無重大差異，所以公司不認列遞延所得稅資產。因此，[e_year]年並無認列遞延所得稅費用。"
+    },
+    {
+        "Vietnamese": "Người đại diện theo pháp luật",
+        "E": "Legal representative",
+        "Hs": "法定代表人",
+        "Ht": "法定代表人"
+    },
+    {
+        "Vietnamese": "Đầu tư ngắn hạn khác",
+        "E": "Other short-term investments",
+        "Hs": "其他短期投资",
+        "Ht": "其他短期投資"
+    },
+    {
+        "Vietnamese": "Phải thu theo tiến độ hợp đồng xây dựng",
+        "E": "Receivables according to the progress of construction contracts",
+        "Hs": "应收工程进度款",
+        "Ht": "應收工程進度款"
+    },
+    {
+        "Vietnamese": "Tài sản sinh học ngắn hạn",
+        "E": "Short-term biological assets",
+        "Hs": "短期生物资产",
+        "Ht": "短期生物資產"
+    },
+    {
+        "Vietnamese": "Chi phí chờ phân bổ ngắn hạn",
+        "E": "Short-term deferred expenses",
+        "Hs": "短期待摊费用",
+        "Ht": "短期待攤費用"
+    },
+    {
+        "Vietnamese": "Tài sản sinh học dài hạn",
+        "E": "Long-term biological assets",
+        "Hs": "长期生物资产",
+        "Ht": "長期生物資產"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi cho sản phẩm định kỳ",
+        "E": "Livestock for periodic products",
+        "Hs": "定期产出的牲畜",
+        "Ht": "定期產出之牲畜"
+    },
+    {
+        "Vietnamese": "Giá trị khấu hao lũy kế",
+        "E": "Accumulated depreciation",
+        "Hs": "累计折旧值",
+        "Ht": "累計折舊值"
+    },
+    {
+        "Vietnamese": "Chi phí chờ phân bổ dài hạn",
+        "E": "Long-term deferred expenses",
+        "Hs": "长期待摊费用",
+        "Ht": "長期待攤費用"
+    },
+    {
+        "Vietnamese": "Phải trả cổ tức, lợi nhuận",
+        "E": "Dividends and profits payable",
+        "Hs": "应付股利、利润",
+        "Ht": "應付股利、利潤"
+    },
+    {
+        "Vietnamese": "Doanh thu chờ phân bổ ngắn hạn",
+        "E": "Short-term deferred revenue",
+        "Hs": "短期递延收入",
+        "Ht": "短期遞延收入"
+    },
+    {
+        "Vietnamese": "Doanh thu chờ phân bổ dài hạn",
+        "E": "Long-term deferred revenue",
+        "Hs": "长期递延收入",
+        "Ht": "長期遞延收入"
+    },
+    {
+        "Vietnamese": "Thặng dư vốn",
+        "E": "Capital surplus",
+        "Hs": "资本溢价",
+        "Ht": "資本溢價"
+    },
+    {
+        "Vietnamese": "Cổ phiếu mua lại của chính mình",
+        "E": "Treasury shares",
+        "Hs": "库存股",
+        "Ht": "庫藏股"
+    },
+    {
+        "Vietnamese": "Lãi, lỗ từ hoạt động đầu tư, tài chính",
+        "E": "Profit, loss from investing and financing activities",
+        "Hs": "投资及融资活动利益或损失",
+        "Ht": "投資及融資活動利益或損失"
+    },
+    {
+        "Vietnamese": "Tăng, giảm chi phí chờ phân bổ",
+        "E": "Increase, decrease in deferred expenses",
+        "Hs": "待摊费用增加或减少",
+        "Ht": "待攤費用增加或減少"
+    },
+    {
+        "Vietnamese": "Chi phí đi vay đã trả",
+        "E": "Borrowing costs paid",
+        "Hs": "已支付的借款费用",
+        "Ht": "已支付之借款費用"
+    },
+    {
+        "Vietnamese": "Tiền chi khác cho hoạt động kinh doanh",
+        "E": "Other payments for operating activities",
+        "Hs": "营业活动的其他现金流出",
+        "Ht": "營業活動之其他現金流出"
+    },
+    {
+        "Vietnamese": "Tiền trả nợ gốc thuê tài chính",
+        "E": "Payments to settle finance lease principal",
+        "Hs": "偿还融资租赁债款本金的支出",
+        "Ht": "償還融資租賃債款本金之支出"
+    },
+    {
+        "Vietnamese": "Lĩnh vực kinh doanh",
+        "E": "Business sector",
+        "Hs": "经营领域",
+        "Ht": "經營領域"
+    },
+    {
+        "Vietnamese": "Cấu trúc doanh nghiệp",
+        "E": "Corporate structure",
+        "Hs": "企业结构",
+        "Ht": "企業結構"
+    },
+    {
+        "Vietnamese": "Tên đơn vị",
+        "E": "Name of entity",
+        "Hs": "单位名称",
+        "Ht": "單位名稱"
+    },
+    {
+        "Vietnamese": "Hoạt động chính",
+        "E": "Principal activities",
+        "Hs": "主要业务",
+        "Ht": "主要業務"
+    },
+    {
+        "Vietnamese": "Tỷ lệ quyền biểu quyết",
+        "E": "Proportion of voting rights",
+        "Hs": "表决权比例",
+        "Ht": "表決權比例"
+    },
+    {
+        "Vietnamese": "Tỷ lệ lợi ích",
+        "E": "Proportion of ownership interest",
+        "Hs": "权益比例",
+        "Ht": "權益比例"
+    },
+    {
+        "Vietnamese": "Công ty liên doanh, liên kết",
+        "E": "Joint ventures and associates",
+        "Hs": "合资及关联企业",
+        "Ht": "合資及關聯企業"
+    },
+    {
+        "Vietnamese": "Danh sách đơn vị trực thuộc",
+        "E": "List of dependent units",
+        "Hs": "直属单位名单",
+        "Ht": "直屬單位名單"
+    },
+    {
+        "Vietnamese": "Hình thức hạch toán",
+        "E": "Form of accounting",
+        "Hs": "核算形式",
+        "Ht": "核算形式"
+    },
+    {
+        "Vietnamese": "Chi nhánh Công ty tại",
+        "E": "Branch of the Company in",
+        "Hs": "公司分支机构位于",
+        "Ht": "公司分支機構位於"
+    },
+    {
+        "Vietnamese": "Phụ thuộc/độc lập",
+        "E": "Dependent/Independent accounting",
+        "Hs": "非独立核算/独立核算",
+        "Ht": "非獨立核算/獨立核算"
+    },
+    {
+        "Vietnamese": "Văn phòng đại diện tại",
+        "E": "Representative office in",
+        "Hs": "代表处位于",
+        "Ht": "代表處位於"
+    },
+    {
+        "Vietnamese": "Không tổ chức hạch toán",
+        "E": "No separate accounting",
+        "Hs": "不单独核算",
+        "Ht": "不單獨核算"
+    },
+    {
+        "Vietnamese": "CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU",
+        "E": "SUMMARY OF SIGNIFICANT ACCOUNTING POLICIES",
+        "Hs": "重 要 会 计 政 策 的 汇 总 说 明",
+        "Ht": "重 要 會 計 政 策 之 彙 總 說 明"
+    },
+    {
+        "Vietnamese": "Tiêu thức phân bổ nguyên liệu, vật liệu:",
+        "E": "Allocation basis for raw materials:",
+        "Hs": "原材料分摊标准：",
+        "Ht": "原材料分攤標準："
+    },
+    {
+        "Vietnamese": "Tài sản sinh học",
+        "E": "Biological assets",
+        "Hs": "生物资产",
+        "Ht": "生物資產"
+    },
+    {
+        "Vietnamese": "Chi phí chờ phân bổ",
+        "E": "Deferred expenses",
+        "Hs": "待摊费用",
+        "Ht": "待攤費用"
+    },
+    {
+        "Vietnamese": "Cây lâu năm cho sản phẩm định kỳ",
+        "E": "Perennial plants for periodic products",
+        "Hs": "定期产出的多年生植物",
+        "Ht": "定期產出之多年生植物"
+    },
+    {
+        "Vietnamese": "Súc vật làm việc",
+        "E": "Working animals",
+        "Hs": "役畜",
+        "Ht": "役畜"
+    },
+    {
+        "Vietnamese": "Nhà cửa, vật kiến trúc cho thuê",
+        "E": "Buildings, structures for lease",
+        "Hs": "出租房屋、建筑物",
+        "Ht": "出租房屋、建築物"
+    },
+    {
+        "Vietnamese": "Quyền sử dụng đất có thời hạn cho thuê",
+        "E": "Definite-term land use rights for lease",
+        "Hs": "出租的有期限土地使用权",
+        "Ht": "出租之有期限土地使用權"
+    },
+    {
+        "Vietnamese": "Bất động sản đầu tư khác",
+        "E": "Other investment property",
+        "Hs": "其他投资性不动产",
+        "Ht": "其他投資性不動產"
+    },
+    {
+        "Vietnamese": "Các khoản nợ phải trả",
+        "E": "Liabilities",
+        "Hs": "各项应付债款",
+        "Ht": "各項應付債款"
+    },
+    {
+        "Vietnamese": "Các khoản nợ phải trả bao gồm:",
+        "E": "Liabilities include:",
+        "Hs": "各项应付债款包括：",
+        "Ht": "各項應付債款包括："
+    },
+    {
+        "Vietnamese": "Doanh thu chờ phân bổ",
+        "E": "Deferred revenue",
+        "Hs": "递延收入",
+        "Ht": "遞延收入"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập doanh nghiệp hoãn lại",
+        "E": "Deferred corporate income tax",
+        "Hs": "递延所得税",
+        "Ht": "遞延所得稅"
+    },
+    {
+        "Vietnamese": "Doanh thu và thu nhập khác",
+        "E": "Revenue and other income",
+        "Hs": "营业收入与其他所得",
+        "Ht": "營業收入與其他所得"
+    },
+    {
+        "Vietnamese": "Doanh thu bán bất động sản",
+        "E": "Revenue from sale of real estate",
+        "Hs": "不动产销售收入",
+        "Ht": "不動產銷售收入"
+    },
+    {
+        "Vietnamese": "Tiền gửi không kỳ hạn",
+        "E": "Demand deposits",
+        "Hs": "活期存款",
+        "Ht": "活期存款"
+    },
+    {
+        "Vietnamese": "Các ngân hàng khác",
+        "E": "Other banks",
+        "Hs": "其他银行",
+        "Ht": "其他銀行"
+    },
+    {
+        "Vietnamese": "Giá gốc",
+        "E": "Cost",
+        "Hs": "原始成本",
+        "Ht": "原始成本"
+    },
+    {
+        "Vietnamese": "Giá trị hợp lý",
+        "E": "Fair value",
+        "Hs": "公允价值",
+        "Ht": "公允價值"
+    },
+    {
+        "Vietnamese": "Giá trị dự phòng",
+        "E": "Provision",
+        "Hs": "准备金额",
+        "Ht": "準備金額"
+    },
+    {
+        "Vietnamese": "Tổng giá trị cổ phiếu",
+        "E": "Total value of shares",
+        "Hs": "股票总值",
+        "Ht": "股票總值"
+    },
+    {
+        "Vietnamese": "Tổng giá trị trái phiếu",
+        "E": "Total value of bonds",
+        "Hs": "债券总值",
+        "Ht": "債券總值"
+    },
+    {
+        "Vietnamese": "Các khoản đầu tư khác",
+        "E": "Other investments",
+        "Hs": "其他投资",
+        "Ht": "其他投資"
+    },
+    {
+        "Vietnamese": "Về số lượng",
+        "E": "By quantity",
+        "Hs": "数量方面",
+        "Ht": "數量方面"
+    },
+    {
+        "Vietnamese": "Về giá trị",
+        "E": "By value",
+        "Hs": "金额方面",
+        "Ht": "金額方面"
+    },
+    {
+        "Vietnamese": "Phải thu của người lao động",
+        "E": "Receivables from employees",
+        "Hs": "应收职工款项",
+        "Ht": "應收職工款項"
+    },
+    {
+        "Vietnamese": "Ký cược, ký quỹ",
+        "E": "Deposits and mortgages",
+        "Hs": "押金、保证金",
+        "Ht": "押金、保證金"
+    },
+    {
+        "Vietnamese": "Cho mượn tài sản phi tiền tệ",
+        "E": "Lending of non-monetary assets",
+        "Hs": "出借非货币性资产",
+        "Ht": "出借非貨幣性資產"
+    },
+    {
+        "Vietnamese": "Các khoản chi hộ",
+        "E": "On-behalf payments",
+        "Hs": "代付款",
+        "Ht": "代付款"
+    },
+    {
+        "Vietnamese": "Giá trị ghi sổ",
+        "E": "Carrying amount",
+        "Hs": "帐面价值",
+        "Ht": "帳面價值"
+    },
+    {
+        "Vietnamese": "Số lượng",
+        "E": "Quantity",
+        "Hs": "数量",
+        "Ht": "數量"
+    },
+    {
+        "Vietnamese": "Sản phẩm",
+        "E": "Products",
+        "Hs": "产品",
+        "Ht": "產品"
+    },
+    {
+        "Vietnamese": "Nguyên liệu, vật tư tại kho bảo thuế",
+        "E": "Raw materials and supplies in bonded warehouses",
+        "Hs": "保税仓库原材料、物资",
+        "Ht": "保稅倉庫原材料、物資"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi lấy sản phẩm một lần",
+        "E": "Livestock for one-time products",
+        "Hs": "一次性产出的牲畜",
+        "Ht": "一次性產出之牲畜"
+    },
+    {
+        "Vietnamese": "Thay đổi phương pháp khấu hao",
+        "E": "Change in depreciation method",
+        "Hs": "折旧方法变更",
+        "Ht": "折舊方法變更"
+    },
+    {
+        "Vietnamese": "Thuyết minh số liệu và giải trình khác",
+        "E": "Notes on figures and other explanations",
+        "Hs": "数据附注及其他说明",
+        "Ht": "數據附註及其他說明"
+    },
+    {
+        "Vietnamese": "Nhóm 1",
+        "E": "Group 1",
+        "Hs": "第1组",
+        "Ht": "第1組"
+    },
+    {
+        "Vietnamese": "Nhóm 2",
+        "E": "Group 2",
+        "Hs": "第2组",
+        "Ht": "第2組"
+    },
+    {
+        "Vietnamese": "Bất động sản đầu tư cho thuê",
+        "E": "Investment property for lease",
+        "Hs": "出租的投资性不动产",
+        "Ht": "出租之投資性不動產"
+    },
+    {
+        "Vietnamese": "Nhà",
+        "E": "Buildings",
+        "Hs": "房屋",
+        "Ht": "房屋"
+    },
+    {
+        "Vietnamese": "Nhà và quyền sử dụng đất",
+        "E": "Buildings and land use rights",
+        "Hs": "房屋及土地使用权",
+        "Ht": "房屋及土地使用權"
+    },
+    {
+        "Vietnamese": "Cơ sở hạ tầng",
+        "E": "Infrastructure",
+        "Hs": "基础设施",
+        "Ht": "基礎設施"
+    },
+    {
+        "Vietnamese": "Bất động sản đầu tư nắm giữ chờ tăng giá",
+        "E": "Investment property held for capital appreciation",
+        "Hs": "持有待增值的投资性不动产",
+        "Ht": "持有待增值之投資性不動產"
+    },
+    {
+        "Vietnamese": "Mua sắm",
+        "E": "Purchases",
+        "Hs": "购置",
+        "Ht": "購置"
+    },
+    {
+        "Vietnamese": "Sửa chữa, bảo dưỡng định kỳ",
+        "E": "Periodic repairs and maintenance",
+        "Hs": "定期维修、保养",
+        "Ht": "定期維修、保養"
+    },
+    {
+        "Vietnamese": "Nâng cấp cải tạo tài sản cố định",
+        "E": "Upgrading and renovation of fixed assets",
+        "Hs": "固定资产升级改造",
+        "Ht": "固定資產升級改造"
+    },
+    {
+        "Vietnamese": "Chi phí mua bảo hiểm cho nhiều kỳ",
+        "E": "Insurance premiums for multiple periods",
+        "Hs": "多期保险费用",
+        "Ht": "多期保險費用"
+    },
+    {
+        "Vietnamese": "Số nợ quá hạn chưa thanh toán:",
+        "E": "Overdue unpaid debts:",
+        "Hs": "逾期未付债款：",
+        "Ht": "逾期未付債款："
+    },
+    {
+        "Vietnamese": "Các đối tượng khác",
+        "E": "Other parties",
+        "Hs": "其他对象",
+        "Ht": "其他對象"
+    },
+    {
+        "Vietnamese": "Thuế tối thiểu toàn cầu",
+        "E": "Global minimum tax",
+        "Hs": "全球最低税",
+        "Ht": "全球最低稅"
+    },
+    {
+        "Vietnamese": "Gốc",
+        "E": "Principal",
+        "Hs": "本金",
+        "Ht": "本金"
+    },
+    {
+        "Vietnamese": "Lãi",
+        "E": "Interest",
+        "Hs": "利息",
+        "Ht": "利息"
+    },
+    {
+        "Vietnamese": "Vay bên liên quan",
+        "E": "Borrowings from related parties",
+        "Hs": "关联方借款",
+        "Ht": "關聯方借款"
+    },
+    {
+        "Vietnamese": "Vay bên thứ ba",
+        "E": "Borrowings from third parties",
+        "Hs": "第三方借款",
+        "Ht": "第三方借款"
+    },
+    {
+        "Vietnamese": "Nợ thuê tài chính",
+        "E": "Finance lease obligations",
+        "Hs": "融资租赁负债",
+        "Ht": "融資租賃負債"
+    },
+    {
+        "Vietnamese": "Lý do quá hạn chưa thanh toán:",
+        "E": "Reasons for overdue non-payment:",
+        "Hs": "逾期未付原因：",
+        "Ht": "逾期未付原因："
+    },
+    {
+        "Vietnamese": "Dự phòng bảo hành sản phẩm, hàng hóa",
+        "E": "Provision for product and goods warranty",
+        "Hs": "产品、商品保修准备",
+        "Ht": "產品、商品保固準備"
+    },
+    {
+        "Vietnamese": "Dự phòng bảo hành công trình xây dựng",
+        "E": "Provision for construction warranty",
+        "Hs": "建筑工程保修准备",
+        "Ht": "建築工程保固準備"
+    },
+    {
+        "Vietnamese": "Dự phòng tái cơ cấu doanh nghiệp",
+        "E": "Provision for restructuring",
+        "Hs": "企业重组准备",
+        "Ht": "企業重組準備"
+    },
+    {
+        "Vietnamese": "Trích lập quỹ",
+        "E": "Appropriation to funds",
+        "Hs": "提取基金",
+        "Ht": "提取基金"
+    },
+    {
+        "Vietnamese": "Sử dụng quỹ",
+        "E": "Utilisation of funds",
+        "Hs": "使用基金",
+        "Ht": "使用基金"
+    },
+    {
+        "Vietnamese": "Tiền và tương đương tiền",
+        "E": "Cash and cash equivalents",
+        "Hs": "现金及现金等价物",
+        "Ht": "現金及約當現金"
+    },
+    {
+        "Vietnamese": "Nợ phải thu",
+        "E": "Receivables",
+        "Hs": "应收帐款",
+        "Ht": "應收帳款"
+    },
+    {
+        "Vietnamese": "Các tài sản khác",
+        "E": "Other assets",
+        "Hs": "其他资产",
+        "Ht": "其他資產"
+    },
+    {
+        "Vietnamese": "Phải trả cho người bán",
+        "E": "Trade accounts payable",
+        "Hs": "应付帐款",
+        "Ht": "應付帳款"
+    },
+    {
+        "Vietnamese": "Phải trả nợ vay",
+        "E": "Borrowings payable",
+        "Hs": "应付借款",
+        "Ht": "應付借款"
+    },
+    {
+        "Vietnamese": "Các khoản phải trả khác",
+        "E": "Other payables",
+        "Hs": "其他应付款",
+        "Ht": "其他應付款"
+    },
+    {
+        "Vietnamese": "Doanh thu bán sản phẩm, hàng hóa",
+        "E": "Sales of products and goods",
+        "Hs": "销售产品、商品的收入",
+        "Ht": "銷售產品、商品之收入"
+    },
+    {
+        "Vietnamese": "Giá vốn của sản phẩm, hàng hóa đã bán",
+        "E": "Cost of products and goods sold",
+        "Hs": "已销售产品、商品的成本",
+        "Ht": "已銷售產品、商品之成本"
+    },
+    {
+        "Vietnamese": "Giá trị còn lại của bất động sản đầu tư",
+        "E": "Carrying amount of investment property",
+        "Hs": "投资性不动产的折余价值",
+        "Ht": "投資性不動產之折餘價值"
+    },
+    {
+        "Vietnamese": "Thanh lý, nhượng bán tài sản cố định",
+        "E": "Disposal, transfer of fixed assets",
+        "Hs": "固定资产处置、出售或转让",
+        "Ht": "固定資產處分、出售或轉讓"
+    },
+    {
+        "Vietnamese": "Các khoản phạt, truy thu",
+        "E": "Penalties and arrears",
+        "Hs": "罚款、追征款项",
+        "Ht": "罰款、追徵款項"
+    },
+    {
+        "Vietnamese": "Thuế suất thực tế tại Việt Nam:",
+        "E": "Effective tax rate in Vietnam:",
+        "Hs": "越南实际税率：",
+        "Ht": "越南實際稅率："
+    },
+    {
+        "Vietnamese": "Trừ: Số trích quỹ khen thưởng, phúc lợi",
+        "E": "Less: Appropriation to bonus and welfare fund",
+        "Hs": "减：提取奖励、福利基金",
+        "Ht": "減：提取獎勵、福利基金"
+    },
+    {
+        "Vietnamese": "Số lượng cổ phiếu phổ thông dự kiến được phát hành thêm",
+        "E": "Number of ordinary shares expected to be additionally issued",
+        "Hs": "预计增发的普通股股数",
+        "Ht": "預計增發之普通股股數"
+    },
+    {
+        "Vietnamese": "Lãi trên cổ phiếu (VND/cổ phiếu)",
+        "E": "Earnings per share (VND/share)",
+        "Hs": "每股收益（VND/股）",
+        "Ht": "每股收益（VND/股）"
+    },
+    {
+        "Vietnamese": "Doanh cung cấp dịch vụ",
+        "E": "Revenue from supplying services",
+        "Hs": "提供劳务收入",
+        "Ht": "提供勞務收入"
+    },
+    {
+        "Vietnamese": "Dự phòng đầu tư nắm giữ đến ngày đáo hạn ngắn hạn",
+        "E": "Provision for short-term held-to-maturity investments",
+        "Hs": "短期持有至到期投资准备",
+        "Ht": "短期持有至到期投資準備"
+    },
+    {
+        "Vietnamese": "Dự phòng tổn thất các khoản đầu tư ngắn hạn khác",
+        "E": "Provision for impairment of other short-term investments",
+        "Hs": "其他短期投资损失准备",
+        "Ht": "其他短期投資損失準備"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi lấy sản phẩm một lần ngắn hạn",
+        "E": "Short-term livestock for one-time products",
+        "Hs": "短期一次性产出的牲畜",
+        "Ht": "短期一次性產出之牲畜"
+    },
+    {
+        "Vietnamese": "Cây trồng theo mùa vụ hoặc lấy sản phẩm một lần ngắn hạn",
+        "E": "Short-term seasonal crops or crops for one-time products",
+        "Hs": "短期季节性或一次性收获的作物",
+        "Ht": "短期季節性或一次性收穫之作物"
+    },
+    {
+        "Vietnamese": "Dự phòng tổn thất tài sản sinh học ngắn hạn",
+        "E": "Provision for impairment of short-term biological assets",
+        "Hs": "短期生物资产减值准备",
+        "Ht": "短期生物資產減值準備"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi cho sản phẩm định kỳ chưa đến giai đoạn trưởng thành",
+        "E": "Livestock for periodic products at the immature stage",
+        "Hs": "定期产出的牲畜（未成熟阶段）",
+        "Ht": "定期產出之牲畜（未成熟階段）"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi cho sản phẩm định kỳ đến giai đoạn trưởng thành",
+        "E": "Livestock for periodic products at the mature stage",
+        "Hs": "定期产出的牲畜（成熟阶段）",
+        "Ht": "定期產出之牲畜（成熟階段）"
+    },
+    {
+        "Vietnamese": "Súc vật nuôi lấy sản phẩm một lần dài hạn",
+        "E": "Long-term livestock for one-time products",
+        "Hs": "长期一次性产出的牲畜",
+        "Ht": "長期一次性產出之牲畜"
+    },
+    {
+        "Vietnamese": "Cây trồng theo mùa vụ hoặc lấy sản phẩm một lần dài hạn",
+        "E": "Long-term seasonal crops or crops for one-time products",
+        "Hs": "长期季节性或一次性收获的作物",
+        "Ht": "長期季節性或一次性收穫之作物"
+    },
+    {
+        "Vietnamese": "Dự phòng tổn thất tài sản sinh học dài hạn",
+        "E": "Provision for impairment of long-term biological assets",
+        "Hs": "长期生物资产减值准备",
+        "Ht": "長期生物資產減值準備"
+    },
+    {
+        "Vietnamese": "Dự phòng tổn thất đầu tư vào đơn vị khác dài hạn",
+        "E": "Provision for impairment of long-term investments in other units",
+        "Hs": "长期投资其他单位的损失准备",
+        "Ht": "長期投資其他單位之損失準備"
+    },
+    {
+        "Vietnamese": "Dự phòng đầu tư nắm giữ đến ngày đáo hạn dài hạn",
+        "E": "Provision for long-term held-to-maturity investments",
+        "Hs": "长期持有至到期投资准备",
+        "Ht": "長期持有至到期投資準備"
+    },
+    {
+        "Vietnamese": "Thuế và các khoản phải nộp Nhà nước ngắn hạn",
+        "E": "Short-term taxes and amounts payable to State budget",
+        "Hs": "短期应交税费及其他应交款",
+        "Ht": "短期應交稅費及其他應交款"
+    },
+    {
+        "Vietnamese": "Phải trả theo tiến độ hợp đồng xây dựng ngắn hạn",
+        "E": "Short-term payables according to the progress of construction contracts",
+        "Hs": "短期应付工程进度款",
+        "Ht": "短期應付工程進度款"
+    },
+    {
+        "Vietnamese": "Thuế và các khoản phải nộp Nhà nước dài hạn",
+        "E": "Long-term taxes and amounts payable to State budget",
+        "Hs": "长期应交税费及其他应交款",
+        "Ht": "長期應交稅費及其他應交款"
+    },
+    {
+        "Vietnamese": "Lãi/lỗ của hoạt động bán, thanh lý bất động sản đầu tư",
+        "E": "Profit/loss from sale and disposal of investment property",
+        "Hs": "投资性不动产出售、处置利益/损失",
+        "Ht": "投資性不動產出售、處分利益/損失"
+    },
+    {
+        "Vietnamese": "Lợi nhuận từ hoạt động kinh doanh trước thay đổi vốn lưu động",
+        "E": "Operating profit before changes in working capital",
+        "Hs": "营运资金变动前的营业活动利益",
+        "Ht": "營運資金變動前之營業活動利益"
+    },
+    {
+        "Vietnamese": "Tăng, giảm các khoản phải trả (Không kể lãi vay phải trả, thuế thu nhập doanh nghiệp phải nộp)",
+        "E": "Increase, decrease in accounts payable (excluding interest payable and corporate income tax payable)",
+        "Hs": "应付帐款增加或减少（不包括应付利息、应纳企业所得税）",
+        "Ht": "應付帳款增加或減少（不包括應付利息、應納企業所得稅）"
+    },
+    {
+        "Vietnamese": "Tiền trả lại vốn góp cho các chủ sở hữu, mua lại cổ phiếu đã phát hành",
+        "E": "Repayment for capital contributions to owners, repurchase of issued shares",
+        "Hs": "归还投资款予所有者（股东）或买回公司已发行股份的支出",
+        "Ht": "歸還投資款予所有者（股東）或買回公司已發行股份之支出"
+    },
+    {
+        "Vietnamese": "Đặc điểm hoạt động của doanh nghiệp trong năm tài chính có ảnh hưởng đến Báo cáo tài chính",
+        "E": "Business performance during the fiscal year impacting the financial statements",
+        "Hs": "企业财务年度内影响财务报表的营业状况",
+        "Ht": "企業財務年度內影響財務報表之營業狀況"
+    },
+    {
+        "Vietnamese": "Danh sách công ty con, công ty liên doanh, liên kết",
+        "E": "List of subsidiaries, joint ventures and associates",
+        "Hs": "子公司、合资企业及关联企业名单",
+        "Ht": "子公司、合資企業及關聯企業名單"
+    },
+    {
+        "Vietnamese": "Đơn vị tiền tệ được sử dụng trong kế toán là Đô la Mỹ (USD).",
+        "E": "Currency used in bookkeeping is US Dollar (USD).",
+        "Hs": "公司采用的会计本位币是美元（USD）。",
+        "Ht": "公司採用之會計本位幣為美元（USD）。"
+    },
+    {
+        "Vietnamese": "Đơn vị tiền tệ được sử dụng trong kế toán là Đồng Việt Nam (VND).",
+        "E": "Currency used in bookkeeping is Vietnamese Dong (VND).",
+        "Hs": "公司采用的会计本位币是越南盾（VND）。",
+        "Ht": "公司採用之會計本位幣是越南盾（VND）。"
+    },
+    {
+        "Vietnamese": "Tuyên bố về việc tuân thủ Chuẩn mực kế toán Việt Nam và Chế độ kế toán",
+        "E": "Declaration of compliance with Vietnamese Accounting Standards and Accounting System",
+        "Hs": "遵循越南会计准则及会计制度的声明",
+        "Ht": "遵循越南會計準則及會計制度之聲明"
+    },
+    {
+        "Vietnamese": "Chênh lệch đánh giá lại tài sản được quy đổi ra VND theo tỷ giá giao dịch thực tế tại ngày đánh giá;",
+        "E": "Differences upon asset revaluation are converted into VND at the actual transaction exchange rate at the date of valuation;",
+        "Hs": "资产重估差价按照重新评估当日的实际交易汇率折算为越南盾；",
+        "Ht": "資產重估差價按照重新評估當日之實際交易匯率折算為越南盾；"
+    },
+    {
+        "Vietnamese": "Tiền bao gồm tiền mặt tại quỹ, tiền gửi ngân hàng không kỳ hạn, tiền đang chuyển mà Công ty không bị hạn chế sử dụng.",
+        "E": "Cash comprises cash on hand, demand deposits in banks and cash in transit which are not restricted for use by the Company.",
+        "Hs": "现金包含公司可不受限制使用的库存现金、银行活期存款及在途现金。",
+        "Ht": "現金包含公司可不受限制使用之庫存現金、銀行活期存款及在途現金。"
+    },
+    {
+        "Vietnamese": "Tài sản cố định hữu hình được trình bày trên Báo cáo tình hình tài chính theo nguyên giá trừ đi giá trị hao mòn lũy kế.",
+        "E": "Tangible fixed assets are stated in the statement of financial position at cost less accumulated depreciation.",
+        "Hs": "有形固定资产于财务状况表中以原始成本（原值）减去累计折旧后的净值列报。",
+        "Ht": "有形固定資產於財務狀況表中以原始成本（原值）減去累計折舊後之淨值列報。"
+    },
+    {
+        "Vietnamese": "Tài sản cố định vô hình được trình bày trên Báo cáo tình hình tài chính theo nguyên giá trừ đi giá trị hao mòn lũy kế.",
+        "E": "Intangible fixed assets are stated in the statement of financial position at cost less accumulated amortisation.",
+        "Hs": "无形固定资产于财务状况表中以原始成本（原值）减去累计折旧后的净值列报。",
+        "Ht": "無形固定資產於財務狀況表中以原始成本（原值）減去累計折舊後之淨值列報。"
+    },
+    {
+        "Vietnamese": "Doanh thu được xác định tương đối chắc chắn.; và",
+        "E": "Revenue can be measured reliably; and",
+        "Hs": "收入能够可靠计量；以及",
+        "Ht": "收入能夠可靠計量；以及"
+    },
+    {
+        "Vietnamese": "Xác định được phần công việc đã hoàn thành vào thời điểm báo cáo; và",
+        "E": "The volume of work completed at the reporting date can be measured reliably; and",
+        "Hs": "交易在报告日的完成程度能够计量；以及",
+        "Ht": "交易於報告日的完成程度能夠計量；以及"
+    },
+    {
+        "Vietnamese": "Việc ghi nhận doanh thu bán bất động sản của Công ty là chủ đầu tư phải đảm bảo thoả mãn đồng thời các điều kiện sau:",
+        "E": "Revenue from the sale of real estate for which the Company is the project investor shall be recognized when all the following conditions are satisfied:",
+        "Hs": "公司作为项目投资方的不动产销售收入，须同时具备下列条件方可认列入账：",
+        "Ht": "公司作為項目投資方之不動產銷售收入，須同時具備下列條件方可認列入帳："
+    },
+    {
+        "Vietnamese": "Công ty không còn nắm giữ quyền quản lý bất động sản như người sở hữu bất động sản hoặc quyền kiểm soát bất động sản;",
+        "E": "The Company retains neither continuing managerial involvement to the degree usually associated with ownership nor effective control over the real estate;",
+        "Hs": "公司不保留通常与不动产所有权有关的继续管理权，且不对该不动产实施控制权；",
+        "Ht": "公司不保留通常與不動產所有權有關的繼續管理權，且不對該不動產實施控制權；"
+    },
+    {
+        "Vietnamese": "Doanh thu được xác định tương đối chắc chắn;",
+        "E": "Revenue can be measured reliably;",
+        "Hs": "收入能够可靠计量；",
+        "Ht": "收入能夠可靠計量；"
+    },
+    {
+        "Vietnamese": "Công ty đã thu được hoặc sẽ thu được lợi ích kinh tế từ giao dịch bán bất động sản;",
+        "E": "The economic benefits associated with the real estate sale transaction have flowed or will flow to the Company;",
+        "Hs": "公司已获得或即将获得不动产销售交易的经济利益；",
+        "Ht": "公司已獲得或即將獲得不動產銷售交易之經濟利益；"
+    },
+    {
+        "Vietnamese": "Xác định được chi phí liên quan đến giao dịch bán bất động sản.",
+        "E": "The costs incurred in respect of the real estate sale transaction can be measured reliably.",
+        "Hs": "能够确定不动产销售交易的相关成本。",
+        "Ht": "能夠確定不動產銷售交易之相關成本。"
+    },
+    {
+        "Vietnamese": "Chi phí bán hàng, chi phí quản lý doanh nghiệp",
+        "E": "Selling expenses, general and administration expenses",
+        "Hs": "销售费用、营业管理费用",
+        "Ht": "銷售費用、營業管理費用"
+    },
+    {
+        "Vietnamese": "Bán, thanh lý tài sản cố định, bất động sản đầu tư",
+        "E": "Sale and disposal of fixed assets and investment property",
+        "Hs": "固定资产、投资性不动产的出售及处置",
+        "Ht": "固定資產、投資性不動產之出售及處分"
+    },
+    {
+        "Vietnamese": "Các nguyên tắc và phương pháp kế toán khác",
+        "E": "Other accounting principles and methods",
+        "Hs": "其他会计原则及方法",
+        "Ht": "其他會計原則及方法"
+    },
+    {
+        "Vietnamese": "THÔNG TIN BỔ SUNG CHO CÁC KHOẢN MỤC TRÌNH BÀY TRONG BÁO CÁO TÌNH HÌNH TÀI CHÍNH",
+        "E": "ADDITIONAL DETAILS OF ITEMS STATED IN THE STATEMENT OF FINANCIAL POSITION",
+        "Hs": "财务状况表项目附注",
+        "Ht": "財務狀況表項目附註"
+    },
+    {
+        "Vietnamese": "Các khoản tiền và tương đương tiền Công ty đang nắm giữ nhưng không bị hạn chế sử dụng",
+        "E": "Cash and cash equivalents held by the Company which are not restricted for use",
+        "Hs": "公司所持有且不受限制使用的现金及现金等价物",
+        "Ht": "公司所持有且不受限制使用之現金及約當現金"
+    },
+    {
+        "Vietnamese": "Đây là các khoản tiền gửi ngân hàng không kỳ hạn, chi tiết như sau:",
+        "E": "These are bank demand deposits, details are as follows:",
+        "Hs": "为银行活期存款，明细如下：",
+        "Ht": "為銀行活期存款，明細如下："
+    },
+    {
+        "Vietnamese": "Đây là các khoản tiền gửi ngân hàng có kỳ hạn không quá 3 tháng, chi tiết như sau:",
+        "E": "These are bank term deposits with maturities of not more than 3 months, details are as follows:",
+        "Hs": "为期限不超过3个月的银行定期存款，明细如下：",
+        "Ht": "為期限不超過3個月之銀行定期存款，明細如下："
+    },
+    {
+        "Vietnamese": "Lý do thay đổi với từng khoản đầu tư/loại cổ phiếu, trái phiếu:",
+        "E": "Reasons for changes in each investment/type of shares, bonds:",
+        "Hs": "各项投资/各类股票、债券变动的原因：",
+        "Ht": "各項投資/各類股票、債券變動之原因："
+    },
+    {
+        "Vietnamese": "Cơ sở xác định giá trị hợp lý đối với chứng khoán kinh doanh;",
+        "E": "Basis for determining the fair value of trading securities;",
+        "Hs": "交易性证券公允价值的确定依据；",
+        "Ht": "交易性證券公允價值之確定依據；"
+    },
+    {
+        "Vietnamese": "Đây là khoản tiền gửi ngân hàng có kỳ hạn trên 3 tháng, chi tiết như sau:",
+        "E": "These are bank term deposits with maturities of more than 3 months, details are as follows:",
+        "Hs": "为期限超过3个月的银行定期存款，明细如下：",
+        "Ht": "為期限超過3個月之銀行定期存款，明細如下："
+    },
+    {
+        "Vietnamese": "Đây là các Trái phiếu do Ngân hàng TMCP Công thương Việt Nam phát hành, bao gồm:",
+        "E": "These are bonds issued by Vietnam Joint Stock Commercial Bank For Industry And Trade, including:",
+        "Hs": "为越南工商股份商业银行发行的债券，包括：",
+        "Ht": "為越南工商股份商業銀行發行之債券，包括："
+    },
+    {
+        "Vietnamese": "Các khoản đầu tư khác:",
+        "E": "Other investments:",
+        "Hs": "其他投资：",
+        "Ht": "其他投資："
+    },
+    {
+        "Vietnamese": "Các giao dịch trọng yếu giữa Công ty và công ty con, liên doanh, liên kết được trình bày tại thuyết minh VIII.2.",
+        "E": "Significant transactions between the Company and its subsidiaries, joint ventures and associates are presented in Note VIII.2.",
+        "Hs": "公司与子公司、合资企业及关联企业之间的重大交易列示于附注VIII.2。",
+        "Ht": "公司與子公司、合資企業及關聯企業之間之重大交易列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải thu ngắn hạn của khách hàng là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of short-term trade accounts receivable from related parties are presented in Note VIII.2.",
+        "Hs": "关联方短期销货应收款明细列示于附注VIII.2。",
+        "Ht": "關聯方短期銷貨應收款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản trả trước cho người bán ngắn hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of short-term advances to suppliers who are related parties are presented in Note VIII.2.",
+        "Hs": "关联方短期预付货款明细列示于附注VIII.2。",
+        "Ht": "關聯方短期預付貨款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Phải thu về cổ tức và lợi nhuận được chia",
+        "E": "Dividends and profits receivable",
+        "Hs": "应收股利及获分利润",
+        "Ht": "應收股利及獲分利潤"
+    },
+    {
+        "Vietnamese": "Chi tiết dự phòng phải thu ngắn hạn khó đòi:",
+        "E": "Details of provision for short-term doubtful debts:",
+        "Hs": "短期坏帐准备（备抵呆帐）明细：",
+        "Ht": "短期壞帳準備（備抵呆帳）明細："
+    },
+    {
+        "Vietnamese": "Giá trị hàng tồn kho ứ đọng, kém, mất phẩm chất, lạc hậu kỹ thuật,... không có khả năng tiêu thụ tại thời điểm cuối kỳ:",
+        "E": "Value of inventories stagnant, poor or deteriorative in quality, technically obsolete,... which are unable to be sold at the end of the period:",
+        "Hs": "期末呆滞、劣质、技术落后...且无法销售的库存物品价值：",
+        "Ht": "期末呆滯、劣質、技術落後...且無法銷售之庫存物品價值："
+    },
+    {
+        "Vietnamese": "Lý do dẫn đến việc trích lập thêm hoặc hoàn nhập dự phòng giảm giá hàng tồn kho:",
+        "E": "Reasons for additional provision or reversal of provision for devaluation of inventory:",
+        "Hs": "增提或转回存货跌价损失准备的原因：",
+        "Ht": "增提或轉回存貨跌價損失準備之原因："
+    },
+    {
+        "Vietnamese": "Cây trồng theo mùa vụ hoặc lấy sản phẩm một lần",
+        "E": "Seasonal crops or crops for one-time products",
+        "Hs": "季节性或一次性收获的作物",
+        "Ht": "季節性或一次性收穫之作物"
+    },
+    {
+        "Vietnamese": "Súc vật cho sản phẩm định kỳ chưa đạt đến giai đoạn trưởng thành",
+        "E": "Livestock for periodic products at the immature stage",
+        "Hs": "定期产出的牲畜（未成熟阶段）",
+        "Ht": "定期產出之牲畜（未成熟階段）"
+    },
+    {
+        "Vietnamese": "Tình hình tăng giảm tổn thất tài sản sinh học ngắn hạn:",
+        "E": "Increases and decreases in impairment of short-term biological assets:",
+        "Hs": "短期生物资产减值增减情况：",
+        "Ht": "短期生物資產減值增減情況："
+    },
+    {
+        "Vietnamese": "Chi phí về thuê cơ sở hạ tầng, thuê hoạt động tài sản cố định",
+        "E": "Expenses for infrastructure lease and operating lease of fixed assets",
+        "Hs": "基础设施租赁及营业租赁固定资产的费用",
+        "Ht": "基礎設施租賃及營業租賃固定資產之費用"
+    },
+    {
+        "Vietnamese": "Các khoản khác (nêu chi tiết nếu có giá trị lớn)",
+        "E": "Others (provide details if of significant value)",
+        "Hs": "其他（金额重大者应列明细）",
+        "Ht": "其他（金額重大者應列明細）"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải thu dài hạn của khách hàng là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of long-term trade accounts receivable from related parties are presented in Note VIII.2.",
+        "Hs": "关联方长期销货应收帐款明细列示于附注VIII.2。",
+        "Ht": "關聯方長期銷貨應收帳款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản trả trước cho người bán dài hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of long-term advances to suppliers who are related parties are presented in Note VIII.2.",
+        "Hs": "关联方长期预付货款明细列示于附注VIII.2。",
+        "Ht": "關聯方長期預付貨款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết dự phòng phải thu dài hạn khó đòi:",
+        "E": "Details of provision for long-term doubtful debts:",
+        "Hs": "长期坏帐准备（备抵呆帐）明细：",
+        "Ht": "長期壞帳準備（備抵呆帳）明細："
+    },
+    {
+        "Vietnamese": "Tài sản sinh học khác, trừ súc vật cho sản phẩm định kỳ đạt đến giai đoạn trưởng thành",
+        "E": "Other biological assets, excluding livestock for periodic products at the mature stage",
+        "Hs": "其他生物资产（不包括成熟阶段的定期产出牲畜）",
+        "Ht": "其他生物資產（不包括成熟階段之定期產出牲畜）"
+    },
+    {
+        "Vietnamese": "Tình hình tăng giảm dự phòng tổn thất tài sản sinh học dài hạn:",
+        "E": "Increases and decreases in provision for impairment of long-term biological assets:",
+        "Hs": "长期生物资产减值准备增减情况：",
+        "Ht": "長期生物資產減值準備增減情況："
+    },
+    {
+        "Vietnamese": "Giá trị còn lại cuối kỳ của bất động sản đầu tư đã dùng để thế chấp, cầm cố đảm bảo cho các khoản vay",
+        "E": "Carrying amount at the end of the period of investment property pledged and mortgaged for the borrowings",
+        "Hs": "期末作为贷款抵押、质押保证的投资性不动产剩余价值",
+        "Ht": "期末作為貸款抵押、質押保證之投資性不動產剩餘價值"
+    },
+    {
+        "Vietnamese": "Nguyên giá tài bất động sản đầu tư đã khấu hao hết nhưng vẫn cho thuê hoặc nắm giữ chờ tăng giá:",
+        "E": "Cost of investment property fully depreciated but still leased out or held for capital appreciation:",
+        "Hs": "已折旧完而仍出租或持有待升值的投资性不动产原始成本：",
+        "Ht": "已折舊完而仍出租或持有待升值之投資性不動產原始成本："
+    },
+    {
+        "Vietnamese": "Tổn thất do suy giảm giá trị của bất động sản đầu tư:",
+        "E": "Impairment losses of investment property:",
+        "Hs": "投资性不动产减值损失：",
+        "Ht": "投資性不動產減值損失："
+    },
+    {
+        "Vietnamese": "Các giao dịch trọng yếu giữa Công ty và công ty con trong kỳ được trình bày tại thuyết minh VIII.2.",
+        "E": "Significant transactions between the Company and its subsidiaries during the period are presented in Note VIII.2.",
+        "Hs": "本期公司与子公司之间的重大交易列示于附注VIII.2。",
+        "Ht": "本期公司與子公司之間之重大交易列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Các giao dịch trọng yếu giữa Công ty và công ty liên doanh, liên kết trong kỳ được trình bày tại thuyết minh VIII.2.",
+        "E": "Significant transactions between the Company and its joint ventures and associates during the period are presented in Note VIII.2.",
+        "Hs": "本期公司与合资企业及关联企业之间的重大交易列示于附注VIII.2。",
+        "Ht": "本期公司與合資企業及關聯企業之間之重大交易列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi phí trả trước tiền thuê tài sản cho nhiều kỳ",
+        "E": "Prepaid asset rental expenses for multiple periods",
+        "Hs": "多期资产租金预付费用",
+        "Ht": "多期資產租金預付費用"
+    },
+    {
+        "Vietnamese": "Tài sản thuế thu nhập hoãn lại liên quan đến khoản chênh lệch tạm thời được khấu trừ",
+        "E": "Deferred income tax assets relating to deductible temporary differences",
+        "Hs": "与可减除暂时性差异相关的递延所得税资产",
+        "Ht": "與可減除暫時性差異相關之遞延所得稅資產"
+    },
+    {
+        "Vietnamese": "Tài sản thuế thu nhập hoãn lại liên quan đến khoản lỗ tính thuế chưa sử dụng",
+        "E": "Deferred income tax assets relating to unused tax losses",
+        "Hs": "与未使用的可结转亏损相关的递延所得税资产",
+        "Ht": "與未使用之可結轉虧損相關之遞延所得稅資產"
+    },
+    {
+        "Vietnamese": "Tài sản thuế thu nhập hoãn lại liên quan đến khoản ưu đãi tính thuế chưa sử dụng",
+        "E": "Deferred income tax assets relating to unused tax incentives",
+        "Hs": "与未使用的税收优惠相关的递延所得税资产",
+        "Ht": "與未使用之稅收優惠相關之遞延所得稅資產"
+    },
+    {
+        "Vietnamese": "Số bù trừ với thuế thu nhập hoãn lại phải trả",
+        "E": "Amount offset against deferred income tax liabilities",
+        "Hs": "与递延所得税负债抵销的金额",
+        "Ht": "與遞延所得稅負債抵銷之金額"
+    },
+    {
+        "Vietnamese": "Chi phí thuế thu nhập doanh nghiệp bổ sung theo quy định về thuế tối thiểu toàn cầu",
+        "E": "Top-up corporate income tax expense under the global minimum tax regulations",
+        "Hs": "补充企业所得税费用（依全球最低税规定）",
+        "Ht": "補充企業所得稅費用（依全球最低稅規定）"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải trả người bán ngắn hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of short-term trade accounts payable to related parties are presented in Note VIII.2.",
+        "Hs": "关联方短期应付帐款明细列示于附注VIII.2。",
+        "Ht": "關聯方短期應付帳款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản người mua trả tiền trước ngắn hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of short-term advances from customers who are related parties are presented in Note VIII.2.",
+        "Hs": "向关联方客户预收的短期款项明细列示于附注VIII.2。",
+        "Ht": "向關聯方客戶預收之短期款項明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Đơn vị hợp thành chịu trách nhiệm kê khai:",
+        "E": "Constituent entity responsible for filing:",
+        "Hs": "负责申报的成员实体：",
+        "Ht": "負責申報之成員實體："
+    },
+    {
+        "Vietnamese": "Đơn vị hợp thành không chịu trách nhiệm kê khai:",
+        "E": "Constituent entity not responsible for filing:",
+        "Hs": "不负责申报的成员实体：",
+        "Ht": "不負責申報之成員實體："
+    },
+    {
+        "Vietnamese": "Tiêu thức phân bổ nghĩa vụ thuế của đơn vị hợp thành: đơn vị hợp thành khác trách nhiệm kê khai chịu 100% thuế bổ sung.",
+        "E": "Basis for allocating the tax obligation among constituent entities: the other constituent entity responsible for filing bears 100% of the top-up tax.",
+        "Hs": "成员实体税务义务分摊标准：负责申报的其他成员实体承担100%补充税。",
+        "Ht": "成員實體稅務義務分攤標準：負責申報之其他成員實體承擔100%補充稅。"
+    },
+    {
+        "Vietnamese": "Đơn vị hợp thành khác không chịu trách nhiệm kê khai:",
+        "E": "Other constituent entity not responsible for filing:",
+        "Hs": "不负责申报的其他成员实体：",
+        "Ht": "不負責申報之其他成員實體："
+    },
+    {
+        "Vietnamese": "Tiêu thức phân bổ nghĩa vụ thuế của đơn vị hợp thành:",
+        "E": "Basis for allocating the tax obligation among constituent entities:",
+        "Hs": "成员实体税务义务分摊标准：",
+        "Ht": "成員實體稅務義務分攤標準："
+    },
+    {
+        "Vietnamese": "Các khoản phải trả do mượn tài sản phi tiền tệ",
+        "E": "Payables arising from borrowing non-monetary assets",
+        "Hs": "因借用非货币性资产而产生的应付款项",
+        "Ht": "因借用非貨幣性資產而產生之應付款項"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải trả ngắn hạn khác là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of other short-term payables to related parties are presented in Note VIII.2.",
+        "Hs": "关联方其他短期应付款明细列示于附注VIII.2。",
+        "Ht": "關聯方其他短期應付款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản vay và nợ thuê tài chính ngắn hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of short-term borrowings and finance lease obligations from related parties are presented in Note VIII.2.",
+        "Hs": "关联方短期借款及融资租赁负债明细列示于附注VIII.2。",
+        "Ht": "關聯方短期借款及融資租賃負債明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Nợ dài hạn đến hạn trả dưới hình thức thuê tài chính:",
+        "E": "Long-term finance lease obligations due for settlement:",
+        "Hs": "到期的长期融资租赁负债：",
+        "Ht": "到期之長期融資租賃負債："
+    },
+    {
+        "Vietnamese": "Số vay và nợ thuê tài chính quá hạn chưa thanh toán",
+        "E": "Overdue unpaid borrowings and finance lease obligations",
+        "Hs": "逾期未偿还的借款及融资租赁负债",
+        "Ht": "逾期未償還之借款及融資租賃負債"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản vay và nợ thuê tài chính dài hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of long-term borrowings and finance lease obligations from related parties are presented in Note VIII.2.",
+        "Hs": "关联方长期借款及融资租赁负债明细列示于附注VIII.2。",
+        "Ht": "關聯方長期借款及融資租賃負債明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải trả người bán dài hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of long-term trade accounts payable to related parties are presented in Note VIII.2.",
+        "Hs": "关联方长期应付帐款明细列示于附注VIII.2。",
+        "Ht": "關聯方長期應付帳款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản người mua trả tiền trước dài hạn là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of long-term advances from customers who are related parties are presented in Note VIII.2.",
+        "Hs": "向关联方客户预收的长期款项明细列示于附注VIII.2。",
+        "Ht": "向關聯方客戶預收之長期款項明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Chi tiết khoản phải trả dài hạn khác là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of other long-term payables to related parties are presented in Note VIII.2.",
+        "Hs": "关联方其他长期应付款明细列示于附注VIII.2。",
+        "Ht": "關聯方其他長期應付款明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập hoàn lại phải trả phát sinh từ các khoản chênh lệch tạm thời chịu thuế",
+        "E": "Deferred income tax liabilities arising from taxable temporary differences",
+        "Hs": "可课税暂时性差异产生的递延所得税负债",
+        "Ht": "可課稅暫時性差異產生之遞延所得稅負債"
+    },
+    {
+        "Vietnamese": "Số bù trừ với tài sản thuế thu nhập hoãn lại",
+        "E": "Amount offset against deferred income tax assets",
+        "Hs": "与递延所得税资产抵销的金额",
+        "Ht": "與遞延所得稅資產抵銷之金額"
+    },
+    {
+        "Vietnamese": "Chia lợi nhuận cho thành viên góp vốn",
+        "E": "Dividends paid to capital contributing members",
+        "Hs": "保留盈余分派予出资成员",
+        "Ht": "保留盈餘分派予出資成員"
+    },
+    {
+        "Vietnamese": "Doanh thu bán, thanh lý bất động sản đầu tư",
+        "E": "Revenue from sale and disposal of investment property",
+        "Hs": "投资性不动产出售、处置收入",
+        "Ht": "投資性不動產出售、處分收入"
+    },
+    {
+        "Vietnamese": "Chi phí nhượng bán, thanh lý bất động sản đầu tư",
+        "E": "Expenses for transfer and disposal of investment property",
+        "Hs": "投资性不动产转让、处置费用",
+        "Ht": "投資性不動產轉讓、處分費用"
+    },
+    {
+        "Vietnamese": "Chi phí thuế thu nhập doanh nghiệp bổ sung theo cơ chế QDMTT (Thuế tối thiểu toàn cầu)",
+        "E": "Top-up corporate income tax expense under the QDMTT mechanism (Global minimum tax)",
+        "Hs": "依QDMTT机制的补充企业所得税费用（全球最低税）",
+        "Ht": "依QDMTT機制之補充企業所得稅費用（全球最低稅）"
+    },
+    {
+        "Vietnamese": "Lợi nhuận phân bổ cho cổ đông sở hữu cổ phiếu phổ thông (VND)",
+        "E": "Profit allocated to shareholders holding ordinary shares (VND)",
+        "Hs": "归属于普通股股东的利润（VND）",
+        "Ht": "歸屬於普通股股東之利潤（VND）"
+    },
+    {
+        "Vietnamese": "Lợi nhuận sau thuế thuộc về cổ đông sở hữu cổ phiếu phổ thông (VND)",
+        "E": "Profit after tax attributable to shareholders holding ordinary shares (VND)",
+        "Hs": "归属于普通股股东的税后利润（VND）",
+        "Ht": "歸屬於普通股股東之稅後利潤（VND）"
+    },
+    {
+        "Vietnamese": "Số lượng cổ phiếu phổ thông đang lưu hành bình quân trong năm",
+        "E": "Weighted mean number of ordinary shares in circulation during the year",
+        "Hs": "本年度流通在外的普通股加权平均股数",
+        "Ht": "本年度流通在外之普通股加權平均股數"
+    },
+    {
+        "Vietnamese": "Số lượng cổ phiếu bình quân lưu hành đã được điều chỉnh do ảnh hưởng pha loãng trong năm",
+        "E": "Weighted mean number of shares in circulation adjusted for dilutive effects during the year",
+        "Hs": "经稀释影响调整后的本年度流通在外股份加权平均股数",
+        "Ht": "經稀釋影響調整後之本年度流通在外股份加權平均股數"
+    },
+    {
+        "Vietnamese": "Công ty áp dụng Chế độ kế toán doanh nghiệp Việt Nam ban hành theo Thông tư số 99/2025/TT-BTC ngày 27 tháng 10 năm 2025 của Bộ Tài chính.",
+        "E": "The Company has applied the Vietnamese Enterprise Accounting System in accordance with Circular No. 99/2025/TT-BTC dated October 27, 2025 issued by the Ministry of Finance.",
+        "Hs": "公司采用财政部2025年10月27日发布的《第99/2025/TT-BTC号公告》中的越南企业会计制度。",
+        "Ht": "公司採用財政部2025年10月27日發布之《第99/2025/TT-BTC號公告》中之越南企業會計制度。"
+    },
+    {
+        "Vietnamese": "Báo cáo tài chính được lập và trình bày theo nguyên tắc giá gốc, phù hợp với Chuẩn mực kế toán Việt Nam và Chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp luật có liên quan.",
+        "E": "The financial statements have been prepared and presented under the historical cost convention and in accordance with Vietnamese Accounting Standards, Vietnamese Enterprise Accounting System and relevant legal regulations.",
+        "Hs": "财务报表依照原始成本原则编制及列报，符合越南会计准则、越南企业会计制度及相关法律规定。",
+        "Ht": "財務報表依照原始成本原則編製及列報，符合越南會計準則、越南企業會計制度及相關法律規定。"
+    },
+    {
+        "Vietnamese": "Báo cáo tài chính được lập và trình bày theo nguyên tắc giá gốc, ngoại trừ các khoản mục được ghi nhận theo cơ sở đo lường khác phù hợp với quy định hiện hành. Báo cáo tài chính được lập và trình bày phù hợp với các Chuẩn mực kế toán Việt Nam, Chế độ kế toán doanh nghiệp Việt Nam và các quy định pháp luật có liên quan.",
+        "E": "The financial statements have been prepared and presented under the historical cost convention, except for items recognized on other measurement bases in accordance with prevailing regulations. The financial statements have been prepared and presented in accordance with Vietnamese Accounting Standards, Vietnamese Enterprise Accounting System and relevant legal regulations.",
+        "Hs": "财务报表依照原始成本原则编制及列报，但依现行规定以其他计量基础认列的项目除外。财务报表的编制及列报符合越南会计准则、越南企业会计制度及相关法律规定。",
+        "Ht": "財務報表依照原始成本原則編製及列報，但依現行規定以其他計量基礎認列之項目除外。財務報表之編製及列報符合越南會計準則、越南企業會計制度及相關法律規定。"
+    },
+    {
+        "Vietnamese": "Thông tư số 99/2025/TT-BTC có hiệu lực thi hành kể từ ngày 01 tháng 01 năm 2026 và áp dụng cho các kỳ kế toán năm bắt đầu từ hoặc sau ngày 01 tháng 01 năm 2026. Theo đó, Công ty thực hiện phân loại lại một số chỉ tiêu trên Báo cáo tài chính cho phù hợp với các quy định của Thông tư số 99/2025/TT-BTC liên quan đến việc trình bày Báo cáo tài chính. Các khác biệt trọng yếu khác (nếu có) được thuyết minh tại các khoản mục tương ứng.",
+        "E": "Circular No. 99/2025/TT-BTC takes effect from January 01, 2026 and applies to annual accounting periods beginning on or after January 01, 2026. Accordingly, the Company has reclassified certain items in the financial statements in accordance with the provisions of Circular No. 99/2025/TT-BTC relating to the presentation of financial statements. Other material differences (if any) are disclosed in the respective items.",
+        "Hs": "《第99/2025/TT-BTC号公告》自2026年01月01日起施行，适用于自2026年01月01日或以后开始的会计年度。据此，公司已依《第99/2025/TT-BTC号公告》有关财务报表列报的规定，对财务报表中若干项目进行重分类。其他重大差异（若有）已于相应项目中说明。",
+        "Ht": "《第99/2025/TT-BTC號公告》自2026年01月01日起施行，適用於自2026年01月01日或以後開始之會計年度。據此，公司已依《第99/2025/TT-BTC號公告》有關財務報表列報之規定，對財務報表中若干項目進行重分類。其他重大差異（若有）已於相應項目中說明。"
+    },
+    {
+        "Vietnamese": "Nguyên tắc chuyển đổi Báo cáo tài chính lập bằng ngoại tệ sang Đồng Việt Nam; Ảnh hưởng (nếu có) do việc chuyển đổi Báo cáo tài chính từ ngoại tệ sang Đồng Việt Nam",
+        "E": "Method of converting the financial statements prepared in foreign currencies into Vietnamese Dongs; Effects (if any) of converting the financial statements from foreign currencies into Vietnamese Dongs",
+        "Hs": "外币财务报表折算为越南盾的原则；外币财务报表折算为越南盾的影响（若有）",
+        "Ht": "外幣財務報表折算為越盾之原則；外幣財務報表折算為越盾之影響（若有）"
+    },
+    {
+        "Vietnamese": "Vốn chủ sở hữu (vốn góp của chủ sở hữu, thặng dư vốn, vốn khác của chủ sở hữu và quyền chọn chuyển đổi trái phiếu) được quy đổi ra VND theo tỷ giá giao dịch thực tế tại ngày góp vốn;",
+        "E": "Owner’s equity (owner’s capital, capital surplus, owner’s other capital and conversion options on bond) is converted into VND at the actual transaction exchange rate at the date of capital contribution;",
+        "Hs": "所有者或股东权益（所有者（股东）投资资金、资本溢价、所有者（股东）的其他资金及债券可转换选择权）按照出资入股当日的实际交易汇率折算为越南盾；",
+        "Ht": "所有者或股東權益（所有者（股東）投資資金、資本溢價、所有者（股東）之其他資金及債券可轉換選擇權）按照出資入股當日之實際交易匯率折算為越南盾；"
+    },
+    {
+        "Vietnamese": "Vốn chủ sở hữu được quy đổi ra VND theo tỷ giá giao dịch thực tế tại ngày góp vốn;",
+        "E": "Owner’s equity is converted into VND at the actual transaction exchange rate at the date of capital contribution;",
+        "Hs": "所有者权益按照出资当日的实际交易汇率折算为越南盾；",
+        "Ht": "所有者權益按照出資當日之實際交易匯率折算為越南盾；"
+    },
+    {
+        "Vietnamese": "Lợi nhuận sau thuế chưa phân phối và các quỹ trích từ lợi nhuận sau thuế chưa phân phối phát sinh trong từng kỳ được quy đổi ra VND bằng cách tính toán theo các khoản mục của Báo cáo kết quả hoạt động kinh doanh. Lợi nhuận sau thuế chưa phân phối còn lại được quy đổi ra VND theo tỷ giá ghi sổ của khoản mục lợi nhuận sau thuế chưa phân phối;",
+        "E": "Retained earnings and funds appropriated from retained earnings arising in each period are converted into VND by calculation based on the items of the Income statement. The remaining retained earnings are converted into VND at the book exchange rate of the retained earnings item;",
+        "Hs": "各期产生的保留盈余及从保留盈余提拨的各项基金按照利润表中的各项目计算折算为越南盾。剩余保留盈余按照保留盈余项目的帐面汇率折算为越南盾；",
+        "Ht": "各期產生之保留盈餘及從保留盈餘提撥之各項基金按照損益表中之各項目計算折算為越南盾。剩餘保留盈餘按照保留盈餘項目之帳面匯率折算為越南盾；"
+    },
+    {
+        "Vietnamese": "Các nghiệp vụ phát sinh trong kỳ không phải là VND được quy đổi sang VND theo tỷ giá giao dịch thực tế tại ngày giao dịch. Tỷ giá giao dịch thực tế là tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi Công ty thường xuyên có giao dịch. Riêng đối với giao dịch mua, bán ngoại tệ, tỷ giá giao dịch thực tế là tỷ giá được quy định trong hợp đồng mua, bán ngoại tệ giữa Công ty và ngân hàng thương mại.",
+        "E": "Transactions arising during the period in currencies other than VND are translated into VND at the actual transaction exchange rate at the transaction date. The actual transaction exchange rate is the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions. For foreign currency purchase and sale transactions, the actual transaction exchange rate is the rate stipulated in the foreign currency purchase and sale contract between the Company and the commercial bank.",
+        "Hs": "本期非以越南盾计价的交易，按照交易当日的实际交易汇率折算为越南盾。实际交易汇率为公司经常交易往来的商业银行的平均转账买卖汇率。外币买卖交易的实际交易汇率为公司与商业银行签订的外币买卖合同中规定的汇率。",
+        "Ht": "本期非以越南盾計價之交易，按照交易當日之實際交易匯率折算為越南盾。實際交易匯率為公司經常交易往來之商業銀行之平均轉帳買賣匯率。外幣買賣交易之實際交易匯率為公司與商業銀行簽訂之外幣買賣合約中規定之匯率。"
+    },
+    {
+        "Vietnamese": "Các nghiệp vụ phát sinh trong kỳ không phải là USD được quy đổi sang USD theo tỷ giá giao dịch thực tế tại ngày giao dịch. Tỷ giá giao dịch thực tế là tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi Công ty thường xuyên có giao dịch. Riêng đối với giao dịch mua, bán ngoại tệ, tỷ giá giao dịch thực tế là tỷ giá được quy định trong hợp đồng mua, bán ngoại tệ giữa Công ty và ngân hàng thương mại.",
+        "E": "Transactions arising during the period in currencies other than USD are translated into USD at the actual transaction exchange rate at the transaction date. The actual transaction exchange rate is the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions. For foreign currency purchase and sale transactions, the actual transaction exchange rate is the rate stipulated in the foreign currency purchase and sale contract between the Company and the commercial bank.",
+        "Hs": "本期非以美元计价的交易，按照交易当日的实际交易汇率折算为美元。实际交易汇率为公司经常交易往来的商业银行的平均转账买卖汇率。外币买卖交易的实际交易汇率为公司与商业银行签订的外币买卖合同中规定的汇率。",
+        "Ht": "本期非以美元計價之交易，按照交易當日之實際交易匯率折算為美元。實際交易匯率為公司經常交易往來之商業銀行之平均轉帳買賣匯率。外幣買賣交易之實際交易匯率為公司與商業銀行簽訂之外幣買賣合約中規定之匯率。"
+    },
+    {
+        "Vietnamese": "Tại ngày lập Báo cáo tình hình tài chính, các khoản mục tiền tệ có gốc ngoại tệ được đánh giá lại theo tỷ giá giao dịch thực tế. Tỷ giá giao dịch thực tế được xác định như sau:",
+        "E": "At the date of preparing the Statement of financial position, monetary items denominated in foreign currencies are revalued at the actual transaction exchange rate. The actual transaction exchange rate is determined as follows:",
+        "Hs": "于财务状况表编制日，以外币计价的货币性项目按照实际交易汇率进行重估。实际交易汇率的确定原则如下：",
+        "Ht": "於財務狀況表編製日，以外幣計價之貨幣性項目按照實際交易匯率進行重估。實際交易匯率之確定原則如下："
+    },
+    {
+        "Vietnamese": "Đối với các khoản mục tiền tệ có gốc ngoại tệ: áp dụng tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi Công ty thường xuyên có giao dịch;",
+        "E": "For monetary items denominated in foreign currencies: the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions is applied;",
+        "Hs": "外币货币性项目：采用公司经常交易往来的商业银行的平均转账买卖汇率；",
+        "Ht": "外幣貨幣性項目：採用公司經常交易往來之商業銀行之平均轉帳買賣匯率；"
+    },
+    {
+        "Vietnamese": "Đối với tiền gửi không kỳ hạn bằng ngoại tệ: áp dụng tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi Công ty mở tài khoản tiền gửi không kỳ hạn;",
+        "E": "For foreign currency demand deposits: the average of the buying and selling transfer exchange rates of the commercial bank where the Company opens the demand deposit account is applied;",
+        "Hs": "外币活期存款：采用公司开立活期存款账户的商业银行的平均转账买卖汇率；",
+        "Ht": "外幣活期存款：採用公司開立活期存款帳戶之商業銀行之平均轉帳買賣匯率；"
+    },
+    {
+        "Vietnamese": "Đối với phần giá trị khoản nợ phải thu có gốc ngoại tệ đã được trích lập dự phòng nợ phải thu khó đòi: không thực hiện đánh giá lại.",
+        "E": "For the portion of receivables denominated in foreign currencies for which a provision for doubtful debts has been made: no revaluation is performed.",
+        "Hs": "已计提坏帐准备（备抵呆账）的外币应收款部分：不进行重估。",
+        "Ht": "已提列壞帳準備（備抵呆帳）之外幣應收款部分：不進行重估。"
+    },
+    {
+        "Vietnamese": "Các nghiệp vụ phát sinh trong kỳ không phải là VND được quy đổi sang VND theo tỷ giá giao dịch thực tế là tỷ giá xấp xỉ với tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi doanh nghiệp thường xuyên có giao dịch. Tỷ giá xấp xỉ chênh lệch không vượt quá +/-1% so với tỷ giá mua bán chuyển khoản trung bình. Riêng đối với giao dịch mua, bán ngoại tệ, tỷ giá giao dịch thực tế là tỷ giá được quy định trong hợp đồng mua, bán ngoại tệ giữa Công ty và ngân hàng thương mại.",
+        "E": "Transactions arising during the period in currencies other than VND are translated into VND at the actual transaction exchange rate, being a rate that approximates the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions. The approximate exchange rate shall not differ by more than +/-1% from the average of the buying and selling transfer exchange rates. For foreign currency purchase and sale transactions, the actual transaction exchange rate is the rate stipulated in the foreign currency purchase and sale contract between the Company and the commercial bank.",
+        "Hs": "本期非以越南盾计价的交易，按照实际交易汇率折算为越南盾，该实际交易汇率为与公司经常交易往来的商业银行的平均转账买卖汇率近似的汇率。近似汇率与平均转账买卖汇率的相差幅度不超过+/-1%。外币买卖交易的实际交易汇率为公司与商业银行签订的外币买卖合同中规定的汇率。",
+        "Ht": "本期非以越南盾計價之交易，按照實際交易匯率折算為越南盾，該實際交易匯率為與公司經常交易往來之商業銀行之平均轉帳買賣匯率近似之匯率。近似匯率與平均轉帳買賣匯率之相差幅度不超過+/-1%。外幣買賣交易之實際交易匯率為公司與商業銀行簽訂之外幣買賣合約中規定之匯率。"
+    },
+    {
+        "Vietnamese": "Các nghiệp vụ phát sinh trong kỳ không phải là USD được quy đổi sang USD theo tỷ giá giao dịch thực tế là tỷ giá xấp xỉ với tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi doanh nghiệp thường xuyên có giao dịch. Tỷ giá xấp xỉ chênh lệch không vượt quá +/-1% so với tỷ giá mua bán chuyển khoản trung bình. Riêng đối với giao dịch mua, bán ngoại tệ, tỷ giá giao dịch thực tế là tỷ giá được quy định trong hợp đồng mua, bán ngoại tệ giữa Công ty và ngân hàng thương mại.",
+        "E": "Transactions arising during the period in currencies other than USD are translated into USD at the actual transaction exchange rate, being a rate that approximates the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions. The approximate exchange rate shall not differ by more than +/-1% from the average of the buying and selling transfer exchange rates. For foreign currency purchase and sale transactions, the actual transaction exchange rate is the rate stipulated in the foreign currency purchase and sale contract between the Company and the commercial bank.",
+        "Hs": "本期非以美元计价的交易，按照实际交易汇率折算为美元，该实际交易汇率为与公司经常交易往来的商业银行的平均转账买卖汇率近似的汇率。近似汇率与平均转账买卖汇率的相差幅度不超过+/-1%。外币买卖交易的实际交易汇率为公司与商业银行签订的外币买卖合同中规定的汇率。",
+        "Ht": "本期非以美元計價之交易，按照實際交易匯率折算為美元，該實際交易匯率為與公司經常交易往來之商業銀行之平均轉帳買賣匯率近似之匯率。近似匯率與平均轉帳買賣匯率之相差幅度不超過+/-1%。外幣買賣交易之實際交易匯率為公司與商業銀行簽訂之外幣買賣合約中規定之匯率。"
+    },
+    {
+        "Vietnamese": "Khi lập Báo cáo tình hình tài chính, Công ty sử dụng tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi doanh nghiệp thường xuyên có giao dịch để đánh giá lại các khoản mục tiền tệ có gốc ngoại tệ tại thời điểm kết thúc kỳ kế toán. Riêng tiền gửi không kỳ hạn bằng ngoại tệ được đánh giá lại theo tỷ giá mua bán chuyển khoản trung bình của ngân hàng thương mại nơi Công ty mở tài khoản tiền gửi không kỳ hạn. Phần giá trị khoản nợ phải thu có gốc ngoại tệ đã được trích lập dự phòng nợ phải thu khó đòi không thực hiện đánh giá lại.",
+        "E": "When preparing the Statement of financial position, the Company uses the average of the buying and selling transfer exchange rates of the commercial bank where the Company regularly conducts transactions to revalue monetary items denominated in foreign currencies at the end of the accounting period. Foreign currency demand deposits are revalued at the average of the buying and selling transfer exchange rates of the commercial bank where the Company opens the demand deposit account. The portion of receivables denominated in foreign currencies for which a provision for doubtful debts has been made is not revalued.",
+        "Hs": "在编制财务状况表时，公司采用其经常交易往来的商业银行的平均转账买卖汇率，对会计期末以外币计价的货币性项目进行重估。外币活期存款按照公司开立活期存款账户的商业银行的平均转账买卖汇率进行重估。已计提坏帐准备（备抵呆账）的外币应收款部分不进行重估。",
+        "Ht": "在編製財務狀況表時，公司採用其經常交易往來之商業銀行之平均轉帳買賣匯率，對會計期末以外幣計價之貨幣性項目進行重估。外幣活期存款按照公司開立活期存款帳戶之商業銀行之平均轉帳買賣匯率進行重估。已提列壞帳準備（備抵呆帳）之外幣應收款部分不進行重估。"
+    },
+    {
+        "Vietnamese": "Tất cả các khoản chênh lệch tỷ giá hối đoái thực tế phát sinh trong kỳ và chênh lệch tỷ giá do đánh giá lại số dư các khoản mục tiền tệ có gốc ngoại tệ tại thời điểm lập Báo cáo tài chính được phản ánh trên Báo cáo kết quả hoạt động kinh doanh.",
+        "E": "All foreign exchange differences actually arising during the period and foreign exchange differences arising from the revaluation of balances of monetary items denominated in foreign currencies at the date of preparing the financial statements are reflected in the Income statement.",
+        "Hs": "本期实际发生的所有汇兑差额以及于财务报表编制日重估外币货币性项目余额所产生的汇兑差额，均列示在利润表中。",
+        "Ht": "本期實際發生之所有匯兌差額以及於財務報表編製日重估外幣貨幣性項目餘額所產生之匯兌差額，均列示於損益表中。"
+    },
+    {
+        "Vietnamese": "Các khoản tương đương tiền là các khoản đầu tư ngắn hạn có thời hạn thu hồi không quá ba tháng kể từ ngày đầu tư, có khả năng chuyển đổi dễ dàng thành một lượng tiền xác định, không có rủi ro trong việc chuyển đổi thành tiền tại thời điểm kết thúc kỳ kế toán và Công ty không bị hạn chế sử dụng.",
+        "E": "Cash equivalents are short-term investments with a recovery period not exceeding three months from the investment date, that are readily convertible to known amounts of cash, are not subject to any risk in conversion into cash at the end of the accounting period, and are not restricted from use by the Company.",
+        "Hs": "现金等价物是指自投资日起回收期限不超过三个月、易于转换为已知金额现金、于会计期末转换为现金时不存在风险且公司使用不受限制的短期投资。",
+        "Ht": "約當現金乃自投資日起回收期限不超過三個月、易於轉換為已知金額現金、於會計期末轉換為現金時不存在風險且公司使用不受限制之短期投資。"
+    },
+    {
+        "Vietnamese": "Chứng khoán kinh doanh được ghi nhận ban đầu theo giá trị hợp lý của khoản thanh toán tại thời điểm giao dịch. Chi phí mua chứng khoán kinh doanh, như chi phí môi giới, giao dịch, cung cấp thông tin, thuế và phí ngân hàng, được ghi nhận vào chi phí tài chính trong kỳ.",
+        "E": "Trading securities are initially recognized at the fair value of the consideration paid at the transaction date. Costs of purchasing trading securities, such as brokerage, transaction and information service fees, taxes and bank charges, are recognized in financial expenses for the period.",
+        "Hs": "交易性证券于交易时以所支付对价的公允价值进行原始认列。购买交易性证券的费用，如经纪、交易、信息提供费用、税费及银行手续费，列入当期财务费用。",
+        "Ht": "交易性證券於交易時以所支付對價之公允價值進行原始認列。購買交易性證券之費用，如經紀、交易、資訊提供費用、稅費及銀行手續費，列入當期財務費用。"
+    },
+    {
+        "Vietnamese": "Tại thời điểm kết thúc kỳ kế toán, khi giá trị thị trường của chứng khoán kinh doanh thấp hơn giá gốc, Công ty trích lập dự phòng tổn thất chứng khoán kinh doanh theo quy định. Khoản trích lập bổ sung hoặc hoàn nhập dự phòng được ghi nhận vào chi phí tài chính trong kỳ.",
+        "E": "At the end of the accounting period, when the market value of trading securities is lower than their cost, the Company makes a provision for impairment of trading securities in accordance with regulations. Additional provisions made or reversals of provisions are recognized in financial expenses for the period.",
+        "Hs": "于会计期末，若交易性证券的市场价值低于其原始成本，公司依规定计提交易性证券损失准备。补提或转回的准备金额列入当期财务费用。",
+        "Ht": "於會計期末，若交易性證券之市場價值低於其原始成本，公司依規定提列交易性證券損失準備。補提或迴轉之準備金額列入當期財務費用。"
+    },
+    {
+        "Vietnamese": "Các khoản đầu tư nắm giữ đến ngày đáo hạn được ghi nhận ban đầu theo giá gốc, bao gồm giá mua và các chi phí liên quan trực tiếp đến giao dịch mua.",
+        "E": "Held-to-maturity investments are initially recognized at cost, including the purchase price and costs directly attributable to the purchase transaction.",
+        "Hs": "持有至到期投资以原始成本认列，其成本包含购买价款及与购买交易直接相关的费用。",
+        "Ht": "持有至到期投資以原始成本認列，其成本包含購買價款及與購買交易直接相關之費用。"
+    },
+    {
+        "Vietnamese": "Tại thời điểm kết thúc kỳ kế toán, khi có dấu hiệu hoặc bằng chứng cho thấy một phần hoặc toàn bộ khoản đầu tư có khả năng không thu hồi được, Công ty trích lập dự phòng tổn thất đầu tư. Khoản trích lập bổ sung hoặc hoàn nhập dự phòng được ghi nhận vào chi phí tài chính trong kỳ.",
+        "E": "At the end of the accounting period, when there are indications or evidence that part or all of an investment may not be recoverable, the Company makes a provision for impairment of investments. Additional provisions made or reversals of provisions are recognized in financial expenses for the period.",
+        "Hs": "于会计期末，若有迹象或证据显示部分或全部投资可能无法收回，公司计提投资损失准备。补提或转回的准备金额列入当期财务费用。",
+        "Ht": "於會計期末，若有跡象或證據顯示部分或全部投資可能無法收回，公司提列投資損失準備。補提或迴轉之準備金額列入當期財務費用。"
+    },
+    {
+        "Vietnamese": "Các khoản đầu tư vào công ty con, công ty liên doanh và công ty liên kết được ghi nhận ban đầu theo giá gốc, bao gồm giá mua hoặc giá trị vốn góp và các chi phí liên quan trực tiếp đến việc đầu tư. Trường hợp đầu tư bằng tài sản phi tiền tệ, giá phí khoản đầu tư được xác định theo giá trị hợp lý của tài sản phi tiền tệ tại thời điểm phát sinh giao dịch.",
+        "E": "Investments in subsidiaries, joint ventures and associates are initially recognized at cost, including the purchase price or capital contribution value plus costs directly attributable to the investment. In case of investments made with non-monetary assets, the cost of the investment is determined at the fair value of the non-monetary assets at the transaction date.",
+        "Hs": "对子公司、合资企业及关联企业的投资以原始成本认列，其成本包含购买价款或出资金额加计与投资直接相关的费用。若以非货币性资产投资，则投资成本应以非货币性资产于交易发生时的公允价值确定。",
+        "Ht": "對子公司、合資企業及關聯企業之投資以原始成本認列，其成本包含購買價款或出資金額加計與投資直接相關之費用。若以非貨幣性資產投資，則投資成本應以非貨幣性資產於交易發生時之公允價值確定。"
+    },
+    {
+        "Vietnamese": "Khoản đầu tư được phân loại là đầu tư vào công ty con khi Công ty có quyền kiểm soát; là đầu tư vào công ty liên doanh khi Công ty có quyền đồng kiểm soát; và là đầu tư vào công ty liên kết khi Công ty có ảnh hưởng đáng kể đối với bên được đầu tư.",
+        "E": "An investment is classified as an investment in a subsidiary when the Company has control; as an investment in a joint venture when the Company has joint control; and as an investment in an associate when the Company has significant influence over the investee.",
+        "Hs": "若公司具有控制权，该投资归类为对子公司的投资；若公司具有共同控制权，归类为对合资企业的投资；若公司对被投资方具有重大影响，归类为对关联企业的投资。",
+        "Ht": "若公司具有控制權，該投資歸類為對子公司之投資；若公司具有共同控制權，歸類為對合資企業之投資；若公司對被投資方具有重大影響，歸類為對關聯企業之投資。"
+    },
+    {
+        "Vietnamese": "Cổ tức và lợi nhuận được chia từ các khoản đầu tư được ghi nhận theo chính sách doanh thu hoạt động tài chính của Công ty.",
+        "E": "Dividends and profits distributed from investments are recognized in accordance with the Company’s financial income policy.",
+        "Hs": "从投资获分的股利及利润按照公司财务收入的会计政策认列。",
+        "Ht": "從投資獲分之股利及利潤按照公司財務收入之會計政策認列。"
+    },
+    {
+        "Vietnamese": "Các khoản đầu tư này được ghi nhận ban đầu theo giá gốc, bao gồm giá mua hoặc khoản góp vốn và các chi phí liên quan trực tiếp đến hoạt động đầu tư. Sau ghi nhận ban đầu, khoản đầu tư được trình bày theo giá gốc trừ đi dự phòng tổn thất đầu tư, nếu có.",
+        "E": "These investments are initially recognized at cost, including the purchase price or capital contribution plus costs directly attributable to the investment activities. After initial recognition, the investments are presented at cost less provision for impairment of investments, if any.",
+        "Hs": "该等投资以原始成本认列，其成本包含购买价款或出资金额加计与投资活动直接相关的费用。在原始认列后，投资以原始成本减去投资损失准备（如有）后的金额列报。",
+        "Ht": "該等投資以原始成本認列，其成本包含購買價款或出資金額加計與投資活動直接相關之費用。在原始認列後，投資以原始成本減去投資損失準備（如有）後之金額列報。"
+    },
+    {
+        "Vietnamese": "Các khoản phải thu bao gồm các khoản phải thu của khách hàng và phải thu khác, được trình bày theo giá trị ghi sổ sau khi đã ghi giảm do các khoản dự phòng phải thu khó đòi.",
+        "E": "Receivables comprise trade accounts receivable and other receivables, and are presented at their carrying amount net of provisions for doubtful debts.",
+        "Hs": "应收帐款包含应收客户款项及其他应收款，且以冲减各项坏帐准备（备抵呆账）后的帐面价值列报。",
+        "Ht": "應收帳款包含應收客戶款項以及其他應收款，且以沖減各項壞帳準備（備抵呆帳）後之帳面價值列報。"
+    },
+    {
+        "Vietnamese": "Khi lập Báo cáo tài chính, Công ty căn cứ kỳ hạn còn lại của các khoản nợ phải thu (từ 12 tháng trở xuống hay trên 12 tháng kể từ thời điểm kết thúc kỳ kế toán) để trình bày là các khoản phải thu ngắn hạn hoặc dài hạn.",
+        "E": "When preparing the financial statements, the Company classifies receivables as short-term or long-term based on their remaining terms (12 months or less, or more than 12 months from the end of the accounting period).",
+        "Hs": "在编制财务报表时，公司根据应收款项的剩余期限（自会计期末起12个月以内或超过12个月）将其列报为短期或长期应收款项。",
+        "Ht": "在編製財務報表時，公司根據應收款項之剩餘期限（自會計期末起12個月以內或超過12個月）將其列報為短期或長期應收款項。"
+    },
+    {
+        "Vietnamese": "Khoản dự phòng phải thu khó đòi phản ánh giá trị tổn thất ước tính đối với các khoản phải thu đã quá hạn thanh toán từ sáu tháng trở lên hoặc chưa đến hạn nhưng có bằng chứng cho thấy một phần hoặc toàn bộ khoản phải thu có thể không thu hồi được. Mức dự phòng được xác định căn cứ vào thời gian quá hạn hoặc giá trị tổn thất ước tính. Trường hợp có bằng chứng đáng tin cậy hoặc phương pháp phù hợp hơn, Công ty xác định mức dự phòng căn cứ vào giá trị ước tính có thể thu hồi. Khoản dự phòng trích lập bổ sung hoặc hoàn nhập được ghi tăng hoặc ghi giảm chi phí quản lý doanh nghiệp trong kỳ.",
+        "E": "Provision for doubtful debts represents the estimated loss on receivables that are overdue for six months or more, or that are not yet due but for which there is evidence that part or all of the receivable may not be recoverable. The provision is determined based on the overdue period or the estimated loss. Where there is reliable evidence or a more appropriate method, the Company determines the provision based on the estimated recoverable amount. Additional provisions made or reversals of provisions are recorded as an increase or decrease in general and administration expenses for the period.",
+        "Hs": "坏帐准备（备抵呆账）反映对逾期六个月以上，或尚未到期但有证据显示部分或全部应收款项可能无法收回的应收款项的预计损失金额。准备金额根据逾期时间或预计损失金额确定。若有可靠证据或更适当的方法，公司根据预计可收回金额确定准备金额。补提或转回的准备金额增加或减少当期营业管理费用。",
+        "Ht": "壞帳準備（備抵呆帳）反映對逾期六個月以上，或尚未到期但有證據顯示部分或全部應收款項可能無法收回之應收款項之預計損失金額。準備金額根據逾期時間或預計損失金額確定。若有可靠證據或更適當之方法，公司根據預計可收回金額確定準備金額。補提或迴轉之準備金額增加或減少當期營業管理費用。"
+    },
+    {
+        "Vietnamese": "Số dự phòng giảm giá hàng tồn kho được lập trên cơ sở chênh lệch lớn hơn giữa giá gốc và giá trị thuần có thể thực hiện được của hàng tồn kho tại thời điểm kết thúc kỳ kế toán. Tăng hoặc giảm số dư dự phòng giảm giá hàng tồn kho được hạch toán vào giá vốn hàng bán trong kỳ.",
+        "E": "The provision for devaluation of inventory is made based on the excess of cost over the net realizable value of inventories at the end of the accounting period. Increases or decreases in the balance of the provision for devaluation of inventory are recorded in cost of sales for the period.",
+        "Hs": "存货跌价损失准备应以会计期末存货原始成本高于可变现净值的差额计提。存货跌价损失准备余额的增加或减少金额应列入当期销货成本。",
+        "Ht": "存貨跌價損失準備應以會計期末存貨原始成本高於可變現淨值之差額提列。存貨跌價損失準備餘額之增加或減少金額應列入當期銷貨成本。"
+    },
+    {
+        "Vietnamese": "Cây lâu năm cho sản phẩm định kỳ và súc vật làm việc không được ghi nhận là tài sản sinh học mà được kế toán là tài sản cố định hữu hình theo chính sách kế toán tài sản cố định hữu hình của Công ty. Sản phẩm chưa thu hoạch từ cây lâu năm cho sản phẩm định kỳ được ghi nhận là tài sản sinh học.",
+        "E": "Perennial plants for periodic products and working animals are not recognized as biological assets but are accounted for as tangible fixed assets in accordance with the Company’s accounting policy for tangible fixed assets. Unharvested produce of perennial plants for periodic products is recognized as biological assets.",
+        "Hs": "定期产出的多年生植物及役畜不认列为生物资产，而按照公司有形固定资产的会计政策作为有形固定资产核算。定期产出的多年生植物上尚未收获的产品认列为生物资产。",
+        "Ht": "定期產出之多年生植物及役畜不認列為生物資產，而按照公司有形固定資產之會計政策作為有形固定資產核算。定期產出之多年生植物上尚未收穫之產品認列為生物資產。"
+    },
+    {
+        "Vietnamese": "Giá gốc tài sản sinh học bao gồm toàn bộ chi phí mua, nuôi trồng, chăm sóc và các chi phí trực tiếp khác phát sinh để đưa tài sản đến trạng thái sẵn sàng tạo ra sản phẩm, thu hoạch hoặc thực hiện chức năng theo dự kiến của Công ty. Các chi phí không tạo ra hoặc không làm tăng lợi ích kinh tế trong tương lai của tài sản sinh học được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ.",
+        "E": "The cost of biological assets comprises all costs of purchase, raising and cultivation, care and other directly attributable costs incurred in bringing the assets to the condition ready to generate products, be harvested or perform the functions intended by the Company. Costs that do not generate or increase the future economic benefits of biological assets are recognized in production and business expenses for the period.",
+        "Hs": "生物资产的原始成本包含采购、养殖种植、照料费用以及为使资产达到可产出产品、可收获或可按公司预定用途发挥功能的状态而发生的其他直接费用。不能产生或增加生物资产未来经济利益的费用列入当期生产、营业费用。",
+        "Ht": "生物資產之原始成本包含採購、養殖種植、照料費用以及為使資產達到可產出產品、可收穫或可按公司預定用途發揮功能之狀態而發生之其他直接費用。不能產生或增加生物資產未來經濟利益之費用列入當期生產、營業費用。"
+    },
+    {
+        "Vietnamese": "Đối với súc vật nuôi cho sản phẩm định kỳ, Công ty bắt đầu trích khấu hao khi tài sản đạt giai đoạn trưởng thành, sẵn sàng tạo ra sản phẩm hoặc sinh ra tài sản sinh học mới. Khấu hao được tính theo phương pháp đường thẳng dựa trên thời gian hữu dụng ước tính, cụ thể như sau:",
+        "E": "For livestock for periodic products, the Company starts to depreciate the assets when they reach the mature stage and are ready to generate products or produce new biological assets. Depreciation is calculated using the straight-line method based on the estimated useful lives, specifically as follows:",
+        "Hs": "对于定期产出的牲畜，公司自资产达到成熟阶段、可产出产品或繁殖新生物资产时开始提列折旧。折旧按照估计耐用年限采用直线法计算，具体如下：",
+        "Ht": "對於定期產出之牲畜，公司自資產達到成熟階段、可產出產品或繁殖新生物資產時開始提列折舊。折舊按照估計耐用年限採用直線法計算，具體如下："
+    },
+    {
+        "Vietnamese": "Tại thời điểm kết thúc kỳ kế toán, Công ty trích lập dự phòng tổn thất tài sản sinh học khi có dấu hiệu hoặc bằng chứng cho thấy giá trị thuần có thể thực hiện được thấp hơn giá trị ghi sổ. Khoản trích lập bổ sung hoặc hoàn nhập dự phòng được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ theo bản chất của tài sản sinh học liên quan.",
+        "E": "At the end of the accounting period, the Company makes a provision for impairment of biological assets when there are indications or evidence that their net realizable value is lower than their carrying amount. Additional provisions made or reversals of provisions are recognized in production and business expenses for the period according to the nature of the related biological assets.",
+        "Hs": "于会计期末，若有迹象或证据显示生物资产的可变现净值低于其帐面价值，公司计提生物资产减值准备。补提或转回的准备金额按照相关生物资产的性质列入当期生产、营业费用。",
+        "Ht": "於會計期末，若有跡象或證據顯示生物資產之可變現淨值低於其帳面價值，公司提列生物資產減值準備。補提或迴轉之準備金額按照相關生物資產之性質列入當期生產、營業費用。"
+    },
+    {
+        "Vietnamese": "Chi phí chờ phân bổ bao gồm chi phí chờ phân bổ ngắn hạn và chi phí chờ phân bổ dài hạn, thể hiện các khoản chi phí thực tế đã phát sinh nhưng chưa tính hết vào chi phí trong kỳ phát sinh do các chi phí này liên quan đến nhiều kỳ hạch toán và được phân bổ vào chi phí theo thời gian mà lợi ích kinh tế do các khoản chi phí này mang lại.",
+        "E": "Deferred expenses comprise short-term and long-term deferred expenses, reflecting the actual costs incurred but not yet fully charged to the expenses of the period in which they are incurred, as those costs relate to many accounting periods and are allocated to expenses over the period in which the economic benefits associated with those costs are generated.",
+        "Hs": "待摊费用包含短期待摊费用和长期待摊费用，乃已实际发生，但因涉及多个会计期间而未全额列入发生当期费用，并应按其带来经济利益的期间摊入费用的支出。",
+        "Ht": "待攤費用包含短期待攤費用和長期待攤費用，乃已實際發生，但因涉及多個會計期間而未全額列入發生當期費用，並應按其帶來經濟利益之期間攤入費用之支出。"
+    },
+    {
+        "Vietnamese": "Khi tài sản cố định hữu hình được nhượng bán hay thanh lý, nguyên giá và giá trị hao mòn lũy kế được xóa sổ và lãi, lỗ phát sinh do nhượng bán hay thanh lý sau khi trừ các chi phí liên quan và giá trị còn lại của tài sản được ghi nhận vào thu nhập khác hoặc chi phí khác trong kỳ.",
+        "E": "In case of transfer or disposal of tangible fixed assets, the cost and accumulated depreciation are written off, and any profit or loss from the transfer or disposal, after deducting related expenses and the carrying amount of the assets, is recorded in other income or other expenses for the period.",
+        "Hs": "在有形固定资产出售或处置时，资产原始成本及累计折旧得以冲销，而出售或处置所产生的损益在扣除相关费用及资产折余价值后列入当期营业外收入或营业外支出。",
+        "Ht": "在有形固定資產出售或處分時，資產原始成本及累計折舊得以沖銷，而出售或處分所產生之損益在扣除相關費用及資產折餘價值後列入當期營業外收入或營業外支出。"
+    },
+    {
+        "Vietnamese": "Tài sản cố định thuê tài chính được trình bày trên Báo cáo tình hình tài chính theo nguyên giá trừ đi giá trị hao mòn lũy kế.",
+        "E": "Finance lease fixed assets are presented in the Statement of financial position at cost less accumulated depreciation.",
+        "Hs": "融资租赁固定资产在财务状况表中以原始成本减去累计折旧后的净值列报。",
+        "Ht": "融資租賃固定資產於財務狀況表中以原始成本減去累計折舊後之淨值列報。"
+    },
+    {
+        "Vietnamese": "Thuê tài sản được phân loại là thuê tài chính khi các điều khoản thuê chuyển giao phần lớn rủi ro và lợi ích gắn liền với quyền sở hữu tài sản cho bên thuê.",
+        "E": "Leases are classified as finance leases whenever the terms of the lease transfer substantially all the risks and rewards incidental to ownership of the assets to the lessee.",
+        "Hs": "在租赁条款将与资产所有权有关的大部分风险与利益转移给承租方时，该租赁归类为融资租赁。",
+        "Ht": "在租賃條款將與資產所有權有關之大部分風險與利益轉移給承租方時，該租賃歸類為融資租賃。"
+    },
+    {
+        "Vietnamese": "Tại thời điểm khởi đầu thuê, tài sản thuê tài chính được ghi nhận như tài sản của Công ty theo giá trị thấp hơn giữa giá trị hợp lý của tài sản thuê và giá trị hiện tại của khoản thanh toán tiền thuê tối thiểu. Nghĩa vụ nợ thuê tài chính tương ứng được ghi nhận là nợ phải trả.",
+        "E": "At the commencement of the lease term, assets held under finance leases are recognized as assets of the Company at the lower of the fair value of the leased assets and the present value of the minimum lease payments. The corresponding finance lease obligation is recognized as a liability.",
+        "Hs": "于租赁开始日，融资租赁资产按照租赁资产公允价值与最低租赁给付现值两者中较低者列为公司资产。相应的融资租赁负债列为负债。",
+        "Ht": "於租賃開始日，融資租賃資產按照租賃資產公允價值與最低租賃給付現值兩者中較低者列為公司資產。相應之融資租賃負債列為負債。"
+    },
+    {
+        "Vietnamese": "Khoản thanh toán tiền thuê được phân bổ thành phần nợ gốc và chi phí tài chính. Chi phí tài chính được ghi nhận vào Báo cáo kết quả hoạt động kinh doanh trong suốt thời hạn thuê trên cơ sở lãi suất định kỳ cố định áp dụng cho số dư nợ thuê tài chính còn lại.",
+        "E": "Lease payments are apportioned between the principal and finance charges. Finance charges are recognized in the Income statement over the lease term so as to produce a constant periodic rate of interest on the remaining balance of the finance lease obligations.",
+        "Hs": "租赁给付分成应付本金及融资费用。融资费用在租赁期间内列入利润表，且以剩余融资租赁负债余额乘以固定周期利率计算。",
+        "Ht": "租賃給付分成應付本金及融資費用。融資費用在租賃期間內列入損益表，且以剩餘融資租賃負債餘額乘以固定週期利率計算。"
+    },
+    {
+        "Vietnamese": "Tài sản thuê tài chính được khấu hao theo phương pháp đường thẳng dựa trên thời gian hữu dụng ước tính của tài sản cùng loại thuộc sở hữu của Công ty. Trường hợp không chắc chắn Công ty sẽ có quyền sở hữu tài sản khi hết hạn thuê, tài sản được khấu hao theo thời gian ngắn hơn giữa thời gian hữu dụng ước tính và thời hạn thuê.",
+        "E": "Assets held under finance leases are depreciated on a straight-line basis over the estimated useful lives of similar assets owned by the Company. Where it is uncertain that the Company will obtain ownership of the assets at the end of the lease term, the assets are depreciated over the shorter of the estimated useful life and the lease term.",
+        "Hs": "融资租赁资产按照归属于公司的同类资产的估计耐用年限采用直线法提列折旧。若不能确定公司是否在租赁期满后取得资产所有权，则应按照估计耐用年限及租赁期限两者中较短者提列折旧。",
+        "Ht": "融資租賃資產按照歸屬於公司的同類資產之估計耐用年限採用直線法提列折舊。若不能確定公司是否在租賃期滿後取得資產所有權，則應按照估計耐用年限及租賃期限兩者中較短者提列折舊。"
+    },
+    {
+        "Vietnamese": "Bất động sản đầu tư bao gồm quyền sử dụng đất, nhà hoặc một phần của nhà, hoặc cả nhà và đất, do Công ty nắm giữ nhằm mục đích thu lợi từ việc cho thuê hoạt động hoặc chờ tăng giá, hoặc cả hai, mà không phải để sử dụng cho hoạt động sản xuất, kinh doanh, cung cấp hàng hóa, dịch vụ, quản lý hoặc để bán trong kỳ hoạt động kinh doanh thông thường.",
+        "E": "Investment property comprises land use rights, buildings or parts of buildings, or both buildings and land, held by the Company to earn rentals under operating leases or for capital appreciation, or both, rather than for use in production or business, supply of goods or services, administrative purposes or sale in the ordinary course of business.",
+        "Hs": "投资性不动产包含公司为赚取经营租赁租金或资本增值，或两者兼有而持有的土地使用权、房屋或房屋的一部分，或房屋及土地，而非用于生产、营业、提供商品或劳务、管理或于正常营业过程中出售。",
+        "Ht": "投資性不動產包含公司為賺取營業租賃租金或資本增值，或兩者兼有而持有之土地使用權、房屋或房屋之一部分，或房屋及土地，而非用於生產、營業、提供商品或勞務、管理或於正常營業過程中出售。"
+    },
+    {
+        "Vietnamese": "Nguyên giá của bất động sản đầu tư là toàn bộ các chi phí (tiền hoặc tương đương tiền) mà doanh nghiệp bỏ ra hoặc giá trị hợp lý của các khoản khác đưa ra trao đổi để có được bất động sản đầu tư tính đến thời điểm mua hoặc xây dựng hoàn thành bất động sản đầu tư đó.",
+        "E": "The cost of investment property comprises all expenditures (in cash or cash equivalents) incurred by the enterprise or the fair value of other consideration given in exchange to acquire the investment property up to the date of purchase or completion of construction of that investment property.",
+        "Hs": "投资性不动产的原始成本是指企业为取得该投资性不动产，截至购买日或建造完成日所支付的全部费用（现金或现金等价物），或为交换而付出的其他对价的公允价值。",
+        "Ht": "投資性不動產之原始成本乃企業為取得該投資性不動產，截至購買日或建造完成日所支付之全部費用（現金或約當現金），或為交換而付出之其他對價之公允價值。"
+    },
+    {
+        "Vietnamese": "Các chi phí phát sinh sau ghi nhận ban đầu chỉ được ghi tăng nguyên giá bất động sản đầu tư khi chắc chắn làm tăng lợi ích kinh tế trong tương lai do sử dụng bất động sản đầu tư. Các chi phí không đáp ứng điều kiện này được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ.",
+        "E": "Expenditures incurred after initial recognition are only added to the cost of investment property when it is certain that they increase the future economic benefits from the use of the investment property. Expenditures that do not meet this condition are recognized in production and business expenses for the period.",
+        "Hs": "在原始认列后发生的费用，仅在确定能使投资性不动产因使用而带来的未来经济利益增加时，列为投资性不动产原始成本增加。不符合此条件的费用列入当期生产、营业费用。",
+        "Ht": "在原始認列後發生之費用，僅在確定能使投資性不動產因使用而帶來之未來經濟利益增加時，列為投資性不動產原始成本增加。不符合此條件之費用列入當期生產、營業費用。"
+    },
+    {
+        "Vietnamese": "Khấu hao bất động sản đầu tư được tính theo phương pháp đường thẳng dựa trên thời gian hữu dụng ước tính, cụ thể như sau:",
+        "E": "Investment property is depreciated using the straight-line method based on the estimated useful lives, specifically as follows:",
+        "Hs": "投资性不动产按照估计耐用年限采用直线法提列折旧，具体如下：",
+        "Ht": "投資性不動產按照估計耐用年限採用直線法提列折舊，具體如下："
+    },
+    {
+        "Vietnamese": "Công ty không trích khấu hao đối với bất động sản đầu tư nắm giữ chờ tăng giá (trừ trường hợp bất động sản đầu tư đang trong thời gian cho thuê).",
+        "E": "The Company does not depreciate investment property held for capital appreciation (except where the investment property is being leased out).",
+        "Hs": "公司对持有以待升值的投资性不动产不提列折旧（投资性不动产正处于出租期间的情况除外）。",
+        "Ht": "公司對持有以待升值之投資性不動產不提列折舊（投資性不動產正處於出租期間之情況除外）。"
+    },
+    {
+        "Vietnamese": "Phải trả cho người bán là các khoản phải trả mang tính chất thương mại phát sinh từ giao dịch mua hàng hóa, dịch vụ, tài sản của nhà cung cấp hoặc người bán (là đơn vị độc lập với người mua). Các khoản phải trả người bán được ghi nhận cho số tiền phải thanh toán trong tương lai liên quan đến hàng hóa, dịch vụ, tài sản hoặc các khoản đầu tư mà Công ty đã nhận từ nhà cung cấp, không phụ thuộc vào việc Công ty đã nhận được hóa đơn hay chưa.",
+        "E": "Trade accounts payable are payables of a commercial nature arising from the purchase of goods, services and assets from suppliers or sellers (being entities independent of the buyer). Trade accounts payable are recognized for amounts to be paid in the future in relation to goods, services, assets or investments received by the Company from suppliers, irrespective of whether the Company has received the invoices or not.",
+        "Hs": "应付帐款是指因向供货商或卖方（与买方为独立单位）购买商品、劳务、资产而产生的具有商业性质的应付款项。应付帐款应以与公司已从供货商收到的商品、劳务、资产或投资有关的未来应付金额认列，而不取决于公司是否已收到发票。",
+        "Ht": "應付帳款乃因向供應商或賣方（與買方為獨立單位）購買商品、勞務、資產而產生之具有商業性質之應付款項。應付帳款應以與公司已從供應商收到之商品、勞務、資產或投資有關之未來應付金額認列，而不取決於公司是否已收到發票。"
+    },
+    {
+        "Vietnamese": "Phải trả khác bao gồm các khoản phải trả không có tính thương mại, không liên quan đến giao dịch mua, bán hàng hóa, cung cấp dịch vụ.",
+        "E": "Other payables comprise non-trade payables that are not related to the purchase or sale of goods or the provision of services.",
+        "Hs": "其他应付款包含不具商业性质、与商品买卖及劳务提供无关的应付款项。",
+        "Ht": "其他應付款包含不具商業性質、與商品買賣及勞務提供無關之應付款項。"
+    },
+    {
+        "Vietnamese": "Các khoản nợ phải trả phải được phân loại ngắn hạn và dài hạn trên Báo cáo tình hình tài chính căn cứ theo kỳ hạn còn lại của các khoản phải trả tại ngày kết thúc kỳ kế toán. Các khoản nợ phải trả mà Công ty không có quyền từ chối nghĩa vụ thanh toán tại bất kỳ thời điểm nào trong vòng 12 tháng kể từ ngày kết thúc kỳ kế toán được phân loại là nợ ngắn hạn.",
+        "E": "Liabilities shall be classified as short-term and long-term in the Statement of financial position based on their remaining terms at the end of the accounting period. Liabilities for which the Company does not have the right to refuse the payment obligation at any time within 12 months from the end of the accounting period are classified as short-term liabilities.",
+        "Hs": "负债应根据其于会计期末的剩余期限，在财务状况表中分类为短期及长期负债。公司于自会计期末起12个月内任何时点均无权拒绝履行付款义务的负债，分类为短期负债。",
+        "Ht": "負債應根據其於會計期末之剩餘期限，於財務狀況表中分類為短期及長期負債。公司於自會計期末起12個月內任何時點均無權拒絕履行付款義務之負債，分類為短期負債。"
+    },
+    {
+        "Vietnamese": "Chi phí phải trả được ghi nhận đối với các khoản chi phí đã phát sinh trong kỳ nhưng chưa có hóa đơn hoặc chưa đủ hồ sơ thanh toán tại thời điểm kết thúc kỳ kế toán, khi Công ty có nghĩa vụ phải thanh toán và giá trị khoản chi phí có thể được ước tính một cách đáng tin cậy. Chi phí phải trả được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ phù hợp với bản chất của khoản chi phí.",
+        "E": "Accrued expenses are recognized for expenses incurred during the period for which invoices or sufficient payment documents have not been received at the end of the accounting period, when the Company has an obligation to pay and the amount can be reliably estimated. Accrued expenses are recognized in production and business expenses for the period in accordance with the nature of the expenses.",
+        "Hs": "应付费用是指本期已发生，但于会计期末尚未取得发票或付款资料不足，而公司负有付款义务且金额能够可靠估计的费用。应付费用按照费用性质列入当期生产、营业费用。",
+        "Ht": "應付費用乃本期已發生，但於會計期末尚未取得發票或付款資料不足，而公司負有付款義務且金額能夠可靠估計之費用。應付費用按照費用性質列入當期生產、營業費用。"
+    },
+    {
+        "Vietnamese": "Đối với khoản tiền nhận trước về cho thuê tài sản trong nhiều kỳ, doanh thu được phân bổ vào từng kỳ kế toán căn cứ vào tổng số tiền đã thu và số kỳ thu tiền trước theo hợp đồng. Đối với các khoản doanh thu chờ phân bổ khác, việc ghi nhận và phân bổ được thực hiện theo bản chất của từng giao dịch và quy định có liên quan.",
+        "E": "For amounts received in advance for leasing assets over multiple periods, revenue is allocated to each accounting period based on the total amount received and the number of periods paid in advance under the contract. For other deferred revenue, recognition and allocation are made according to the nature of each transaction and relevant regulations.",
+        "Hs": "对于多期资产租赁的向客户预收的款项，收入按照已收总额及合同约定的预收期数分摊至各会计期间。对于其他递延收入，按照各交易的性质及相关规定进行认列及分摊。",
+        "Ht": "對於多期資產租賃之向客戶預收之款項，收入按照已收總額及合約約定之預收期數分攤至各會計期間。對於其他遞延收入，按照各交易之性質及相關規定進行認列及分攤。"
+    },
+    {
+        "Vietnamese": "Công ty không hạch toán vào doanh thu chờ phân bổ đối với tiền nhận trước của người mua khi chưa cung cấp sản phẩm, hàng hóa, dịch vụ; hoặc doanh thu chưa thực thu tiền từ hoạt động cho thuê tài sản, cung cấp dịch vụ trong nhiều kỳ kế toán.",
+        "E": "The Company does not record as deferred revenue advances received from buyers for products, goods or services not yet provided, or revenue not yet collected from leasing assets or providing services over multiple accounting periods.",
+        "Hs": "对于尚未提供产品、商品、劳务而向买方预收的款项，或尚未收款的多个会计期间资产出租、劳务提供收入，公司不列入递延收入。",
+        "Ht": "對於尚未提供產品、商品、勞務而向買方預收之款項，或尚未收款之多個會計期間資產出租、勞務提供收入，公司不列入遞延收入。"
+    },
+    {
+        "Vietnamese": "Dự phòng phải trả được ghi nhận khi Công ty có nghĩa vụ nợ hiện tại phát sinh từ một sự kiện đã xảy ra, bao gồm nghĩa vụ pháp lý hoặc nghĩa vụ ngầm định; việc thanh toán nghĩa vụ có khả năng làm giảm sút lợi ích kinh tế và giá trị nghĩa vụ được ước tính một cách đáng tin cậy.",
+        "E": "Provisions for liabilities are recognized when the Company has a present obligation, legal or constructive, as a result of a past event; it is probable that the settlement of the obligation will result in an outflow of economic benefits; and the amount of the obligation can be reliably estimated.",
+        "Hs": "负债准备于公司因过去事项而承担现时义务（包含法定义务或推定义务），履行该义务很可能导致经济利益流出，且该义务金额能够可靠估计时认列。",
+        "Ht": "負債準備於公司因過去事項而承擔現時義務（包含法定義務或推定義務），履行該義務很可能導致經濟利益流出，且該義務金額能夠可靠估計時認列。"
+    },
+    {
+        "Vietnamese": "Dự phòng phải trả được xác định theo ước tính hợp lý nhất về khoản tiền cần thiết để thanh toán nghĩa vụ tại thời điểm kết thúc kỳ kế toán. Trường hợp ảnh hưởng của giá trị thời gian của tiền là trọng yếu, dự phòng được xác định theo giá trị hiện tại của khoản chi ước tính.",
+        "E": "Provisions for liabilities are measured at the best estimate of the expenditure required to settle the obligation at the end of the accounting period. Where the effect of the time value of money is material, the provision is measured at the present value of the estimated expenditure.",
+        "Hs": "负债准备按照于会计期末履行义务所需支出的最佳估计数确定。若货币时间价值的影响重大，准备金额按照预计支出的现值确定。",
+        "Ht": "負債準備按照於會計期末履行義務所需支出之最佳估計數確定。若貨幣時間價值之影響重大，準備金額按照預計支出之現值確定。"
+    },
+    {
+        "Vietnamese": "Số dự phòng cần lập bổ sung hoặc hoàn nhập được ghi nhận vào chi phí có liên quan trong kỳ. Công ty không ghi nhận dự phòng cho các khoản lỗ hoạt động trong tương lai, trừ trường hợp hợp đồng có rủi ro lớn đáp ứng điều kiện ghi nhận dự phòng.",
+        "E": "Additional provisions required or reversals of provisions are recognized in the related expenses for the period. The Company does not recognize provisions for future operating losses, except for onerous contracts that meet the recognition criteria for provisions.",
+        "Hs": "应补提或转回的准备金额列入当期相关费用。公司不对未来经营亏损认列准备，但符合准备认列条件的亏损性合同除外。",
+        "Ht": "應補提或迴轉之準備金額列入當期相關費用。公司不對未來經營虧損認列準備，但符合準備認列條件之虧損性合約除外。"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập doanh nghiệp hoãn lại được ghi nhận theo phương pháp Bảng cân đối kế toán, trên cơ sở chênh lệch tạm thời giữa cơ sở tính thuế của tài sản, nợ phải trả và giá trị ghi sổ của các khoản mục này trên Báo cáo tình hình tài chính.",
+        "E": "Deferred corporate income tax is recognized using the balance sheet method, based on temporary differences between the tax bases of assets and liabilities and their carrying amounts in the Statement of financial position.",
+        "Hs": "递延企业所得税按照资产负债表法认列，且根据资产、负债的计税基础与其在财务状况表中列示的帐面价值之间的暂时性差异认列。",
+        "Ht": "遞延企業所得稅按照資產負債表法認列，且根據資產、負債之計稅基礎與其於財務狀況表中列示之帳面價值之間之暫時性差異認列。"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập doanh nghiệp hoãn lại phải trả được ghi nhận đối với các chênh lệch tạm thời chịu thuế. Tài sản thuế thu nhập doanh nghiệp hoãn lại được ghi nhận đối với các chênh lệch tạm thời được khấu trừ, các khoản lỗ tính thuế và ưu đãi thuế chưa sử dụng, trong phạm vi có khả năng Công ty sẽ có thu nhập chịu thuế trong tương lai để sử dụng các khoản này.",
+        "E": "Deferred corporate income tax liabilities are recognized for taxable temporary differences. Deferred corporate income tax assets are recognized for deductible temporary differences, unused tax losses and unused tax incentives, to the extent that it is probable that the Company will have future taxable income against which these can be utilized.",
+        "Hs": "递延企业所得税负债就应纳税暂时性差异认列。递延企业所得税资产就可抵减暂时性差异、未使用的课税亏损及未使用的税收优惠认列，但以公司很可能于未来取得足以使用该等项目的应课税所得为限。",
+        "Ht": "遞延企業所得稅負債就應納稅暫時性差異認列。遞延企業所得稅資產就可抵減暫時性差異、未使用之課稅虧損及未使用之租稅優惠認列，但以公司很可能於未來取得足以使用該等項目之應課稅所得為限。"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập doanh nghiệp hoãn lại được xác định theo thuế suất dự tính áp dụng trong kỳ tài sản được thu hồi hoặc nợ phải trả được thanh toán, căn cứ vào quy định pháp luật thuế đã được ban hành hoặc cơ bản được ban hành tại thời điểm kết thúc kỳ kế toán.",
+        "E": "Deferred corporate income tax is measured at the tax rates expected to apply in the period when the asset is realized or the liability is settled, based on tax laws enacted or substantively enacted at the end of the accounting period.",
+        "Hs": "递延企业所得税按照预期收回资产或清偿负债期间适用的税率确定，且以会计期末已颁布或实质上已颁布的税法规定为依据。",
+        "Ht": "遞延企業所得稅按照預期收回資產或清償負債期間適用之稅率確定，且以會計期末已頒布或實質上已頒布之稅法規定為依據。"
+    },
+    {
+        "Vietnamese": "Tài sản thuế thu nhập doanh nghiệp hoãn lại và thuế thu nhập doanh nghiệp hoãn lại phải trả chỉ được bù trừ khi Công ty có quyền hợp pháp được bù trừ thuế thu nhập hiện hành và các khoản thuế hoãn lại liên quan đến cùng cơ quan thuế.",
+        "E": "Deferred corporate income tax assets and deferred corporate income tax liabilities are offset only when the Company has a legally enforceable right to set off current income tax and the deferred taxes relate to the same tax authority.",
+        "Hs": "递延企业所得税资产与递延企业所得税负债仅在公司拥有以当期所得税相互抵销的法定权利，且递延税项与同一税务机关相关时，方可相互抵销。",
+        "Ht": "遞延企業所得稅資產與遞延企業所得稅負債僅在公司擁有以當期所得稅相互抵銷之法定權利，且遞延稅項與同一稅務機關相關時，方可相互抵銷。"
+    },
+    {
+        "Vietnamese": "Nợ thuê tài chính được ghi nhận tại thời điểm khởi đầu thuê theo giá trị hiện tại của các khoản thanh toán tiền thuê tối thiểu. Các khoản thanh toán tiền thuê được phân bổ giữa nợ gốc và chi phí tài chính; chi phí tài chính được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ, trừ trường hợp được vốn hóa theo quy định có liên quan.",
+        "E": "Finance lease obligations are recognized at the commencement of the lease at the present value of the minimum lease payments. Lease payments are apportioned between the principal and finance charges; finance charges are recognized in production and business expenses for the period, except where they are capitalized in accordance with relevant regulations.",
+        "Hs": "融资租赁负债于租赁开始日按照最低租赁给付现值认列。租赁给付分成应付本金及融资费用；融资费用列入当期生产、营业费用，但依相关规定予以资本化者除外。",
+        "Ht": "融資租賃負債於租賃開始日按照最低租賃給付現值認列。租賃給付分成應付本金及融資費用；融資費用列入當期生產、營業費用，但依相關規定予以資本化者除外。"
+    },
+    {
+        "Vietnamese": "Chi phí đi vay bao gồm lãi tiền vay và các chi phí khác phát sinh liên quan trực tiếp đến việc đi vay. Chi phí đi vay được ghi nhận vào chi phí sản xuất, kinh doanh trong kỳ khi phát sinh, trừ trường hợp được vốn hóa.",
+        "E": "Borrowing costs comprise interest on borrowings and other costs directly attributable to the borrowings. Borrowing costs are recognized in production and business expenses for the period in which they are incurred, except to the extent that they are capitalized.",
+        "Hs": "借款费用包含借款利息及与借款直接相关的其他费用。借款费用在发生时应计入当期生产、营业费用，其费用得以资本化除外。",
+        "Ht": "借款費用包含借款利息及與借款直接相關之其他費用。借款費用在發生時應計入當期生產、營業費用，其費用得以資本化除外。"
+    },
+    {
+        "Vietnamese": "Chi phí đi vay liên quan trực tiếp đến việc đầu tư xây dựng hoặc sản xuất tài sản dở dang cần có một thời gian đủ dài để đưa vào sử dụng hoặc bán được vốn hóa vào giá trị của tài sản đó khi đồng thời phát sinh chi phí đầu tư cho tài sản, chi phí đi vay và các hoạt động cần thiết để đưa tài sản vào trạng thái sẵn sàng sử dụng hoặc bán.",
+        "E": "Borrowing costs directly attributable to the construction or production of assets in progress that necessarily take a substantial period of time to get ready for their intended use or sale are capitalized into the cost of those assets when expenditures for the assets, borrowing costs and the activities necessary to prepare the assets for their intended use or sale are all being incurred.",
+        "Hs": "直接归属于需经相当长时间才能达到可使用或可销售状态的在建资产的建造或生产的借款费用，在资产支出、借款费用以及为使资产达到可使用或可销售状态所必要的活动同时发生时，资本化计入该资产成本。",
+        "Ht": "直接歸屬於需經相當長時間才能達到可使用或可銷售狀態之在建資產之建造或生產之借款費用，在資產支出、借款費用以及為使資產達到可使用或可銷售狀態所必要之活動同時發生時，資本化計入該資產成本。"
+    },
+    {
+        "Vietnamese": "Đối với khoản vay riêng phục vụ việc đầu tư xây dựng hoặc sản xuất tài sản dở dang, chi phí đi vay được vốn hóa là chi phí đi vay thực tế phát sinh sau khi trừ thu nhập từ việc đầu tư tạm thời khoản vay này, nếu có.",
+        "E": "For specific borrowings for the construction or production of assets in progress, the borrowing costs eligible for capitalization are the actual borrowing costs incurred less any income from the temporary investment of those borrowings, if any.",
+        "Hs": "对于为建造或生产在建资产而借入的专门借款，应予资本化的借款费用为实际发生的借款费用减去该借款暂时性投资所取得的收益（如有）。",
+        "Ht": "對於為建造或生產在建資產而借入之專門借款，應予資本化之借款費用為實際發生之借款費用減去該借款暫時性投資所取得之收益（如有）。"
+    },
+    {
+        "Vietnamese": "Đối với các khoản vay chung, tỷ lệ vốn hóa được xác định theo tỷ lệ lãi suất bình quân gia quyền của các khoản vay chưa trả trong kỳ của Công ty, không bao gồm các khoản vay riêng phục vụ việc đầu tư xây dựng hoặc sản xuất tài sản dở dang. Chi phí đi vay được vốn hóa trong kỳ không vượt quá tổng số chi phí đi vay phát sinh trong kỳ đó.",
+        "E": "For general borrowings, the capitalization rate is determined as the weighted average interest rate of the Company’s borrowings outstanding during the period, other than specific borrowings for the construction or production of assets in progress. The borrowing costs capitalized during the period shall not exceed the total borrowing costs incurred in that period.",
+        "Hs": "对于一般借款，资本化率应以公司当期各项未付借款的加权平均利率确定，为建造或生产在建资产而借入的专门借款除外。当期应予资本化的借款费用，不得超过当期发生的借款费用总额。",
+        "Ht": "對於一般借款，資本化率應以公司當期各項未付借款之加權平均利率確定，為建造或生產在建資產而借入之專門借款除外。當期應予資本化之借款費用，不得超過當期發生之借款費用總額。"
+    },
+    {
+        "Vietnamese": "Việc vốn hóa chi phí đi vay được tạm ngừng trong thời gian hoạt động đầu tư xây dựng hoặc sản xuất bị gián đoạn bất thường và chấm dứt khi các hoạt động cần thiết để đưa tài sản vào trạng thái sẵn sàng sử dụng hoặc bán đã hoàn thành.",
+        "E": "Capitalization of borrowing costs is suspended during periods in which construction or production activities are abnormally interrupted, and ceases when the activities necessary to prepare the assets for their intended use or sale have been completed.",
+        "Hs": "在建造或生产活动发生非正常中断期间，借款费用应暂停资本化；当为使资产达到可使用或可销售状态所必要的活动完成时，借款费用停止资本化。",
+        "Ht": "在建造或生產活動發生非正常中斷期間，借款費用應暫停資本化；當為使資產達到可使用或可銷售狀態所必要之活動完成時，借款費用停止資本化。"
+    },
+    {
+        "Vietnamese": "Vốn chủ sở hữu bao gồm vốn đầu tư của chủ sở hữu, thặng dư vốn, vốn khác của chủ sở hữu, quyền chọn chuyển đổi trái phiếu, chênh lệch đánh giá lại tài sản, chênh lệch tỷ giá hối đoái, các quỹ và lợi nhuận sau thuế chưa phân phối, nếu có.",
+        "E": "Owner’s equity comprises owner’s investment capital, capital surplus, owner’s other capital, conversion options on bonds, assets revaluation differences, foreign exchange differences, funds and retained earnings, if any.",
+        "Hs": "所有者权益包含所有者投资资本、资本溢价、所有者（股东）的其他资金、债券可转换选择权、资产重估差价、汇兑差额、各项基金及保留盈余（如有）。",
+        "Ht": "所有者權益包含所有者投資資本、資本溢價、所有者（股東）之其他資金、債券可轉換選擇權、資產重估差價、匯兌差額、各項基金及保留盈餘（如有）。"
+    },
+    {
+        "Vietnamese": "Vốn đầu tư của chủ sở hữu được ghi nhận theo số vốn thực góp của chủ sở hữu. Thặng dư vốn, vốn khác của chủ sở hữu và quyền chọn chuyển đổi trái phiếu được ghi nhận theo bản chất từng giao dịch và quy định kế toán có liên quan.",
+        "E": "Owner’s investment capital is recognized according to the capital actually contributed by the owners. Capital surplus, owner’s other capital and conversion options on bonds are recognized according to the nature of each transaction and relevant accounting regulations.",
+        "Hs": "所有者投资资本按照所有者实际出资金额认列。资本溢价、所有者（股东）的其他资金及债券可转换选择权按照各交易的性质及相关会计规定认列。",
+        "Ht": "所有者投資資本按照所有者實際出資金額認列。資本溢價、所有者（股東）之其他資金及債券可轉換選擇權按照各交易之性質及相關會計規定認列。"
+    },
+    {
+        "Vietnamese": "Vốn đầu tư của chủ sở hữu được ghi nhận theo số vốn thực góp của chủ sở hữu.",
+        "E": "Owner’s investment capital is recognized according to the capital actually contributed by the owners.",
+        "Hs": "所有者投资资本按照所有者实际出资金额认列。",
+        "Ht": "所有者投資資本按照所有者實際出資金額認列。"
+    },
+    {
+        "Vietnamese": "Thặng dư vốn, vốn khác của chủ sở hữu và quyền chọn chuyển đổi trái phiếu được ghi nhận theo bản chất từng giao dịch và quy định kế toán có liên quan.",
+        "E": "Capital surplus, owner’s other capital and conversion options on bonds are recognized according to the nature of each transaction and relevant accounting regulations.",
+        "Hs": "资本溢价、所有者（股东）的其他资金及债券可转换选择权按照各交易的性质及相关会计规定认列。",
+        "Ht": "資本溢價、所有者（股東）之其他資金及債券可轉換選擇權按照各交易之性質及相關會計規定認列。"
+    },
+    {
+        "Vietnamese": "Chênh lệch đánh giá lại tài sản và chênh lệch tỷ giá hối đoái được ghi nhận, xử lý và kết chuyển theo quy định hiện hành.",
+        "E": "Assets revaluation differences and foreign exchange differences are recognized, treated and transferred in accordance with prevailing regulations.",
+        "Hs": "资产重估差价及汇兑差额按照现行规定认列、处理及结转。",
+        "Ht": "資產重估差價及匯兌差額按照現行規定認列、處理及結轉。"
+    },
+    {
+        "Vietnamese": "Lợi nhuận sau thuế chưa phân phối phản ánh kết quả kinh doanh sau thuế thu nhập doanh nghiệp và tình hình phân chia lợi nhuận hoặc xử lý lỗ của Công ty.",
+        "E": "Retained earnings reflect the business results after corporate income tax and the profit distribution or loss handling of the Company.",
+        "Hs": "保留盈余反映公司企业所得税后的经营成果以及利润分配或亏损处理情况。",
+        "Ht": "保留盈餘反映公司企業所得稅後之經營成果以及利潤分配或虧損處理情況。"
+    },
+    {
+        "Vietnamese": "Bất động sản đã hoàn thành toàn bộ và bàn giao cho người mua, Công ty đã chuyển giao rủi ro và lợi ích gắn liền với quyền sở hữu bất động sản cho người mua;",
+        "E": "The real estate has been fully completed and handed over to the buyer, and the Company has transferred the risks and rewards of ownership of the real estate to the buyer;",
+        "Hs": "不动产已全部完工并交付买方，公司已将与不动产所有权有关的风险与利益转移给买方；",
+        "Ht": "不動產已全部完工並交付買方，公司已將與不動產所有權有關之風險與利益轉移給買方；"
+    },
+    {
+        "Vietnamese": "Khi kết quả thực hiện hợp đồng xây dựng được ước tính một cách đáng tin cậy, doanh thu và chi phí liên quan đến hợp đồng được ghi nhận tương ứng với phần công việc đã hoàn thành tại thời điểm kết thúc kỳ kế toán.",
+        "E": "When the outcome of a construction contract can be estimated reliably, revenue and costs associated with the contract are recognized by reference to the stage of completion of the contract activity at the end of the accounting period.",
+        "Hs": "在工程合同履约结果能够可靠估计时，与合同有关的收入与成本按照会计期末的已完成工作量认列入账。",
+        "Ht": "在工程合約履約結果能夠可靠估計時，與合約有關之收入與成本按照會計期末之已完成工作量認列入帳。"
+    },
+    {
+        "Vietnamese": "Đối với hợp đồng xây dựng quy định nhà thầu được thanh toán theo tiến độ kế hoạch, doanh thu được ghi nhận tương ứng với phần công việc đã hoàn thành do Công ty tự xác định tại thời điểm kết thúc kỳ kế toán, không phụ thuộc vào việc hóa đơn thanh toán theo tiến độ kế hoạch đã được lập hay chưa và số tiền ghi trên hóa đơn.",
+        "E": "Where the construction contract stipulates that the contractor is paid according to the planned progress, revenue is recognized by reference to the stage of completion determined by the Company at the end of the accounting period, irrespective of whether progress billings have been issued and of the amounts stated in the invoices.",
+        "Hs": "若工程合同中规定承包商按照计划进度付款，则收入按照由公司于会计期末自行确定的已完成工作量认列，而不取决于按计划进度付款的发票是否已开立及发票上列示的金额。",
+        "Ht": "若工程合約中規定承包商按照計劃進度付款，則收入按照由公司於會計期末自行確定之已完成工作量認列，而不取決於按計劃進度付款之發票是否已開立及發票上列示之金額。"
+    },
+    {
+        "Vietnamese": "Doanh thu hợp đồng bao gồm doanh thu ban đầu được ghi trong hợp đồng; các khoản tăng, giảm trong quá trình thực hiện, tiền thưởng và các khoản thanh toán khác khi các khoản này có khả năng làm thay đổi doanh thu và được xác định một cách đáng tin cậy. Các khoản bồi thường chỉ được ghi nhận khi khách hàng chấp thuận và giá trị được xác định một cách đáng tin cậy.",
+        "E": "Contract revenue comprises the initial amount of revenue agreed in the contract, and variations during contract performance, incentive payments and other payments to the extent that they are likely to result in a change in revenue and can be measured reliably. Compensation is recognized only when it is accepted by the customer and its amount can be measured reliably.",
+        "Hs": "合同收入包含合同中约定的初始收入，以及履约过程中的增减变动、奖励款及其他款项，但以该等款项很可能导致收入变动且能够可靠计量者为限。赔偿款仅在客户同意且金额能够可靠确定时认列。",
+        "Ht": "合約收入包含合約中約定之初始收入，以及履約過程中之增減變動、獎勵款及其他款項，但以該等款項很可能導致收入變動且能夠可靠計量者為限。賠償款僅在客戶同意且金額能夠可靠確定時認列。"
+    },
+    {
+        "Vietnamese": "Khi kết quả thực hiện hợp đồng xây dựng không thể ước tính được một cách đáng tin cậy, doanh thu chỉ được ghi nhận tương đương với chi phí hợp đồng đã phát sinh mà việc được hoàn trả là tương đối chắc chắn. Chi phí của hợp đồng chỉ được ghi nhận vào chi phí trong kỳ khi đã phát sinh.",
+        "E": "When the outcome of a construction contract cannot be estimated reliably, revenue is recognized only to the extent of contract costs incurred for which recovery is reasonably certain. Contract costs are only recognized as expenses for the period when incurred.",
+        "Hs": "在工程合同履约结果不能可靠估计时，收入仅以已发生且相对确定能够收回的合同成本金额认列。合同成本仅在实际发生时列入当期费用。",
+        "Ht": "在工程合約履約結果不能可靠估計時，收入僅以已發生且相對確定能夠收回之合約成本金額認列。合約成本僅在實際發生時列入當期費用。"
+    },
+    {
+        "Vietnamese": "Doanh thu cho thuê tài sản hoạt động được ghi nhận theo thời hạn cho thuê. Tiền cho thuê nhận trước của nhiều kỳ được phân bổ vào doanh thu phù hợp với thời gian cho thuê.",
+        "E": "Revenue from operating leases of assets is recognized over the lease term. Rentals received in advance for multiple periods are allocated to revenue over the lease term.",
+        "Hs": "经营租赁资产收入按照出租期限认列。涉及多个会计期间的预收租金按照出租期限逐期转为收入。",
+        "Ht": "營業租賃資產收入按照出租期限認列。涉及多個會計期間之預收租金按照出租期限逐期轉為收入。"
+    },
+    {
+        "Vietnamese": "Cổ tức và lợi nhuận được chia bằng tiền hoặc tài sản phi tiền tệ được ghi nhận khi Công ty có quyền nhận và thuộc giai đoạn sau ngày đầu tư. Khoản được chia thuộc giai đoạn trước ngày đầu tư được ghi giảm giá gốc khoản đầu tư.",
+        "E": "Dividends and distributed profits received in cash or non-monetary assets are recognized when the Company has the right to receive them and they relate to the period after the investment date. Amounts distributed relating to the period before the investment date are recorded as a reduction in the cost of the investment.",
+        "Hs": "以现金或非货币性资产获分的股利及利润，在公司有权收取且属于投资日后期间时认列。属于投资日前期间的获分款项冲减投资原始成本。",
+        "Ht": "以現金或非貨幣性資產獲分之股利及利潤，在公司有權收取且屬於投資日後期間時認列。屬於投資日前期間之獲分款項沖減投資原始成本。"
+    },
+    {
+        "Vietnamese": "Các khoản chiết khấu thương mại và giảm giá hàng bán phát sinh sau khi đã ghi nhận doanh thu, cũng như hàng bán bị trả lại do vi phạm cam kết, hợp đồng hoặc không bảo đảm chất lượng, chủng loại, quy cách, được theo dõi riêng theo từng khách hàng và từng loại sản phẩm, hàng hóa hoặc dịch vụ.",
+        "E": "Trade discounts and sales allowances arising after revenue has been recognized, as well as sales returns due to breach of commitments or contracts or failure to meet quality, type or specification requirements, are tracked separately for each customer and each type of product, goods or service.",
+        "Hs": "认列收入后发生的商业折扣、销货折让，以及因违反承诺、合同或品质、种类、规格不符而发生的销货退回，按照各客户及各类产品、商品或劳务分别追踪。",
+        "Ht": "認列收入後發生之商業折扣、銷貨折讓，以及因違反承諾、合約或品質、種類、規格不符而發生之銷貨退回，按照各客戶及各類產品、商品或勞務分別追蹤。"
+    },
+    {
+        "Vietnamese": "Toàn bộ các khoản giảm trừ doanh thu được kết chuyển giảm doanh thu bán hàng và cung cấp dịch vụ để xác định doanh thu thuần trên Báo cáo kết quả hoạt động kinh doanh.",
+        "E": "All sales deductions are transferred to reduce gross sales in order to determine net revenue in the Income statement.",
+        "Hs": "所有抵减项目均结转冲减销售货物和提供劳务收入，以确定利润表中的销货净额。",
+        "Ht": "所有抵減項目均結轉沖減銷售貨物及提供勞務收入，以確定損益表中之銷貨淨額。"
+    },
+    {
+        "Vietnamese": "Các khoản thuế nhập khẩu, thuế tiêu thụ đặc biệt và thuế bảo vệ môi trường đã tính vào giá trị hàng mua được ghi giảm giá vốn hàng bán khi được hoàn lại.",
+        "E": "Import duties, special consumption tax and environmental protection tax included in the value of purchased goods are recorded as a reduction in cost of sales when refunded.",
+        "Hs": "已计入购入货物价值的进口税、特别消费税及环境保护税，于获退还时冲减销货成本。",
+        "Ht": "已計入購入貨物價值之進口稅、特別消費稅及環境保護稅，於獲退還時沖減銷貨成本。"
+    },
+    {
+        "Vietnamese": "Chi phí tài chính được theo dõi chi tiết theo từng nội dung. Chi phí đi vay và chi phí phát hành trái phiếu không đủ điều kiện vốn hóa được phân bổ phù hợp với kỳ hạn vay hoặc kỳ hạn trái phiếu và ghi nhận vào chi phí tài chính.",
+        "E": "Financial expenses are tracked in detail by content. Borrowing costs and bond issuance costs that do not qualify for capitalization are allocated in line with the borrowing term or bond term and recognized in financial expenses.",
+        "Hs": "财务费用按照各项内容明细追踪。不符合资本化条件的借款费用及债券发行费用按照借款期限或债券期限分摊并列入财务费用。",
+        "Ht": "財務費用按照各項內容明細追蹤。不符合資本化條件之借款費用及債券發行費用按照借款期限或債券期限分攤並列入財務費用。"
+    },
+    {
+        "Vietnamese": "Chi phí tài chính được theo dõi chi tiết theo từng nội dung. Chi phí đi vay không đủ điều kiện vốn hóa được phân bổ phù hợp với kỳ hạn vay và ghi nhận vào chi phí tài chính.",
+        "E": "Financial expenses are tracked in detail by content. Borrowing costs that do not qualify for capitalization are allocated in line with the borrowing term and recognized in financial expenses.",
+        "Hs": "财务费用按照各项内容明细追踪。不符合资本化条件的借款费用按照借款期限分摊并列入财务费用。",
+        "Ht": "財務費用按照各項內容明細追蹤。不符合資本化條件之借款費用按照借款期限分攤並列入財務費用。"
+    },
+    {
+        "Vietnamese": "Chi phí bán hàng và chi phí quản lý doanh nghiệp được theo dõi chi tiết theo từng nội dung, ghi nhận trong kỳ phát sinh và kết chuyển để xác định kết quả hoạt động kinh doanh.",
+        "E": "Selling expenses and general and administration expenses are tracked in detail by content, recognized in the period in which they are incurred and transferred to determine business results.",
+        "Hs": "销售费用及营业管理费用按照各项内容明细追踪，于发生当期认列并结转以确定经营成果。",
+        "Ht": "銷售費用及營業管理費用按照各項內容明細追蹤，於發生當期認列並結轉以確定經營成果。"
+    },
+    {
+        "Vietnamese": "Thu nhập từ bán, thanh lý tài sản cố định được ghi nhận khi Công ty đã chuyển giao phần lớn rủi ro và lợi ích gắn liền với quyền sở hữu tài sản cho người mua. Khoản thu từ bán, thanh lý tài sản cố định được ghi nhận vào thu nhập khác; giá trị còn lại và các chi phí trực tiếp liên quan được ghi nhận vào chi phí khác. Lãi hoặc lỗ được xác định bằng chênh lệch giữa khoản thu từ bán, thanh lý với giá trị còn lại và chi phí trực tiếp liên quan, được ghi nhận vào thu nhập khác hoặc chi phí khác trên Báo cáo tài chính.",
+        "E": "Income from the sale or disposal of fixed assets is recognized when the Company has transferred substantially all the risks and rewards of ownership of the assets to the buyer. Proceeds from the sale or disposal of fixed assets are recognized in other income; the carrying amount and directly related costs are recognized in other expenses. The gain or loss, determined as the difference between the proceeds from the sale or disposal and the carrying amount plus directly related costs, is recognized in other income or other expenses in the financial statements.",
+        "Hs": "出售、处置固定资产的收入于公司已将与资产所有权有关的大部分风险与利益转移给买方时认列。出售、处置固定资产的收款列入营业外收入；折余价值及直接相关费用列入营业外支出。损益按照出售、处置收款与折余价值及直接相关费用之间的差额确定，并于财务报表中列入营业外收入或营业外支出。",
+        "Ht": "出售、處分固定資產之收入於公司已將與資產所有權有關之大部分風險與利益轉移給買方時認列。出售、處分固定資產之收款列入營業外收入；折餘價值及直接相關費用列入營業外支出。損益按照出售、處分收款與折餘價值及直接相關費用之間之差額確定，並於財務報表中列入營業外收入或營業外支出。"
+    },
+    {
+        "Vietnamese": "Thuế (bao gồm cả chi phí thuế thu nhập doanh nghiệp bổ sung theo quy định về thuế tối thiểu toàn cầu), chi phí thuế thu nhập doanh nghiệp hoãn lại",
+        "E": "Tax (including top-up corporate income tax expense under the global minimum tax regulations), deferred corporate income tax expense",
+        "Hs": "税项（包含依全球最低税规定的补充企业所得税费用）、递延所得税费用",
+        "Ht": "稅項（包含依全球最低稅規定之補充企業所得稅費用）、遞延所得稅費用"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập doanh nghiệp được ghi nhận trong Báo cáo kết quả hoạt động kinh doanh bao gồm chi phí thuế thu nhập doanh nghiệp hiện hành và chi phí thuế thu nhập doanh nghiệp hoãn lại.",
+        "E": "Corporate income tax recognized in the Income statement comprises current corporate income tax expense and deferred corporate income tax expense.",
+        "Hs": "列示在利润表的企业所得税包含当期企业所得税费用及递延所得税费用。",
+        "Ht": "列示於損益表之企業所得稅包含當期企業所得稅費用及遞延所得稅費用。"
+    },
+    {
+        "Vietnamese": "Thuế thu nhập hoãn lại được ghi nhận theo phương pháp Bảng cân đối kế toán, trên cơ sở các chênh lệch tạm thời phát sinh giữa cơ sở tính thuế đối với tài sản hoặc công nợ và giá trị ghi sổ của chúng trên Báo cáo tình hình tài chính. Thuế thu nhập hoãn lại được xác định theo thuế suất dự tính sẽ áp dụng cho niên độ mà tài sản được thu hồi hay nợ phải trả được thanh toán. Tài sản thuế thu nhập hoãn lại được ghi nhận tới chừng mực mà trong tương lai có thể phát sinh thu nhập chịu thuế để số chênh lệch tạm thời có thể được sử dụng đến.",
+        "E": "Deferred income tax is calculated using the balance sheet method, on temporary differences arising between the tax bases of assets or liabilities and their carrying amounts in the Statement of financial position. Deferred income tax is calculated at the tax rates that are expected to apply in the period when the asset is realized or the liability is settled. Deferred income tax assets are recognized to the extent that it is probable that future taxable income will be available against which the temporary differences can be utilized.",
+        "Hs": "递延所得税按照资产负债表法列报，且根据资产或负债项目在财务状况表中列示的帐面价值与其计税基础之间的暂时性差异而列报。递延所得税应以预期收回资产或清偿负债的会计年度的适用税率确认。递延所得税资产在暂时性差异有可能用以抵减未来应课税所得的范围内认列。",
+        "Ht": "遞延所得稅按照資產負債表法列報，且根據資產或負債項目於財務狀況表中列示之帳面價值與其計稅基礎之間之暫時性差異而列報。遞延所得稅應以預期收回資產或清償負債之會計年度之適用稅率確認。遞延所得稅資產於暫時性差異有可能用以抵減未來應課稅所得之範圍內認列。"
+    },
+    {
+        "Vietnamese": "Tỷ lệ chiết khấu Công ty đã sử dụng ngoài các yếu tố đầu vào có thể quan sát được khi xác định giá trị hợp lý của chứng khoán kinh doanh.",
+        "E": "The discount rate used by the Company, in addition to observable inputs, in determining the fair value of trading securities.",
+        "Hs": "公司在确定交易性证券公允价值时，除可观察输入值外所使用的折现率。",
+        "Ht": "公司於確定交易性證券公允價值時，除可觀察輸入值外所使用之折現率。"
+    },
+    {
+        "Vietnamese": "Công ty thuộc đối tượng áp dụng quy định về thuế tối thiểu toàn cầu theo Nghị quyết số 107/2023/QH15 của Quốc hội Việt Nam và Nghị định số 236/2025/NĐ-CP của Chính phủ.",
+        "E": "The Company is subject to the global minimum tax regulations under Resolution No. 107/2023/QH15 of the National Assembly of Vietnam and Decree No. 236/2025/NĐ-CP of the Government.",
+        "Hs": "公司属于依越南国会第107/2023/QH15号决议及政府第236/2025/NĐ-CP号议定适用全球最低税规定的对象。",
+        "Ht": "公司屬於依越南國會第107/2023/QH15號決議及政府第236/2025/NĐ-CP號議定適用全球最低稅規定之對象。"
+    },
+    {
+        "Vietnamese": "Khả năng không thực hiện được hợp đồng với khách hàng.",
+        "E": "The possibility of being unable to perform contracts with customers.",
+        "Hs": "无法履行与客户所签合同的可能性。",
+        "Ht": "無法履行與客戶所簽合約之可能性。"
+    },
+    {
+        "Vietnamese": "Chi tiết doanh thu bán hàng và cung cấp dịch vụ cho khách hàng là các bên liên quan được trình bày tại thuyết minh VIII.2.",
+        "E": "Details of gross sales to related parties are presented in Note VIII.2.",
+        "Hs": "向关联方销售货物和提供劳务收入的明细列示于附注VIII.2。",
+        "Ht": "向關聯方銷售貨物及提供勞務收入之明細列示於附註VIII.2。"
+    },
+    {
+        "Vietnamese": "Báo cáo tài chính của Công ty cho năm tài chính liền trước chưa được kiểm toán và được trình bày lại nhằm mục đích so sánh.",
+        "E": "The Company’s financial statements for the preceding financial year have not been audited and are re-presented for comparative purposes.",
+        "Hs": "公司上一财务年度的财务报表未经审计，并为比较目的而重新列报。",
+        "Ht": "公司上一財務年度之財務報表未經查核，並為比較目的而重新列報。"
+    },
+    {
+        "Vietnamese": "Phần giá trị các tài sản mà doanh nghiệp đang nắm giữ của các bên khác nhưng bị giới hạn sử dụng do có sự hạn chế của pháp luật hoặc các khoản nợ phải trả mà doanh nghiệp có nghĩa vụ phải thanh toán theo thỏa thuận hợp đồng hoặc theo quy định của pháp luật.",
+        "E": "The value of assets of other parties held by the enterprise but restricted in use due to legal restrictions, or liabilities that the enterprise is obliged to settle under contractual agreements or legal regulations.",
+        "Hs": "企业持有的其他方资产中因法律限制而受限使用的部分价值，或企业依合同约定或法律规定负有偿付义务的负债。",
+        "Ht": "企業持有之其他方資產中因法律限制而受限使用之部分價值，或企業依合約約定或法律規定負有償付義務之負債。"
+    },
+    {
+        "Vietnamese": "Khi thanh lý, nhượng bán hoặc hoán đổi chứng khoán kinh doanh, giá vốn được xác định theo phương pháp bình quân gia quyền và được áp dụng nhất quán giữa các kỳ kế toán.",
+        "E": "When trading securities are disposed of, transferred or exchanged, their cost is determined using the weighted average method and applied consistently between accounting periods.",
+        "Hs": "交易性证券在处置、转让或交换时，其成本以加权平均法确定，并于各会计期间一致采用。",
+        "Ht": "交易性證券在處分、轉讓或交換時，其成本以加權平均法確定，並於各會計期間一致採用。"
+    },
+    {
+        "Vietnamese": "Khi thanh lý, nhượng bán hoặc hoán đổi chứng khoán kinh doanh, giá vốn được xác định theo phương pháp nhập trước, xuất trước và được áp dụng nhất quán giữa các kỳ kế toán.",
+        "E": "When trading securities are disposed of, transferred or exchanged, their cost is determined using the first in - first out method and applied consistently between accounting periods.",
+        "Hs": "交易性证券在处置、转让或交换时，其成本以先进先出法确定，并于各会计期间一致采用。",
+        "Ht": "交易性證券在處分、轉讓或交換時，其成本以先進先出法確定，並於各會計期間一致採用。"
+    },
+    {
+        "Vietnamese": "Đối với khoản đầu tư có chiết khấu hoặc phụ trội, khoản chiết khấu hoặc phụ trội được phân bổ vào doanh thu hoạt động tài chính theo phương pháp đường thẳng, phù hợp với kỳ hạn khoản đầu tư và được áp dụng nhất quán. Trường hợp phần phụ trội được phân bổ trong kỳ lớn hơn phần lãi theo lãi suất danh nghĩa của khoản đầu tư, phần chênh lệch được ghi nhận vào chi phí tài chính.",
+        "E": "For investments with a discount or premium, the discount or premium is amortized to financial income using the straight-line method over the term of the investment and applied consistently. Where the premium amortized in the period exceeds the interest at the nominal interest rate of the investment, the difference is recognized in financial expenses.",
+        "Hs": "对于有折价或溢价的投资，其折价或溢价按照投资期限采用直线法摊入财务收入，并一致采用。若当期摊销的溢价大于按照投资名义利率计算的利息，其差额列入财务费用。",
+        "Ht": "對於有折價或溢價之投資，其折價或溢價按照投資期限採用直線法攤入財務收入，並一致採用。若當期攤銷之溢價大於按照投資名義利率計算之利息，其差額列入財務費用。"
+    },
+    {
+        "Vietnamese": "Đối với khoản đầu tư có chiết khấu hoặc phụ trội, khoản chiết khấu hoặc phụ trội được phân bổ vào doanh thu hoạt động tài chính theo phương pháp lãi suất thực, phù hợp với kỳ hạn khoản đầu tư và được áp dụng nhất quán. Trường hợp phần phụ trội được phân bổ trong kỳ lớn hơn phần lãi theo lãi suất danh nghĩa của khoản đầu tư, phần chênh lệch được ghi nhận vào chi phí tài chính.",
+        "E": "For investments with a discount or premium, the discount or premium is amortized to financial income using the effective interest method over the term of the investment and applied consistently. Where the premium amortized in the period exceeds the interest at the nominal interest rate of the investment, the difference is recognized in financial expenses.",
+        "Hs": "对于有折价或溢价的投资，其折价或溢价按照投资期限采用实际利率法摊入财务收入，并一致采用。若当期摊销的溢价大于按照投资名义利率计算的利息，其差额列入财务费用。",
+        "Ht": "對於有折價或溢價之投資，其折價或溢價按照投資期限採用實際利率法攤入財務收入，並一致採用。若當期攤銷之溢價大於按照投資名義利率計算之利息，其差額列入財務費用。"
+    },
+    {
+        "Vietnamese": "Giá trị hàng tồn kho được tính theo phương pháp giá đích danh.",
+        "E": "Inventories are calculated using the specific identification method.",
+        "Hs": "存货以个别计价法计价。",
+        "Ht": "存貨以個別計價法計價。"
+    },
+    {
+        "Vietnamese": "Giá trị hàng tồn kho được tính theo phương pháp giá bán lẻ.",
+        "E": "Inventories are calculated using the retail method.",
+        "Hs": "存货以零售价法计价。",
+        "Ht": "存貨以零售價法計價。"
+    },
+    {
+        "Vietnamese": "Giá trị hàng tồn kho được tính theo phương pháp chi phí chuẩn.",
+        "E": "Inventories are calculated using the standard cost method.",
+        "Hs": "存货以标准成本法计价。",
+        "Ht": "存貨以標準成本法計價。"
+    },
+    {
+        "Vietnamese": "Hàng tồn kho được hạch toán theo phương pháp xác định số lượng và tính giá trị hàng xuất kho theo từng lần phát sinh.",
+        "E": "Inventories are accounted for by determining quantities and valuing goods issued at each transaction.",
+        "Hs": "存货按照于每次发生时确定数量并计算发出存货价值的方法核算。",
+        "Ht": "存貨按照於每次發生時確定數量並計算發出存貨價值之方法核算。"
+    },
+    {
+        "Vietnamese": "Hàng tồn kho được hạch toán theo phương pháp xác định số lượng và tính giá trị hàng xuất kho trên cơ sở số lượng và giá trị hàng tồn kho cuối kỳ.",
+        "E": "Inventories are accounted for by determining quantities and valuing goods issued based on the quantity and value of inventories at the end of the period.",
+        "Hs": "存货按照根据期末存货数量及价值确定数量并计算发出存货价值的方法核算。",
+        "Ht": "存貨按照根據期末存貨數量及價值確定數量並計算發出存貨價值之方法核算。"
+    },
+    {
+        "Vietnamese": "Phải trả cổ tức, lợi nhuận phản ánh số cổ tức phải trả cho các cổ đông. Thời điểm doanh nghiệp ghi nhận khoản phải trả về cổ tức, lợi nhuận là thời điểm doanh nghiệp không có quyền từ chối nghĩa vụ chi trả cổ tức, lợi nhuận cho các cổ đông của công ty theo quy định của pháp luật và điều lệ của doanh nghiệp.",
+        "E": "Dividends and profits payable reflect dividends payable to shareholders. The enterprise recognizes dividends and profits payable at the time when it no longer has the right to refuse the obligation to pay dividends and profits to the Company’s shareholders in accordance with the law and the enterprise’s charter.",
+        "Hs": "应付股利、利润反映应付给股东的股利金额。企业认列应付股利、利润的时点，为企业依法律规定及企业章程无权拒绝向公司股东支付股利、利润义务的时点。",
+        "Ht": "應付股利、利潤反映應付給股東之股利金額。企業認列應付股利、利潤之時點，為企業依法律規定及企業章程無權拒絕向公司股東支付股利、利潤義務之時點。"
+    },
+    {
+        "Vietnamese": "Phải trả cổ tức, lợi nhuận phản ánh số lợi nhuận phải trả cho các thành viên góp vốn. Thời điểm doanh nghiệp ghi nhận khoản phải trả về cổ tức, lợi nhuận là thời điểm doanh nghiệp không có quyền từ chối nghĩa vụ chi trả cổ tức, lợi nhuận cho các thành viên góp vốn của công ty theo quy định của pháp luật và điều lệ của doanh nghiệp.",
+        "E": "Dividends and profits payable reflect profits payable to capital-contributing members. The enterprise recognizes dividends and profits payable at the time when it no longer has the right to refuse the obligation to pay dividends and profits to the Company’s capital-contributing members in accordance with the law and the enterprise’s charter.",
+        "Hs": "应付股利、利润反映应付给出资成员的利润金额。企业认列应付股利、利润的时点，为企业依法律规定及企业章程无权拒绝向公司出资成员支付股利、利润义务的时点。",
+        "Ht": "應付股利、利潤反映應付給出資成員之利潤金額。企業認列應付股利、利潤之時點，為企業依法律規定及企業章程無權拒絕向公司出資成員支付股利、利潤義務之時點。"
+    },
+    {
+        "Vietnamese": "Đối với hợp đồng thanh toán theo tiến độ kế hoạch, chênh lệch giữa tổng doanh thu lũy kế đã ghi nhận và tổng số tiền lũy kế khách hàng phải thanh toán theo tiến độ kế hoạch được ghi nhận là khoản phải thu hoặc phải trả theo tiến độ hợp đồng xây dựng.",
+        "E": "For contracts paid according to planned progress, the difference between total cumulative revenue recognized and total cumulative amounts payable by customers according to the planned progress is recognized as receivables or payables according to the progress of construction contracts.",
+        "Hs": "对于按照计划进度付款的合同，已认列累计收入总额与客户按照计划进度应付累计金额总额的差额，列为应收或应付工程进度款。",
+        "Ht": "對於按照計劃進度付款之合約，已認列累計收入總額與客戶按照計劃進度應付累計金額總額之差額，列為應收或應付工程進度款。"
+    },
+    {
+        "Vietnamese": "Đối với hợp đồng thanh toán theo giá trị khối lượng thực tế, khoản phải thu của khách hàng được ghi nhận tương ứng với giá trị phần công việc đã hoàn thành được khách hàng xác nhận và phản ánh trên hóa đơn đã lập.",
+        "E": "For contracts paid based on the value of work actually performed, receivables from customers are recognized corresponding to the value of work completed as confirmed by customers and reflected in invoices issued.",
+        "Hs": "对于按照实际完成工程量价值付款的合同，应收客户款项按照经客户确认并在已开立发票上列示的已完成工作量价值认列。",
+        "Ht": "對於按照實際完成工程量價值付款之合約，應收客戶款項按照經客戶確認並於已開立發票上列示之已完成工作量價值認列。"
+    },
+    {
+        "Vietnamese": "Phụ Lục",
+        "E": "Appendix",
+        "Hs": "附录",
+        "Ht": "附錄"
+    },
+    {
+        "Vietnamese": "Giá trị hao mòn lũy kế",
+        "E": "Accumulated depreciation",
+        "Hs": "累计折旧",
+        "Ht": "累計折舊"
+    },
+    {
+        "Vietnamese": "Chỉ tiêu",
+        "E": "Items",
+        "Hs": "项目",
+        "Ht": "項目"
+    },
+    {
+        "Vietnamese": "Ngành nghề kinh doanh của Công ty là",
+        "E": "The business activities of the Company are",
+        "Hs": "公司的经营范围为",
+        "Ht": "公司之經營範圍為"
+    },
+    {
+        "Vietnamese": "Địa chỉ",
+        "E": "Address",
+        "Hs": "地址",
+        "Ht": "地址"
+    },
+    {
+        "Vietnamese": "Chi tiết",
+        "E": "Details",
+        "Hs": "明细",
+        "Ht": "明細"
+    },
+    {
+        "Vietnamese": "Tài sản",
+        "E": "Assets",
+        "Hs": "资产",
+        "Ht": "資產"
+    },
+    {
+        "Vietnamese": "Báo cáo tình hình tài chính",
+        "E": "Statement of financial position",
+        "Hs": "财务状况表",
+        "Ht": "財務狀況表"
+    },
+    {
+        "Vietnamese": "Trường hợp chiết khấu thương mại hoặc giảm giá hàng bán đã được thể hiện trên hóa đơn là khoản giảm trừ vào số tiền người mua phải thanh toán, doanh thu được ghi nhận theo giá đã trừ chiết khấu hoặc giảm giá.",
+        "E": "Where trade discounts or sales allowances are shown on the invoice as a deduction from the amount payable by the buyer, revenue is recognized at the price net of the discount or allowance.",
+        "Hs": "若商业折扣或销货折让已在发票上列示为买方应付金额的减项，则收入按照扣除折扣或折让后的价格认列。",
+        "Ht": "若商業折扣或銷貨折讓已於發票上列示為買方應付金額之減項，則收入按照扣除折扣或折讓後之價格認列。"
+    },
+    {
+        "Vietnamese": "Trường hợp sản phẩm, hàng hóa, dịch vụ đã tiêu thụ từ kỳ trước nhưng phát sinh chiết khấu thương mại, giảm giá hàng bán hoặc hàng bán bị trả lại trước thời điểm phát hành Báo cáo tài chính, khoản giảm trừ được ghi giảm doanh thu trên Báo cáo tài chính của kỳ trước. Nếu phát sinh sau thời điểm phát hành Báo cáo tài chính, khoản giảm trừ được ghi giảm doanh thu của kỳ phát sinh.",
+        "E": "Where products, goods or services were sold in a prior period but trade discounts, sales allowances or sales returns arise before the issuance date of the financial statements, the deductions are recorded as a reduction in revenue in the financial statements of the prior period. If they arise after the issuance date of the financial statements, the deductions are recorded as a reduction in revenue of the period in which they arise.",
+        "Hs": "若产品、商品、劳务已于前期销售，但于财务报表发布日前发生商业折扣、销货折让或销货退回，则该抵减金额冲减前期财务报表的收入。若于财务报表发布日后发生，则冲减发生当期的收入。",
+        "Ht": "若產品、商品、勞務已於前期銷售，但於財務報表發布日前發生商業折扣、銷貨折讓或銷貨退回，則該抵減金額沖減前期財務報表之收入。若於財務報表發布日後發生，則沖減發生當期之收入。"
     }
 ]

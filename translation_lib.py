@@ -390,31 +390,12 @@ def apply_sizing_and_layout(doc, target_col="E", process_settings=None):
                 
             # Cols > 10 -> Font size = 7pt for all cells
             if col_count > 10 and (process_settings is None or process_settings.get("table_7pt", True)):
-                resized_any = False
                 for row in tbl.rows:
                     for cell in row.cells:
                         for para in cell.paragraphs:
                             for run in para.runs:
                                 run.font.size = Pt(7)
-                                resized_any = True
-                
-                # Leave a warning note before the table if size was modified
-                if resized_any:
-                    try:
-                        new_p_el = OxmlElement('w:p')
-                        tbl._element.addprevious(new_p_el)
-                        new_p = Paragraph(new_p_el, tbl._parent)
-                        run = new_p.add_run(
-                            "⚠️ [Ghi chú từ Tool: Bảng có >10 cột, tự động giảm cỡ chữ xuống 7pt để phù hợp bố cục / "
-                            "Table has >10 columns, font size auto-set to 7pt]"
-                        )
-                        run.font.color.rgb = RGBColor(220, 53, 69) # Red warning color
-                        run.font.italic = True
-                        run.font.bold = True
-                        run.font.size = Pt(8.5)
-                    except Exception as e:
-                        pass
-                                
+
             # 3-column table with specific text in Cell(0, 2)
             if col_count == 3:
                 # VBA: tbl.cell(1, 3).Range.text (1-indexed) -> Cell(0, 2)
@@ -1317,6 +1298,20 @@ def apply_chinese_currency_cleanup(doc):
         for row in table.rows:
             for cell in row.cells:
                 _clean_container(cell)
+def normalize_dictionary_keys(translation_map, cleanv_map):
+    """
+    Applies CleanV to the Vietnamese keys so they match the CleanV-normalized document.
+    If two keys normalize to the same text, the key that was already normalized wins.
+    """
+    result = {}
+    for key, value in translation_map.items():
+        new_key, changed = apply_normalization_to_text(key, cleanv_map)
+        if new_key in result and changed:
+            continue
+        result[new_key] = value
+    return result
+
+
 def apply_normalization_to_text(text, cleanv_map):
     """
     Applies Vietnamese text normalization using the cleanv_map.
@@ -2023,8 +2018,12 @@ def replace_text_in_document(doc, translation_map, case_threshold=25, cleanv_map
 
     # Pass 3: Dictionary-based replacements (Final translation)
     if process_settings.get("dictionary", True):
+        # The document text has already been through CleanV (e.g. "cổ phiếu" -> "cổ phần"),
+        # so dictionary keys must get the same normalization or they can never match.
+        if process_settings.get("clean_v", True) and cleanv_map:
+            translation_map = normalize_dictionary_keys(translation_map, cleanv_map)
         prepared_list = prepare_translation_list(translation_map, case_threshold)
-        
+
         # Add normalization list (CleanV) to the start of prepared_list ONLY if clean_v IS enabled
         if process_settings.get("clean_v", True) and cleanv_map:
             norm_list = []

@@ -942,11 +942,12 @@ if st.session_state.authenticated and st.session_state.username == "admin":
                            "đang hiển thị nhật ký dự phòng trong usage_log.csv.")
             else:
                 st.info("🌐 Đang xem nhật ký từ **Google Sheets**.")
-            if logs:
-                log_df = pd.DataFrame(logs)
-                # Convert Timestamp to datetime for filtering
-                log_df['Timestamp'] = pd.to_datetime(log_df['Timestamp'])
-                
+            log_df = pd.DataFrame(logs, columns=["Timestamp", "User", "Event Type", "Details"])
+            # Convert Timestamp to datetime for filtering; rows without a readable time cannot be filtered
+            log_df['Timestamp'] = pd.to_datetime(log_df['Timestamp'], errors='coerce')
+            log_df = log_df.dropna(subset=['Timestamp'])
+            if not log_df.empty:
+
                 # Filter Section UI
                 st.markdown("#### 🔍 Bộ lọc")
                 c1, c2, c3, c4 = st.columns([1.5, 1, 1, 1.5])
@@ -1169,13 +1170,32 @@ if st.session_state.authenticated and st.session_state.username == "admin":
 
             # 4. Confirmed company names (shared table, saved by users from the AI import panel)
             try:
-                from company_names_store import dictionary_rows, load_company_names
+                from company_names_store import (STATUS_APPROVED, STATUS_PENDING, SHEET_TITLE, dictionary_rows, load_company_names,
+                                                 storage_status, upload_local_to_sheet)
                 company_entries = load_company_names(use_cache=False)
-                st.markdown(f"**4. Tên công ty đã xác nhận** ({len(company_entries)} tên)")
-                st.caption("Người dùng lưu từ mục 📤 Nhập bản dịch từ AI. Tên được tự thay khi xử lý báo cáo và gửi kèm khi dịch bằng AI. "
-                           "Tải về theo mẫu Dictionary_v3 (cột Vietnamese, E, Hs, Ht) để gộp vào từ điển khi cần.")
+                pending = sum(entry["status"] == STATUS_PENDING for entry in company_entries.values())
+                approved = sum(entry["status"] == STATUS_APPROVED for entry in company_entries.values())
+                st.markdown(f"**4. Tên công ty đã xác nhận** ({len(company_entries)} tên · {approved} đã duyệt · {pending} chờ duyệt)")
+                st.caption("Người dùng lưu từ mục 📤 Nhập bản dịch từ AI; tên được dùng ngay khi lưu (tự thay khi xử lý báo cáo, gửi kèm khi dịch bằng AI). "
+                           f"Rà soát trên Google Sheet, sheet {SHEET_TITLE}: cột Status chọn Đã duyệt / Không dùng (tên Không dùng sẽ không được thay), "
+                           "điền Reviewed by và Note; sửa trực tiếp cột International nếu sai. Thay đổi có hiệu lực sau tối đa 5 phút.")
+                company_storage = storage_status()
+                if company_storage["backend"] == "sheet":
+                    if company_storage["url"]:
+                        st.link_button(f"📊 Mở sheet {SHEET_TITLE} trên Google Sheet", company_storage["url"], use_container_width=True)
+                    if company_storage["local_rows"]:
+                        st.warning(f"File company_names.csv trên máy còn {company_storage['local_rows']} dòng chưa có trên Google Sheet "
+                                   "(lưu lúc chưa kết nối được Sheet).")
+                        if st.button("⬆️ Đưa các tên này lên Google Sheet", key="tab_company_names_upload", use_container_width=True):
+                            added = upload_local_to_sheet()
+                            st.success(f"Đã đưa {added} dòng lên sheet {SHEET_TITLE}. File cũ được đổi tên thành company_names_uploaded_<thời gian>.csv để dự phòng.")
+                            company_entries = load_company_names(use_cache=False)
+                else:
+                    st.warning(f"Chưa kết nối được Google Sheet nên tên đang được lưu tạm vào company_names.csv trên máy ({company_storage['detail']}). "
+                               "Khi kết nối lại, mở mục này để đưa các tên lên Sheet.")
                 if company_entries:
-                    st.dataframe([{"Tên tiếng Việt": entry["vietnamese"], "Tên quốc tế": entry["international"],
+                    st.dataframe([{"Tên tiếng Việt": entry["vietnamese"], "Tên quốc tế": entry["international"], "Trạng thái": entry["status"],
+                                   "Người duyệt": entry["reviewed_by"], "Ghi chú": entry["note"],
                                    "Người lưu": entry["saved_by"], "Thời gian": entry["saved_at"]}
                                   for entry in company_entries.values()], hide_index=True, use_container_width=True)
                     company_buffer = io.BytesIO()

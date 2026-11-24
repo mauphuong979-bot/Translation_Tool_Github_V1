@@ -54,6 +54,19 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
 '''
         return AppTest.from_string(source, default_timeout=15).run()
 
+    def review_state(self, app, **changes):
+        """Change the review table state the way ticking boxes or editing cells in the table does."""
+        state = dict(app.session_state["ai_review_state"])
+        state.update(changes, version=state["version"] + 1)
+        app.session_state["ai_review_state"] = state
+        return app.run()
+
+    def table(self, app):
+        return app.dataframe[0].value
+
+    def confirm(self, app):
+        return next(box for box in app.checkbox if "Tôi đã rà soát" in box.label).check().run()
+
     def test_current_report_requires_confirmation_and_keeps_download(self):
         app = self.app()
         self.assertFalse(app.exception)
@@ -75,8 +88,8 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app.run()
         self.assertEqual(len(app.get("download_button")), 1)
         self.assertEqual(app.session_state["ai_import_result"]["data"], result["data"])
-        app.multiselect[0].set_value([]).run()
-        self.assertFalse(app.checkbox[1].value)
+        self.review_state(app, excluded=list(self.table(app)["Mã"]))
+        self.assertFalse(self.table(app)["Áp dụng"].any())
         self.assertTrue(app.button(key="ai_apply_translations").disabled)
         self.assertFalse(app.get("download_button"))
 
@@ -84,7 +97,7 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app = self.app(current=False)
         app.button(key="ai_check_translations").click().run()
         self.assertFalse(app.exception)
-        self.assertEqual(len(app.multiselect[0].value), 1)
+        self.assertEqual(list(self.table(app)["Áp dụng"]), [True])
 
     def test_legacy_uploaded_report_gets_a_short_non_stacking_output_name(self):
         self.report_path = self.report_path.with_name("Bao_cao_Ht_tool_111126 1737_review.docx")
@@ -120,12 +133,11 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app.button(key="ai_check_translations").click().run()
         self.assertFalse(app.exception)
         columns = json.loads(app.dataframe[0].proto.columns)
-        self.assertGreater(columns["Ghi chú"]["width"], columns["Nội dung gốc"]["width"])
-        self.assertGreater(columns["Ghi chú"]["width"], columns["Bản dịch AI"]["width"])
-        self.assertTrue(columns["Mã"]["pinned"])
+        self.assertTrue(columns["Mã"]["pinned"] and columns["Áp dụng"]["pinned"])
         self.assertGreater(app.dataframe[0].proto.row_height, 32)
-        self.assertEqual(len(app.selectbox), 1)
-        self.assertTrue(any("Ghi chú (đầy đủ)" in element.value for element in app.markdown))
+        self.assertEqual(list(self.table(app).columns), ["Áp dụng", "Mã", "Trạng thái", "Nội dung gốc", "Bản dịch AI (sửa được)", "Ghi chú"])
+        self.assertFalse(app.selectbox)
+        self.assertFalse(app.multiselect)
 
     def test_c009_is_shown_as_existing_not_selected_and_not_newly_applied(self):
         report, worksheet, items = fixtures.ReviewRoundtripTests().pair(count=10, prior_revision_indices=(8,))
@@ -138,12 +150,12 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app = self.app()
         app.button(key="ai_check_translations").click().run()
         self.assertFalse(app.exception)
-        self.assertNotIn(c009, app.multiselect[0].options)
-        self.assertEqual(app.selectbox[0].value, 8)
-        self.assertEqual(app.dataframe[0].value.iloc[8]["Trạng thái"], "Track Changes có sẵn")
-        self.assertTrue(any("TRƯỚC khi nhập AI" in element.value for element in app.info))
-        self.assertTrue(any("Existing prior-report translation" in element.value for element in app.text))
-        app.multiselect[0].set_value([selected]).run()
+        table = self.table(app)
+        self.assertFalse(table.iloc[8]["Áp dụng"])
+        self.assertEqual(table.iloc[8]["Trạng thái"], "Track Changes có sẵn")
+        self.assertIn("TRƯỚC khi nhập AI", table.iloc[8]["Ghi chú"])
+        self.assertIn("Existing prior-report translation", table.iloc[8]["Ghi chú"])
+        self.review_state(app, excluded=[review_id for review_id in table["Mã"] if review_id != selected])
         app.checkbox[1].check().run()
         app.button(key="ai_apply_translations").click().run()
         self.assertFalse(app.exception)
@@ -165,8 +177,41 @@ with patch("review_import_ui.st.file_uploader", side_effect=uploaded):
         app.session_state["ai_import_preview"] = preview
         app.run()
         self.assertFalse(app.exception)
-        self.assertFalse(app.dataframe)
-        self.assertTrue(any("Kiểm tra bản dịch AI lần nữa" in element.value for element in app.info))
+        self.assertIn("version", app.session_state["ai_import_preview"])
+        self.assertTrue(app.dataframe)
+
+    def test_edit_translation_then_apply_again_from_the_original_report(self):
+        import io
+        app = self.app()
+        app.button(key="ai_check_translations").click().run()
+        review_id = self.table(app)["Mã"][0]
+        self.confirm(app)
+        app.button(key="ai_apply_translations").click().run()
+        first = app.session_state["ai_import_result"]["data"]
+        self.review_state(app, edits={review_id: "Edited by reviewer."})
+        self.assertFalse(app.exception)
+        self.assertEqual(self.table(app)["Bản dịch AI (sửa được)"][0], "Edited by reviewer.")
+        self.assertEqual(self.table(app)["Trạng thái"][0], "✏️ Đã sửa · Sẵn sàng")
+        self.assertFalse(app.get("download_button"))
+        self.assertTrue(any("đã thay đổi sau lần áp dụng trước" in element.value for element in app.info))
+        self.confirm(app)
+        app.button(key="ai_apply_translations").click().run()
+        self.assertFalse(app.exception)
+        result = app.session_state["ai_import_result"]
+        self.assertNotEqual(result["data"], first)
+        self.assertEqual(result["edited_ids"], [review_id])
+        output = Document(io.BytesIO(result["data"]))
+        self.assertEqual(output.paragraphs[0]._p.xpath("./w:ins//w:t/text()"), ["Edited by reviewer."])
+        self.assertEqual(app.session_state["processed_outputs"]["review"], self.report_data)
+
+    def test_blank_edit_is_not_applied(self):
+        app = self.app()
+        app.button(key="ai_check_translations").click().run()
+        review_id = self.table(app)["Mã"][0]
+        self.review_state(app, edits={review_id: ""})
+        self.assertFalse(app.exception)
+        self.assertEqual(app.session_state["ai_import_preview"]["data"]["counts"], {"blank": 1})
+        self.assertFalse(any(button.key == "ai_apply_translations" for button in app.button))
 
 
 if __name__ == "__main__":

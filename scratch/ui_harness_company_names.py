@@ -13,6 +13,8 @@ sys.path.insert(0, str(ROOT))
 import company_names_store  # noqa: E402
 import review_import_ui  # noqa: E402
 
+import usage_logger  # noqa: E402
+usage_logger.get_gsheet_client = lambda: (None, "harness: no Google Sheet")  # never write harness names to the real Sheet
 company_names_store.LOCAL_FILE = os.environ.get("COMPANY_NAMES_FILE", str(Path(tempfile.gettempdir()) / "harness_company_names.csv"))
 review_import_ui.log_event = lambda *args: None  # never write harness actions to the real usage log
 st.set_page_config(layout="wide")

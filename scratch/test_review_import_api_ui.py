@@ -55,11 +55,21 @@ config = AIConfig(api_key="test", batch_size=1, max_workers=1, web_search={web!r
 lookup = lambda request: lookup_reply({{"Công ty TNHH ABC Việt Nam": ("ABC Vietnam Co., Ltd", "https://masothue.com/abc")}})
 import company_names_store
 def ticked(rows, **kwargs):
+    if rows and "Tên quốc tế" not in rows[0]:
+        return rows
     return [dict(row, **{{"Lưu": True, "Tên quốc tế": row["Tên quốc tế"] or "Typed Name Ltd"}}) for row in rows]
 patches = [patch("company_names_store.LOCAL_FILE", str(folder / "company_names.csv")),
+           patch("usage_logger.get_gsheet_client", return_value=(None, "test: no Google Sheet")),
            patch("usage_logger.is_local_env", return_value=True),
            patch("review_import_ui.log_event", side_effect=logged),
            patch("ai_translate_api.make_client", return_value=FakeClient(respond, lookup))]
+import io
+class Upload(io.BytesIO):
+    name = "AI_Form_API.docx"
+def uploader(label, **kwargs):
+    word = folder / "word.docx"
+    return Upload(word.read_bytes()) if label.startswith("Tải lên AI_Form") and word.exists() else None
+patches.append(patch("review_import_ui.st.file_uploader", side_effect=uploader))
 if {tick_all!r}:
     patches.append(patch("review_import_ui.st.data_editor", side_effect=ticked))
 if secrets is None:
@@ -88,7 +98,7 @@ with ExitStack() as stack:
         app.button(key="ai_translate_api").click().run()
         self.assertFalse(app.exception)
         self.assertEqual(app.session_state["ai_import_preview"]["data"]["counts"], {"ready": 3})
-        self.assertEqual(len(app.multiselect[0].value), 3)
+        self.assertTrue(app.dataframe[0].value["Áp dụng"].all())
         self.checkbox(app, "Tôi đã rà soát").check().run()
         app.button(key="ai_apply_translations").click().run()
         self.assertFalse(app.exception)
@@ -118,6 +128,63 @@ with ExitStack() as stack:
         self.assertEqual([entry["review_id"] for entry in json.loads(shown)], [item["review_id"] for item in self.items])
         for forbidden in ("Reference suggestion", "Translation Tool", "TT_AI_"):
             self.assertNotIn(forbidden, shown)
+
+    def test_edited_result_is_applied_without_calling_the_api_again(self):
+        app = self.app()
+        self.checkbox(app, "Tôi đồng ý gửi").check().run()
+        app.button(key="ai_translate_api").click().run()
+        first = self.items[0]["review_id"]
+        state = dict(app.session_state["ai_review_state"])
+        app.session_state["ai_review_state"] = dict(state, edits={first: "Edited charter capital."}, version=state["version"] + 1)
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertFalse(any("json" in button.proto.label for button in app.get("download_button")))
+        self.assertEqual(app.session_state["ai_import_preview"]["data"]["counts"], {"ready": 3})
+        self.checkbox(app, "Tôi đã rà soát").check().run()
+        app.button(key="ai_apply_translations").click().run()
+        self.assertFalse(app.exception)
+        output = Document(io.BytesIO(app.session_state["ai_import_result"]["data"]))
+        self.assertEqual(output.paragraphs[0]._p.xpath("./w:ins//w:t/text()"), ["Edited charter capital."])
+        self.assertEqual((self.folder / "log.txt").read_text(encoding="utf-8").count("AI API"), 1)
+
+    def test_word_round_trip_with_track_changes(self):
+        from docx.oxml import parse_xml
+        app = self.app()
+        self.checkbox(app, "Tôi đồng ý gửi").check().run()
+        app.button(key="ai_translate_api").click().run()
+        self.assertTrue(any(button.proto.label.startswith("📄 Tải AI_Form") for button in app.get("download_button")))
+        worksheet = Document(io.BytesIO(app.session_state["ai_api_word_export"]["data"]))
+        self.assertEqual(worksheet.tables[0].cell(1, 4).text, "Charter capital VND 1,234.56.")
+        cell = worksheet.tables[1].cell(1, 4)
+        namespace = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+        cell.paragraphs[0]._p.append(parse_xml(f'<w:ins {namespace} w:id="990" w:author="Translator"><w:r><w:t xml:space="preserve"> Reviewed.</w:t></w:r></w:ins>'))
+        worksheet.save(self.folder / "word.docx")
+        app.run()
+        self.assertFalse(app.exception)
+        rows = {row["review_id"]: row for row in app.session_state["ai_import_preview"]["data"]["rows"]}
+        second = self.items[1]["review_id"]
+        self.assertEqual(rows[second]["translation"], "Charter capital VND 1,234.56. Reviewed.")
+        self.assertTrue(rows[second]["word_edited"])
+        self.assertFalse(rows[self.items[0]["review_id"]]["word_edited"])
+        self.assertEqual(app.session_state["ai_import_preview"]["data"]["counts"], {"ready": 3})
+        self.assertIn("📝 Sửa trong Word · Sẵn sàng", list(app.dataframe[0].value["Trạng thái"]))
+        self.checkbox(app, "Tôi đã rà soát").check().run()
+        app.button(key="ai_apply_translations").click().run()
+        self.assertFalse(app.exception)
+        output = Document(io.BytesIO(app.session_state["ai_import_result"]["data"]))
+        self.assertEqual(output.paragraphs[1]._p.xpath("./w:ins//w:t/text()"), ["Charter capital VND 1,234.56. Reviewed."])
+        self.assertEqual((self.folder / "log.txt").read_text(encoding="utf-8").count("AI API"), 1)
+        (self.folder / "word.docx").unlink()
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertNotIn("word_edited", app.session_state["ai_import_preview"]["data"]["rows"][0])
+
+    def test_effective_results_include_edits(self):
+        from review_import_ui import _effective_results
+        results = [{"review_id": "A-C001", "translation": "One", "highlight": ["One"]}]
+        effective = _effective_results(results, {"A-C001": "Uno", "A-C002": "Dos"})
+        self.assertEqual(effective, [{"review_id": "A-C001", "translation": "Uno", "highlight": ["One"]},
+                                     {"review_id": "A-C002", "translation": "Dos", "highlight": []}])
 
     def test_failed_batch_can_be_retried(self):
         app = self.app(refuse_first_once=True)

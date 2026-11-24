@@ -240,12 +240,30 @@ class ReviewRoundtripTests(unittest.TestCase):
         self.assertEqual(Paragraph(parse_xml(accepted.xml), result._body).text, translation)
         self.assertEqual(Paragraph(parse_xml(rejected.xml), result._body).text, source)
 
-    def test_worksheet_revisions_and_objects_are_blocked(self):
-        for tag in ("ins", "del", "fldSimple", "object"):
+    def test_worksheet_objects_are_blocked(self):
+        for tag in ("fldSimple", "object"):
             with self.subTest(tag=tag):
                 report, worksheet, _ = self.pair()
                 worksheet.tables[0].cell(1, 4).paragraphs[0]._p.append(OxmlElement(f"w:{tag}"))
                 self.assertEqual(self.preview(report, worksheet)["counts"], {"blocked": 1})
+
+    def test_worksheet_track_changes_in_result_cell_are_accepted(self):
+        from docx.oxml import parse_xml
+        report, worksheet, _ = self.pair()
+        cell = worksheet.tables[0].cell(1, 4)
+        cell.text = ""
+        namespace = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+        paragraph = cell.paragraphs[0]._p
+        paragraph.append(parse_xml(f'<w:r {namespace}><w:t xml:space="preserve">Charter capital </w:t></w:r>'))
+        paragraph.append(parse_xml(f'<w:del {namespace} w:id="901" w:author="T"><w:r><w:delText>VND 1</w:delText></w:r></w:del>'))
+        paragraph.append(parse_xml(f'<w:ins {namespace} w:id="902" w:author="T"><w:r><w:rPr><w:highlight w:val="yellow"/></w:rPr>'
+                                   f'<w:t>VND 2</w:t></w:r></w:ins>'))
+        preview = self.preview(report, worksheet)
+        self.assertEqual(preview["counts"], {"ready": 1})
+        row = preview["rows"][0]
+        self.assertEqual(row["translation"], "Charter capital VND 2")
+        self.assertEqual(row["highlights"], [(16, 21)])
+        self.assertIn("Track Changes", row["reason"])
 
     def test_legacy_reports_and_merged_worksheets_are_rejected(self):
         report, worksheet, _ = self.pair()
