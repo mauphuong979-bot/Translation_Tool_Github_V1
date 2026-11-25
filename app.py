@@ -562,152 +562,155 @@ with tabs[0]:
         # Manual button click
         trigger_processing = process_btn
 
-        if trigger_processing:
-            with st.spinner("Đang xử lý báo cáo..."):
-                started_at = time.perf_counter()
-                try:
-                    target_col = st.session_state.meta_translate
-                    
-                    # 0. Load Dynamic Dictionary_v3
-                    # Prepare metadata for tag substitution
-                    metadata_for_tags = {
-                        "name_vn": st.session_state.meta_name_lc,
-                        "name_trans": st.session_state.meta_name_cap,
-                        "year_end": st.session_state.meta_year_end,
-                        "report_date": st.session_state.meta_date,
-                        "period_in": st.session_state.meta_period_short,
-                        "period_in_2": st.session_state.meta_period_short_2,
-                        "signer_1": st.session_state.meta_signer_1,
-                        "signer_2": st.session_state.meta_signer_2,
-                        "signer_3": st.session_state.meta_signer_3
-                    }
-                    
-                    v3_df = tl.load_and_fill_v3_dictionary(metadata_for_tags)
-                    if v3_df is not None:
-                        # Filter and prepare translation map for the specific target language
-                        if target_col in v3_df.columns:
-                            display_df = v3_df[['Vietnamese', target_col]].dropna().copy()
-                            st.session_state.current_dict = display_df
-                        else:
-                            st.error(f"Không tìm thấy cột ngôn ngữ '{target_col}' trong Dictionary_v3.")
-                            st.stop()
-                    else:
-                        st.error("Không đọc được Dictionary_v3.xlsx.")
-                        st.stop()
-
-                    # Translation map is now built from the dynamically filled dictionary
-                    translation_map = dict(zip(st.session_state.current_dict['Vietnamese'], st.session_state.current_dict[target_col]))
-                    # Company names confirmed by users (shared table); dictionary entries keep priority
+        # Own container: elements drawn only in the processing run (spinner, warnings, the auto-download frame)
+        # must not shift the elements below, or the AI import expander resets to collapsed on the next rerun.
+        with st.container():
+            if trigger_processing:
+                with st.spinner("Đang xử lý báo cáo..."):
+                    started_at = time.perf_counter()
                     try:
-                        from company_names_store import company_name_map
-                        for company_vn, company_international in company_name_map().items():
-                            translation_map.setdefault(company_vn, company_international)
-                    except Exception as company_error:
-                        st.warning(f"Không đọc được bảng tên công ty đã xác nhận: {company_error}")
-
-                    # Prepare metadata
-                    metadata = {
-                        "Name (not capitalized)": tl.clean_text(st.session_state.meta_name_lc),
-                        "Reporting date": tl.clean_text(st.session_state.meta_date),
-                        "Translate into": st.session_state.meta_translate,
-                        "Year-end date": tl.clean_text(st.session_state.meta_year_end),
-                        "Translated Name": tl.clean_text(st.session_state.meta_name_cap),
-                        "Period (in table)": tl.clean_text(st.session_state.meta_period_short),
-                        "signer_1": tl.clean_text(st.session_state.meta_signer_1),
-                        "signer_2": tl.clean_text(st.session_state.meta_signer_2),
-                        "signer_3": tl.clean_text(st.session_state.meta_signer_3)
-                    }
+                        target_col = st.session_state.meta_translate
                     
-                    # Inject suggest_py and py_dict
-                    process_settings = dict(st.session_state.process_steps)
-                    process_settings["suggest_py"] = suggest_py
-                    active_py_dict = st.session_state.get("py_dict") if suggest_py else None
+                        # 0. Load Dynamic Dictionary_v3
+                        # Prepare metadata for tag substitution
+                        metadata_for_tags = {
+                            "name_vn": st.session_state.meta_name_lc,
+                            "name_trans": st.session_state.meta_name_cap,
+                            "year_end": st.session_state.meta_year_end,
+                            "report_date": st.session_state.meta_date,
+                            "period_in": st.session_state.meta_period_short,
+                            "period_in_2": st.session_state.meta_period_short_2,
+                            "signer_1": st.session_state.meta_signer_1,
+                            "signer_2": st.session_state.meta_signer_2,
+                            "signer_3": st.session_state.meta_signer_3
+                        }
                     
-                    mode_specs = {
-                        "Original output (current)": [("original", process_settings)],
-                        "Clean output (no inline suggestions)": [("clean", dict(process_settings))],
-                        "Comments + Track Changes": [("review", dict(process_settings))],
-                        "All outputs": [("original", process_settings), ("clean", dict(process_settings)), ("review", dict(process_settings))],
-                    }
-                    outputs = {}
-                    msg = "Report processed."
-                    for variant_name, variant_settings in mode_specs[export_mode]:
-                        uploaded_file.seek(0)
-                        if variant_name in ("clean", "review"):
-                            variant_settings["suggestion"] = False
-                            variant_settings["always_original"] = False
-                            variant_settings["suggest_py"] = False
-                        variant_settings["review_annotations"] = variant_name == "review"
-                        review_items = [] if variant_name == "review" else None
-                        variant_file, variant_msg = process_financial_report(
-                            uploaded_file,
-                            metadata=metadata,
-                            translation_map=translation_map,
-                            case_threshold=st.session_state.case_threshold,
-                            target_col=target_col,
-                            process_settings=variant_settings,
-                            py_dict=active_py_dict,
-                            review_items=review_items
-                        )
-                        if not variant_file:
-                            processed_file, msg = None, variant_msg
-                            break
-                        outputs[variant_name] = variant_file.getvalue()
-                        if variant_name == "review":
-                            ai_review_file = build_ai_review_document(review_items, target_col)
-                            if ai_review_file is not None:
-                                outputs["ai_review"] = ai_review_file.getvalue()
-                    processed_file = outputs.get("original") or outputs.get("clean") or outputs.get("review")
-                    if processed_file:
-                        # Prepare the resolved dictionary for download
-                        resolved_dict_output = io.BytesIO()
-                        with pd.ExcelWriter(resolved_dict_output, engine='openpyxl') as writer:
-                            v3_df.to_excel(writer, index=False, sheet_name='ResolvedDictionary')
-                        resolved_dict_data = resolved_dict_output.getvalue()
-
-                        # Generate Dynamic Filename
-                        original_name = uploaded_file.name.rsplit('.', 1)[0]
-                        target_lang = st.session_state.meta_translate
-                        # Vietnam Time (GMT+7)
-                        vn_tz = timezone(timedelta(hours=7))
-                        timestamp = datetime.now(vn_tz).strftime("%d%m%y_%H%M")
-                        processed_filename = f"{original_name}_{target_lang}_{timestamp}.docx"
-                        primary_output_kind = next(output_kind for output_kind in ("original", "clean", "review") if outputs.get(output_kind))
-                        primary_filename = review_output_filename(processed_filename, primary_output_kind)
-                        
-                        # Save to session state for persistent display
-                        st.session_state.processed_file_id = uploaded_file.name
-                        st.session_state.processed_output_word = processed_file
-                        st.session_state.processed_outputs = outputs
-                        st.session_state.processed_output_excel = resolved_dict_data
-                        st.session_state.process_success_msg = msg
-                        st.session_state.processed_filename = processed_filename
-                        st.session_state.process_stats = summarize_outputs(outputs, review_items, time.perf_counter() - started_at)
-                        
-                        log_event(st.session_state.username, "Processing", f"File: {uploaded_file.name} (Lang: {target_col})")
-                        
-                        # AUTO OPEN / DOWNLOAD IF ENABLED
-                        if st.session_state.auto_open:
-                            if hasattr(os, 'startfile'):
-                                # Local Windows Usage: Open Word directly
-                                temp_dir = os.path.join(BASE_DIR, "temp_output")
-                                if not os.path.exists(temp_dir):
-                                    os.makedirs(temp_dir)
-                                temp_path = os.path.join(temp_dir, primary_filename)
-                                try:
-                                    with open(temp_path, "wb") as f:
-                                        # Handle both BytesIO and raw bytes
-                                        f.write(processed_file.getvalue() if hasattr(processed_file, "getvalue") else processed_file)
-                                    os.startfile(temp_path)
-                                except Exception as e:
-                                    st.warning(f"Không tự mở được Word: {e}. Bạn vẫn có thể tải file bằng nút bên dưới.")
+                        v3_df = tl.load_and_fill_v3_dictionary(metadata_for_tags)
+                        if v3_df is not None:
+                            # Filter and prepare translation map for the specific target language
+                            if target_col in v3_df.columns:
+                                display_df = v3_df[['Vietnamese', target_col]].dropna().copy()
+                                st.session_state.current_dict = display_df
                             else:
-                                # Cloud / Linux Usage: Trigger automatic browser download
-                                st_auto_download(processed_file, primary_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                    else:
-                        st.error(msg)
-                except Exception as e:
-                    st.error(f"Đã xảy ra lỗi khi xử lý: {str(e)}")
+                                st.error(f"Không tìm thấy cột ngôn ngữ '{target_col}' trong Dictionary_v3.")
+                                st.stop()
+                        else:
+                            st.error("Không đọc được Dictionary_v3.xlsx.")
+                            st.stop()
+
+                        # Translation map is now built from the dynamically filled dictionary
+                        translation_map = dict(zip(st.session_state.current_dict['Vietnamese'], st.session_state.current_dict[target_col]))
+                        # Company names confirmed by users (shared table); dictionary entries keep priority
+                        try:
+                            from company_names_store import company_name_map
+                            for company_vn, company_international in company_name_map().items():
+                                translation_map.setdefault(company_vn, company_international)
+                        except Exception as company_error:
+                            st.warning(f"Không đọc được bảng tên công ty đã xác nhận: {company_error}")
+
+                        # Prepare metadata
+                        metadata = {
+                            "Name (not capitalized)": tl.clean_text(st.session_state.meta_name_lc),
+                            "Reporting date": tl.clean_text(st.session_state.meta_date),
+                            "Translate into": st.session_state.meta_translate,
+                            "Year-end date": tl.clean_text(st.session_state.meta_year_end),
+                            "Translated Name": tl.clean_text(st.session_state.meta_name_cap),
+                            "Period (in table)": tl.clean_text(st.session_state.meta_period_short),
+                            "signer_1": tl.clean_text(st.session_state.meta_signer_1),
+                            "signer_2": tl.clean_text(st.session_state.meta_signer_2),
+                            "signer_3": tl.clean_text(st.session_state.meta_signer_3)
+                        }
+                    
+                        # Inject suggest_py and py_dict
+                        process_settings = dict(st.session_state.process_steps)
+                        process_settings["suggest_py"] = suggest_py
+                        active_py_dict = st.session_state.get("py_dict") if suggest_py else None
+                    
+                        mode_specs = {
+                            "Original output (current)": [("original", process_settings)],
+                            "Clean output (no inline suggestions)": [("clean", dict(process_settings))],
+                            "Comments + Track Changes": [("review", dict(process_settings))],
+                            "All outputs": [("original", process_settings), ("clean", dict(process_settings)), ("review", dict(process_settings))],
+                        }
+                        outputs = {}
+                        msg = "Report processed."
+                        for variant_name, variant_settings in mode_specs[export_mode]:
+                            uploaded_file.seek(0)
+                            if variant_name in ("clean", "review"):
+                                variant_settings["suggestion"] = False
+                                variant_settings["always_original"] = False
+                                variant_settings["suggest_py"] = False
+                            variant_settings["review_annotations"] = variant_name == "review"
+                            review_items = [] if variant_name == "review" else None
+                            variant_file, variant_msg = process_financial_report(
+                                uploaded_file,
+                                metadata=metadata,
+                                translation_map=translation_map,
+                                case_threshold=st.session_state.case_threshold,
+                                target_col=target_col,
+                                process_settings=variant_settings,
+                                py_dict=active_py_dict,
+                                review_items=review_items
+                            )
+                            if not variant_file:
+                                processed_file, msg = None, variant_msg
+                                break
+                            outputs[variant_name] = variant_file.getvalue()
+                            if variant_name == "review":
+                                ai_review_file = build_ai_review_document(review_items, target_col)
+                                if ai_review_file is not None:
+                                    outputs["ai_review"] = ai_review_file.getvalue()
+                        processed_file = outputs.get("original") or outputs.get("clean") or outputs.get("review")
+                        if processed_file:
+                            # Prepare the resolved dictionary for download
+                            resolved_dict_output = io.BytesIO()
+                            with pd.ExcelWriter(resolved_dict_output, engine='openpyxl') as writer:
+                                v3_df.to_excel(writer, index=False, sheet_name='ResolvedDictionary')
+                            resolved_dict_data = resolved_dict_output.getvalue()
+
+                            # Generate Dynamic Filename
+                            original_name = uploaded_file.name.rsplit('.', 1)[0]
+                            target_lang = st.session_state.meta_translate
+                            # Vietnam Time (GMT+7)
+                            vn_tz = timezone(timedelta(hours=7))
+                            timestamp = datetime.now(vn_tz).strftime("%d%m%y_%H%M")
+                            processed_filename = f"{original_name}_{target_lang}_{timestamp}.docx"
+                            primary_output_kind = next(output_kind for output_kind in ("original", "clean", "review") if outputs.get(output_kind))
+                            primary_filename = review_output_filename(processed_filename, primary_output_kind)
+                        
+                            # Save to session state for persistent display
+                            st.session_state.processed_file_id = uploaded_file.name
+                            st.session_state.processed_output_word = processed_file
+                            st.session_state.processed_outputs = outputs
+                            st.session_state.processed_output_excel = resolved_dict_data
+                            st.session_state.process_success_msg = msg
+                            st.session_state.processed_filename = processed_filename
+                            st.session_state.process_stats = summarize_outputs(outputs, review_items, time.perf_counter() - started_at)
+                        
+                            log_event(st.session_state.username, "Processing", f"File: {uploaded_file.name} (Lang: {target_col})")
+                        
+                            # AUTO OPEN / DOWNLOAD IF ENABLED
+                            if st.session_state.auto_open:
+                                if hasattr(os, 'startfile'):
+                                    # Local Windows Usage: Open Word directly
+                                    temp_dir = os.path.join(BASE_DIR, "temp_output")
+                                    if not os.path.exists(temp_dir):
+                                        os.makedirs(temp_dir)
+                                    temp_path = os.path.join(temp_dir, primary_filename)
+                                    try:
+                                        with open(temp_path, "wb") as f:
+                                            # Handle both BytesIO and raw bytes
+                                            f.write(processed_file.getvalue() if hasattr(processed_file, "getvalue") else processed_file)
+                                        os.startfile(temp_path)
+                                    except Exception as e:
+                                        st.warning(f"Không tự mở được Word: {e}. Bạn vẫn có thể tải file bằng nút bên dưới.")
+                                else:
+                                    # Cloud / Linux Usage: Trigger automatic browser download
+                                    st_auto_download(processed_file, primary_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        else:
+                            st.error(msg)
+                    except Exception as e:
+                        st.error(f"Đã xảy ra lỗi khi xử lý: {str(e)}")
 
         # PERSISTENT DOWNLOAD BUTTONS - Shown if processing was successful for current file
         if st.session_state.get('processed_file_id') == uploaded_file.name:

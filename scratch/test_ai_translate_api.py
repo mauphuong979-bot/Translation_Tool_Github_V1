@@ -256,7 +256,7 @@ class CompanyLookupTests(unittest.TestCase):
         self.assertEqual(json.loads(lookups[0]["messages"][0]["content"]), [ABC])
         tool = lookups[0]["tools"][0]
         self.assertEqual((tool["type"], tool["allowed_domains"], tool["max_uses"]),
-                         ("web_search_20260209", ["masothue.com", "thuvienphapluat.vn"], 2))
+                         ("web_search_20260209", ["masothue.com", "thuvienphapluat.vn"], 6))
         self.assertNotIn("format", lookups[0]["output_config"])
         self.assertNotIn("Doanh thu", lookups[0]["messages"][0]["content"])
         payload = json.loads(translations[0]["messages"][0]["content"])
@@ -293,6 +293,15 @@ class CompanyLookupTests(unittest.TestCase):
         outcome = translate_items([item(1, original=ABC + ".")], "E", WEB, FakeClient(
             lookup=lambda request: lookup_reply({ABC: (" ABC  TRADING CO., LTD ", "https://masothue.com/abc")})))
         self.assertEqual(outcome["company_names"][ABC]["international"], "Abc Trading Co., Ltd")
+
+    def test_lookup_answer_matches_name_written_differently_in_word(self):
+        source = "Công ty TNHH Chỉ May American & Efird​ Việt Nam"
+        echoed = "CÔNG TY TNHH CHỈ MAY AMERICAN & EFIRD VIỆT NAM"
+        outcome = translate_items([item(1, original=source)], "E", WEB, FakeClient(
+            lookup=lambda request: lookup_reply({echoed: ("AMERICAN & EFIRD VIETNAM THREAD LIMITED LIABILITY COMPANY",
+                                                          "https://masothue.com/3603520029")})))
+        self.assertEqual([entry["international"] for entry in outcome["company_names"].values()],
+                         ["American & Efird Vietnam Thread Limited Liability Company"])
 
     def test_pause_turn_is_continued(self):
         replies = [lookup_reply({}, stop_reason="pause_turn"), lookup_reply({ABC: ("ABC Ltd", "https://masothue.com/abc")})]

@@ -92,6 +92,21 @@
       "port": 8506
     },
     {
+      "name": "after-process-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "scratch/ui_harness_ai_import_after_process.py",
+        "--server.port",
+        "8508",
+        "--server.headless",
+        "true"
+      ],
+      "port": 8508
+    },
+    {
       "name": "api-word-harness",
       "runtimeExecutable": "python",
       "runtimeArgs": [

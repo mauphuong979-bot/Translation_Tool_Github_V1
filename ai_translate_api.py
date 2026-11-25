@@ -7,6 +7,7 @@ checks as the manual AI_Form import.
 """
 import json
 import re
+import unicodedata
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from urllib.parse import urlparse
@@ -22,6 +23,9 @@ PRICES = {"claude-opus-5-5": (4.0, 20.0, 0.20), "claude-sonnet-5-5": (2.0, 10.0,
 WEB_SEARCH_PRICE = 0.01  # USD per search
 LOOKUP_DOMAINS = ("masothue.com", "thuvienphapluat.vn")
 LOOKUP_BATCH = 10
+# Searches allowed per lookup = this + 2 per name. The spare searches cover a search that fails and must be repeated;
+# with only 2 per name, one failed search used up a single-name lookup and the name came back as not found.
+LOOKUP_SPARE_SEARCHES = 4
 MAX_CONTINUATIONS = 3
 
 RESULT_SCHEMA = {
@@ -307,6 +311,14 @@ def title_case_name(name):
     return re.sub(r"[^\W\d_]+", convert, name)
 
 
+def _name_key(name):
+    """Comparison key for a Vietnamese name: the AI echoes names in composed Unicode and without hidden characters, while
+    text from Word may use decomposed accents, zero-width or non-breaking spaces, or a different case."""
+    text = unicodedata.normalize("NFC", str(name))
+    text = "".join(char for char in text if unicodedata.category(char) != "Cf")
+    return " ".join(text.split()).casefold()
+
+
 def _parse_lookup(message, asked):
     text = "".join(block.text for block in message.content if getattr(block, "type", None) == "text")
     match = re.search(r"\{.*\}", text, re.DOTALL)
@@ -317,11 +329,13 @@ def _parse_lookup(message, asked):
     except json.JSONDecodeError as error:
         raise BatchError("Kết quả tra cứu tên công ty không phải JSON hợp lệ.") from error
     found = {}
+    asked_by_key = {_name_key(name): name for name in asked}
     for entry in data.get("names", []) if isinstance(data, dict) else []:
         if not isinstance(entry, dict):
             continue
         name, international, url = (entry.get(key) for key in ("vietnamese", "international", "source_url"))
-        if name in asked and isinstance(international, str) and international.strip() and isinstance(url, str) and _allowed_source(url):
+        name = asked_by_key.get(_name_key(name)) if isinstance(name, str) else None
+        if name and isinstance(international, str) and international.strip() and isinstance(url, str) and _allowed_source(url):
             found[name] = {"international": title_case_name(" ".join(international.split())), "source_url": url}
     return found
 
@@ -333,7 +347,7 @@ def _lookup_batch(client, names, config):
         "system": _lookup_system_prompt(),
         "messages": [{"role": "user", "content": json.dumps(names, ensure_ascii=False)}],
         "tools": [{"type": "web_search_20260209", "name": "web_search", "allowed_domains": list(LOOKUP_DOMAINS),
-                   "max_uses": max(1, min(config.web_search_max_uses, 2 * len(names)))}],
+                   "max_uses": max(1, min(config.web_search_max_uses, LOOKUP_SPARE_SEARCHES + 2 * len(names)))}],
         "output_config": {"effort": config.effort},
     }
     if config.fallbacks:
