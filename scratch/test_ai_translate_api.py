@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import test_review_roundtrip as fixtures
 from ai_translate_api import (FALLBACK_BETA, AIConfig, build_payload, build_system_prompt, describe_api_error, estimate_cost,
-                              find_company_names, load_config, make_batches, translate_items, usage_cost)
+                              find_company_names, load_config, make_batches, title_case_name, translate_items, usage_cost)
 from review_roundtrip import apply_ai_results, preview_ai_results, read_review_manifest
 
 saved = fixtures.saved
@@ -274,6 +274,25 @@ class CompanyLookupTests(unittest.TestCase):
         sub_domain = translate_items([item(1, original=ABC + ".")], "E", WEB,
                                      FakeClient(lookup=lambda request: lookup_reply({ABC: ("ABC Ltd", "https://www.thuvienphapluat.vn/abc")})))
         self.assertIn(ABC, sub_domain["company_names"])
+
+    def test_title_case_name(self):
+        cases = {
+            "ABC TRADING AND SERVICES COMPANY LIMITED": "Abc Trading and Services Company Limited",
+            "HOA BINH CONSTRUCTION GROUP JSC": "Hoa Binh Construction Group JSC",
+            "NEW INCREASE (VN) CO., LTD": "New Increase (VN) Co., Ltd",
+            "THE BANK FOR FOREIGN TRADE OF VIETNAM": "The Bank for Foreign Trade of Vietnam",
+            "TRANS-PACIFIC LOGISTICS II LLC": "Trans-Pacific Logistics II LLC",
+            "ABC Vietnam Co., Ltd": "ABC Vietnam Co., Ltd",
+            "": "",
+        }
+        for name, expected in cases.items():
+            with self.subTest(name=name):
+                self.assertEqual(title_case_name(name), expected)
+
+    def test_all_caps_lookup_answer_is_title_cased(self):
+        outcome = translate_items([item(1, original=ABC + ".")], "E", WEB, FakeClient(
+            lookup=lambda request: lookup_reply({ABC: (" ABC  TRADING CO., LTD ", "https://masothue.com/abc")})))
+        self.assertEqual(outcome["company_names"][ABC]["international"], "Abc Trading Co., Ltd")
 
     def test_pause_turn_is_continued(self):
         replies = [lookup_reply({}, stop_reason="pause_turn"), lookup_reply({ABC: ("ABC Ltd", "https://masothue.com/abc")})]

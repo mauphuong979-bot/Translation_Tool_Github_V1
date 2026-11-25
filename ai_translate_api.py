@@ -278,6 +278,35 @@ def _allowed_source(url):
     return any(host == domain or host.endswith("." + domain) for domain in LOOKUP_DOMAINS)
 
 
+# Title-casing an all-caps international name: these words get a fixed form, these stay upper case, and the small
+# words are lower case except at the start. A word with no vowel (JSC, LLC, VN, TNHH, MTV) is taken as an abbreviation.
+NAME_FIXED_CASE = {"CO": "Co", "LTD": "Ltd", "CORP": "Corp", "INC": "Inc", "PTE": "Pte", "BHD": "Bhd", "MR": "Mr", "ST": "St"}
+NAME_UPPER = {"USA", "UK", "UAE", "EU", "ASEAN", "I", "II", "III", "IV", "VI", "VII", "VIII", "IX", "XI", "XII"}
+NAME_SMALL = {"AND", "OF", "THE", "FOR", "IN", "ON", "AT", "BY", "TO", "A", "AN", "DE", "DU", "LA"}
+
+
+def title_case_name(name):
+    """'ABC TRADING AND SERVICES CO., LTD' -> 'Abc Trading and Services Co., Ltd'. Names with any lower-case letter
+    are returned unchanged (they are already written the way the source spells them)."""
+    if not name or any(char.islower() for char in name):
+        return name
+    first = True
+
+    def convert(match):
+        nonlocal first
+        word, at_start = match.group(), first
+        first = False
+        if word in NAME_FIXED_CASE:
+            return NAME_FIXED_CASE[word]
+        if word in NAME_UPPER or not any(char in "AEIOUY" for char in word):
+            return word
+        if word in NAME_SMALL and not at_start:
+            return word.lower()
+        return word[0] + word[1:].lower()
+
+    return re.sub(r"[^\W\d_]+", convert, name)
+
+
 def _parse_lookup(message, asked):
     text = "".join(block.text for block in message.content if getattr(block, "type", None) == "text")
     match = re.search(r"\{.*\}", text, re.DOTALL)
@@ -293,7 +322,7 @@ def _parse_lookup(message, asked):
             continue
         name, international, url = (entry.get(key) for key in ("vietnamese", "international", "source_url"))
         if name in asked and isinstance(international, str) and international.strip() and isinstance(url, str) and _allowed_source(url):
-            found[name] = {"international": international.strip(), "source_url": url}
+            found[name] = {"international": title_case_name(" ".join(international.split())), "source_url": url}
     return found
 
 
